@@ -96,7 +96,9 @@ namespace mkr {
             throw std::runtime_error(info_log.get());
         }
 
-        spdlog::info("shader program %s created", _name.c_str());
+        spdlog::info("shader program {} created", _name.c_str());
+
+        uniform_handles_[shader_uniform::u_mat_mvp] = get_uniform_location("u_mat_mvp");
     }
 
     shader_program::~shader_program() {
@@ -105,12 +107,6 @@ namespace mkr {
 
     void shader_program::use() {
         glUseProgram(program_handle_);
-    }
-
-    void shader_program::set_texture(uint32_t _texture_unit, std::shared_ptr<texture> _texture) {
-        if (_texture) {
-            _texture->bind(_texture_unit);
-        }
     }
 
     // Float

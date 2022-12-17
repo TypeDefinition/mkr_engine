@@ -68,8 +68,6 @@ namespace mkr {
 
             // Swap buffer.
             app_window_->swap_buffers();
-
-            sleep(10000);
         }
 
         void exit() {

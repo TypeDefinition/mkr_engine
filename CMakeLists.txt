@@ -15,7 +15,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Compiler Flags
 # set(CMAKE_CXX_FLAGS "-std=c++20 -O3")
-set(CMAKE_CXX_FLAGS "-std=c++20 -g -fsanitize=thread")
+set(CMAKE_CXX_FLAGS "-std=c++20 -g")
+# set(CMAKE_CXX_FLAGS "-std=c++20 -g -fsanitize=thread")
 
 set(SRC_DIR "src/")
 file(GLOB_RECURSE SRC_FILES LIST_DIRECTORIES true CONFIGURE_DEPENDS

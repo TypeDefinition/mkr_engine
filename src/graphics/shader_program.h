@@ -7,16 +7,17 @@
 #include <maths/vector2.h>
 #include <maths/vector3.h>
 #include <maths/matrix.h>
-#include "graphics/texture.h"
 
 namespace mkr {
-#define MAX_LIGHTS 8
+    #define MAX_LIGHTS 8
 
     enum texture_unit {
         texture_albedo,
     };
 
     enum shader_uniform {
+        u_mat_mvp,
+
         num_shader_uniforms,
     };
 
@@ -40,8 +41,6 @@ namespace mkr {
         inline const std::string& name() const { return name_; }
 
         void use();
-
-        void set_texture(uint32_t _texture_unit, std::shared_ptr<texture> _texture);
 
         // Float
         void set_uniform(const std::string &_uniform_name, float _value0);

@@ -7,6 +7,7 @@
 #include <common/singleton.h>
 #include <maths/colour.h>
 #include "graphics/app_window.h"
+#include "graphics/renderer.h"
 
 namespace mkr {
     class graphics_system : public singleton<graphics_system> {
@@ -14,6 +15,7 @@ namespace mkr {
 
     private:
         std::unique_ptr<app_window> app_window_;
+        std::unique_ptr<renderer> renderer_;
 
         graphics_system() {}
         ~graphics_system() {}
@@ -56,9 +58,14 @@ namespace mkr {
             if (GLEW_OK != glewInit()) {
                 throw std::runtime_error("glewInit failed");
             }
+
+            renderer_ = std::make_unique<renderer>();
         }
 
         void update() {
+            // Render.
+            renderer_->update();
+
             // Swap buffer.
             app_window_->swap_buffers();
 

@@ -98,7 +98,11 @@ namespace mkr {
 
         spdlog::info("shader program {} created", _name.c_str());
 
+        // Get uniform(s).
         uniform_handles_[shader_uniform::u_mat_mvp] = get_uniform_location("u_mat_mvp");
+
+        // Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
+        set_uniform("texture_albedo", texture_unit::texture_albedo);
     }
 
     shader_program::~shader_program() {

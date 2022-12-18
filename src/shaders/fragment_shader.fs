@@ -1,7 +1,15 @@
 #version 460 core
-out vec4 FragColor;
+
+// Inputs
+in vec2 io_tex_coord;
+
+// Outputs
+out vec4 io_frag_colour;
+
+// Uniforms
+uniform sampler2D texture_albedo;
 
 void main()
 {
-    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    io_frag_colour = texture(texture_albedo, io_tex_coord);
 }

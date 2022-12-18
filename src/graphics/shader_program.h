@@ -7,13 +7,10 @@
 #include <maths/vector2.h>
 #include <maths/vector3.h>
 #include <maths/matrix.h>
+#include "graphics/texture.h"
 
 namespace mkr {
     #define MAX_LIGHTS 8
-
-    enum texture_unit {
-        texture_albedo,
-    };
 
     enum shader_uniform {
         u_mat_mvp,

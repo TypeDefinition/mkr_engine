@@ -11,8 +11,8 @@ namespace mkr {
       * Per Vertex Data (Stored in VBO 0):
       * 00 - Position
       * 01 - Normal
-      * 02 - Texture Coordinate
-      * 03 - Tangent
+      * 02 - Tangent
+      * 03 - Texture Coordinate
 
       * Per Instance Data (Stored in VBO 1):
       *
@@ -31,8 +31,8 @@ namespace mkr {
     enum vertex_attrib : GLuint {
         position,
         normal,
-        tex_coord,
         tangent,
+        tex_coord,
 
         instance_model_view_mat_col0,
         instance_model_view_mat_col1,

@@ -16,11 +16,11 @@ namespace mkr {
         std::string title_;
         uint32_t width_, height_;
         uint32_t flags_;
-        SDL_Window *window_;
+        SDL_Window* window_;
         SDL_GLContext gl_context_;
 
     public:
-        app_window(const std::string &_title, uint32_t _width, uint32_t _height, uint32_t _flags)
+        app_window(const std::string& _title, uint32_t _width, uint32_t _height, uint32_t _flags)
                 : title_(_title), width_(_width), height_(_height), flags_(_flags) {
             // Create Window
             window_ = SDL_CreateWindow(title_.c_str(),

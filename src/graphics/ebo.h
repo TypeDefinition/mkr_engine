@@ -8,7 +8,7 @@ namespace mkr {
         GLuint handle_;
 
     public:
-        ebo(GLsizeiptr _size, void *_data) {
+        ebo(GLsizeiptr _size, void* _data) {
             glCreateBuffers(1, &handle_);
             glNamedBufferData(handle_, _size, _data, GL_STATIC_DRAW);
         }

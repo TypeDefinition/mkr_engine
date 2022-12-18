@@ -16,16 +16,20 @@ namespace mkr {
         bool quit_ = false;
 
         application() {}
+
         ~application() {}
 
     public:
         inline float delta_time() const { return delta_time_; }
+
         inline float time_elapsed() const { return time_elapsed_; }
 
         void quit() { quit_ = true; }
 
         virtual void init();
+
         virtual void run();
+
         virtual void exit();
     };
 }

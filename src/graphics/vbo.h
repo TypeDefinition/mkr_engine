@@ -73,9 +73,9 @@ namespace mkr {
         GLsizei byte_size_;
 
     public:
-        vbo_layout(const std::vector<vbo_element> &_elements)
+        vbo_layout(const std::vector<vbo_element>& _elements)
                 : elements_{_elements}, byte_size_{0} {
-            for (const auto &e: elements_) {
+            for (const auto& e: elements_) {
                 byte_size_ += e.byte_size_;
             }
         }
@@ -88,7 +88,7 @@ namespace mkr {
             return byte_size_;
         }
 
-        const vbo_element &operator[](size_t _index) const {
+        const vbo_element& operator[](size_t _index) const {
             return elements_[_index];
         }
     };
@@ -100,7 +100,7 @@ namespace mkr {
         vbo_layout layout_;
 
     public:
-        vbo(GLsizeiptr _size, void *_data, GLenum _usage, vbo_layout _layout)
+        vbo(GLsizeiptr _size, void* _data, GLenum _usage, vbo_layout _layout)
                 : layout_{_layout} {
             glCreateBuffers(1, &handle_);
             glNamedBufferData(handle_, _size, _data, _usage);
@@ -118,7 +118,7 @@ namespace mkr {
             return divisor_;
         }
 
-        const vbo_layout &layout() const {
+        const vbo_layout& layout() const {
             return layout_;
         }
 
@@ -126,11 +126,11 @@ namespace mkr {
             glBindBuffer(GL_ARRAY_BUFFER, handle_);
         }
 
-        void set_data(GLsizeiptr _size, void *_data, GLenum _usage) {
+        void set_data(GLsizeiptr _size, void* _data, GLenum _usage) {
             glNamedBufferData(handle_, _size, _data, _usage);
         }
 
-        void set_sub_data(GLintptr _offset, GLsizeiptr _size, void *_data) {
+        void set_sub_data(GLintptr _offset, GLsizeiptr _size, void* _data) {
             glNamedBufferSubData(handle_, _offset, _size, _data);
         }
     };

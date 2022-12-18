@@ -18,6 +18,7 @@ namespace mkr {
         std::unique_ptr<renderer> renderer_;
 
         graphics_system() {}
+
         ~graphics_system() {}
 
     public:

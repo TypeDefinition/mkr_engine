@@ -8,6 +8,7 @@ namespace mkr {
     class file_util {
     private:
         file_util() = delete;
+
         ~file_util() = delete;
 
     public:

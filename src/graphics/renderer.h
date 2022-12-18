@@ -65,8 +65,8 @@ namespace mkr {
 
             auto model_mat = translation_matrix * rotation_matrix * scale_matrix;
             auto view_mat = matrix_util::view_matrix(vector3::zero, vector3::z_axis, vector3::y_axis);
-            auto perspective_mat = matrix_util::perspective_matrix(16.0f/9.0f, 70.0f * maths_util::deg2rad, 0.1f, 100.0f);
-            auto ortho_mat = matrix_util::orthographic_matrix(16.0f/9.0f, 2.0f, 0.1f, 100.0f);
+            auto perspective_mat = matrix_util::perspective_matrix(16.0f / 9.0f, 70.0f * maths_util::deg2rad, 0.1f, 100.0f);
+            auto ortho_mat = matrix_util::orthographic_matrix(16.0f / 9.0f, 2.0f, 0.1f, 100.0f);
 
             sp_->set_uniform(shader_uniform::u_mat_mvp, false, perspective_mat * view_mat * model_mat);
             // sp_->set_uniform(shader_uniform::u_mat_mvp, false, ortho_mat * view_mat * model_mat);

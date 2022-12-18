@@ -34,13 +34,13 @@ namespace mkr {
             return maths_util::clamp<uint32_t>(maths_util::min(log2_width, log2_height), 1, GL_TEXTURE_MAX_LEVEL);
         }
 
-        texture(const std::string &_name, uint32_t _width, uint32_t _height, texture_shape _shape, texture_wrap_mode _wrap_mode)
+        texture(const std::string& _name, uint32_t _width, uint32_t _height, texture_shape _shape, texture_wrap_mode _wrap_mode)
                 : handle_(0), name_(_name), width_(_width), height_(_height), shape_(_shape), wrap_mode_(_wrap_mode) {}
 
     public:
         virtual ~texture() {}
 
-        inline const std::string &name() const { return name_; }
+        inline const std::string& name() const { return name_; }
 
         inline uint32_t width() const { return width_; }
 
@@ -55,7 +55,7 @@ namespace mkr {
 
     class texture_2d : public texture {
     public:
-        texture_2d(const std::string &_name, uint32_t _width, uint32_t _height, const void *_data)
+        texture_2d(const std::string& _name, uint32_t _width, uint32_t _height, const void* _data)
                 : texture(_name, _width, _height, texture_shape::shape_2d, texture_wrap_mode::repeat) {
             /**
              * IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
@@ -87,7 +87,7 @@ namespace mkr {
 
     class texture_cube : public texture {
     public:
-        texture_cube(const std::string &_name, uint32_t _width, uint32_t _height, std::array<const void *, 6> _data)
+        texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, 6> _data)
                 : texture(_name, _width, _height, texture_shape::shape_2d, texture_wrap_mode::clamp_to_edge) {
             glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &handle_);
         }

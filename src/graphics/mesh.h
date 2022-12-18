@@ -15,7 +15,7 @@ namespace mkr {
         const std::vector<uint32_t> indices_;
 
     public:
-        mesh(const std::string &_name, const std::vector<vertex> &_vertices, const std::vector<uint32_t> &_indices)
+        mesh(const std::string& _name, const std::vector<vertex>& _vertices, const std::vector<uint32_t>& _indices)
                 : name_{_name}, vertices_{_vertices}, indices_{_indices} {
             // VAO
             vao_ = std::make_shared<vao>();

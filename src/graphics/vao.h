@@ -26,13 +26,13 @@ namespace mkr {
         }
 
         void set_vbo(vbo_index _type, std::shared_ptr<vbo> _vbo) {
-            const vbo_layout &layout = _vbo->layout();
+            const vbo_layout& layout = _vbo->layout();
             glVertexArrayVertexBuffer(handle_, _type, _vbo->handle(), 0, layout.byte_size());
             glVertexArrayBindingDivisor(handle_, _type, _vbo->divisor());
 
             GLuint offset = 0;
             for (size_t i = 0; i < layout.num_elements(); ++i) {
-                const vbo_element &e = layout[i];
+                const vbo_element& e = layout[i];
                 switch (e.type_) {
                     case GL_INT:
                     case GL_UNSIGNED_INT:

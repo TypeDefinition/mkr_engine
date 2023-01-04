@@ -22,13 +22,13 @@ namespace mkr {
     public:
         renderer() {
             mesh_ = asset_loader::instance().make_quad("quad");
-            auto vs_src = file_util::file_to_str("/mnt/PopWork/mkr_engine/src/shaders/vertex_shader.vs");
-            auto fs_src = file_util::file_to_str("/mnt/PopWork/mkr_engine/src/shaders/fragment_shader.fs");
+            auto vs_src = file_util::file_to_str("/mnt/ZorinWork/mkr_engine/src/shaders/vertex_shader.vs");
+            auto fs_src = file_util::file_to_str("/mnt/ZorinWork/mkr_engine/src/shaders/fragment_shader.fs");
             std::vector<std::string> vs = {vs_src};
             std::vector<std::string> fs = {fs_src};
             sp_ = std::make_shared<shader_program>("sp", vs, fs);
 
-            texture_2d_ = asset_loader::instance().load_texture_2d("texture_2d", "/mnt/PopWork/mkr_engine/textures/Brick Wall/Brick_Wall_001_Albedo_2048x2048.png");
+            texture_2d_ = asset_loader::instance().load_texture_2d("texture_2d", "/mnt/ZorinWork/mkr_engine/textures/Test_0.png");
 
             transform_.local_position_ = {0.0f, 0.0f, 2.0f};
             transform_.local_rotation_ = quaternion{vector3::y_axis, maths_util::pi};

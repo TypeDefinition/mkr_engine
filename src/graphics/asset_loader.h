@@ -69,7 +69,7 @@ namespace mkr {
 
         asset_loader() {}
 
-        ~asset_loader() {}
+        virtual ~asset_loader() {}
 
     public:
         std::shared_ptr<texture_2d> get_texture_2d(const std::string& _name) {

@@ -17,7 +17,7 @@ namespace mkr {
 
         application() {}
 
-        ~application() {}
+        virtual ~application() {}
 
     public:
         inline float delta_time() const { return delta_time_; }

@@ -19,7 +19,7 @@ namespace mkr {
 
         graphics_system() {}
 
-        ~graphics_system() {}
+        virtual ~graphics_system() {}
 
     public:
         void init() {

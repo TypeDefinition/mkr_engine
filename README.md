@@ -6,4 +6,4 @@ sudo apt install libspdlog-dev
 
 sudo apt install libsdl2-dev
 
-sudo apt install libsdl-image1.2-dev
+sudo apt install libsdl2-image-dev

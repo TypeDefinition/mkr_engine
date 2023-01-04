@@ -37,7 +37,7 @@ namespace mkr {
         ~renderer() {}
 
         void update() {
-            glClearNamedFramebufferfv(0, GL_COLOR, 0, &colour::blue.r_);
+            glClearNamedFramebufferfv(0, GL_COLOR, 0, (GLfloat*)&colour::blue.r_);
             float depth = 1.0f;
             glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
 

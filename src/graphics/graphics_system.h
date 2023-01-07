@@ -24,8 +24,8 @@ namespace mkr {
     public:
         void init() {
             // Initialise SDL_image.
-            int imgFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP;
-            if (imgFlags != (IMG_Init(imgFlags) & imgFlags)) {
+            int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP;
+            if (img_flags != (IMG_Init(img_flags) & img_flags)) {
                 const std::string err_msg = "IMG_Init failed";
                 spdlog::error(err_msg);
                 throw std::runtime_error(err_msg);

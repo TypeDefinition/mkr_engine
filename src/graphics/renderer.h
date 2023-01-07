@@ -6,6 +6,7 @@
 #include "util/file_util.h"
 #include "graphics/asset_loader.h"
 #include "graphics/shader_program.h"
+#include "input/input_system.h"
 #include "component/camera.h"
 #include "component/light.h"
 #include "component/transform.h"
@@ -14,10 +15,17 @@
 namespace mkr {
     class renderer {
     private:
+        input_name input_quit = 0;
+        input_name input_name_left = 1;
+        input_name input_name_right = 2;
+
         std::shared_ptr<mesh> mesh_;
         std::shared_ptr<shader_program> sp_;
         std::shared_ptr<texture_2d> texture_2d_;
         transform transform_;
+        float rotation_angle_ = 0.0f;
+
+        event_listener input_listener_;
 
     public:
         renderer() {
@@ -32,6 +40,29 @@ namespace mkr {
 
             transform_.local_position_ = {0.0f, 0.0f, 2.0f};
             transform_.local_rotation_ = quaternion{vector3::y_axis, maths_util::pi};
+
+            input_system::instance().register_button(input_quit, input::get_input_mask(input_context_default, controller_index_default, kc_escape));
+            input_system::instance().register_button(input_name_left, input::get_input_mask(input_context_default, controller_index_default, kc_left));
+            input_system::instance().register_button(input_name_right, input::get_input_mask(input_context_default, controller_index_default, kc_right));
+
+            input_listener_.set_callback([&](const event* _event) {
+                const auto* e = dynamic_cast<const button_event*>(_event);
+                if (!e) { return; }
+                if (e->state_ != button_event::button_state::pressed) { return; }
+
+                if (e->name_ == input_quit) {
+                    application::instance().terminate();
+                }
+
+                if (e->name_ == input_name_left) {
+                    rotation_angle_ -= 180.0f * application::instance().delta_time();
+                }
+
+                if (e->name_ == input_name_right) {
+                    rotation_angle_ += 180.0f * application::instance().delta_time();
+                }
+            });
+            input_system::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);
         }
 
         ~renderer() {}
@@ -55,11 +86,14 @@ namespace mkr {
             // glStencilMask(0x00);
 
             matrix4x4 translation_matrix = matrix_util::translation_matrix(transform_.local_position_);
-            quaternion rotation_x{vector3::x_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
-            quaternion rotation_y{vector3::y_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
-            quaternion rotation_z{vector3::z_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
+            // quaternion rotation_x{vector3::x_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
+            // quaternion rotation_y{vector3::y_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
+            // quaternion rotation_z{vector3::z_axis, 30.0f * application::instance().delta_time() * maths_util::deg2rad};
             // transform_.local_rotation_ = rotation_x * rotation_y * rotation_z * transform_.local_rotation_;
-            transform_.local_rotation_ = rotation_z * transform_.local_rotation_;
+            // transform_.local_rotation_ = rotation_z * transform_.local_rotation_;
+            quaternion rot{vector3::z_axis, rotation_angle_ * maths_util::deg2rad};
+            transform_.local_rotation_ = rot * quaternion{vector3::y_axis, maths_util::pi};
+
             matrix4x4 rotation_matrix = transform_.local_rotation_.to_rotation_matrix();
             matrix4x4 scale_matrix = matrix_util::scale_matrix(transform_.local_scale_);
 

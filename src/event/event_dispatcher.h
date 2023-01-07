@@ -14,7 +14,7 @@ namespace mkr {
     class event_dispatcher {
     private:
         /// The event_listener(s) added to this event_dispatcher is sorted by the event type they are subscribed to.
-        std::unordered_map<int32_t, std::unordered_set<std::shared_ptr<event_listener>>> listeners_;
+        std::unordered_map<int32_t, std::unordered_set<event_listener*>> listeners_;
 
     public:
         event_dispatcher() = default;
@@ -24,12 +24,11 @@ namespace mkr {
         /**
             \brief Dispatches an event of type T. Only event_listener(s) subscribed to event(s) of type T will receive the event.
             \param _event The event to dispatch.
-            \param _deleteAfterDispatch If set to true, the event will be deleted after dispatching. This means that the ownership of the event is given to the dispatcher. The default value is set to true.
         */
         template<typename T>
-        void dispatch_event(std::shared_ptr<event> _event) requires std::is_base_of_v<mkr::event, T> {
+        void dispatch_event(event* _event) requires std::is_base_of_v<mkr::event, T> {
             for (auto listener : listeners_[family<event>::get_id<T>()]) {
-                listener->invoke_callback(_event.get());
+                listener->invoke_callback(_event);
             }
         }
 
@@ -38,7 +37,7 @@ namespace mkr {
             \param _listener The event_listener to add.
         */
         template<typename T>
-        void add_listener(std::shared_ptr<event_listener> _listener) requires std::is_base_of_v<mkr::event, T> {
+        void add_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
             listeners_[family<event>::get_id<T>()].insert(_listener);
         }
 
@@ -47,7 +46,7 @@ namespace mkr {
             \param _listener The event_listener to remove.
         */
         template<typename T>
-        void remove_listener(std::shared_ptr<event_listener> _listener) requires std::is_base_of_v<mkr::event, T> {
+        void remove_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
             listeners_[family<event>::get_id<T>()].erase(_listener);
         }
     };

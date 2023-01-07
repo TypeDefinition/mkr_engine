@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <string>
 #include <common/singleton.h>
 
@@ -13,7 +14,7 @@ namespace mkr {
         /// The duration that has passed since the application started.
         float time_elapsed_ = 0.0f;
         /// A flag to exit the game loop. Set to true to quit the application.
-        bool quit_ = false;
+        std::atomic_bool terminate_ = false;
 
         application() {}
 
@@ -24,7 +25,7 @@ namespace mkr {
 
         inline float time_elapsed() const { return time_elapsed_; }
 
-        void quit() { quit_ = true; }
+        void terminate() { terminate_ = true; }
 
         virtual void init();
 

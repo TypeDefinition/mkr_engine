@@ -1,4 +1,4 @@
-#include <spdlog/spdlog.h>
+#include <log/log.h>
 #include "application/sdl_event_system.h"
 #include "input/input_system.h"
 
@@ -26,7 +26,7 @@ namespace mkr {
     void input_system::init() {
         if (0 != SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC)) {
             const std::string err_msg = "SDL_INIT_GAMECONTROLLER or SDL_INIT_JOYSTICK or SDL_INIT_HAPTIC failed";
-            spdlog::error(err_msg);
+            mkr::log::error(err_msg);
             throw std::runtime_error(err_msg);
         }
 

@@ -1,11 +1,13 @@
 #include <SDL2/SDL.h>
-#include "application/application.h"
-#include "application/sdl_event_system.h"
+#include <log/log.h>
 #include "input/input_system.h"
 #include "graphics/graphics_system.h"
+#include "application/application.h"
+#include "application/sdl_event_system.h"
 
 namespace mkr {
     void application::init() {
+        log::init(); // Initialise first to allow systems to start logging.
         sdl_event_system::instance().init();
         input_system::instance().init();
         graphics_system::instance().init();
@@ -29,8 +31,9 @@ namespace mkr {
     }
 
     void application::exit() {
-        sdl_event_system::instance().exit();
+        sdl_event_system::instance().exit(); // Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.
         input_system::instance().exit();
         graphics_system::instance().exit();
+        log::exit();  // Exit last to allow systems to keep logging.
     }
 }

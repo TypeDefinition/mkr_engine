@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <spdlog/spdlog.h>
+#include <log/log.h>
 #include <maths/matrix_util.h>
 #include "util/file_util.h"
 #include "graphics/asset_loader.h"

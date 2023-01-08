@@ -1,4 +1,4 @@
-#include <spdlog/spdlog.h>
+#include <log/log.h>
 #include "graphics/shader_program.h"
 
 namespace mkr {
@@ -19,7 +19,7 @@ namespace mkr {
             glGetShaderiv(shader_handle, GL_INFO_LOG_LENGTH, &log_length);
             std::shared_ptr<GLchar> info_log{new GLchar[log_length]};
             glGetShaderInfoLog(shader_handle, log_length, &log_length, info_log.get());
-            spdlog::error(info_log.get());
+            mkr::log::error(info_log.get());
             throw std::runtime_error(info_log.get());
         }
 
@@ -30,7 +30,7 @@ namespace mkr {
         GLint uniform_handle = glGetUniformLocation(program_handle_, _uniform_name.c_str());
         if (uniform_handle == -1) {
             std::string err_msg = "cannot find uniform " + _uniform_name + " in shader " + name_;
-            spdlog::warn(err_msg);
+            mkr::log::warn(err_msg);
         }
         return uniform_handle;
     }
@@ -39,7 +39,7 @@ namespace mkr {
         GLint attrib_handle = glGetAttribLocation(program_handle_, _attrib_name.c_str());
         if (attrib_handle == -1) {
             std::string err_msg = "cannot find attribute " + _attrib_name + " in shader " + name_;
-            spdlog::warn(err_msg);
+            mkr::log::warn(err_msg);
         }
         return attrib_handle;
     }
@@ -92,11 +92,11 @@ namespace mkr {
             glGetProgramiv(program_handle_, GL_INFO_LOG_LENGTH, &log_length);
             std::shared_ptr<GLchar> info_log{new GLchar[log_length]};
             glGetProgramInfoLog(program_handle_, log_length, &log_length, info_log.get());
-            spdlog::error(info_log.get());
+            mkr::log::error(info_log.get());
             throw std::runtime_error(info_log.get());
         }
 
-        spdlog::info("shader program {} created", _name.c_str());
+        mkr::log::info("shader program {} created", _name.c_str());
 
         // Get uniform(s).
         uniform_handles_[shader_uniform::u_mat_mvp] = get_uniform_location("u_mat_mvp");

@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <spdlog/spdlog.h>
+#include <log/log.h>
 #include <common/singleton.h>
 #include <maths/colour.h>
 #include "graphics/app_window.h"
@@ -27,14 +27,14 @@ namespace mkr {
             int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP;
             if (img_flags != (IMG_Init(img_flags) & img_flags)) {
                 const std::string err_msg = "IMG_Init failed";
-                spdlog::error(err_msg);
+                mkr::log::error(err_msg);
                 throw std::runtime_error(err_msg);
             }
 
             // Initialise SDL video subsystem.
             if (0 != SDL_InitSubSystem(SDL_INIT_VIDEO)) {
                 const std::string err_msg = "SDL_INIT_VIDEO failed";
-                spdlog::error(err_msg);
+                mkr::log::error(err_msg);
                 throw std::runtime_error(err_msg);
             }
 
@@ -50,7 +50,7 @@ namespace mkr {
             int majorVersion, minorVersion;
             SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &majorVersion);
             SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minorVersion);
-            spdlog::info("OpenGL Version: {}.{}", majorVersion, minorVersion);
+            mkr::log::info("OpenGL Version: {}.{}", majorVersion, minorVersion);
 
             // Create Window
             app_window_ = std::make_unique<app_window>("mkr_engine", 1920, 1080, window_flags::none);

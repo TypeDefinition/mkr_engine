@@ -33,11 +33,9 @@ FetchContent_MakeAvailable(mkr_common_lib)
 FetchContent_Declare(mkr_maths_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_maths_lib.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_maths_lib)
 
-if(NOT TARGET spdlog)
-    # Stand-alone build
-    find_package(spdlog REQUIRED)
-endif()
+FetchContent_Declare(mkr_log_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log_lib.git GIT_TAG main)
+FetchContent_MakeAvailable(mkr_log_lib)
 
 # Target
 target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR})
-target_link_libraries(${PROJECT_NAME} mkr_maths_lib mkr_common_lib GL GLEW SDL2 SDL2_image spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME} mkr_maths_lib mkr_common_lib GL GLEW SDL2 SDL2_image mkr_log_lib)

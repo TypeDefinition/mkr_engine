@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
@@ -15,6 +16,7 @@ namespace mkr {
     private:
         /// The event_listener(s) added to this event_dispatcher is sorted by the event type they are subscribed to.
         std::unordered_map<int32_t, std::unordered_set<event_listener*>> listeners_;
+        std::mutex mutex_;
 
     public:
         event_dispatcher() = default;
@@ -27,6 +29,7 @@ namespace mkr {
         */
         template<typename T>
         void dispatch_event(event* _event) requires std::is_base_of_v<mkr::event, T> {
+            std::lock_guard lock{mutex_};
             for (auto listener : listeners_[family<event>::get_id<T>()]) {
                 listener->invoke_callback(_event);
             }
@@ -38,6 +41,7 @@ namespace mkr {
         */
         template<typename T>
         void add_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
+            std::lock_guard lock{mutex_};
             listeners_[family<event>::get_id<T>()].insert(_listener);
         }
 
@@ -47,6 +51,7 @@ namespace mkr {
         */
         template<typename T>
         void remove_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
+            std::lock_guard lock{mutex_};
             listeners_[family<event>::get_id<T>()].erase(_listener);
         }
     };

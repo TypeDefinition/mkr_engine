@@ -36,6 +36,9 @@ FetchContent_MakeAvailable(mkr_maths_lib)
 FetchContent_Declare(mkr_log_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log_lib.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_log_lib)
 
+FetchContent_Declare(flecs GIT_REPOSITORY https://github.com/SanderMertens/flecs.git GIT_TAG master)
+FetchContent_MakeAvailable(flecs)
+
 # Target
 target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR})
-target_link_libraries(${PROJECT_NAME} mkr_maths_lib mkr_common_lib GL GLEW SDL2 SDL2_image mkr_log_lib)
+target_link_libraries(${PROJECT_NAME} mkr_maths_lib mkr_common_lib mkr_log_lib GL GLEW SDL2 SDL2_image flecs)

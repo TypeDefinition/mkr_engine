@@ -20,6 +20,24 @@ namespace mkr {
         shape_cube = GL_TEXTURE_CUBE_MAP,
     };
 
+    enum texture_cube_side {
+        texture_cube_positive_x = 0,
+        texture_cube_negative_X = 1,
+        texture_cube_positive_Y = 2,
+        texture_cube_negative_Y = 3,
+        texture_cube_positive_Z = 4,
+        texture_cube_negative_Z = 5,
+
+        texture_cube_left = texture_cube_positive_x,
+        texture_cube_right = texture_cube_negative_X,
+        texture_cube_top = texture_cube_positive_Y,
+        texture_cube_bottom = texture_cube_negative_Y,
+        texture_cube_front = texture_cube_positive_Z,
+        texture_cube_back = texture_cube_negative_Z,
+
+        num_texture_cube_sides = 6,
+    };
+
     class texture {
     protected:
         GLuint handle_;
@@ -63,13 +81,13 @@ namespace mkr {
              * This is because glTextureStorage2D creates a fixed storage space for our texture, not like
              * glTexImage2D where it can resize itself to generate mipmaps. The glTextureStorage2D documentation
              * states "GL_INVALID_VALUE is generated if width, height or levels are less than 1." */
-
+            // Direct-State-Access Method (OpenGL 4.5)
             glCreateTextures(GL_TEXTURE_2D, 1, &handle_);
 
-            glTextureStorage2D(handle_, mip_map_level(width_, height_),
+            glTextureStorage2D(handle_, (GLsizei) mip_map_level(width_, height_),
                                GL_RGBA8, ///< Format to store the texture data in OpenGL.
-                               width_, height_);
-            glTextureSubImage2D(handle_, 0, 0, 0, width_, height_,
+                               (GLsizei) width_, (GLsizei) height_);
+            glTextureSubImage2D(handle_, 0, 0, 0, (GLsizei) width_, (GLsizei) height_,
                                 GL_RGBA, ///< Format of the image data.
                                 GL_UNSIGNED_BYTE, _data);
 
@@ -79,19 +97,53 @@ namespace mkr {
             glTextureParameteri(handle_, GL_TEXTURE_WRAP_S, wrap_mode_);
             glTextureParameteri(handle_, GL_TEXTURE_WRAP_T, wrap_mode_);
 
+            // Generate Mipmap
             glGenerateTextureMipmap(handle_);
         }
 
-        virtual ~texture_2d() {}
+        virtual ~texture_2d() {
+            glDeleteTextures(1, &handle_);
+        }
     };
 
     class texture_cube : public texture {
     public:
-        texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, 6> _data)
+        texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, num_texture_cube_sides> _data)
                 : texture(_name, _width, _height, texture_shape::shape_2d, texture_wrap_mode::clamp_to_edge) {
+            /**
+             * IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
+             * We can no longer leave it at 0 and expect OpenGL to figure out how many mipmaps to generate.
+             * This is because glTextureStorage2D creates a fixed storage space for our texture, not like
+             * glTexImage2D where it can resize itself to generate mipmaps. The glTextureStorage2D documentation
+             * states "GL_INVALID_VALUE is generated if width, height or levels are less than 1." */
+            // Direct-State-Access Method (OpenGL 4.5)
             glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &handle_);
+
+            // Set the texture data.
+            glTextureStorage2D(handle_, (GLsizei) mip_map_level(width_, height_),
+                               GL_RGBA8, ///< Format to store the texture data in OpenGL. Standardise to RGBA8
+                               (GLsizei) width_, (GLsizei) height_);
+
+            // Note that for cubemaps, we have to use glTextureSubImage3D instead of glTextureSubImage2D, but we still use glTextureStorage2D.
+            for (auto i = 0; i < num_texture_cube_sides; ++i) {
+                glTextureSubImage3D(handle_, 0, 0, 0, i, (GLsizei) width_, (GLsizei) height_, 1,
+                                    GL_RGBA, ///< Format of the image data.
+                                    GL_UNSIGNED_BYTE, _data[i]);
+            }
+
+            // Texture Parameter(s)
+            glTextureParameteri(handle_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTextureParameteri(handle_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTextureParameteri(handle_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTextureParameteri(handle_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTextureParameteri(handle_, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+            // Generate Mipmap
+            glGenerateTextureMipmap(handle_);
         }
 
-        virtual ~texture_cube() {}
+        virtual ~texture_cube() {
+            glDeleteTextures(1, &handle_);
+        }
     };
 }

@@ -10,7 +10,7 @@
 #include "graphics/texture.h"
 
 namespace mkr {
-    #define MAX_LIGHTS 8
+    #define max_lights 8
 
     enum shader_uniform {
         u_mat_mvp,

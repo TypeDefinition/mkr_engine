@@ -1,10 +1,11 @@
 #include "input/keyboard_handler.h"
+#include "input/input_helper.h"
 
 namespace mkr {
     void keyboard_handler::on_key_down(input_mask _input_mask) {
         std::lock_guard<std::mutex> key_lock{key_mutex_};
         for (const auto& iter: registered_keys_) {
-            if (!input::compare_mask(_input_mask, iter.first)) {
+            if (!input_helper::compare_mask(_input_mask, iter.first)) {
                 continue;
             }
 
@@ -17,7 +18,7 @@ namespace mkr {
     void keyboard_handler::on_key_up(input_mask _input_mask) {
         std::lock_guard<std::mutex> key_lock{key_mutex_};
         for (const auto& iter: registered_keys_) {
-            if (!input::compare_mask(_input_mask, iter.first)) {
+            if (!input_helper::compare_mask(_input_mask, iter.first)) {
                 continue;
             }
 

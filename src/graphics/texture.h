@@ -5,7 +5,8 @@
 #include <GL/glew.h>
 
 namespace mkr {
-    enum texture_unit : GLuint {
+    enum texture_unit {
+        texture_skybox,
         texture_albedo,
     };
 
@@ -81,7 +82,7 @@ namespace mkr {
              * This is because glTextureStorage2D creates a fixed storage space for our texture, not like
              * glTexImage2D where it can resize itself to generate mipmaps. The glTextureStorage2D documentation
              * states "GL_INVALID_VALUE is generated if width, height or levels are less than 1." */
-            // Direct-State-Access Method (OpenGL 4.5)
+            // Direct-State-Access Method (OpenGL 4.5) Create Texture
             glCreateTextures(GL_TEXTURE_2D, 1, &handle_);
 
             glTextureStorage2D(handle_, (GLsizei) mip_map_level(width_, height_),
@@ -102,6 +103,7 @@ namespace mkr {
         }
 
         virtual ~texture_2d() {
+            // Delete Texture
             glDeleteTextures(1, &handle_);
         }
     };
@@ -109,17 +111,9 @@ namespace mkr {
     class texture_cube : public texture {
     public:
         texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, num_texture_cube_sides> _data)
-                : texture(_name, _width, _height, texture_shape::shape_2d, texture_wrap_mode::clamp_to_edge) {
-            /**
-             * IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
-             * We can no longer leave it at 0 and expect OpenGL to figure out how many mipmaps to generate.
-             * This is because glTextureStorage2D creates a fixed storage space for our texture, not like
-             * glTexImage2D where it can resize itself to generate mipmaps. The glTextureStorage2D documentation
-             * states "GL_INVALID_VALUE is generated if width, height or levels are less than 1." */
-            // Direct-State-Access Method (OpenGL 4.5)
+                : texture(_name, _width, _height, texture_shape::shape_cube, texture_wrap_mode::clamp_to_edge) {
             glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &handle_);
 
-            // Set the texture data.
             glTextureStorage2D(handle_, (GLsizei) mip_map_level(width_, height_),
                                GL_RGBA8, ///< Format to store the texture data in OpenGL. Standardise to RGBA8
                                (GLsizei) width_, (GLsizei) height_);
@@ -131,14 +125,12 @@ namespace mkr {
                                     GL_UNSIGNED_BYTE, _data[i]);
             }
 
-            // Texture Parameter(s)
             glTextureParameteri(handle_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTextureParameteri(handle_, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTextureParameteri(handle_, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTextureParameteri(handle_, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTextureParameteri(handle_, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-            // Generate Mipmap
             glGenerateTextureMipmap(handle_);
         }
 

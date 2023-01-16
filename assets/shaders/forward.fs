@@ -4,7 +4,8 @@
 in vec2 io_tex_coord;
 
 // Outputs
-out vec4 io_frag_colour;
+layout (location = 0) out vec4 io_frag_colour;
+
 
 // Uniforms
 uniform sampler2D texture_albedo;

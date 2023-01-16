@@ -84,7 +84,7 @@ namespace mkr {
         void* pixel_data = converted_surface->pixels;
 
         if (_flip_x) {
-            flip_image_x((uint8_t*) pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
+            flip_image_x(pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
         }
 
         if (!_flip_y) { // SDL_Image fucking stupidly loads the image upside down, so we need to reverse it.
@@ -126,10 +126,10 @@ namespace mkr {
             int width = converted_surfaces[i]->w;
             int height = converted_surfaces[i]->h;
             void* pixel_data = converted_surfaces[i]->pixels;
-            if (_flip_x) {
-                flip_image_x((uint8_t*) pixel_data, width, height, pixel_format->BytesPerPixel);
+            if (!_flip_x) {
+                flip_image_x(pixel_data, width, height, pixel_format->BytesPerPixel);
             }
-            if (!_flip_y) { // SDL_Image fucking stupidly loads the image upside down, so we need to reverse it.
+            if (_flip_y) {
                 flip_image_y(pixel_data, width, height, pixel_format->BytesPerPixel);
             }
         }

@@ -39,6 +39,19 @@ namespace mkr {
                 if (e->name_ == input_cam_backward) {
                     translation_.z_ -= application::instance().delta_time() * 2.0f;
                 }
+
+                if (e->name_ == input_look_left) {
+                    rotation_.y_ += 180.0f * application::instance().delta_time();
+                }
+                if (e->name_ == input_look_right) {
+                    rotation_.y_ -= 180.0f * application::instance().delta_time();
+                }
+                if (e->name_ == input_look_up) {
+                    rotation_.x_ -= 180.0f * application::instance().delta_time();
+                }
+                if (e->name_ == input_look_down) {
+                    rotation_.x_ += 180.0f * application::instance().delta_time();
+                }
             });
             input_manager::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);
         }
@@ -50,6 +63,12 @@ namespace mkr {
         void operator()(transform& _transform, camera& _camera) {
             _transform.local_position_ += translation_;
             translation_ = vector3::zero;
+
+            quaternion rot_z{vector3::z_axis, rotation_.z_ * maths_util::deg2rad};
+            quaternion rot_y{vector3::y_axis, rotation_.y_ * maths_util::deg2rad};
+            quaternion rot_x{vector3::x_axis, rotation_.x_ * maths_util::deg2rad};
+            _transform.local_rotation_ = rot_x * rot_y * rot_z * _transform.local_rotation_;
+            rotation_ = vector3::zero;
         }
     };
 }

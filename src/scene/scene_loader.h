@@ -31,10 +31,28 @@ namespace mkr {
             input_manager::instance().register_button(input_cam_forward, input_context_default, controller_index_default, kc_w);
             input_manager::instance().register_button(input_cam_backward, input_context_default, controller_index_default, kc_s);
 
+            input_manager::instance().register_button(input_look_left, input_context_default, controller_index_default, kc_left);
+            input_manager::instance().register_button(input_look_right, input_context_default, controller_index_default, kc_right);
+            input_manager::instance().register_button(input_look_up, input_context_default, controller_index_default, kc_up);
+            input_manager::instance().register_button(input_look_down, input_context_default, controller_index_default, kc_down);
+
             // Load Assets
             asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
-            asset_loader::instance().load_shader_program("forward_shader", {"/mnt/ZorinWork/mkr_engine/assets/shaders/vertex_shader.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fragment_shader.fs"});
+            asset_loader::instance().load_shader_program("forward_shader", {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.fs"});
             asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test_0.png");
+
+            auto skybox_texture = asset_loader::instance().load_texture_cube("skybox", {
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Left_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Right_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Top_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Bottom_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Front_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Back_256x256.png",
+            });
+            renderer::instance().set_skybox_texture(skybox_texture);
+
+            auto skybox_shader = asset_loader::instance().load_shader_program("skybox", {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.fs"});
+            renderer::instance().set_skybox_shader(skybox_shader);
 
             _world->system<transform, mesh_renderer>("mesh_system").each(renderer::instance().mesh_system());
             _world->system<transform, camera>("camera_system").each(renderer::instance().camera_system());
@@ -58,9 +76,9 @@ namespace mkr {
                 _world->entity().set<transform>(cube_trans).set<mesh_renderer>(cube_renderer);
 
                 // Systems
-                _world->system<transform, mesh_renderer>("cube_control").each([&](transform& _t, mesh_renderer& _m) {
+                /* _world->system<transform, mesh_renderer>("cube_control").each([&](transform& _t, mesh_renderer& _m) {
                     cube_control_(_t, _m);
-                });
+                }); */
             }
 
             {
@@ -101,6 +119,11 @@ namespace mkr {
             input_manager::instance().unregister_button(input_cam_right, input_context_default, controller_index_default, kc_d);
             input_manager::instance().unregister_button(input_cam_forward, input_context_default, controller_index_default, kc_w);
             input_manager::instance().unregister_button(input_cam_backward, input_context_default, controller_index_default, kc_s);
+
+            input_manager::instance().unregister_button(input_look_left, input_context_default, controller_index_default, kc_left);
+            input_manager::instance().unregister_button(input_look_right, input_context_default, controller_index_default, kc_right);
+            input_manager::instance().unregister_button(input_look_up, input_context_default, controller_index_default, kc_up);
+            input_manager::instance().unregister_button(input_look_down, input_context_default, controller_index_default, kc_down);
         }
     };
 }

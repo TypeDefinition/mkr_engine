@@ -13,5 +13,10 @@ namespace mkr {
         input_cam_right,
         input_cam_forward,
         input_cam_backward,
+
+        input_look_left,
+        input_look_right,
+        input_look_up,
+        input_look_down,
     };
 }

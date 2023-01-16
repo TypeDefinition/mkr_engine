@@ -27,21 +27,21 @@ namespace mkr {
     }
 
     GLint shader_program::get_uniform_location(const std::string& _uniform_name) const {
-        GLint uniform_handle = glGetUniformLocation(program_handle_, _uniform_name.c_str());
-        if (uniform_handle == -1) {
+        GLint uniform_location = glGetUniformLocation(program_handle_, _uniform_name.c_str());
+        if (uniform_location == -1) {
             std::string err_msg = "cannot find uniform " + _uniform_name + " in shader " + name_;
             mkr::log::warn(err_msg);
         }
-        return uniform_handle;
+        return uniform_location;
     }
 
     GLint shader_program::get_attrib_location(const std::string& _attrib_name) const {
-        GLint attrib_handle = glGetAttribLocation(program_handle_, _attrib_name.c_str());
-        if (attrib_handle == -1) {
+        GLint attrib_location = glGetAttribLocation(program_handle_, _attrib_name.c_str());
+        if (attrib_location == -1) {
             std::string err_msg = "cannot find attribute " + _attrib_name + " in shader " + name_;
             mkr::log::warn(err_msg);
         }
-        return attrib_handle;
+        return attrib_location;
     }
 
     shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
@@ -102,7 +102,12 @@ namespace mkr {
         uniform_handles_[shader_uniform::u_mat_mvp] = get_uniform_location("u_mat_mvp");
 
         // Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
-        set_uniform("texture_albedo", texture_unit::texture_albedo);
+        // For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions
+        // that may be used to load uniform variables defined as sampler types.
+        // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
+        // Thus, we must texture_unit to a signed integer.
+        set_uniform("texture_skybox", (int32_t) texture_unit::texture_skybox);
+        set_uniform("texture_albedo", (int32_t) texture_unit::texture_albedo);
     }
 
     shader_program::~shader_program() {

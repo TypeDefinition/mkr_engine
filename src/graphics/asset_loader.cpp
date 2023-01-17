@@ -82,11 +82,9 @@ namespace mkr {
         }
 
         void* pixel_data = converted_surface->pixels;
-
         if (_flip_x) {
             flip_image_x(pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
         }
-
         if (!_flip_y) { // SDL_Image fucking stupidly loads the image upside down, so we need to reverse it.
             flip_image_y(pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
         }
@@ -109,8 +107,8 @@ namespace mkr {
 
     std::shared_ptr<texture_cube> asset_loader::load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x, bool _flip_y) {
         SDL_PixelFormat* pixel_format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
-        SDL_Surface* raw_surfaces[num_texture_cube_sides];
-        SDL_Surface* converted_surfaces[num_texture_cube_sides];
+        SDL_Surface* raw_surfaces[num_texture_cube_sides] = {nullptr};
+        SDL_Surface* converted_surfaces[num_texture_cube_sides] = {nullptr};
 
         for (auto i = 0; i < num_texture_cube_sides; ++i) {
             raw_surfaces[i] = IMG_Load(_files[i].c_str());
@@ -123,14 +121,12 @@ namespace mkr {
                 mkr::log::error("unable to convert texture: {}", _files[i]);
             }
 
-            int width = converted_surfaces[i]->w;
-            int height = converted_surfaces[i]->h;
             void* pixel_data = converted_surfaces[i]->pixels;
-            if (!_flip_x) {
-                flip_image_x(pixel_data, width, height, pixel_format->BytesPerPixel);
+            if (_flip_x) {
+                flip_image_x(pixel_data, converted_surfaces[i]->w, converted_surfaces[i]->h, pixel_format->BytesPerPixel);
             }
-            if (_flip_y) {
-                flip_image_y(pixel_data, width, height, pixel_format->BytesPerPixel);
+            if (!_flip_y) {
+                flip_image_y(pixel_data, converted_surfaces[i]->w, converted_surfaces[i]->h, pixel_format->BytesPerPixel);
             }
         }
 
@@ -165,10 +161,15 @@ namespace mkr {
         std::vector<uint32_t> indices;
 
         // Front
-        vertices[0].position_ = {1.0f, -1.0f, 1.0f};
-        vertices[1].position_ = {-1.0f, 1.0f, 1.0f};
-        vertices[2].position_ = {1.0f, 1.0f, 1.0f};
-        vertices[3].position_ = {-1.0f, -1.0f, 1.0f};
+        vertices[0].position_ = {1.0f, -1.0f, 1.0f}; // Bottom Left
+        vertices[1].position_ = {-1.0f, 1.0f, 1.0f}; // Top Right
+        vertices[2].position_ = {1.0f, 1.0f, 1.0f}; // Top Left
+        vertices[3].position_ = {-1.0f, -1.0f, 1.0f}; // Bottom Right
+
+        vertices[0].tex_coord_ = {-1.0f, 1.0f, 1.0f};
+        vertices[1].tex_coord_ = {1.0f, -1.0f, 1.0f};
+        vertices[2].tex_coord_ = {-1.0f, -1.0f, 1.0f};
+        vertices[3].tex_coord_ = {1.0f, 1.0f, 1.0f};
 
         vertices[0].normal_ = {0.0f, 0.0f, -1.0f};
         vertices[1].normal_ = {0.0f, 0.0f, -1.0f};
@@ -180,11 +181,6 @@ namespace mkr {
         vertices[2].tangent_ = {-1.0f, 0.0f, 0.0f};
         vertices[3].tangent_ = {-1.0f, 0.0f, 0.0f};
 
-        vertices[0].tex_coord_ = {0.0f, 0.0f};
-        vertices[1].tex_coord_ = {1.0f, 1.0f};
-        vertices[2].tex_coord_ = {0.0f, 1.0f};
-        vertices[3].tex_coord_ = {1.0f, 0.0f};
-
         indices.push_back(0);
         indices.push_back(1);
         indices.push_back(2);
@@ -193,10 +189,15 @@ namespace mkr {
         indices.push_back(1);
 
         // Top
-        vertices[4].position_ = {1.0f, 1.0f, 1.0f};
-        vertices[5].position_ = {-1.0f, 1.0f, -1.0f};
-        vertices[6].position_ = {1.0f, 1.0f, -1.0f};
-        vertices[7].position_ = {-1.0f, 1.0f, 1.0f};
+        vertices[4].position_ = {1.0f, 1.0f, 1.0f}; // Front Left
+        vertices[5].position_ = {-1.0f, 1.0f, -1.0f}; // Back Right
+        vertices[6].position_ = {1.0f, 1.0f, -1.0f}; // Back Left
+        vertices[7].position_ = {-1.0f, 1.0f, 1.0f}; // Front Right
+
+        vertices[4].tex_coord_ = {-1.0f, 1.0f, -1.0f};
+        vertices[5].tex_coord_ = {1.0f, 1.0f, 1.0f};
+        vertices[6].tex_coord_ = {-1.0f, 1.0f, 1.0f};
+        vertices[7].tex_coord_ = {1.0f, 1.0f, -1.0f};
 
         vertices[4].normal_ = {0.0f, -1.0f, 0.0f};
         vertices[5].normal_ = {0.0f, -1.0f, 0.0f};
@@ -208,11 +209,6 @@ namespace mkr {
         vertices[6].tangent_ = {-1.0f, 0.0f, 0.0f};
         vertices[7].tangent_ = {-1.0f, 0.0f, 0.0f};
 
-        vertices[4].tex_coord_ = {0.0f, 0.0f};
-        vertices[5].tex_coord_ = {1.0f, 1.0f};
-        vertices[6].tex_coord_ = {0.0f, 1.0f};
-        vertices[7].tex_coord_ = {1.0f, 0.0f};
-
         indices.push_back(4);
         indices.push_back(5);
         indices.push_back(6);
@@ -221,10 +217,15 @@ namespace mkr {
         indices.push_back(5);
 
         // Down
-        vertices[8].position_ = {1.0f, -1.0f, -1.0f};
-        vertices[9].position_ = {-1.0f, -1.0f, 1.0f};
-        vertices[10].position_ = {1.0f, -1.0f, 1.0f};
-        vertices[11].position_ = {-1.0f, -1.0f, -1.0f};
+        vertices[8].position_ = {1.0f, -1.0f, -1.0f}; // Back Left
+        vertices[9].position_ = {-1.0f, -1.0f, 1.0f}; // Front Right
+        vertices[10].position_ = {1.0f, -1.0f, 1.0f}; // Front Left
+        vertices[11].position_ = {-1.0f, -1.0f, -1.0f}; // Back Right
+
+        vertices[8].tex_coord_ = {-1.0f, -1.0f, 1.0f};
+        vertices[9].tex_coord_ = {1.0f, -1.0f, -1.0f};
+        vertices[10].tex_coord_ = {-1.0f, -1.0f, -1.0f};
+        vertices[11].tex_coord_ = {1.0f, -1.0f, 1.0f};
 
         vertices[8].normal_ = {0.0f, 1.0f, 0.0f};
         vertices[9].normal_ = {0.0f, 1.0f, 0.0f};
@@ -236,11 +237,6 @@ namespace mkr {
         vertices[10].tangent_ = {-1.0f, 0.0f, 0.0f};
         vertices[11].tangent_ = {-1.0f, 0.0f, 0.0f};
 
-        vertices[8].tex_coord_ = {0.0f, 0.0f};
-        vertices[9].tex_coord_ = {1.0f, 1.0f};
-        vertices[10].tex_coord_ = {0.0f, 1.0f};
-        vertices[11].tex_coord_ = {1.0f, 0.0f};
-
         indices.push_back(8);
         indices.push_back(9);
         indices.push_back(10);
@@ -249,10 +245,16 @@ namespace mkr {
         indices.push_back(9);
 
         // Left
-        vertices[12].position_ = {1.0f, -1.0f, -1.0f};
-        vertices[13].position_ = {1.0f, 1.0f, 1.0f};
-        vertices[14].position_ = {1.0f, 1.0f, -1.0f};
-        vertices[15].position_ = {1.0f, -1.0f, 1.0f};
+        vertices[12].position_ = {1.0f, -1.0f, -1.0f}; // Back Bottom
+        vertices[13].position_ = {1.0f, 1.0f, 1.0f}; // Front Top
+        vertices[14].position_ = {1.0f, 1.0f, -1.0f}; // Back Top
+        vertices[15].position_ = {1.0f, -1.0f, 1.0f}; // Front Bottom
+
+        // Cubemaps use left-hand coordinate system instead of right-hand coordinate system.
+        vertices[12].tex_coord_ = {-1.0f, 1.0f, -1.0f};
+        vertices[13].tex_coord_ = {-1.0f, -1.0f, 1.0f};
+        vertices[14].tex_coord_ = {-1.0f, -1.0f, -1.0f};
+        vertices[15].tex_coord_ = {-1.0f, 1.0f, 1.0f};
 
         vertices[12].normal_ = {-1.0f, 0.0f, 0.0f};
         vertices[13].normal_ = {-1.0f, 0.0f, 0.0f};
@@ -264,11 +266,6 @@ namespace mkr {
         vertices[14].tangent_ = {0.0f, 0.0f, 1.0f};
         vertices[15].tangent_ = {0.0f, 0.0f, 1.0f};
 
-        vertices[12].tex_coord_ = {0.0f, 0.0f};
-        vertices[13].tex_coord_ = {1.0f, 1.0f};
-        vertices[14].tex_coord_ = {0.0f, 1.0f};
-        vertices[15].tex_coord_ = {1.0f, 0.0f};
-
         indices.push_back(12);
         indices.push_back(13);
         indices.push_back(14);
@@ -277,10 +274,16 @@ namespace mkr {
         indices.push_back(13);
 
         // Right
-        vertices[16].position_ = {-1.0f, -1.0f, 1.0f};
-        vertices[17].position_ = {-1.0f, 1.0f, -1.0f};
-        vertices[18].position_ = {-1.0f, 1.0f, 1.0f};
-        vertices[19].position_ = {-1.0f, -1.0f, -1.0f};
+        vertices[16].position_ = {-1.0f, -1.0f, 1.0f}; // Front Bottom
+        vertices[17].position_ = {-1.0f, 1.0f, -1.0f}; // Back Top
+        vertices[18].position_ = {-1.0f, 1.0f, 1.0f}; // Front Top
+        vertices[19].position_ = {-1.0f, -1.0f, -1.0f}; // Back Bottom
+
+        // Cubemaps use left-hand coordinate system instead of right-hand coordinate system.
+        vertices[16].tex_coord_ = {1.0f, 1.0f, 1.0f};
+        vertices[17].tex_coord_ = {1.0f, -1.0f, -1.0f};
+        vertices[18].tex_coord_ = {1.0f, -1.0f, 1.0f};
+        vertices[19].tex_coord_ = {1.0f, 1.0f, -1.0f};
 
         vertices[16].normal_ = {1.0f, 0.0f, 0.0f};
         vertices[17].normal_ = {1.0f, 0.0f, 0.0f};
@@ -292,11 +295,6 @@ namespace mkr {
         vertices[18].tangent_ = {0.0f, 0.0f, -1.0f};
         vertices[19].tangent_ = {0.0f, 0.0f, -1.0f};
 
-        vertices[16].tex_coord_ = {0.0f, 0.0f};
-        vertices[17].tex_coord_ = {1.0f, 1.0f};
-        vertices[18].tex_coord_ = {0.0f, 1.0f};
-        vertices[19].tex_coord_ = {1.0f, 0.0f};
-
         indices.push_back(16);
         indices.push_back(17);
         indices.push_back(18);
@@ -305,20 +303,20 @@ namespace mkr {
         indices.push_back(17);
 
         // Back
-        vertices[20].position_ = {-1.0f, -1.0f, -1.0f};
-        vertices[21].position_ = {1.0f, 1.0f, -1.0f};
-        vertices[22].position_ = {-1.0f, 1.0f, -1.0f};
-        vertices[23].position_ = {1.0f, -1.0f, -1.0f};
+        vertices[20].position_ = {-1.0f, -1.0f, -1.0f}; // Bottom Right
+        vertices[21].position_ = {1.0f, 1.0f, -1.0f}; // Top Left
+        vertices[22].position_ = {-1.0f, 1.0f, -1.0f}; // Top Right
+        vertices[23].position_ = {1.0f, -1.0f, -1.0f}; // Bottom Left
+
+        vertices[20].tex_coord_ = {1.0f, 1.0f, -1.0f};
+        vertices[21].tex_coord_ = {-1.0f, -1.0f, -1.0f};
+        vertices[22].tex_coord_ = {1.0f, -1.0f, -1.0f};
+        vertices[23].tex_coord_ = {-1.0f, 1.0f, -1.0f};
 
         vertices[20].normal_ = {0.0f, 0.0f, 1.0f};
         vertices[21].normal_ = {0.0f, 0.0f, 1.0f};
         vertices[22].normal_ = {0.0f, 0.0f, 1.0f};
         vertices[23].normal_ = {0.0f, 0.0f, 1.0f};
-
-        vertices[20].tex_coord_ = {0.0f, 0.0f};
-        vertices[21].tex_coord_ = {1.0f, 1.0f};
-        vertices[22].tex_coord_ = {0.0f, 1.0f};
-        vertices[23].tex_coord_ = {1.0f, 0.0f};
 
         vertices[20].tangent_ = {1.0f, 0.0f, 0.0f};
         vertices[21].tangent_ = {1.0f, 0.0f, 0.0f};
@@ -350,10 +348,10 @@ namespace mkr {
         vertices[2].normal_ = {0.0f, 0.0f, 1.0f};
         vertices[3].normal_ = {0.0f, 0.0f, 1.0f};
 
-        vertices[0].tex_coord_ = {0.0f, 0.0f};
-        vertices[1].tex_coord_ = {1.0f, 1.0f};
-        vertices[2].tex_coord_ = {0.0f, 1.0f};
-        vertices[3].tex_coord_ = {1.0f, 0.0f};
+        vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
+        vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
+        vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
+        vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};
 
         vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};
         vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};
@@ -369,6 +367,36 @@ namespace mkr {
         indices[3] = 0;
         indices[4] = 3;
         indices[5] = 1;
+
+        std::shared_ptr<mesh> mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
+        meshes_.insert({_name, mesh_ptr});
+        return mesh_ptr;
+    }
+
+    std::shared_ptr<mesh> asset_loader::make_triangle(const std::string& _name) {
+        std::vector<vertex> vertices(3);
+
+        vertices[0].position_ = {-0.5f, -0.5f, 0.0f};
+        vertices[1].position_ = {0.5f, 0.5f, 0.0f};
+        vertices[2].position_ = {-0.5f, 0.5f, 0.0f};
+
+        vertices[0].normal_ = {0.0f, 0.0f, 1.0f};
+        vertices[1].normal_ = {0.0f, 0.0f, 1.0f};
+        vertices[2].normal_ = {0.0f, 0.0f, 1.0f};
+
+        vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};
+        vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};
+        vertices[2].tangent_ = {1.0f, 0.0f, 0.0f};
+
+        vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
+        vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
+        vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
+
+        std::vector<uint32_t> indices(3);
+
+        indices[0] = 0;
+        indices[1] = 1;
+        indices[2] = 2;
 
         std::shared_ptr<mesh> mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
         meshes_.insert({_name, mesh_ptr});
@@ -393,10 +421,10 @@ namespace mkr {
         vertices[2].tangent_ = {1.0f, 0.0f, 0.0f};
         vertices[3].tangent_ = {1.0f, 0.0f, 0.0f};
 
-        vertices[0].tex_coord_ = {0.0f, 0.0f};
-        vertices[1].tex_coord_ = {1.0f, 1.0f};
-        vertices[2].tex_coord_ = {0.0f, 1.0f};
-        vertices[3].tex_coord_ = {1.0f, 0.0f};
+        vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
+        vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
+        vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
+        vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};
 
         std::vector<uint32_t> indices(6);
 
@@ -421,7 +449,7 @@ namespace mkr {
         // Vertex Attribute(s)
         std::vector<vector3> positions;
         std::vector<vector3> normals;
-        std::vector<vector2> tex_coords;
+        std::vector<vector3> tex_coords;
 
         // Read the file.
         std::string file_str = file_util::file_to_str(_file);
@@ -439,7 +467,7 @@ namespace mkr {
 
             // TexCoord
             if (std::strncmp("vt ", line.c_str(), 3) == 0) {
-                vector2 tex_coord;
+                vector3 tex_coord;
                 std::sscanf(line.c_str() + 3, "%f%f", &tex_coord.x_, &tex_coord.y_);
                 tex_coords.push_back(tex_coord);
             }

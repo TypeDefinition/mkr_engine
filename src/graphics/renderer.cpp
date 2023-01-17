@@ -90,8 +90,8 @@ namespace mkr {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         // glEnable(GL_STENCIL_TEST);
         // glStencilMask(0xFF); // Each bit is written to the stencil buffer as-is.
-        glDisable(GL_STENCIL_TEST);
-        glStencilMask(0x00);
+        // glDisable(GL_STENCIL_TEST);
+        // glStencilMask(0x00);
     }
 
     void renderer::update() {
@@ -100,7 +100,7 @@ namespace mkr {
         float depth = 1.0f;
         glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
 
-        // Render Skybox
+        // Draw
         draw_skybox();
         draw_objects();
 

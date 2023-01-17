@@ -27,7 +27,7 @@ namespace mkr {
 
         void set_vbo(vbo_index _type, std::shared_ptr<vbo> _vbo) {
             const vbo_layout& layout = _vbo->layout();
-            glVertexArrayVertexBuffer(handle_, _type, _vbo->handle(), 0, layout.byte_size());
+            glVertexArrayVertexBuffer(handle_, _type, _vbo->handle(), 0, layout.bytes());
             glVertexArrayBindingDivisor(handle_, _type, _vbo->divisor());
 
             GLuint offset = 0;
@@ -49,7 +49,7 @@ namespace mkr {
                 }
                 glVertexArrayAttribBinding(handle_, e.attrib_, _type);
                 glEnableVertexArrayAttrib(handle_, e.attrib_);
-                offset += e.byte_size_;
+                offset += e.bytes_;
             }
 
             vbos_[_type] = std::move(_vbo);

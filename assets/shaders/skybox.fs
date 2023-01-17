@@ -9,7 +9,6 @@ layout (location = 0) out vec4 io_frag_colour;
 // Uniforms
 uniform samplerCube texture_skybox;
 
-void main()
-{
+void main() {
     io_frag_colour =  texture(texture_skybox, io_tex_coord);
 }

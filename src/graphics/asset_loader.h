@@ -65,6 +65,8 @@ namespace mkr {
 
         std::shared_ptr<mesh> make_quad(const std::string& _name);
 
+        std::shared_ptr<mesh> make_triangle(const std::string& _name);
+
         std::shared_ptr<mesh> load_obj(const std::string& _name, const std::string& _file);
     };
 }

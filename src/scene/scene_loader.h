@@ -37,13 +37,15 @@ namespace mkr {
             input_manager::instance().register_button(input_look_down, input_context_default, controller_index_default, kc_down);
 
             // Load Assets
+            asset_loader::instance().make_triangle("triangle");
+            asset_loader::instance().make_quad("quad");
             asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
             asset_loader::instance().load_shader_program("forward_shader", {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.fs"});
             asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test_0.png");
 
             auto skybox_texture = asset_loader::instance().load_texture_cube("skybox", {
-                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Left_256x256.png",
                     "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Right_256x256.png",
+                    "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Left_256x256.png",
                     "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Top_256x256.png",
                     "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Bottom_256x256.png",
                     "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/Skybox_Test_001_Front_256x256.png",
@@ -83,10 +85,11 @@ namespace mkr {
 
             {
                 transform cube_trans;
-                cube_trans.local_position_ = {-0.5f, -0.5f, 4.0f};
+                cube_trans.local_position_ = {-1.0f, 1.0f, 2.0f};
+                cube_trans.local_rotation_ = quaternion{vector3::y_axis, 180.0f * maths_util::deg2rad};
 
                 mesh_renderer cube_renderer;
-                cube_renderer.mesh_ = asset_loader::instance().get_mesh("cube");
+                cube_renderer.mesh_ = asset_loader::instance().get_mesh("quad");
                 cube_renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
                 cube_renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 

@@ -21,6 +21,7 @@ namespace mkr {
     void application::run() {
         // Start systems.
         sdl_event_poller::instance().start();
+        renderer::instance().start();
 
         // Update systems.
         uint64_t prev_frame_time = 0;

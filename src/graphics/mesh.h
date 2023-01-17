@@ -21,13 +21,13 @@ namespace mkr {
             vao_ = std::make_shared<vao>();
 
             // VBO
-            vbo_layout vertex_data_layout({
-                                                  vbo_element{vertex_attrib::position, GL_FLOAT, 3, 3 * sizeof(float), GL_FALSE},
-                                                  vbo_element{vertex_attrib::normal, GL_FLOAT, 3, 3 * sizeof(float), GL_FALSE},
-                                                  vbo_element{vertex_attrib::tangent, GL_FLOAT, 3, 3 * sizeof(float), GL_FALSE},
-                                                  vbo_element{vertex_attrib::tex_coord, GL_FLOAT, 2, 2 * sizeof(float), GL_FALSE}
-                                          });
-            std::shared_ptr<vbo> vertex_data = std::make_shared<vbo>(sizeof(vertex) * _vertices.size(), (void*)_vertices.data(), GL_STATIC_DRAW, vertex_data_layout);
+            vbo_layout layout({
+                                      vbo_element{vertex_attrib::position, GL_FLOAT, 3, sizeof(vector3), GL_FALSE},
+                                      vbo_element{vertex_attrib::tex_coord, GL_FLOAT, 3, sizeof(vector3), GL_FALSE},
+                                      vbo_element{vertex_attrib::normal, GL_FLOAT, 3, sizeof(vector3), GL_FALSE},
+                                      vbo_element{vertex_attrib::tangent, GL_FLOAT, 3, sizeof(vector3), GL_FALSE},
+                              });
+            std::shared_ptr<vbo> vertex_data = std::make_shared<vbo>(sizeof(vertex) * _vertices.size(), (void*)_vertices.data(), GL_STATIC_DRAW, layout);
             vao_->set_vbo(vbo_index::vertex_data, vertex_data);
 
             // EBO

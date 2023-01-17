@@ -10,12 +10,11 @@ namespace mkr {
       *
       * Per Vertex Data (Stored in VBO 0):
       * 00 - Position
-      * 01 - Normal
-      * 02 - Tangent
-      * 03 - Texture Coordinate
+      * 01 - Texture Coordinate
+      * 02 - Normal
+      * 03 - Tangent
 
       * Per Instance Data (Stored in VBO 1):
-      *
       * 04 - Instance Model View Matrix Column 0
       * 05 - Instance Model View Matrix Column 1
       * 06 - Instance Model View Matrix Column 2
@@ -30,9 +29,9 @@ namespace mkr {
       * 15 - To Be Defined */
     enum vertex_attrib : GLuint {
         position,
+        tex_coord,
         normal,
         tangent,
-        tex_coord,
 
         instance_model_view_mat_col0,
         instance_model_view_mat_col1,
@@ -59,8 +58,8 @@ namespace mkr {
         const GLenum type_;
         /// The number of components.
         const GLint count_;
-        /// Total size in bytes. byte_size_ = sizeof(type_) * count_
-        const GLsizei byte_size_;
+        /// Total size in bytes. bytes_ = sizeof(type_) * count_
+        const GLsizei bytes_;
         /// Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted
         /// directly as fixed-point values (GL_FALSE) when they are accessed.
         /// This parameter is ignored if type is GL_FIXED.
@@ -70,13 +69,13 @@ namespace mkr {
     class vbo_layout {
     private:
         std::vector<vbo_element> elements_;
-        GLsizei byte_size_;
+        GLsizei bytes_;
 
     public:
         vbo_layout(const std::vector<vbo_element>& _elements)
-                : elements_{_elements}, byte_size_{0} {
+                : elements_{_elements}, bytes_{0} {
             for (const auto& e: elements_) {
-                byte_size_ += e.byte_size_;
+                bytes_ += e.bytes_;
             }
         }
 
@@ -84,8 +83,8 @@ namespace mkr {
             return elements_.size();
         }
 
-        GLsizei byte_size() const {
-            return byte_size_;
+        GLsizei bytes() const {
+            return bytes_;
         }
 
         const vbo_element& operator[](size_t _index) const {
@@ -100,8 +99,8 @@ namespace mkr {
         vbo_layout layout_;
 
     public:
-        vbo(GLsizeiptr _size, void* _data, GLenum _usage, vbo_layout _layout)
-                : layout_{_layout} {
+        vbo(GLsizeiptr _size, void* _data, GLenum _usage, vbo_layout _layout, GLuint _divisor = 0)
+                : divisor_{_divisor}, layout_{_layout} {
             glCreateBuffers(1, &handle_);
             glNamedBufferData(handle_, _size, _data, _usage);
         }

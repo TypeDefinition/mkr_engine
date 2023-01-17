@@ -32,8 +32,8 @@ namespace mkr {
             delta_time_ = static_cast<float>(curr_frame_time - prev_frame_time) / static_cast<float>(SDL_GetPerformanceFrequency());
             time_elapsed_ += delta_time_;
 
-            scene_manager::instance().update();
             input_manager::instance().update();
+            scene_manager::instance().update();
             renderer::instance().update();
         }
 

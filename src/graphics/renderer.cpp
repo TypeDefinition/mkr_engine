@@ -5,6 +5,7 @@
 #include <maths/colour.h>
 #include "graphics/renderer.h"
 #include "scene/scene_manager.h"
+#include "graphics/asset_loader.h"
 
 namespace mkr {
     void renderer::draw_skybox() {
@@ -28,18 +29,20 @@ namespace mkr {
         glDepthFunc(GL_LESS);
 
         auto view_projection_matrix = projection_matrix_ * view_matrix_;
-        for (size_t i = 0; i < model_matrices_.size(); ++i) {
-            shaders_[i]->set_uniform(shader_uniform::u_mat_mvp, false, view_projection_matrix * model_matrices_[i]);
-            shaders_[i]->use();
-            meshes_[i]->bind();
-            textures_[i]->bind(texture_unit::texture_albedo);
-            glDrawElements(GL_TRIANGLES, meshes_[i]->num_indices(), GL_UNSIGNED_INT, 0);
+        for (auto iter: model_matrices_) {
+            const auto* mesh_rend = iter.first;
+            const std::vector<matrix4x4>& model_matrices = iter.second;
+
+            for (auto mat: model_matrices) {
+                mesh_rend->shader_->set_uniform(shader_uniform::u_mat_mvp, false, view_projection_matrix * mat);
+                mesh_rend->shader_->use();
+                mesh_rend->texture_2d_->bind(texture_unit::texture_albedo);
+                mesh_rend->mesh_->bind();
+                glDrawElements(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0);
+            }
         }
 
         model_matrices_.clear();
-        meshes_.clear();
-        textures_.clear();
-        shaders_.clear();
     }
 
     void renderer::init() {
@@ -96,7 +99,7 @@ namespace mkr {
 
     void renderer::update() {
         // Clear framebuffer.
-        glClearNamedFramebufferfv(0, GL_COLOR, 0, (GLfloat*) &colour::blue.r_);
+        glClearNamedFramebufferfv(0, GL_COLOR, 0, (GLfloat*)&colour::blue.r_);
         float depth = 1.0f;
         glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
 
@@ -113,34 +116,18 @@ namespace mkr {
         IMG_Quit();
     }
 
-    std::function<void(transform&, camera&)> renderer::camera_system() {
-        return [&](transform& _transform, camera& _camera)-> void {
-            if (_camera.mode_ == projection_mode::perspective) {
-                projection_matrix_ = matrix_util::perspective_matrix(_camera.aspect_ratio_, _camera.fov_, _camera.near_plane_, _camera.far_plane_);
-            } else {
-                projection_matrix_ = matrix_util::orthographic_matrix(_camera.aspect_ratio_, _camera.ortho_size_, _camera.near_plane_, _camera.far_plane_);
-            }
+    void renderer::prep_cameras(const global_transform& _global_transform, const camera& _camera) {
+        if (_camera.mode_ == projection_mode::perspective) {
+            projection_matrix_ = matrix_util::perspective_matrix(_camera.aspect_ratio_, _camera.fov_, _camera.near_plane_, _camera.far_plane_);
+        } else {
+            projection_matrix_ = matrix_util::orthographic_matrix(_camera.aspect_ratio_, _camera.ortho_size_, _camera.near_plane_, _camera.far_plane_);
+        }
 
-            auto pos = _transform.local_position_;
-            auto forward = quaternion::rotate(vector3::z_axis, _transform.local_rotation_);
-            auto up = quaternion::rotate(vector3::y_axis, _transform.local_rotation_);
-            view_matrix_ = matrix_util::view_matrix(pos, forward, up);
-
-            skybox_mvp_ = projection_matrix_ * matrix_util::view_matrix(vector3::zero, forward, up);
-        };
+        view_matrix_ = matrix_util::view_matrix(_global_transform.position_, _global_transform.forward_, _global_transform.up_);
+        skybox_mvp_ = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
     }
 
-    std::function<void(transform&, mesh_renderer&)> renderer::mesh_system() {
-        return [&](transform& _transform, mesh_renderer& _mesh_renderer) {
-            matrix4x4 translation_matrix = matrix_util::translation_matrix(_transform.local_position_);
-            matrix4x4 rotation_matrix = _transform.local_rotation_.to_rotation_matrix();
-            matrix4x4 scale_matrix = matrix_util::scale_matrix(_transform.local_scale_);
-            matrix4x4 model_mat = translation_matrix * rotation_matrix * scale_matrix;
-
-            model_matrices_.push_back(model_mat);
-            meshes_.push_back(_mesh_renderer.mesh_);
-            textures_.push_back(_mesh_renderer.texture_2d_);
-            shaders_.push_back(_mesh_renderer.shader_);
-        };
+    void renderer::sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
+        model_matrices_[&_mesh_renderer].push_back(_global_transform.model_matrix_);
     }
 }

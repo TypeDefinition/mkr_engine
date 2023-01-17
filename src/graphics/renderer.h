@@ -1,12 +1,14 @@
 #pragma once
 
 #include <functional>
+#include <flecs.h>
 #include <common/singleton.h>
 #include <maths/matrix_util.h>
 #include "graphics/app_window.h"
 #include "component/mesh_renderer.h"
 #include "component/transform.h"
 #include "component/camera.h"
+#include "component/tag.h"
 
 namespace mkr {
     class renderer : public singleton<renderer> {
@@ -17,10 +19,8 @@ namespace mkr {
 
         matrix4x4 view_matrix_ = matrix4x4::identity();
         matrix4x4 projection_matrix_ = matrix4x4::identity();
-        std::vector<matrix4x4> model_matrices_;
-        std::vector<std::shared_ptr<mesh>> meshes_;
-        std::vector<std::shared_ptr<texture_2d>> textures_;
-        std::vector<std::shared_ptr<shader_program>> shaders_;
+
+        std::unordered_map<const mesh_renderer*, std::vector<matrix4x4>> model_matrices_;
 
         matrix4x4 skybox_mvp_ = matrix4x4::identity();
         std::shared_ptr<mesh> skybox_mesh_;
@@ -48,8 +48,8 @@ namespace mkr {
 
         inline void set_skybox_shader(std::shared_ptr<shader_program> _shader) { skybox_shader_ = _shader; }
 
-        std::function<void(transform&, camera&)> camera_system();
+        void prep_cameras(const global_transform& _global_transform, const camera& _camera);
 
-        std::function<void(transform&, mesh_renderer&)> mesh_system();
+        void sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer);
     };
 }

@@ -9,21 +9,28 @@ namespace mkr {
     class vao {
     private:
         GLuint handle_;
-        std::shared_ptr<vbo> vbos_[vbo_index::num_vbo];
         std::shared_ptr<ebo> ebo_;
+        std::shared_ptr<vbo> vbos_[vbo_index::num_vbo];
 
     public:
-        vao() {
-            glCreateVertexArrays(1, &handle_);
+        vao() { glCreateVertexArrays(1, &handle_); }
+
+        ~vao() { glDeleteVertexArrays(1, &handle_); }
+
+        inline void bind() { glBindVertexArray(handle_); }
+
+        [[nodiscard]] inline std::shared_ptr<const ebo> get_ebo() const { return ebo_; }
+
+        [[nodiscard]] inline std::shared_ptr<ebo> get_ebo() { return ebo_; }
+
+        void set_ebo(std::shared_ptr<ebo> _ebo) {
+            ebo_ = std::move(_ebo);
+            glVertexArrayElementBuffer(handle_, ebo_->handle());
         }
 
-        ~vao() {
-            glDeleteVertexArrays(1, &handle_);
-        }
+        [[nodiscard]] inline std::shared_ptr<const vbo> get_vbo(vbo_index _type) const { return vbos_[_type]; }
 
-        void bind() {
-            glBindVertexArray(handle_);
-        }
+        [[nodiscard]] inline std::shared_ptr<vbo> get_vbo(vbo_index _type) { return vbos_[_type]; }
 
         void set_vbo(vbo_index _type, std::shared_ptr<vbo> _vbo) {
             const vbo_layout& layout = _vbo->layout();
@@ -53,11 +60,6 @@ namespace mkr {
             }
 
             vbos_[_type] = std::move(_vbo);
-        }
-
-        void set_ebo(std::shared_ptr<ebo> _ebo) {
-            ebo_ = std::move(_ebo);
-            glVertexArrayElementBuffer(handle_, ebo_->handle());
         }
     };
 }

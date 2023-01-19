@@ -33,9 +33,10 @@ namespace mkr {
     void test_scene::init_assets() {
         // Load Assets
         asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
-        asset_loader::instance().load_shader_program("forward_shader", {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.fs"});
+        asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.fs"});
         asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
 
+        renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.fs"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_right.png",
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_left.png",
@@ -44,8 +45,6 @@ namespace mkr {
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_front.png",
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_back.png",
         }));
-
-        renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.fs"}));
     }
 
     void test_scene::init_systems() {
@@ -53,15 +52,13 @@ namespace mkr {
         world_.system<transform, const player_body>().each([&](transform& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
 
         world_.system<transform, mesh_renderer>().each([&](transform& _transform, mesh_renderer& _mesh_renderer) {
-            quaternion rotation(vector3::z_axis, application::instance().delta_time() * maths_util::deg2rad * 30.0f);
-            _transform.rotate(rotation);
+            // quaternion rotation(vector3::z_axis, application::instance().delta_time() * maths_util::deg2rad * 30.0f);
+            // _transform.rotate(rotation);
         });
 
         world_.system<const root>().each(calculate_transforms);
-        world_.system<const global_transform, const camera>().each([](const global_transform& _global_transform, const camera& _camera){ renderer::instance().prep_cameras(_global_transform, _camera); });
+        world_.system<const global_transform, const camera>().each([](const global_transform& _global_transform, const camera& _camera) { renderer::instance().prep_cameras(_global_transform, _camera); });
         world_.system<const global_transform, const mesh_renderer>().each([](const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) { renderer::instance().sort_meshes(_global_transform, _mesh_renderer); });
-
-
     }
 
     void test_scene::exit_controls() {
@@ -130,6 +127,25 @@ namespace mkr {
 
         entity2.child_of(entity1);
         entity1.child_of(entity0);
+
+        int count = 20;
+        for (int x = 0; x <= count; x += 2) {
+            for (int y = 0; y <= count; y += 2) {
+                for (int z = 0; z <= count; z += 2) {
+                    auto cube = world_.entity();
+
+                    transform trans;
+                    trans.set_position({(float)x, (float)y, (float)z});
+
+                    mesh_renderer renderer;
+                    renderer.mesh_ = asset_loader::instance().get_mesh("cube");
+                    renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
+                    renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
+
+                    cube.set<transform>(trans).set<mesh_renderer>(renderer).add<root>();
+                }
+            }
+        }
     }
 
     void test_scene::update() {

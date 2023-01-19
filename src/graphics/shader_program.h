@@ -13,14 +13,23 @@ namespace mkr {
     #define max_lights 8
 
     enum shader_uniform {
-        u_mat_mvp,
+        u_view_projection_matrix,
 
         num_shader_uniforms,
+    };
+
+    enum class render_pass {
+        skybox,
+        geometry,
+        lighting,
+        forward,
+        post_proc,
     };
 
     class shader_program {
     private:
         const std::string name_;
+        const render_pass render_pass_;
         GLuint program_handle_;
         GLint uniform_handles_[num_shader_uniforms];
 
@@ -30,8 +39,12 @@ namespace mkr {
 
         GLint get_attrib_location(const std::string& _attrib_name) const;
 
+        void assign_uniforms();
+
+        void assign_textures();
+
     public:
-        shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources);
+        shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources);
 
         virtual ~shader_program();
 

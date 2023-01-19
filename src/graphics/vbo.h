@@ -33,10 +33,10 @@ namespace mkr {
         normal,
         tangent,
 
-        instance_model_view_mat_col0,
-        instance_model_view_mat_col1,
-        instance_model_view_mat_col2,
-        instance_model_view_mat_col3,
+        model_matrix_col0,
+        model_matrix_col1,
+        model_matrix_col2,
+        model_matrix_col3,
 
         instance_normal_mat_col0,
         instance_normal_mat_col1,
@@ -99,7 +99,7 @@ namespace mkr {
         vbo_layout layout_;
 
     public:
-        vbo(GLsizeiptr _size, void* _data, GLenum _usage, vbo_layout _layout, GLuint _divisor = 0)
+        vbo(GLsizeiptr _size, void* _data, GLenum _usage, vbo_layout _layout, GLuint _divisor)
                 : divisor_{_divisor}, layout_{_layout} {
             glCreateBuffers(1, &handle_);
             glNamedBufferData(handle_, _size, _data, _usage);

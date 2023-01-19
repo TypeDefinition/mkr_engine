@@ -44,8 +44,53 @@ namespace mkr {
         return attrib_location;
     }
 
-    shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
-            : name_{_name} {
+    void shader_program::assign_uniforms() {
+        // Get uniform(s).
+        // Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
+        // For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions
+        // that may be used to load uniform variables defined as sampler types.
+        // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
+        // Thus, we must texture_unit to a signed integer.
+        switch (render_pass_) {
+            case render_pass::skybox:
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                break;
+            case render_pass::geometry:
+                break;
+            case render_pass::lighting:
+                break;
+            case render_pass::forward:
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                break;
+            case render_pass::post_proc:
+                break;
+        }
+    }
+
+    void shader_program::assign_textures() {
+        // Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
+        // For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions
+        // that may be used to load uniform variables defined as sampler types.
+        // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
+        // Thus, we must texture_unit to a signed integer.
+        switch (render_pass_) {
+            case render_pass::skybox:
+                set_uniform("texture_skybox", (int32_t) texture_unit::texture_skybox);
+                break;
+            case render_pass::geometry:
+                break;
+            case render_pass::lighting:
+                break;
+            case render_pass::forward:
+                set_uniform("texture_albedo", (int32_t) texture_unit::texture_albedo);
+                break;
+            case render_pass::post_proc:
+                break;
+        }
+    }
+
+    shader_program::shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
+            : name_{_name}, render_pass_{_render_pass} {
         // Create the shader program.
         program_handle_ = glCreateProgram();
 
@@ -98,16 +143,8 @@ namespace mkr {
 
         mkr::log::info("shader program {} created", _name.c_str());
 
-        // Get uniform(s).
-        uniform_handles_[shader_uniform::u_mat_mvp] = get_uniform_location("u_mat_mvp");
-
-        // Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
-        // For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions
-        // that may be used to load uniform variables defined as sampler types.
-        // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
-        // Thus, we must texture_unit to a signed integer.
-        set_uniform("texture_skybox", (int32_t) texture_unit::texture_skybox);
-        set_uniform("texture_albedo", (int32_t) texture_unit::texture_albedo);
+        assign_uniforms();
+        assign_textures();
     }
 
     shader_program::~shader_program() {

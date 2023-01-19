@@ -15,11 +15,13 @@ namespace mkr {
 
         glDisable(GL_DEPTH_TEST);
 
-        skybox_shader_->set_uniform(shader_uniform::u_mat_mvp, false, skybox_mvp_);
+        skybox_shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, skybox_view_projection_matrix);
         skybox_shader_->use();
-        skybox_mesh_->bind();
         skybox_texture_->bind(texture_unit::texture_skybox);
-        glDrawElements(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0);
+        skybox_mesh_->bind();
+        skybox_mesh_->set_instance_data({{matrix4x4 ::identity()}});
+
+        glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
     }
 
     void renderer::draw_objects() {
@@ -29,20 +31,20 @@ namespace mkr {
         glDepthFunc(GL_LESS);
 
         auto view_projection_matrix = projection_matrix_ * view_matrix_;
-        for (auto iter: model_matrices_) {
+        for (auto iter: instances_) {
             const auto* mesh_rend = iter.first;
-            const std::vector<matrix4x4>& model_matrices = iter.second;
+            const std::vector<mesh_instance>& instances_ = iter.second;
 
-            for (auto mat: model_matrices) {
-                mesh_rend->shader_->set_uniform(shader_uniform::u_mat_mvp, false, view_projection_matrix * mat);
-                mesh_rend->shader_->use();
-                mesh_rend->texture_2d_->bind(texture_unit::texture_albedo);
-                mesh_rend->mesh_->bind();
-                glDrawElements(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0);
-            }
+            mesh_rend->shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+            mesh_rend->shader_->use();
+            mesh_rend->texture_2d_->bind(texture_unit::texture_albedo);
+            mesh_rend->mesh_->bind();
+            mesh_rend->mesh_->set_instance_data(instances_);
+
+            glDrawElementsInstanced(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0, instances_.size());
         }
 
-        model_matrices_.clear();
+        instances_.clear();
     }
 
     void renderer::init() {
@@ -124,10 +126,10 @@ namespace mkr {
         }
 
         view_matrix_ = matrix_util::view_matrix(_global_transform.position_, _global_transform.forward_, _global_transform.up_);
-        skybox_mvp_ = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
+        skybox_view_projection_matrix = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
     }
 
     void renderer::sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
-        model_matrices_[&_mesh_renderer].push_back(_global_transform.model_matrix_);
+        instances_[&_mesh_renderer].push_back({_global_transform.model_matrix_});
     }
 }

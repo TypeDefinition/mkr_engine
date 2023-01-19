@@ -20,9 +20,9 @@ namespace mkr {
         matrix4x4 view_matrix_ = matrix4x4::identity();
         matrix4x4 projection_matrix_ = matrix4x4::identity();
 
-        std::unordered_map<const mesh_renderer*, std::vector<matrix4x4>> model_matrices_;
+        std::unordered_map<const mesh_renderer*, std::vector<mesh_instance>> instances_;
 
-        matrix4x4 skybox_mvp_ = matrix4x4::identity();
+        matrix4x4 skybox_view_projection_matrix = matrix4x4::identity();
         std::shared_ptr<mesh> skybox_mesh_;
         std::shared_ptr<texture_cube> skybox_texture_;
         std::shared_ptr<shader_program> skybox_shader_;

@@ -44,7 +44,7 @@ namespace mkr {
         // Shaders
         std::shared_ptr<shader_program> get_shader_program(const std::string& _name);
 
-        std::shared_ptr<shader_program> load_shader_program(const std::string& _name, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files);
+        std::shared_ptr<shader_program> load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files);
 
         // Texture 2D
         std::shared_ptr<texture_2d> get_texture_2d(const std::string& _name);

@@ -47,7 +47,7 @@ namespace mkr {
         return (iter == shader_programs_.end()) ? nullptr : iter->second;
     }
 
-    std::shared_ptr<shader_program> asset_loader::load_shader_program(const std::string& _name, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files) {
+    std::shared_ptr<shader_program> asset_loader::load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files) {
         std::vector<std::string> vs_sources;
         for (const auto& filename: _vs_files) {
             vs_sources.push_back(file_util::file_to_str(filename));
@@ -58,7 +58,7 @@ namespace mkr {
             fs_sources.push_back(file_util::file_to_str(filename));
         }
 
-        auto shader = std::make_shared<shader_program>(_name, vs_sources, fs_sources);
+        auto shader = std::make_shared<shader_program>(_name, _render_pass, vs_sources, fs_sources);
         shader_programs_[_name] = shader;
         return shader;
     }

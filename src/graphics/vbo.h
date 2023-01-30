@@ -38,11 +38,9 @@ namespace mkr {
         model_matrix_col2,
         model_matrix_col3,
 
-        instance_normal_mat_col0,
-        instance_normal_mat_col1,
-        instance_normal_mat_col2,
-
-        num_vertex_attrib,
+        normal_matrix_col0,
+        normal_matrix_col1,
+        normal_matrix_col2,
     };
 
     enum vbo_index : GLuint {

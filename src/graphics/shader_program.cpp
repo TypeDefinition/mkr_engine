@@ -60,7 +60,26 @@ namespace mkr {
             case render_pass::lighting:
                 break;
             case render_pass::forward:
+                // Vertex Shader
+                uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
+                uniform_handles_[shader_uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
                 uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+
+                // Fragment Shader
+                uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");
+                uniform_handles_[shader_uniform::u_num_lights] = get_uniform_location("u_num_lights");
+                for (auto i = 0; i < max_lights; ++i) {
+                    uniform_handles_[i + shader_uniform::u_light_mode0] = get_uniform_location("u_lights[" + std::to_string(i) + "].mode_");
+                    uniform_handles_[i + shader_uniform::u_light_power0] = get_uniform_location("u_lights[" + std::to_string(i) + "].power_");
+                    uniform_handles_[i + shader_uniform::u_light_colour0] = get_uniform_location("u_lights[" + std::to_string(i) + "].colour_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_constant0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_constant_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_linear0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_linear_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
+                    uniform_handles_[i + shader_uniform::u_light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
+                    uniform_handles_[i + shader_uniform::u_light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
+                    uniform_handles_[i + shader_uniform::u_light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
+                    uniform_handles_[i + shader_uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
+                }
                 break;
             case render_pass::post_proc:
                 break;
@@ -75,14 +94,14 @@ namespace mkr {
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
             case render_pass::skybox:
-                set_uniform("texture_skybox", (int32_t) texture_unit::texture_skybox);
+                set_uniform("u_texture_skybox", (int32_t)texture_unit::texture_skybox);
                 break;
             case render_pass::geometry:
                 break;
             case render_pass::lighting:
                 break;
             case render_pass::forward:
-                set_uniform("texture_albedo", (int32_t) texture_unit::texture_albedo);
+                set_uniform("u_texture_albedo", (int32_t)texture_unit::texture_albedo);
                 break;
             case render_pass::post_proc:
                 break;

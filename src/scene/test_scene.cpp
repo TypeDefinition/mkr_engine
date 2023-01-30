@@ -1,20 +1,13 @@
 #include "scene/test_scene.h"
 #include "graphics/asset_loader.h"
 #include "graphics/renderer.h"
+#include "system/systems.h"
 #include "component/camera.h"
 #include "component/mesh_renderer.h"
 #include "component/transform.h"
-#include "system/systems.h"
+#include "component/light.h"
 
 namespace mkr {
-    struct Position {
-        float x, y;
-    };
-
-    struct Velocity {
-        float x, y;
-    };
-
     void test_scene::init_controls() {
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -33,10 +26,10 @@ namespace mkr {
     void test_scene::init_assets() {
         // Load Assets
         asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
-        asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.fs"});
+        asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
         asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
 
-        renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vs"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.fs"}));
+        renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_right.png",
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_left.png",
@@ -52,12 +45,13 @@ namespace mkr {
         world_.system<transform, const player_body>().each([&](transform& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
 
         world_.system<transform, mesh_renderer>().each([&](transform& _transform, mesh_renderer& _mesh_renderer) {
-            // quaternion rotation(vector3::z_axis, application::instance().delta_time() * maths_util::deg2rad * 30.0f);
-            // _transform.rotate(rotation);
+            quaternion rotation(vector3::z_axis, application::instance().delta_time() * maths_util::deg2rad * 30.0f);
+            _transform.rotate(rotation);
         });
 
         world_.system<const root>().each(calculate_transforms);
         world_.system<const global_transform, const camera>().each([](const global_transform& _global_transform, const camera& _camera) { renderer::instance().prep_cameras(_global_transform, _camera); });
+        world_.system<const global_transform, const light>().each([](const global_transform& _global_transform, const light& _light) { renderer::instance().prep_lights(_global_transform, _light); });
         world_.system<const global_transform, const mesh_renderer>().each([](const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) { renderer::instance().sort_meshes(_global_transform, _mesh_renderer); });
     }
 
@@ -89,7 +83,7 @@ namespace mkr {
         auto entity0 = world_.entity().add<root>();
         {
             transform trans;
-            trans.set_position({0.0f, 0.0f, 3.0f});
+            trans.set_position({0.0f, -1.0f, 5.0f});
 
             mesh_renderer renderer;
             renderer.mesh_ = asset_loader::instance().get_mesh("cube");
@@ -128,7 +122,7 @@ namespace mkr {
         entity2.child_of(entity1);
         entity1.child_of(entity0);
 
-        int count = 20;
+        /*int count = 20;
         for (int x = 0; x <= count; x += 2) {
             for (int y = 0; y <= count; y += 2) {
                 for (int z = 0; z <= count; z += 2) {
@@ -145,6 +139,23 @@ namespace mkr {
                     cube.set<transform>(trans).set<mesh_renderer>(renderer).add<root>();
                 }
             }
+        }*/
+
+        // Lights
+        {
+            transform trans;
+            trans.set_position({0.0f, 5.0f, 0.0f});
+
+            quaternion rotation_x, rotation_y;
+            rotation_x.set_rotation(vector3::x_axis, 45.0f * maths_util::deg2rad);
+            rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
+            trans.set_rotation(rotation_x * rotation_y);
+
+            light lt;
+            lt.set_mode(light_mode::directional);
+            lt.set_power(0.5f);
+
+            world_.entity().set<light>(lt).set<transform>(trans).add<root>();
         }
     }
 

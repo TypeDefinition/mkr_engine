@@ -37,7 +37,10 @@ namespace mkr {
                                                vbo_element{vertex_attrib::model_matrix_col0, GL_FLOAT, 4, sizeof(float) * 4, GL_FALSE},
                                                vbo_element{vertex_attrib::model_matrix_col1, GL_FLOAT, 4, sizeof(float) * 4, GL_FALSE},
                                                vbo_element{vertex_attrib::model_matrix_col2, GL_FLOAT, 4, sizeof(float) * 4, GL_FALSE},
-                                               vbo_element{vertex_attrib::model_matrix_col3, GL_FLOAT, 4, sizeof(float) * 4, GL_FALSE}});
+                                               vbo_element{vertex_attrib::model_matrix_col3, GL_FLOAT, 4, sizeof(float) * 4, GL_FALSE},
+                                               vbo_element{vertex_attrib::normal_matrix_col0, GL_FLOAT, 3, sizeof(float) * 3, GL_FALSE},
+                                               vbo_element{vertex_attrib::normal_matrix_col1, GL_FLOAT, 3, sizeof(float) * 3, GL_FALSE},
+                                               vbo_element{vertex_attrib::normal_matrix_col2, GL_FLOAT, 3, sizeof(float) * 3, GL_FALSE}});
             std::shared_ptr<vbo> instance_data = std::make_shared<vbo>(0, nullptr, GL_STREAM_DRAW, instance_layout, 1);
             vao_->set_vbo(vbo_index::instance_data, instance_data);
         }

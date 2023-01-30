@@ -31,19 +31,48 @@ namespace mkr {
         glDepthFunc(GL_LESS);
 
         auto view_projection_matrix = projection_matrix_ * view_matrix_;
-        for (auto iter: instances_) {
+        for (const auto& iter: instances_) {
             const auto* mesh_rend = iter.first;
-            const std::vector<mesh_instance>& instances_ = iter.second;
+            const std::vector<mesh_instance>& instances = iter.second;
 
+            // Vertex Shader
+            mesh_rend->shader_->set_uniform(shader_uniform::u_view_matrix, false, view_matrix_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_projection_matrix, false, projection_matrix_);
             mesh_rend->shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+
+            // Fragment Shader
+            mesh_rend->shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_num_lights, (int)lights_.size());
+
+            for (auto i = 0; i < lights_.size(); ++i) {
+                const auto& t = lights_[i].first;
+                const auto& l = lights_[i].second;
+
+                auto position_matrix = view_matrix_ * t.model_matrix_;
+                auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
+                vector3 direction_vector = vector3{cam_right.dot(t.forward_), cam_up.dot(t.forward_), cam_forward.dot(t.forward_)}.normalised();
+
+                mesh_rend->shader_->set_uniform(i + u_light_mode0, l.get_mode());
+                mesh_rend->shader_->set_uniform(i + u_light_power0, l.get_power());
+                mesh_rend->shader_->set_uniform(i + u_light_colour0, l.get_colour());
+                mesh_rend->shader_->set_uniform(i + u_light_attenuation_constant0, l.get_attenuation_constant());
+                mesh_rend->shader_->set_uniform(i + u_light_attenuation_linear0, l.get_attenuation_linear());
+                mesh_rend->shader_->set_uniform(i + u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+                mesh_rend->shader_->set_uniform(i + u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                mesh_rend->shader_->set_uniform(i + u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+                mesh_rend->shader_->set_uniform(i + u_light_position_camera_space0, position_camera_space);
+                mesh_rend->shader_->set_uniform(i + u_light_direction_camera_space0, direction_vector);
+            }
+
             mesh_rend->shader_->use();
             mesh_rend->texture_2d_->bind(texture_unit::texture_albedo);
             mesh_rend->mesh_->bind();
-            mesh_rend->mesh_->set_instance_data(instances_);
+            mesh_rend->mesh_->set_instance_data(instances);
 
-            glDrawElementsInstanced(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0, instances_.size());
+            glDrawElementsInstanced(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
         }
 
+        lights_.clear();
         instances_.clear();
     }
 
@@ -127,9 +156,19 @@ namespace mkr {
 
         view_matrix_ = matrix_util::view_matrix(_global_transform.position_, _global_transform.forward_, _global_transform.up_);
         skybox_view_projection_matrix = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
+
+        cam_forward = _global_transform.forward_;
+        cam_up = _global_transform.up_;
+        cam_right = -_global_transform.left_;
+    }
+
+    void renderer::prep_lights(const global_transform& _global_transform, const light& _light) {
+        lights_.emplace_back(_global_transform, _light);
     }
 
     void renderer::sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
-        instances_[&_mesh_renderer].push_back({_global_transform.model_matrix_});
+        const auto model_view_matrix = view_matrix_ * _global_transform.model_matrix_;
+        const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(matrix_util::inverse_matrix(model_view_matrix).value()), 3, 3);
+        instances_[&_mesh_renderer].push_back({_global_transform.model_matrix_, normal_matrix});
     }
 }

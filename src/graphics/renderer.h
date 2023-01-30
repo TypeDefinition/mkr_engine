@@ -8,6 +8,7 @@
 #include "component/mesh_renderer.h"
 #include "component/transform.h"
 #include "component/camera.h"
+#include "component/light.h"
 #include "component/tag.h"
 
 namespace mkr {
@@ -19,6 +20,10 @@ namespace mkr {
 
         matrix4x4 view_matrix_ = matrix4x4::identity();
         matrix4x4 projection_matrix_ = matrix4x4::identity();
+
+        colour ambient_colour_ = colour::dark_grey;
+        std::vector<std::pair<global_transform, light>> lights_;
+        vector3 cam_up, cam_right, cam_forward;
 
         std::unordered_map<const mesh_renderer*, std::vector<mesh_instance>> instances_;
 
@@ -49,6 +54,8 @@ namespace mkr {
         inline void set_skybox_shader(std::shared_ptr<shader_program> _shader) { skybox_shader_ = _shader; }
 
         void prep_cameras(const global_transform& _global_transform, const camera& _camera);
+
+        void prep_lights(const global_transform& _global_transform, const light& _light);
 
         void sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer);
     };

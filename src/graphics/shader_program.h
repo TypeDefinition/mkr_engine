@@ -10,12 +10,31 @@
 #include "graphics/texture.h"
 
 namespace mkr {
-    #define max_lights 8
+    #define max_lights 64
 
     enum shader_uniform {
+        // Vertex Shader
+        u_view_matrix,
+        u_projection_matrix,
         u_view_projection_matrix,
 
-        num_shader_uniforms,
+        // Fragment Shader
+        u_ambient_colour,
+
+        u_num_lights,
+
+        u_light_mode0, // Light Mode 0 to N
+        u_light_power0 = max_lights + u_light_mode0, // Light Power 0 to N
+        u_light_colour0 = max_lights + u_light_power0, // Light Colour 0 to N
+        u_light_attenuation_constant0 = max_lights + u_light_colour0, // Light Attenuation Constant 0 to N
+        u_light_attenuation_linear0 = max_lights + u_light_attenuation_constant0, // Light Attenuation Linear 0 to N
+        u_light_attenuation_quadratic0 = max_lights + u_light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
+        u_light_spotlight_inner_cosine0 = max_lights + u_light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
+        u_light_spotlight_outer_cosine0 = max_lights + u_light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
+        u_light_position_camera_space0 = max_lights + u_light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
+        u_light_direction_camera_space0 = max_lights + u_light_position_camera_space0, // Light Direction Camera Space 0 to N
+
+        num_shader_uniforms = max_lights + u_light_direction_camera_space0,
     };
 
     enum class render_pass {

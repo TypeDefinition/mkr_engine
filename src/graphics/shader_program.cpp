@@ -53,7 +53,13 @@ namespace mkr {
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
             case render_pass::skybox:
-                uniform_handles_[shader_uniform::view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                // Vertex Shader
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+
+                // Fragment Shader
+                uniform_handles_[shader_uniform::u_sky_colour] = get_uniform_location("u_sky_colour");
+                uniform_handles_[shader_uniform::u_texture_skybox_enabled] = get_uniform_location("u_texture_skybox_enabled");
+                uniform_handles_[shader_uniform::u_texture_skybox] = get_uniform_location("u_texture_skybox");
                 break;
             case render_pass::geometry:
                 break;
@@ -61,24 +67,40 @@ namespace mkr {
                 break;
             case render_pass::forward:
                 // Vertex Shader
-                uniform_handles_[shader_uniform::view_matrix] = get_uniform_location("u_view_matrix");
-                uniform_handles_[shader_uniform::projection_matrix] = get_uniform_location("u_projection_matrix");
-                uniform_handles_[shader_uniform::view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
+                uniform_handles_[shader_uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
 
                 // Fragment Shader
-                uniform_handles_[shader_uniform::ambient_colour] = get_uniform_location("u_ambient_colour");
-                uniform_handles_[shader_uniform::num_lights] = get_uniform_location("u_num_lights");
+                uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");
+                uniform_handles_[shader_uniform::u_albedo_colour] = get_uniform_location("u_albedo_colour");
+                uniform_handles_[shader_uniform::u_gloss] = get_uniform_location("u_gloss");
+
+                uniform_handles_[shader_uniform::u_texture_albedo_enabled] = get_uniform_location("u_texture_albedo_enabled");
+                uniform_handles_[shader_uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");
+                uniform_handles_[shader_uniform::u_texture_specular_enabled] = get_uniform_location("u_texture_specular_enabled");
+                uniform_handles_[shader_uniform::u_texture_gloss_enabled] = get_uniform_location("u_texture_gloss_enabled");
+                uniform_handles_[shader_uniform::u_texture_displacement_enabled] = get_uniform_location("u_texture_displacement_enabled");
+
+                uniform_handles_[shader_uniform::u_texture_albedo] = get_uniform_location("u_texture_albedo");
+                uniform_handles_[shader_uniform::u_texture_normal] = get_uniform_location("u_texture_normal");
+                uniform_handles_[shader_uniform::u_texture_specular] = get_uniform_location("u_texture_specular");
+                uniform_handles_[shader_uniform::u_texture_gloss] = get_uniform_location("u_texture_gloss");
+                uniform_handles_[shader_uniform::u_texture_displacement] = get_uniform_location("u_texture_displacement");
+
+                uniform_handles_[shader_uniform::u_enable_lights] = get_uniform_location("u_enable_lights");
+                uniform_handles_[shader_uniform::u_num_lights] = get_uniform_location("u_num_lights");
                 for (auto i = 0; i < max_lights; ++i) {
-                    uniform_handles_[i + shader_uniform::light_mode0] = get_uniform_location("u_lights[" + std::to_string(i) + "].mode_");
-                    uniform_handles_[i + shader_uniform::light_power0] = get_uniform_location("u_lights[" + std::to_string(i) + "].power_");
-                    uniform_handles_[i + shader_uniform::light_colour0] = get_uniform_location("u_lights[" + std::to_string(i) + "].colour_");
-                    uniform_handles_[i + shader_uniform::light_attenuation_constant0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_constant_");
-                    uniform_handles_[i + shader_uniform::light_attenuation_linear0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_linear_");
-                    uniform_handles_[i + shader_uniform::light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
-                    uniform_handles_[i + shader_uniform::light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
-                    uniform_handles_[i + shader_uniform::light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
-                    uniform_handles_[i + shader_uniform::light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
-                    uniform_handles_[i + shader_uniform::light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
+                    uniform_handles_[i + shader_uniform::u_light_mode0] = get_uniform_location("u_lights[" + std::to_string(i) + "].mode_");
+                    uniform_handles_[i + shader_uniform::u_light_power0] = get_uniform_location("u_lights[" + std::to_string(i) + "].power_");
+                    uniform_handles_[i + shader_uniform::u_light_colour0] = get_uniform_location("u_lights[" + std::to_string(i) + "].colour_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_constant0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_constant_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_linear0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_linear_");
+                    uniform_handles_[i + shader_uniform::u_light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
+                    uniform_handles_[i + shader_uniform::u_light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
+                    uniform_handles_[i + shader_uniform::u_light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
+                    uniform_handles_[i + shader_uniform::u_light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
+                    uniform_handles_[i + shader_uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
                 }
                 break;
             case render_pass::post_proc:
@@ -94,14 +116,18 @@ namespace mkr {
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
             case render_pass::skybox:
-                set_uniform("u_texture_skybox", (int32_t)texture_unit::texture_skybox);
+                set_uniform(shader_uniform::u_texture_skybox, (int32_t)texture_unit::texture_skybox);
                 break;
             case render_pass::geometry:
                 break;
             case render_pass::lighting:
                 break;
             case render_pass::forward:
-                set_uniform("u_texture_albedo", (int32_t)texture_unit::texture_albedo);
+                set_uniform(shader_uniform::u_texture_albedo, (int32_t)texture_unit::texture_albedo);
+                set_uniform(shader_uniform::u_texture_normal, (int32_t)texture_unit::texture_normal);
+                set_uniform(shader_uniform::u_texture_specular, (int32_t)texture_unit::texture_specular);
+                set_uniform(shader_uniform::u_texture_gloss, (int32_t)texture_unit::texture_gloss);
+                set_uniform(shader_uniform::u_texture_displacement, (int32_t)texture_unit::texture_displacement);
                 break;
             case render_pass::post_proc:
                 break;

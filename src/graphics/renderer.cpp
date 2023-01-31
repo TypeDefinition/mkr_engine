@@ -9,17 +9,23 @@
 
 namespace mkr {
     void renderer::draw_skybox() {
-        if (!skybox_texture_ || !skybox_shader_ || !skybox_mesh_) {
+        if (!skybox_shader_ || !skybox_mesh_) {
             return;
         }
 
         glDisable(GL_DEPTH_TEST);
 
-        skybox_shader_->set_uniform(shader_uniform::view_projection_matrix, false, skybox_view_projection_matrix);
-        skybox_shader_->use();
-        skybox_texture_->bind(texture_unit::texture_skybox);
         skybox_mesh_->bind();
         skybox_mesh_->set_instance_data({{matrix4x4 ::identity()}});
+
+        if (skybox_texture_) {
+            skybox_texture_->bind(texture_unit::texture_skybox);
+        }
+
+        skybox_shader_->set_uniform(shader_uniform::u_texture_skybox_enabled, skybox_texture_ != nullptr);
+        skybox_shader_->set_uniform(shader_uniform::u_sky_colour, sky_colour_);
+        skybox_shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, skybox_view_projection_matrix);
+        skybox_shader_->use();
 
         glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
     }
@@ -35,15 +41,31 @@ namespace mkr {
             const auto* mesh_rend = iter.first;
             const std::vector<mesh_instance>& instances = iter.second;
 
-            // Vertex Shader
-            mesh_rend->shader_->set_uniform(shader_uniform::view_matrix, false, view_matrix_);
-            mesh_rend->shader_->set_uniform(shader_uniform::projection_matrix, false, projection_matrix_);
-            mesh_rend->shader_->set_uniform(shader_uniform::view_projection_matrix, false, view_projection_matrix);
+            // Bind textures.
+            if (mesh_rend->texture_albedo_) { mesh_rend->texture_albedo_->bind(texture_unit::texture_albedo); }
+            if (mesh_rend->texture_normal_) { mesh_rend->texture_normal_->bind(texture_unit::texture_normal); }
+            if (mesh_rend->texture_specular_) { mesh_rend->texture_specular_->bind(texture_unit::texture_specular); }
+            if (mesh_rend->texture_gloss) { mesh_rend->texture_gloss->bind(texture_unit::texture_gloss); }
+            if (mesh_rend->texture_displacement_) { mesh_rend->texture_displacement_->bind(texture_unit::texture_displacement); }
 
-            // Fragment Shader
-            mesh_rend->shader_->set_uniform(shader_uniform::ambient_colour, ambient_colour_);
-            mesh_rend->shader_->set_uniform(shader_uniform::num_lights, (int)lights_.size());
+            // Vertex Shader Uniforms
+            mesh_rend->shader_->set_uniform(shader_uniform::u_view_matrix, false, view_matrix_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_projection_matrix, false, projection_matrix_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
 
+            // Fragment Shader Uniforms
+            mesh_rend->shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_albedo_colour, mesh_rend->albedo_colour_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_gloss, mesh_rend->gloss_);
+
+            mesh_rend->shader_->set_uniform(shader_uniform::u_texture_albedo_enabled, mesh_rend->texture_albedo_ != nullptr);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_texture_normal_enabled, mesh_rend->texture_normal_ != nullptr);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_texture_specular_enabled, mesh_rend->texture_specular_ != nullptr);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_texture_gloss_enabled, mesh_rend->texture_gloss != nullptr);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_texture_displacement_enabled, mesh_rend->texture_displacement_ != nullptr);
+
+            mesh_rend->shader_->set_uniform(shader_uniform::u_enable_lights, enable_lights_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_num_lights, (int)lights_.size());
             for (auto i = 0; i < lights_.size(); ++i) {
                 const auto& t = lights_[i].first;
                 const auto& l = lights_[i].second;
@@ -52,23 +74,23 @@ namespace mkr {
                 auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
                 vector3 direction_vector = vector3{cam_right.dot(t.forward_), cam_up.dot(t.forward_), cam_forward.dot(t.forward_)}.normalised();
 
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_mode0, l.get_mode());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_power0, l.get_power());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_colour0, l.get_colour());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_attenuation_constant0, l.get_attenuation_constant());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_attenuation_linear0, l.get_attenuation_linear());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_attenuation_quadratic0, l.get_attenuation_quadratic());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_position_camera_space0, position_camera_space);
-                mesh_rend->shader_->set_uniform(i + shader_uniform::light_direction_camera_space0, direction_vector);
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_mode0, l.get_mode());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_power0, l.get_power());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_colour0, l.get_colour());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_position_camera_space0, position_camera_space);
+                mesh_rend->shader_->set_uniform(i + shader_uniform::u_light_direction_camera_space0, direction_vector);
             }
 
             mesh_rend->shader_->use();
-            mesh_rend->texture_2d_->bind(texture_unit::texture_albedo);
             mesh_rend->mesh_->bind();
             mesh_rend->mesh_->set_instance_data(instances);
 
+            // Draw.
             glDrawElementsInstanced(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
         }
 

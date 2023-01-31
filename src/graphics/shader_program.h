@@ -14,27 +14,44 @@ namespace mkr {
 
     enum shader_uniform : uint32_t {
         // Vertex Shader
-        view_matrix,
-        projection_matrix,
-        view_projection_matrix,
+        u_view_matrix,
+        u_projection_matrix,
+        u_view_projection_matrix,
 
         // Fragment Shader
-        ambient_colour,
+        u_sky_colour,
+        u_ambient_colour,
+        u_albedo_colour,
+        u_gloss,
 
-        num_lights,
+        u_texture_skybox_enabled,
+        u_texture_albedo_enabled,
+        u_texture_normal_enabled,
+        u_texture_specular_enabled,
+        u_texture_gloss_enabled,
+        u_texture_displacement_enabled,
 
-        light_mode0, // Light Mode 0 to N
-        light_power0 = max_lights + light_mode0, // Light Power 0 to N
-        light_colour0 = max_lights + light_power0, // Light Colour 0 to N
-        light_attenuation_constant0 = max_lights + light_colour0, // Light Attenuation Constant 0 to N
-        light_attenuation_linear0 = max_lights + light_attenuation_constant0, // Light Attenuation Linear 0 to N
-        light_attenuation_quadratic0 = max_lights + light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
-        light_spotlight_inner_cosine0 = max_lights + light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
-        light_spotlight_outer_cosine0 = max_lights + light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
-        light_position_camera_space0 = max_lights + light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
-        light_direction_camera_space0 = max_lights + light_position_camera_space0, // Light Direction Camera Space 0 to N
+        u_texture_skybox,
+        u_texture_albedo,
+        u_texture_normal,
+        u_texture_specular,
+        u_texture_gloss,
+        u_texture_displacement,
 
-        num_shader_uniforms = max_lights + light_direction_camera_space0,
+        u_enable_lights,
+        u_num_lights,
+        u_light_mode0, // Light Mode 0 to N
+        u_light_power0 = max_lights + u_light_mode0, // Light Power 0 to N
+        u_light_colour0 = max_lights + u_light_power0, // Light Colour 0 to N
+        u_light_attenuation_constant0 = max_lights + u_light_colour0, // Light Attenuation Constant 0 to N
+        u_light_attenuation_linear0 = max_lights + u_light_attenuation_constant0, // Light Attenuation Linear 0 to N
+        u_light_attenuation_quadratic0 = max_lights + u_light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
+        u_light_spotlight_inner_cosine0 = max_lights + u_light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
+        u_light_spotlight_outer_cosine0 = max_lights + u_light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
+        u_light_position_camera_space0 = max_lights + u_light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
+        u_light_direction_camera_space0 = max_lights + u_light_position_camera_space0, // Light Direction Camera Space 0 to N
+
+        num_shader_uniforms = max_lights + u_light_direction_camera_space0,
     };
 
     enum class render_pass {

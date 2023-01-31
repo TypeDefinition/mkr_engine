@@ -29,14 +29,20 @@ namespace mkr {
         asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
         asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
 
+        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Albedo_512x512.png");
+        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Normal_512x512.png");
+        asset_loader::instance().load_texture_2d("brick_wall_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Gloss_512x512.png");
+        asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Specular_512x512.png");
+        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Displacement_512x512.png");
+
         renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_right.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_left.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_top.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_bottom.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_front.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/skybox_test_back.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_right.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_left.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_top.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_bottom.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_front.png",
+                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_back.png",
         }));
     }
 
@@ -44,10 +50,10 @@ namespace mkr {
         world_.system<transform, const player_head>().each([&](transform& _transform, const player_head& _player_head) { head_control_(_transform, _player_head); });
         world_.system<transform, const player_body>().each([&](transform& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
 
-        world_.system<transform, mesh_renderer>().each([&](transform& _transform, mesh_renderer& _mesh_renderer) {
+        /*world_.system<transform, mesh_renderer>().each([&](transform& _transform, mesh_renderer& _mesh_renderer) {
             quaternion rotation(vector3::z_axis, application::instance().delta_time() * maths_util::deg2rad * 30.0f);
             _transform.rotate(rotation);
-        });
+        });*/
 
         world_.system<const root>().each(calculate_transforms);
         world_.system<const global_transform, const camera>().each([](const global_transform& _global_transform, const camera& _camera) { renderer::instance().prep_cameras(_global_transform, _camera); });
@@ -87,7 +93,11 @@ namespace mkr {
 
             mesh_renderer renderer;
             renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-            renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
+            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("brick_wall_albedo");
+            renderer.texture_normal_ = asset_loader::instance().get_texture_2d("brick_wall_normal");
+            renderer.texture_specular_ = asset_loader::instance().get_texture_2d("brick_wall_specular");
+            renderer.texture_gloss = asset_loader::instance().get_texture_2d("brick_wall_gloss");
+            renderer.texture_displacement_ = asset_loader::instance().get_texture_2d("brick_wall_displacement");
             renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 
             entity0.set<transform>(trans).set<mesh_renderer>(renderer);
@@ -100,7 +110,7 @@ namespace mkr {
 
             mesh_renderer renderer;
             renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-            renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
+            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
             renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 
             entity1.set<transform>(trans).set<mesh_renderer>(renderer);
@@ -113,7 +123,7 @@ namespace mkr {
 
             mesh_renderer renderer;
             renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-            renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
+            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
             renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 
             entity2.set<transform>(trans).set<mesh_renderer>(renderer);
@@ -133,7 +143,7 @@ namespace mkr {
 
                     mesh_renderer renderer;
                     renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-                    renderer.texture_2d_ = asset_loader::instance().get_texture_2d("test_texture");
+                    renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
                     renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 
                     cube.set<transform>(trans).set<mesh_renderer>(renderer).add<root>();
@@ -153,7 +163,7 @@ namespace mkr {
 
             light lt;
             // lt.set_mode(light_mode::directional);
-            // lt.set_power(0.5f);
+            lt.set_power(20.0f);
 
             world_.entity().set<light>(lt).set<transform>(trans).add<root>();
         }

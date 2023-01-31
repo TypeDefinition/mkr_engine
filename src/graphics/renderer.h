@@ -31,6 +31,9 @@ namespace mkr {
         std::shared_ptr<mesh> skybox_mesh_;
         std::shared_ptr<texture_cube> skybox_texture_;
         std::shared_ptr<shader_program> skybox_shader_;
+        colour sky_colour_ = colour::cyan;
+
+        bool enable_lights_ = true;
 
         renderer() {}
 

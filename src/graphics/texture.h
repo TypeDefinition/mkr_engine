@@ -8,6 +8,10 @@ namespace mkr {
     enum texture_unit {
         texture_skybox,
         texture_albedo,
+        texture_normal,
+        texture_specular,
+        texture_gloss,
+        texture_displacement,
     };
 
     enum texture_wrap_mode : GLint {

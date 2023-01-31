@@ -24,8 +24,6 @@ namespace mkr {
         float spotlight_outer_angle_ = 30.0f;
 
     public:
-        static bool enable_lighting;
-
         light() = default;
 
         virtual ~light() = default;

@@ -7,7 +7,9 @@
 namespace mkr {
     struct mesh_renderer {
         std::shared_ptr<mesh> mesh_;
-        std::shared_ptr<texture_2d> texture_2d_;
+        std::shared_ptr<texture_2d> texture_albedo_, texture_normal_, texture_specular_, texture_gloss, texture_displacement_;
         std::shared_ptr<shader_program> shader_;
+        colour albedo_colour_ = colour::white;
+        float gloss_ = 0.3f;
     };
 }

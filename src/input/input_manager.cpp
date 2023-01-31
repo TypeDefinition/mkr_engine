@@ -44,11 +44,11 @@ namespace mkr {
         SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC);
     }
 
-    void input_manager::register_button(input_name _input_name, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        keyboard_handler_.register_button(_input_name, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::register_button(input_action _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
+        keyboard_handler_.register_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
     }
 
-    void input_manager::unregister_button(input_name _input_name, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        keyboard_handler_.unregister_button(_input_name, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::unregister_button(input_action _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
+        keyboard_handler_.unregister_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
     }
 }

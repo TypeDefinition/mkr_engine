@@ -10,8 +10,8 @@
 namespace mkr {
     class keyboard_handler {
     private:
-        std::unordered_map<input_mask, std::unordered_set<input_name>> registered_keys_;
-        std::unordered_set<input_name> prev_state_, curr_state_;
+        std::unordered_map<input_mask, std::unordered_set<input_action>> registered_keys_;
+        std::unordered_set<input_action> prev_state_, curr_state_;
         std::mutex key_mutex_, state_mutex_;
 
     public:
@@ -25,8 +25,8 @@ namespace mkr {
 
         void dispatch_events(event_dispatcher& _event_dispatcher);
 
-        void register_button(input_name _input_name, input_mask _input_mask);
+        void register_button(input_action _input_action, input_mask _input_mask);
 
-        void unregister_button(input_name _input_name, input_mask _input_mask);
+        void unregister_button(input_action _input_action, input_mask _input_mask);
     };
 }

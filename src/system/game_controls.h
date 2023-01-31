@@ -8,7 +8,7 @@
 #include "component/camera.h"
 
 namespace mkr {
-    enum controls : input_name {
+    enum controls : input_action {
         quit = 0,
 
         move_left,
@@ -33,14 +33,14 @@ namespace mkr {
             input_listener_.set_callback([&](const event* _event) {
                 const auto* e = dynamic_cast<const button_event*>(_event);
                 if (!e) { return; }
-                if (e->state_ != button_event::button_state::pressed) { return; }
+                if (e->state_ != button_state::pressed) { return; }
 
-                if (e->name_ == quit) { application::instance().terminate(); }
+                if (e->action_ == quit) { application::instance().terminate(); }
 
-                if (e->name_ == look_up) {
+                if (e->action_ == look_up) {
                     rotation_.x_ -= 180.0f * application::instance().delta_time();
                 }
-                if (e->name_ == look_down) {
+                if (e->action_ == look_down) {
                     rotation_.x_ += 180.0f * application::instance().delta_time();
                 }
             });
@@ -69,25 +69,25 @@ namespace mkr {
             input_listener_.set_callback([&](const event* _event) {
                 const auto* e = dynamic_cast<const button_event*>(_event);
                 if (!e) { return; }
-                if (e->state_ != button_event::button_state::pressed) { return; }
+                if (e->state_ != button_state::pressed) { return; }
 
-                if (e->name_ == move_left) {
+                if (e->action_ == move_left) {
                     translation_.x_ += application::instance().delta_time() * 2.0f;
                 }
-                if (e->name_ == move_right) {
+                if (e->action_ == move_right) {
                     translation_.x_ -= application::instance().delta_time() * 2.0f;
                 }
-                if (e->name_ == move_forward) {
+                if (e->action_ == move_forward) {
                     translation_.z_ += application::instance().delta_time() * 2.0f;
                 }
-                if (e->name_ == move_backward) {
+                if (e->action_ == move_backward) {
                     translation_.z_ -= application::instance().delta_time() * 2.0f;
                 }
 
-                if (e->name_ == look_left) {
+                if (e->action_ == look_left) {
                     rotation_.y_ += 180.0f * application::instance().delta_time();
                 }
-                if (e->name_ == look_right) {
+                if (e->action_ == look_right) {
                     rotation_.y_ -= 180.0f * application::instance().delta_time();
                 }
             });

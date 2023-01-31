@@ -8,13 +8,13 @@
         When making games, for portability purposes, as well as our own sanity, we do not want to hardcode physical buttons to specific actions in our games.
         We should use a layer of abstraction. This is where our input system comes in.\n\n
 
-        input_name (32bit unsigned integer) -
-            An input name is the name we give to our actions. Examples can be JUMP, WALK or SHOOT.
+        input_action (32bit unsigned integer) -
+            An input action is the name we give to our actions. Examples can be JUMP, WALK or SHOOT.
 
         input_mask (16bit input_context + 16bit controller_index + 32bit keycode) -
             A 64bit mask made by combining an input_context, a controller_index and a keycode.
-            To register a control, we will register with an input handler a input_name and a input_mask.
-            This means that whenever the conditions of the input_mask is met (correct context, controller and physical button), an event representing input_name will be dispatched.
+            To register a control, we will register with an input handler a input_action and a input_mask.
+            This means that whenever the conditions of the input_mask is met (correct context, controller and physical button), an event representing input_action will be dispatched.
 
         input_context (16bit unsigned integer) -
             The controls of a game might differ depending on what is happening.
@@ -37,8 +37,8 @@ namespace mkr {
     /// \brief 64bit Input Mask
     typedef uint64_t input_mask;
 
-    /// \brief 32bit Input Name
-    typedef uint32_t input_name;
+    /// \brief 32bit Input Action
+    typedef uint32_t input_action;
 
     /// \brief 16bit Input Context
     enum input_context : uint16_t {

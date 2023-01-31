@@ -12,29 +12,29 @@
 namespace mkr {
     #define max_lights 64
 
-    enum shader_uniform {
+    enum shader_uniform : uint32_t {
         // Vertex Shader
-        u_view_matrix,
-        u_projection_matrix,
-        u_view_projection_matrix,
+        view_matrix,
+        projection_matrix,
+        view_projection_matrix,
 
         // Fragment Shader
-        u_ambient_colour,
+        ambient_colour,
 
-        u_num_lights,
+        num_lights,
 
-        u_light_mode0, // Light Mode 0 to N
-        u_light_power0 = max_lights + u_light_mode0, // Light Power 0 to N
-        u_light_colour0 = max_lights + u_light_power0, // Light Colour 0 to N
-        u_light_attenuation_constant0 = max_lights + u_light_colour0, // Light Attenuation Constant 0 to N
-        u_light_attenuation_linear0 = max_lights + u_light_attenuation_constant0, // Light Attenuation Linear 0 to N
-        u_light_attenuation_quadratic0 = max_lights + u_light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
-        u_light_spotlight_inner_cosine0 = max_lights + u_light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
-        u_light_spotlight_outer_cosine0 = max_lights + u_light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
-        u_light_position_camera_space0 = max_lights + u_light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
-        u_light_direction_camera_space0 = max_lights + u_light_position_camera_space0, // Light Direction Camera Space 0 to N
+        light_mode0, // Light Mode 0 to N
+        light_power0 = max_lights + light_mode0, // Light Power 0 to N
+        light_colour0 = max_lights + light_power0, // Light Colour 0 to N
+        light_attenuation_constant0 = max_lights + light_colour0, // Light Attenuation Constant 0 to N
+        light_attenuation_linear0 = max_lights + light_attenuation_constant0, // Light Attenuation Linear 0 to N
+        light_attenuation_quadratic0 = max_lights + light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
+        light_spotlight_inner_cosine0 = max_lights + light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
+        light_spotlight_outer_cosine0 = max_lights + light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
+        light_position_camera_space0 = max_lights + light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
+        light_direction_camera_space0 = max_lights + light_position_camera_space0, // Light Direction Camera Space 0 to N
 
-        num_shader_uniforms = max_lights + u_light_direction_camera_space0,
+        num_shader_uniforms = max_lights + light_direction_camera_space0,
     };
 
     enum class render_pass {
@@ -136,67 +136,67 @@ namespace mkr {
         void set_uniform(const std::string& _uniform_name, const vector3& _value);
 
         // Float
-        void set_uniform(uint32_t _uniformID, float _value0);
+        void set_uniform(uint32_t _shader_uniform, float _value0);
 
-        void set_uniform(uint32_t _uniformID, float _value0, float _value1);
+        void set_uniform(uint32_t _shader_uniform, float _value0, float _value1);
 
-        void set_uniform(uint32_t _uniformID, float _value0, float _value1, float _value2);
+        void set_uniform(uint32_t _shader_uniform, float _value0, float _value1, float _value2);
 
-        void set_uniform(uint32_t _uniformID, float _value0, float _value1, float _value2, float _value3);
+        void set_uniform(uint32_t _shader_uniform, float _value0, float _value1, float _value2, float _value3);
 
         // Integer
-        void set_uniform(uint32_t _uniformID, int32_t _value0);
+        void set_uniform(uint32_t _shader_uniform, int32_t _value0);
 
-        void set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1);
+        void set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1);
 
-        void set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1, int32_t _value2);
+        void set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1, int32_t _value2);
 
-        void set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3);
+        void set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3);
 
         // Unsigned Integer
-        void set_uniform(uint32_t _uniformID, uint32_t _value0);
+        void set_uniform(uint32_t _shader_uniform, uint32_t _value0);
 
-        void set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1);
+        void set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1);
 
-        void set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1, uint32_t _value2);
+        void set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1, uint32_t _value2);
 
-        void set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3);
+        void set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3);
 
         // Boolean
-        void set_uniform(uint32_t _uniformID, bool _value0);
+        void set_uniform(uint32_t _shader_uniform, bool _value0);
 
-        void set_uniform(uint32_t _uniformID, bool _value0, bool _value1);
+        void set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1);
 
-        void set_uniform(uint32_t _uniformID, bool _value0, bool _value1, bool _value2);
+        void set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1, bool _value2);
 
-        void set_uniform(uint32_t _uniformID, bool _value0, bool _value1, bool _value2, bool _value3);
+        void set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1, bool _value2, bool _value3);
 
         // Matrix
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x2& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x2& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x3& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x3& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x4& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x4& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x2& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x2& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x3& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x3& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x4& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x4& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x2& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x2& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x3& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x3& _value);
 
-        void set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x4& _value);
+        void set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x4& _value);
 
         // Colour
-        void set_uniform(uint32_t _uniformID, const colour& _value);
+        void set_uniform(uint32_t _shader_uniform, const colour& _value);
 
         // Vector2
-        void set_uniform(uint32_t _uniformID, const vector2& _value);
+        void set_uniform(uint32_t _shader_uniform, const vector2& _value);
 
         // Vector3
-        void set_uniform(uint32_t _uniformID, const vector3& _value);
+        void set_uniform(uint32_t _shader_uniform, const vector3& _value);
     };
 }

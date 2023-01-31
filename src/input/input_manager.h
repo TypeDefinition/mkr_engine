@@ -35,8 +35,8 @@ namespace mkr {
 
         inline const event_dispatcher* get_event_dispatcher() const { return &input_event_dispatcher_; }
 
-        void register_button(input_name _input_name, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void register_button(input_action _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
 
-        void unregister_button(input_name _input_name, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void unregister_button(input_action _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
     };
 }

@@ -152,8 +152,8 @@ namespace mkr {
             trans.set_rotation(rotation_x * rotation_y);
 
             light lt;
-            lt.set_mode(light_mode::directional);
-            lt.set_power(0.5f);
+            // lt.set_mode(light_mode::directional);
+            // lt.set_power(0.5f);
 
             world_.entity().set<light>(lt).set<transform>(trans).add<root>();
         }

@@ -33,38 +33,38 @@ namespace mkr {
     void keyboard_handler::dispatch_events(event_dispatcher& _event_dispatcher) {
         std::lock_guard<std::mutex> state_lock{state_mutex_};
 
-        std::unordered_set<input_name> down_buttons = curr_state_;
+        std::unordered_set<input_action> down_buttons = curr_state_;
         for (auto name: prev_state_) {
             down_buttons.erase(name);
         }
-        std::unordered_set<input_name> up_buttons = prev_state_;
+        std::unordered_set<input_action> up_buttons = prev_state_;
         for (auto name: curr_state_) {
             up_buttons.erase(name);
         }
 
         for (auto name: down_buttons) {
-            button_event e{name, button_event::button_state::down};
+            button_event e{name, button_state::down};
             _event_dispatcher.dispatch_event<button_event>(&e);
         }
         for (auto name: curr_state_) {
-            button_event e{name, button_event::button_state::pressed};
+            button_event e{name, button_state::pressed};
             _event_dispatcher.dispatch_event<button_event>(&e);
         }
         for (auto name: up_buttons) {
-            button_event e{name, button_event::button_state::up};
+            button_event e{name, button_state::up};
             _event_dispatcher.dispatch_event<button_event>(&e);
         }
 
         prev_state_ = curr_state_;
     }
 
-    void keyboard_handler::register_button(input_name _input_name, input_mask _input_mask) {
+    void keyboard_handler::register_button(input_action _input_action, input_mask _input_mask) {
         std::lock_guard<std::mutex> key_lock{key_mutex_};
-        registered_keys_[_input_mask].insert(_input_name);
+        registered_keys_[_input_mask].insert(_input_action);
     }
 
-    void keyboard_handler::unregister_button(input_name _input_name, input_mask _input_mask) {
+    void keyboard_handler::unregister_button(input_action _input_action, input_mask _input_mask) {
         std::lock_guard<std::mutex> key_lock{key_mutex_};
-        registered_keys_[_input_mask].erase(_input_name);
+        registered_keys_[_input_mask].erase(_input_action);
     }
 }

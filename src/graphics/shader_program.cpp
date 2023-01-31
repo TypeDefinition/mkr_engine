@@ -53,7 +53,7 @@ namespace mkr {
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
             case render_pass::skybox:
-                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                uniform_handles_[shader_uniform::view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
                 break;
             case render_pass::geometry:
                 break;
@@ -61,24 +61,24 @@ namespace mkr {
                 break;
             case render_pass::forward:
                 // Vertex Shader
-                uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
-                uniform_handles_[shader_uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
-                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                uniform_handles_[shader_uniform::view_matrix] = get_uniform_location("u_view_matrix");
+                uniform_handles_[shader_uniform::projection_matrix] = get_uniform_location("u_projection_matrix");
+                uniform_handles_[shader_uniform::view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
 
                 // Fragment Shader
-                uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");
-                uniform_handles_[shader_uniform::u_num_lights] = get_uniform_location("u_num_lights");
+                uniform_handles_[shader_uniform::ambient_colour] = get_uniform_location("u_ambient_colour");
+                uniform_handles_[shader_uniform::num_lights] = get_uniform_location("u_num_lights");
                 for (auto i = 0; i < max_lights; ++i) {
-                    uniform_handles_[i + shader_uniform::u_light_mode0] = get_uniform_location("u_lights[" + std::to_string(i) + "].mode_");
-                    uniform_handles_[i + shader_uniform::u_light_power0] = get_uniform_location("u_lights[" + std::to_string(i) + "].power_");
-                    uniform_handles_[i + shader_uniform::u_light_colour0] = get_uniform_location("u_lights[" + std::to_string(i) + "].colour_");
-                    uniform_handles_[i + shader_uniform::u_light_attenuation_constant0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_constant_");
-                    uniform_handles_[i + shader_uniform::u_light_attenuation_linear0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_linear_");
-                    uniform_handles_[i + shader_uniform::u_light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
-                    uniform_handles_[i + shader_uniform::u_light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
-                    uniform_handles_[i + shader_uniform::u_light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
-                    uniform_handles_[i + shader_uniform::u_light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
-                    uniform_handles_[i + shader_uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
+                    uniform_handles_[i + shader_uniform::light_mode0] = get_uniform_location("u_lights[" + std::to_string(i) + "].mode_");
+                    uniform_handles_[i + shader_uniform::light_power0] = get_uniform_location("u_lights[" + std::to_string(i) + "].power_");
+                    uniform_handles_[i + shader_uniform::light_colour0] = get_uniform_location("u_lights[" + std::to_string(i) + "].colour_");
+                    uniform_handles_[i + shader_uniform::light_attenuation_constant0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_constant_");
+                    uniform_handles_[i + shader_uniform::light_attenuation_linear0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_linear_");
+                    uniform_handles_[i + shader_uniform::light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
+                    uniform_handles_[i + shader_uniform::light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
+                    uniform_handles_[i + shader_uniform::light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
+                    uniform_handles_[i + shader_uniform::light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
+                    uniform_handles_[i + shader_uniform::light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
                 }
                 break;
             case render_pass::post_proc:
@@ -299,122 +299,122 @@ namespace mkr {
     }
 
     // Float
-    void shader_program::set_uniform(uint32_t _uniformID, float _value0) {
-        glProgramUniform1f(program_handle_, uniform_handles_[_uniformID], _value0);
+    void shader_program::set_uniform(uint32_t _shader_uniform, float _value0) {
+        glProgramUniform1f(program_handle_, uniform_handles_[_shader_uniform], _value0);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, float _value0, float _value1) {
-        glProgramUniform2f(program_handle_, uniform_handles_[_uniformID], _value0, _value1);
+    void shader_program::set_uniform(uint32_t _shader_uniform, float _value0, float _value1) {
+        glProgramUniform2f(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, float _value0, float _value1, float _value2) {
-        glProgramUniform3f(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2);
+    void shader_program::set_uniform(uint32_t _shader_uniform, float _value0, float _value1, float _value2) {
+        glProgramUniform3f(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, float _value0, float _value1, float _value2, float _value3) {
-        glProgramUniform4f(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2, _value3);
+    void shader_program::set_uniform(uint32_t _shader_uniform, float _value0, float _value1, float _value2, float _value3) {
+        glProgramUniform4f(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2, _value3);
     }
 
     // Integer
-    void shader_program::set_uniform(uint32_t _uniformID, int32_t _value0) {
-        glProgramUniform1i(program_handle_, uniform_handles_[_uniformID], _value0);
+    void shader_program::set_uniform(uint32_t _shader_uniform, int32_t _value0) {
+        glProgramUniform1i(program_handle_, uniform_handles_[_shader_uniform], _value0);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1) {
-        glProgramUniform2i(program_handle_, uniform_handles_[_uniformID], _value0, _value1);
+    void shader_program::set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1) {
+        glProgramUniform2i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1, int32_t _value2) {
-        glProgramUniform3i(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2);
+    void shader_program::set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1, int32_t _value2) {
+        glProgramUniform3i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3) {
-        glProgramUniform4i(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2, _value3);
+    void shader_program::set_uniform(uint32_t _shader_uniform, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3) {
+        glProgramUniform4i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2, _value3);
     }
 
     // Unsigned Integer
-    void shader_program::set_uniform(uint32_t _uniformID, uint32_t _value0) {
-        glProgramUniform1ui(program_handle_, uniform_handles_[_uniformID], _value0);
+    void shader_program::set_uniform(uint32_t _shader_uniform, uint32_t _value0) {
+        glProgramUniform1ui(program_handle_, uniform_handles_[_shader_uniform], _value0);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1) {
-        glProgramUniform2ui(program_handle_, uniform_handles_[_uniformID], _value0, _value1);
+    void shader_program::set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1) {
+        glProgramUniform2ui(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1, uint32_t _value2) {
-        glProgramUniform3ui(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2);
+    void shader_program::set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1, uint32_t _value2) {
+        glProgramUniform3ui(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3) {
-        glProgramUniform4ui(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2, _value3);
+    void shader_program::set_uniform(uint32_t _shader_uniform, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3) {
+        glProgramUniform4ui(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2, _value3);
     }
 
     // Boolean
-    void shader_program::set_uniform(uint32_t _uniformID, bool _value0) {
-        glProgramUniform1i(program_handle_, uniform_handles_[_uniformID], _value0);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _value0) {
+        glProgramUniform1i(program_handle_, uniform_handles_[_shader_uniform], _value0);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _value0, bool _value1) {
-        glProgramUniform2i(program_handle_, uniform_handles_[_uniformID], _value0, _value1);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1) {
+        glProgramUniform2i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _value0, bool _value1, bool _value2) {
-        glProgramUniform3i(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1, bool _value2) {
+        glProgramUniform3i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _value0, bool _value1, bool _value2, bool _value3) {
-        glProgramUniform4i(program_handle_, uniform_handles_[_uniformID], _value0, _value1, _value2, _value3);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _value0, bool _value1, bool _value2, bool _value3) {
+        glProgramUniform4i(program_handle_, uniform_handles_[_shader_uniform], _value0, _value1, _value2, _value3);
     }
 
     // Matrix
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x2& _value) {
-        glProgramUniformMatrix2fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x2& _value) {
+        glProgramUniformMatrix2fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x3& _value) {
-        glProgramUniformMatrix3fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x3& _value) {
+        glProgramUniformMatrix3fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x4& _value) {
-        glProgramUniformMatrix4fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x4& _value) {
+        glProgramUniformMatrix4fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x3& _value) {
-        glProgramUniformMatrix2x3fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x3& _value) {
+        glProgramUniformMatrix2x3fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x2& _value) {
-        glProgramUniformMatrix3x2fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x2& _value) {
+        glProgramUniformMatrix3x2fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x2& _value) {
-        glProgramUniformMatrix4x2fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x2& _value) {
+        glProgramUniformMatrix4x2fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix2x4& _value) {
-        glProgramUniformMatrix2x4fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix2x4& _value) {
+        glProgramUniformMatrix2x4fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix3x4& _value) {
-        glProgramUniformMatrix3x4fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix3x4& _value) {
+        glProgramUniformMatrix3x4fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
-    void shader_program::set_uniform(uint32_t _uniformID, bool _transpose, const matrix4x3& _value) {
-        glProgramUniformMatrix4x3fv(program_handle_, uniform_handles_[_uniformID], 1, _transpose, _value[0]);
+    void shader_program::set_uniform(uint32_t _shader_uniform, bool _transpose, const matrix4x3& _value) {
+        glProgramUniformMatrix4x3fv(program_handle_, uniform_handles_[_shader_uniform], 1, _transpose, _value[0]);
     }
 
     // Colour
-    void shader_program::set_uniform(uint32_t _uniformID, const colour& _colour) {
-        glProgramUniform4f(program_handle_, uniform_handles_[_uniformID], _colour.r_, _colour.g_, _colour.b_, _colour.a_);
+    void shader_program::set_uniform(uint32_t _shader_uniform, const colour& _colour) {
+        glProgramUniform4f(program_handle_, uniform_handles_[_shader_uniform], _colour.r_, _colour.g_, _colour.b_, _colour.a_);
     }
 
     // Vector2
-    void shader_program::set_uniform(uint32_t _uniformID, const vector2& _value) {
-        glProgramUniform2f(program_handle_, uniform_handles_[_uniformID], _value.x_, _value.y_);
+    void shader_program::set_uniform(uint32_t _shader_uniform, const vector2& _value) {
+        glProgramUniform2f(program_handle_, uniform_handles_[_shader_uniform], _value.x_, _value.y_);
     }
 
     // Vector3
-    void shader_program::set_uniform(uint32_t _uniformID, const vector3& _value) {
-        glProgramUniform3f(program_handle_, uniform_handles_[_uniformID], _value.x_, _value.y_, _value.z_);
+    void shader_program::set_uniform(uint32_t _shader_uniform, const vector3& _value) {
+        glProgramUniform3f(program_handle_, uniform_handles_[_shader_uniform], _value.x_, _value.y_, _value.z_);
     }
 }

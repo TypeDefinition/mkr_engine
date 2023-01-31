@@ -29,11 +29,11 @@ namespace mkr {
         asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
         asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
 
-        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Albedo_512x512.png");
-        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Normal_512x512.png");
-        asset_loader::instance().load_texture_2d("brick_wall_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Gloss_512x512.png");
-        asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Specular_512x512.png");
-        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_001_Displacement_512x512.png");
+        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Albedo_2048x2048.png");
+        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Normal_2048x2048.png");
+        asset_loader::instance().load_texture_2d("brick_wall_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Gloss_2048x2048.png");
+        asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Specular_2048x2048.png");
+        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Displacement_2048x2048.png");
 
         renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {

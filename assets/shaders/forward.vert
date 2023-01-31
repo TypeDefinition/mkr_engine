@@ -50,8 +50,8 @@ void main() {
     we named CBT_V_MATRIX_TBN poorly. We should actually name it CBT_V_MATRIX_TBNInverse. But I've already typed out the code and this entire freaking passage. So we'll just keep the name. And if you
     are wondering why I typed this whole message instead of changing the name of CBT_V_MATRIX_TBN, it's cause I only thought of the name change as I am typing this out. */
     // TBN (Technically the inverse of a TBN Matrix. Converts from tangent space to view space.)
-    io_tbn_matrix[0] = normalize(v_normal_matrix *  tangent);
-    io_tbn_matrix[1] = normalize(v_normal_matrix *  bitangent);
+    io_tbn_matrix[0] = normalize(v_normal_matrix * tangent);
+    io_tbn_matrix[1] = normalize(v_normal_matrix * bitangent);
     io_tbn_matrix[2] = io_vertex_normal;
 
     gl_Position = u_view_projection_matrix * v_model_matrix * vec4(v_position, 1.0f);

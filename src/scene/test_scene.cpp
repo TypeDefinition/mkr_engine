@@ -26,14 +26,19 @@ namespace mkr {
     void test_scene::init_assets() {
         // Load Assets
         asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
+        asset_loader::instance().load_obj("wall", "/mnt/ZorinWork/mkr_engine/assets/models/wall.obj");
         asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
         asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
 
-        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Albedo_2048x2048.png");
-        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Normal_2048x2048.png");
-        asset_loader::instance().load_texture_2d("brick_wall_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Gloss_2048x2048.png");
-        asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Specular_2048x2048.png");
-        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Displacement_2048x2048.png");
+        // asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Albedo_2048x2048.png");
+        // asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Normal_2048x2048.png");
+        // asset_loader::instance().load_texture_2d("brick_wall_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Gloss_2048x2048.png");
+        // asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Specular_2048x2048.png");
+        // asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Displacement_2048x2048.png");
+
+        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_albedo.jpg");
+        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_normal.jpg");
+        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_displacement.jpg");
 
         renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {
@@ -92,11 +97,11 @@ namespace mkr {
             trans.set_position({0.0f, -1.0f, 5.0f});
 
             mesh_renderer renderer;
-            renderer.mesh_ = asset_loader::instance().get_mesh("cube");
+            renderer.mesh_ = asset_loader::instance().get_mesh("wall");
             renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("brick_wall_albedo");
             renderer.texture_normal_ = asset_loader::instance().get_texture_2d("brick_wall_normal");
-            renderer.texture_specular_ = asset_loader::instance().get_texture_2d("brick_wall_specular");
-            renderer.texture_gloss = asset_loader::instance().get_texture_2d("brick_wall_gloss");
+            // renderer.texture_specular_ = asset_loader::instance().get_texture_2d("brick_wall_specular");
+            // renderer.texture_gloss = asset_loader::instance().get_texture_2d("brick_wall_gloss");
             renderer.texture_displacement_ = asset_loader::instance().get_texture_2d("brick_wall_displacement");
             renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
 

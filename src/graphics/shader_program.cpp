@@ -75,6 +75,7 @@ namespace mkr {
                 uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");
                 uniform_handles_[shader_uniform::u_albedo_colour] = get_uniform_location("u_albedo_colour");
                 uniform_handles_[shader_uniform::u_gloss] = get_uniform_location("u_gloss");
+                uniform_handles_[shader_uniform::u_displacement_scale] = get_uniform_location("u_displacement_scale");
 
                 uniform_handles_[shader_uniform::u_texture_albedo_enabled] = get_uniform_location("u_texture_albedo_enabled");
                 uniform_handles_[shader_uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");

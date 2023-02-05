@@ -11,5 +11,6 @@ namespace mkr {
         std::shared_ptr<shader_program> shader_;
         colour albedo_colour_ = colour::white;
         float gloss_ = 0.3f;
+        float displacement_scale_ = 0.1f;
     };
 }

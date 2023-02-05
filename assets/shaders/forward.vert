@@ -18,7 +18,8 @@ out io_block {
     vec3 io_vertex_position; // Vertex position in camera space.
     vec3 io_vertex_normal; // Vertex normal in camera space.
     mat3 io_normal_matrix;
-    mat3 io_tbn_matrix;
+    mat3 io_tbn_matrix; // Converts from tangent space to camera space.
+    mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
 };
 
 // Uniforms
@@ -42,17 +43,12 @@ void main() {
     // A cross product between the tangent and the normal gives us the bitangent.
     vec3 bitangent = normalize(cross(v_normal, tangent));
 
-    /* So, at this point you might be asking, "If we want to convert a vector from one space to another, we need to dot product it with all 3 axis of the new space.
-    So if we take CBT_V_MATRIX_TBN and multiply it by a vec3 right now, we aren't actually doing a dot product with all 3 axis. We need to transpose CBT_V_MATRIX_TBN in order to achieve that."
-    Ah, but you see, the transpose of CBT_V_MATRIX_TBN converts a point TO tangent space. But what we want is to actually convert FROM tangent space. And for orthoganal matrices, their transpose is also
-    their inverse. Which is why CBT_V_MATRIX_TBN is currently the tranpose of what it is now. Because we want it to do the opposite of converting to tangent space. We want to convert FROM tangent space
-    to view space. Later on in the fragment shader you will see a point where we transpose CBT_V_MATRIX_TBN when we want to convert TO tangent space. So at the end of the day I guess it kinda is cause
-    we named CBT_V_MATRIX_TBN poorly. We should actually name it CBT_V_MATRIX_TBNInverse. But I've already typed out the code and this entire freaking passage. So we'll just keep the name. And if you
-    are wondering why I typed this whole message instead of changing the name of CBT_V_MATRIX_TBN, it's cause I only thought of the name change as I am typing this out. */
-    // TBN (Technically the inverse of a TBN Matrix. Converts from tangent space to view space.)
+    // io_tbn_matrix[0] = v_normal_matrix * normalize(tangent);
+    // io_tbn_matrix[1] = v_normal_matrix * normalize(bitangent);
     io_tbn_matrix[0] = normalize(v_normal_matrix * tangent);
     io_tbn_matrix[1] = normalize(v_normal_matrix * bitangent);
     io_tbn_matrix[2] = io_vertex_normal;
+    io_tbn_inv_matrix = transpose(io_tbn_matrix); // Since TBN is an orthogonal matrix, its transpose is also its inverse.
 
     gl_Position = u_view_projection_matrix * v_model_matrix * vec4(v_position, 1.0f);
 }

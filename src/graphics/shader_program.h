@@ -23,6 +23,7 @@ namespace mkr {
         u_ambient_colour,
         u_albedo_colour,
         u_gloss,
+        u_displacement_scale,
 
         u_texture_skybox_enabled,
         u_texture_albedo_enabled,

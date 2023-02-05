@@ -31,7 +31,8 @@ in io_block {
     vec3 io_vertex_position; // Vertex position in camera space.
     vec3 io_vertex_normal; // Vertex normal in camera space.
     mat3 io_normal_matrix;
-    mat3 io_tbn_matrix;
+    mat3 io_tbn_matrix; // Converts from tangent space to camera space.
+    mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
 };
 
 // Outputs
@@ -41,6 +42,7 @@ layout (location = 0) out vec4 io_frag_colour;
 uniform vec4 u_ambient_colour;
 uniform vec4 u_albedo_colour;
 uniform float u_gloss;
+uniform float u_displacement_scale;
 
 uniform bool u_texture_albedo_enabled;
 uniform bool u_texture_normal_enabled;
@@ -58,78 +60,75 @@ uniform bool u_enable_lights;
 uniform int u_num_lights;
 uniform light u_lights[max_lights];
 
-vec2 parallax_mapping() {
-    /* Get the direction of the camera to the fragment's surface.
-    Right now we are in camera space. We need to convert into tangent space.
-    Since io_tbn_matrix converts from tangent space to camera space, the transpose (which is also the inverse) converts from camera space to tangent space. */
-    vec3 cam_to_frag = normalize(transpose(io_tbn_matrix) * io_vertex_position); // Convert to tangent space.
+vec2 parallax_mapping(const vec2 _tex_coord) {
+    // Get the direction of the camera to the fragment's surface in tangent space.
+    vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
+    // Convert height map to depth map because depth looks nicer then height.
+    // A height of 0.9 is a depth of 0.1, a height of 0.4 is a depth of 0.6 etc.
+    float depth = 1.0f - texture(u_texture_displacement, _tex_coord).r;
 
-    /* We are reading a height map, but we want to do our calculations based on depth instead since the results of a depth map looks better than a heightmap.
-    By converting the height map to a depth map, it means that a height of 0.9 is a depth of 0.1, and a height of 0.4 is a depth of 0.6. */
-    float depth = 1.0f - texture(u_texture_displacement, io_tex_coord.xy).r;
+    // Note the division of view_direction.xy by view_direction.z.
+    // As the view_direction vector is normalized view_direction.z will be somewhere in the range between 0.0 and 1.0.
+    // When view_direction is largely parallel to the surface its z component is close to 0.0 and the division returns a much larger offset as
+    // compared to when view_direction is perpendicular to the surface.
+    // So basically we're increasing the size of the offset in such a way that it offsets the texture coordinates at a larger scale when
+    // looking at a surface from a steeper angle.
 
-    /* What is interesting to note here is the division of cam_to_frag.xy by cam_to_frag.z.
-    As the cam_to_frag vector is normalized cam_to_frag.z will be somewhere in the range between 0.0 and 1.0.
-    When cam_to_frag is largely parallel to the surface its z component is close to 0.0 and the division returns a much larger offset.
-    compared to when cam_to_frag is largely perpendicular to the surface.
-    So basically we're increasing the size of the offset in such a way that it offsets the texture coordinates at a larger scale when looking at a surface from
-    an angle compared to when looking at it from the top which gives more realistic results at angles.
-    Some people prefer to leave the division by cam_to_frag.z out of the equation as normal Parallax Mapping could produce undesirable results at certain angles.
-    The technique is then called Parallax Mapping With Offset Limiting. Choosing which technique to pick is usually a matter of personal preference.
-    Do take note that if we do divide by cam_to_frag.z, make sure to negate it. Since we are in tangent space, cam_to_frag.z is a negative number,
-    and any division by it will negate our result. So we need to negate cam_to_frag.z to turn it into a positive number first */
-    const float displacement_scale = 0.03f;
-    return (cam_to_frag.xy / -cam_to_frag.z) * depth * displacement_scale; // Parallax Mapping Without Offset Limiting
-    // return cam_to_frag.xy * depth * displacement_scale; // Parallax Mapping With Offset Limiting
+    // Some people prefer to leave the division by view_direction.z out of the equation as normal Parallax Mapping could produce undesirable results at certain angles.
+    // This is called "Parallax Mapping with Offset Limiting".
+    // Choosing which technique to pick is usually a matter of personal preference.
+
+    // Do take note that if we divide by view_direction.z, make sure to negate it,
+    // as we are in tangent space, view_direction.z is a negative number, and any division by it will negate our result.
+    return (view_direction.xy / -view_direction.z) * depth * u_displacement_scale; // Parallax Mapping without Offset Limiting
 }
 
-vec2 parallax_occlusion_mapping() {
-    /* Parallax Occlusion Mapping is based on the same principles as Steep Parallax Mapping,
-    but instead of taking the texture coordinates of the first depth layer after a collision,
-    we're going to linearly interpolate between the depth layer after and before the collision.
-    We base the weight of the linear interpolation on how far the surface's height is from the depth layer's value of both layers.
-    This is again an approximation, but significantly more accurate than Steep Parallax Mapping. */
+// Parallax Occlusion Mapping is based on the same principles as Steep Parallax Mapping
+// but instead of taking the texture coordinates of the first depth layer after a collision,
+// we're going to linearly interpolate between the depth layer after and before the collision.
+// We base the weight of the linear interpolation on how far the surface's height is from the depth layer's value of both layers.
+// This is again an approximation, but significantly more accurate than Steep Parallax Mapping.
+vec2 parallax_occlusion_mapping(const vec2 _tex_coord) {
+    // Get the direction of the camera to the fragment's surface in tangent space.
+    vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
+    // Convert height map to depth map because depth looks nicer then height.
+    // A height of 0.9 is a depth of 0.1, a height of 0.4 is a depth of 0.6 etc.
+    float depth = 1.0f - texture(u_texture_displacement, _tex_coord).r;
+    // Get the UV displacement when the depth is 1. This is the maximum possible UV displacement we can have.
+    const vec2 max_uv_displacement = (view_direction.xy / -view_direction.z) * depth * u_displacement_scale;
 
-    vec2 max_uv_displacement = parallax_mapping();
-
-    /* Rather than take a fixed number of samples each time, we are going to make use of the fact that only from the sides do we need a higher number of samples.
-    When view perpendicularly, we do not need as many samples as there is no need to displace anything when a fragment is viewed directly perpendicular.
-    When the surface is viewed perpendicularly, the dot product betweem the surface normal and vertexToCam vector is 1, and when viewed sideways, the dor product is 0.
-    By doing this, we can select how many samples we actually want to calculate. */
-    int min_displacement_samples = 1;
-    int max_displacement_samples = 5;
-    float dot_product = dot(io_vertex_normal, normalize(-io_vertex_position));
-    int num_samples = int(mix(max_displacement_samples, min_displacement_samples, dot_product));
-
-    float current_layer_depth = 0.0f;
-    float current_texture_depth = 0.0f;
-    vec2 current_uv_displacement = vec2(0.0f, 0.0f);
+    // Rather than take a fixed number of samples each time, we are going to make use of the
+    // fact that only from the sides do we need a higher number of samples.
+    // When view perpendicularly, we do not need as many samples as there is no need to displace
+    // anything when a fragment is viewed directly perpendicular.
+    // When the surface is viewed perpendicularly, the dot product betweem the surface normal and
+    // fragment to camera vector is 1, and when viewed sideways, the dot product is 0.
+    // By doing this, we can select how many samples we actually want to calculate.
+    const int min_displacement_samples = 8;
+    const int max_displacement_samples = 32;
+    const float dot_product = dot(io_vertex_normal, normalize(-io_vertex_position));
+    const int num_samples = int(mix(max_displacement_samples, min_displacement_samples, dot_product));
 
     float previous_layer_depth = 0.0f;
-    float previous_texture_depth = 0.0f;
     vec2 previous_uv_displacement = vec2(0.0f, 0.0f);
-
+    float previous_texture_depth = 0.0f;
     for (int i = 0; i < num_samples; ++i) {
-        previous_layer_depth = current_layer_depth;
-        previous_texture_depth = current_texture_depth;
-        previous_uv_displacement = current_uv_displacement;
-
-        /* We do not have to multiply current_layer_depth & current_texture_depth by u_DisplacementScale as they would cancel each other out.
-        Futhermore, doing so will mean we will have to declare another variable so that current_uv_displacement's multiplication is not affected. */
-        current_layer_depth = float(i)/float(num_samples);
-        current_uv_displacement = current_layer_depth * max_uv_displacement;
-        current_texture_depth = 1.0f - texture(u_texture_displacement, io_tex_coord.xy + current_uv_displacement).r;
+        const float current_layer_depth = float(i)/float(num_samples);
+        const vec2 current_uv_displacement = current_layer_depth * max_uv_displacement;
+        const float current_texture_depth = 1.0f - texture(u_texture_displacement, _tex_coord + current_uv_displacement).r;
 
         // Interpolate between previous_uv_displacement and current_uv_displacement.
         if (current_layer_depth > current_texture_depth) {
             // Currently we have overshot by this much.
-            float excess_depth = current_layer_depth - current_texture_depth;
+            const float excess_depth = current_layer_depth - current_texture_depth;
             // Previously we undershot by this much.
-            float lacking_depth = previous_texture_depth - previous_layer_depth;
-
-            // return  previous_uv_displacement + (current_uv_displacement - previous_uv_displacement) * (lacking_depth / (lacking_depth + excess_depth));
+            const float lacking_depth = previous_texture_depth - previous_layer_depth;
             return mix(previous_uv_displacement, current_uv_displacement, lacking_depth / (lacking_depth + excess_depth));
         }
+
+        previous_layer_depth = current_layer_depth;
+        previous_uv_displacement = current_uv_displacement;
+        previous_texture_depth = current_texture_depth;
     }
 
     return max_uv_displacement;
@@ -271,9 +270,7 @@ float get_gloss(const in vec2 _tex_coord) {
 
 vec2 get_tex_coord() {
     if (u_texture_displacement_enabled) {
-        return io_tex_coord.xy;
-        return io_tex_coord.xy + parallax_mapping();
-        return io_tex_coord.xy + parallax_occlusion_mapping();
+        return io_tex_coord.xy + parallax_occlusion_mapping(io_tex_coord.xy);
     }
     return io_tex_coord.xy;
 }

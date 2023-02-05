@@ -57,6 +57,7 @@ namespace mkr {
             mesh_rend->shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
             mesh_rend->shader_->set_uniform(shader_uniform::u_albedo_colour, mesh_rend->albedo_colour_);
             mesh_rend->shader_->set_uniform(shader_uniform::u_gloss, mesh_rend->gloss_);
+            mesh_rend->shader_->set_uniform(shader_uniform::u_displacement_scale, mesh_rend->displacement_scale_);
 
             mesh_rend->shader_->set_uniform(shader_uniform::u_texture_albedo_enabled, mesh_rend->texture_albedo_ != nullptr);
             mesh_rend->shader_->set_uniform(shader_uniform::u_texture_normal_enabled, mesh_rend->texture_normal_ != nullptr);
@@ -175,13 +176,12 @@ namespace mkr {
         } else {
             projection_matrix_ = matrix_util::orthographic_matrix(_camera.aspect_ratio_, _camera.ortho_size_, _camera.near_plane_, _camera.far_plane_);
         }
-
         view_matrix_ = matrix_util::view_matrix(_global_transform.position_, _global_transform.forward_, _global_transform.up_);
-        skybox_view_projection_matrix = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
-
         cam_forward = _global_transform.forward_;
         cam_up = _global_transform.up_;
         cam_right = -_global_transform.left_;
+
+        skybox_view_projection_matrix = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
     }
 
     void renderer::prep_lights(const global_transform& _global_transform, const light& _light) {
@@ -190,7 +190,8 @@ namespace mkr {
 
     void renderer::sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
         const auto model_view_matrix = view_matrix_ * _global_transform.model_matrix_;
-        const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(matrix_util::inverse_matrix(model_view_matrix).value()), 3, 3);
+        const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
+        const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
         instances_[&_mesh_renderer].push_back({_global_transform.model_matrix_, normal_matrix});
     }
 }

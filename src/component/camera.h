@@ -3,6 +3,7 @@
 #include <memory>
 #include "graphics/shader_program.h"
 #include "graphics/texture.h"
+#include "graphics/skybox.h"
 
 namespace mkr {
     enum projection_mode {
@@ -38,17 +39,7 @@ namespace mkr {
         uint8_t depth_ = 0;
         /// Viewport
         viewport viewport_;
-
-        /// Deferred lighting shader
-        std::shared_ptr<shader_program> lighting_shader_;
-        /// Post processing shaders
-        std::vector<std::shared_ptr<shader_program>> post_process_shaders_;
-
-        /// Skybox shader
-        std::shared_ptr<shader_program> skybox_shader_;
-        /// Skybox colour
-        colour skybox_colour_ = colour::white;
-        /// Skybox texture
-        std::shared_ptr<texture> skybox_texture_;
+        /// Skybox
+        std::shared_ptr<skybox> skybox_ = std::make_shared<skybox>();
     };
 }

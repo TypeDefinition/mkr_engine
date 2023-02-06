@@ -269,10 +269,7 @@ float get_gloss(const in vec2 _tex_coord) {
 }
 
 vec2 get_tex_coord() {
-    if (u_texture_displacement_enabled) {
-        return io_tex_coord.xy + parallax_occlusion_mapping(io_tex_coord.xy);
-    }
-    return io_tex_coord.xy;
+    return u_texture_displacement_enabled ? (io_tex_coord.xy + parallax_occlusion_mapping(io_tex_coord.xy)) : io_tex_coord.xy;
 }
 
 void main() {
@@ -283,8 +280,8 @@ void main() {
         return;
     }
 
-    const vec4 albedo = get_albedo(tex_coord);
     const vec3 normal = get_normal(tex_coord);
+    const vec4 albedo = get_albedo(tex_coord);
     const vec4 specular = get_specular(tex_coord);
     const float gloss = get_gloss(tex_coord);
 

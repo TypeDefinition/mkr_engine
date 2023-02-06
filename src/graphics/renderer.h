@@ -1,10 +1,13 @@
 #pragma once
 
 #include <functional>
+#include <queue>
 #include <flecs.h>
 #include <common/singleton.h>
 #include <maths/matrix_util.h>
 #include "graphics/app_window.h"
+#include "graphics/framebuffer.h"
+#include "graphics/material.h"
 #include "component/mesh_renderer.h"
 #include "component/transform.h"
 #include "component/camera.h"
@@ -12,36 +15,51 @@
 #include "component/tag.h"
 
 namespace mkr {
+    struct camera_data {
+        global_transform transform_;
+        camera camera_;
+
+        inline bool operator<(const camera_data& _rhs) const {
+            return camera_.depth_ < _rhs.camera_.depth_;
+        }
+    };
+
+    struct light_data {
+        global_transform transform_;
+        light light_;
+    };
+
     class renderer : public singleton<renderer> {
         friend class singleton<renderer>;
 
     private:
         std::unique_ptr<app_window> app_window_;
+        std::shared_ptr<dbuffer> dbuffer_;
+        std::shared_ptr<gbuffer> gbuffer_;
+        std::shared_ptr<lbuffer> lbuffer_;
+        std::shared_ptr<fbuffer> fbuffer_;
+        std::shared_ptr<pbuffer> pbuffer_;
+        std::shared_ptr<mesh> screen_quad_;
+        std::shared_ptr<mesh> skybox_;
 
-        matrix4x4 view_matrix_ = matrix4x4::identity();
-        matrix4x4 projection_matrix_ = matrix4x4::identity();
+        // Camera
+        std::priority_queue<camera_data> cameras_;
 
+        // Lights
         colour ambient_colour_ = colour::dark_grey;
-        std::vector<std::pair<global_transform, light>> lights_;
-        vector3 cam_up, cam_right, cam_forward;
+        std::vector<light_data> lights_;
 
-        std::unordered_map<const mesh_renderer*, std::vector<mesh_instance>> instances_;
-
-        matrix4x4 skybox_view_projection_matrix = matrix4x4::identity();
-        std::shared_ptr<mesh> skybox_mesh_;
-        std::shared_ptr<texture_cube> skybox_texture_;
-        std::shared_ptr<shader_program> skybox_shader_;
-        colour sky_colour_ = colour::cyan;
-
-        bool enable_lights_ = true;
+        // Objects
+        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> deferred_objs_;
+        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_objs_;
 
         renderer() {}
 
         virtual ~renderer() {}
 
-        void draw_skybox();
-
-        void draw_objects();
+        void render();
+        void g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
+        void l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
 
     public:
         void init();
@@ -52,14 +70,10 @@ namespace mkr {
 
         void exit();
 
-        inline void set_skybox_texture(std::shared_ptr<texture_cube> _texture) { skybox_texture_ = _texture; }
+        void update_cameras(const global_transform& _global_transform, const camera& _camera);
 
-        inline void set_skybox_shader(std::shared_ptr<shader_program> _shader) { skybox_shader_ = _shader; }
+        void update_lights(const global_transform& _global_transform, const light& _light);
 
-        void prep_cameras(const global_transform& _global_transform, const camera& _camera);
-
-        void prep_lights(const global_transform& _global_transform, const light& _light);
-
-        void sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer);
+        void update_objects(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer);
     };
 }

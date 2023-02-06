@@ -4,11 +4,10 @@
 #include <log/log.h>
 #include <maths/colour.h>
 #include "graphics/renderer.h"
-#include "scene/scene_manager.h"
 #include "graphics/asset_loader.h"
 
 namespace mkr {
-    void renderer::draw_skybox() {
+    /*void renderer::draw_skybox() {
         if (!skybox_shader_ || !skybox_mesh_) {
             return;
         }
@@ -16,7 +15,7 @@ namespace mkr {
         glDisable(GL_DEPTH_TEST);
 
         skybox_mesh_->bind();
-        skybox_mesh_->set_instance_data({{matrix4x4 ::identity()}});
+        skybox_mesh_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
 
         if (skybox_texture_) {
             skybox_texture_->bind(texture_unit::texture_skybox);
@@ -28,76 +27,7 @@ namespace mkr {
         skybox_shader_->use();
 
         glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
-    }
-
-    void renderer::draw_objects() {
-        // Render Objects
-        glEnable(GL_DEPTH_TEST);
-        glDepthMask(GL_TRUE);
-        glDepthFunc(GL_LESS);
-
-        auto view_projection_matrix = projection_matrix_ * view_matrix_;
-        for (const auto& iter: instances_) {
-            const auto* mesh_rend = iter.first;
-            const std::vector<mesh_instance>& instances = iter.second;
-
-            // Bind textures.
-            if (mesh_rend->material_->texture_albedo_) { mesh_rend->material_->texture_albedo_->bind(texture_unit::texture_albedo); }
-            if (mesh_rend->material_->texture_normal_) { mesh_rend->material_->texture_normal_->bind(texture_unit::texture_normal); }
-            if (mesh_rend->material_->texture_specular_) { mesh_rend->material_->texture_specular_->bind(texture_unit::texture_specular); }
-            if (mesh_rend->material_->texture_gloss_) { mesh_rend->material_->texture_gloss_->bind(texture_unit::texture_gloss); }
-            if (mesh_rend->material_->texture_displacement_) { mesh_rend->material_->texture_displacement_->bind(texture_unit::texture_displacement); }
-
-            // Vertex Shader Uniforms
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_view_matrix, false, view_matrix_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_projection_matrix, false, projection_matrix_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
-
-            // Fragment Shader Uniforms
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_albedo_colour, mesh_rend->material_->albedo_colour_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_gloss, mesh_rend->material_->gloss_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_displacement_scale, mesh_rend->material_->displacement_scale_);
-
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_texture_albedo_enabled, mesh_rend->material_->texture_albedo_ != nullptr);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_texture_normal_enabled, mesh_rend->material_->texture_normal_ != nullptr);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_texture_specular_enabled, mesh_rend->material_->texture_specular_ != nullptr);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_texture_gloss_enabled, mesh_rend->material_->texture_gloss_ != nullptr);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_texture_displacement_enabled, mesh_rend->material_->texture_displacement_ != nullptr);
-
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_enable_lights, enable_lights_);
-            mesh_rend->material_->shader_->set_uniform(shader_uniform::u_num_lights, (int)lights_.size());
-            for (auto i = 0; i < lights_.size(); ++i) {
-                const auto& t = lights_[i].first;
-                const auto& l = lights_[i].second;
-
-                auto position_matrix = view_matrix_ * t.model_matrix_;
-                auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
-                vector3 direction_vector = vector3{cam_right.dot(t.forward_), cam_up.dot(t.forward_), cam_forward.dot(t.forward_)}.normalised();
-
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_mode0, l.get_mode());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_power0, l.get_power());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_colour0, l.get_colour());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_position_camera_space0, position_camera_space);
-                mesh_rend->material_->shader_->set_uniform(i + shader_uniform::u_light_direction_camera_space0, direction_vector);
-            }
-
-            mesh_rend->material_->shader_->use();
-            mesh_rend->mesh_->bind();
-            mesh_rend->mesh_->set_instance_data(instances);
-
-            // Draw.
-            glDrawElementsInstanced(GL_TRIANGLES, mesh_rend->mesh_->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
-        }
-
-        lights_.clear();
-        instances_.clear();
-    }
+    }*/
 
     void renderer::init() {
         // Initialise SDL_image.
@@ -137,13 +67,20 @@ namespace mkr {
             throw std::runtime_error("glewInit failed");
         }
 
-        skybox_mesh_ = asset_loader::instance().make_skybox("skybox");
+        skybox_ = asset_loader::instance().make_skybox();
+        screen_quad_ = asset_loader::instance().make_screen_quad();
+
+        // Framebuffers
+        dbuffer_ = std::make_shared<dbuffer>();
+        gbuffer_ = std::make_shared<gbuffer>(app_window_->width(), app_window_->height());
+        lbuffer_ = std::make_shared<lbuffer>(app_window_->width(), app_window_->height());
+        fbuffer_ = std::make_shared<fbuffer>(app_window_->width(), app_window_->height());
+        pbuffer_ = std::make_shared<pbuffer>(app_window_->width(), app_window_->height());
     }
 
     void renderer::start() {
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_CULL_FACE);
-        glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         // glEnable(GL_STENCIL_TEST);
         // glStencilMask(0xFF); // Each bit is written to the stencil buffer as-is.
@@ -153,13 +90,11 @@ namespace mkr {
 
     void renderer::update() {
         // Clear framebuffer.
-        glClearNamedFramebufferfv(0, GL_COLOR, 0, (GLfloat*)&colour::blue.r_);
-        float depth = 1.0f;
-        glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
+        dbuffer_->clear_colour_all();
+        dbuffer_->clear_depth_stencil();
 
-        // Draw
-        draw_skybox();
-        draw_objects();
+        // Render
+        render();
 
         // Swap buffer.
         app_window_->swap_buffers();
@@ -170,28 +105,182 @@ namespace mkr {
         IMG_Quit();
     }
 
-    void renderer::prep_cameras(const global_transform& _global_transform, const camera& _camera) {
-        if (_camera.mode_ == projection_mode::perspective) {
-            projection_matrix_ = matrix_util::perspective_matrix(_camera.aspect_ratio_, _camera.fov_, _camera.near_plane_, _camera.far_plane_);
+    void renderer::update_cameras(const global_transform& _global_transform, const camera& _camera) {
+        cameras_.push({_global_transform, _camera});
+    }
+
+    void renderer::update_lights(const global_transform& _global_transform, const light& _light) {
+        lights_.push_back({_global_transform, _light});
+    }
+
+    void renderer::update_objects(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
+        if (_mesh_renderer.material_->render_path_ == render_path::deferred) {
+            deferred_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
         } else {
-            projection_matrix_ = matrix_util::orthographic_matrix(_camera.aspect_ratio_, _camera.ortho_size_, _camera.near_plane_, _camera.far_plane_);
+            forward_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
         }
-        view_matrix_ = matrix_util::view_matrix(_global_transform.position_, _global_transform.forward_, _global_transform.up_);
-        cam_forward = _global_transform.forward_;
-        cam_up = _global_transform.up_;
-        cam_right = -_global_transform.left_;
-
-        skybox_view_projection_matrix = projection_matrix_ * matrix_util::view_matrix(vector3::zero, _global_transform.forward_, _global_transform.up_);
     }
 
-    void renderer::prep_lights(const global_transform& _global_transform, const light& _light) {
-        lights_.emplace_back(_global_transform, _light);
+    void renderer::render() {
+        while (!cameras_.empty()) {
+            auto cam_data = cameras_.top();
+            cameras_.pop();
+            auto& trans = cam_data.transform_;
+            auto& cam = cam_data.camera_;
+
+            auto view_matrix = matrix_util::view_matrix(trans.position_, trans.forward_, trans.up_);
+            auto view_forward = trans.forward_;
+            auto view_up = trans.up_;
+            auto view_right = -trans.left_;
+            matrix4x4 projection_matrix;
+            if (cam.mode_ == projection_mode::perspective) {
+                projection_matrix = matrix_util::perspective_matrix(cam.aspect_ratio_, cam.fov_, cam.near_plane_, cam.far_plane_);
+            } else {
+                projection_matrix = matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
+            }
+
+            auto skybox_view_projection_matrix = projection_matrix * matrix_util::view_matrix(vector3::zero, trans.forward_, trans.up_);
+
+            g_pass(view_matrix, projection_matrix);
+            l_pass(view_matrix, view_forward, view_up, view_right);
+
+            // Blit to default framebuffer.
+            lbuffer_->set_read_colour_attachment(lbuffer_composite);
+            lbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+            dbuffer_->bind();
+        }
     }
 
-    void renderer::sort_meshes(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
-        const auto model_view_matrix = view_matrix_ * _global_transform.model_matrix_;
-        const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
-        const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
-        instances_[&_mesh_renderer].push_back({_global_transform.model_matrix_, normal_matrix});
+    void renderer::g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
+        // IMPORTANT: Disable blending so that and fragment with 0 in its alpha channel does not get discarded.
+        glDisable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
+
+        // Bind buffer.
+        gbuffer_->clear_colour_all();
+        gbuffer_->clear_depth_stencil();
+        gbuffer_->set_draw_colour_attachment_all();
+        gbuffer_->bind();
+
+        // Use shader.
+        material::g_shader_->use();
+
+        auto view_projection_matrix = _projection_matrix * _view_matrix;
+        for (auto& material_iter: deferred_objs_) {
+            auto material_ptr = material_iter.first;
+
+            // Bind textures.
+            if (material_ptr->texture_albedo_) { material_ptr->texture_albedo_->bind(texture_unit::texture_albedo); }
+            if (material_ptr->texture_normal_) { material_ptr->texture_normal_->bind(texture_unit::texture_normal); }
+            if (material_ptr->texture_specular_) { material_ptr->texture_specular_->bind(texture_unit::texture_specular); }
+            if (material_ptr->texture_gloss_) { material_ptr->texture_gloss_->bind(texture_unit::texture_gloss); }
+            if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
+
+            // Vertex shader uniforms.
+            material::g_shader_->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
+            material::g_shader_->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
+            material::g_shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+
+            // Fragment shader uniforms.
+            material::g_shader_->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);
+            material::g_shader_->set_uniform(shader_uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
+            material::g_shader_->set_uniform(shader_uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
+            material::g_shader_->set_uniform(shader_uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
+            material::g_shader_->set_uniform(shader_uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+
+            material::g_shader_->set_uniform(shader_uniform::u_albedo_colour, material_ptr->albedo_colour_);
+            material::g_shader_->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
+            material::g_shader_->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
+
+            // Draw to screen.
+            for (auto& mesh_iter: material_iter.second) {
+                auto mesh_ptr = mesh_iter.first;
+                auto& instances = mesh_iter.second;
+                std::for_each(instances.begin(), instances.end(), [=](mesh_instance& _inst) {
+                    const auto model_view_matrix = _view_matrix * _inst.model_matrix_;
+                    const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
+                    _inst.normal_matrix_ = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
+                });
+
+                mesh_ptr->bind();
+                mesh_ptr->set_instance_data(instances);
+                glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
+            }
+        }
+
+        deferred_objs_.clear();
+    }
+
+    void renderer::l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
+        glDisable(GL_DEPTH_TEST);
+
+        // Bind buffer.
+        lbuffer_->clear_colour_all();
+        lbuffer_->clear_depth_stencil();
+        lbuffer_->set_draw_colour_attachment_all();
+        lbuffer_->bind();
+
+        // Bind textures.
+        gbuffer_->get_colour_attachment(gbuffer_position)->bind(texture_unit::texture_gbuffer_position);
+        gbuffer_->get_colour_attachment(gbuffer_normal)->bind(texture_unit::texture_gbuffer_normal);
+        gbuffer_->get_colour_attachment(gbuffer_albedo)->bind(texture_unit::texture_gbuffer_albedo);
+        gbuffer_->get_colour_attachment(gbuffer_specular)->bind(texture_unit::texture_gbuffer_specular);
+        gbuffer_->get_colour_attachment(gbuffer_gloss)->bind(texture_unit::texture_gbuffer_gloss);
+
+        // Use shader.
+        material::l_shader_->use();
+
+        // Lights.
+        material::l_shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
+        material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
+
+        // Mesh.
+        screen_quad_->bind();
+        screen_quad_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
+
+        // If there are more lights than we can render in a single lighting pass, split it into multiple passes.
+        const auto num_pass = (lights_.size() / max_lights) + 1;
+        for (size_t p = 0; p < num_pass; ++p) {
+            // Swap the diffuse and specular buffers.
+            lbuffer_->get_colour_attachment(lbuffer_diffuse)->bind(texture_unit::texture_lbuffer_diffuse);
+            lbuffer_->get_colour_attachment(lbuffer_specular)->bind(texture_unit::texture_lbuffer_specular);
+            lbuffer_->swap_buffers();
+
+            size_t start = max_lights * p;
+            size_t end = maths_util::min<size_t>(start + max_lights, lights_.size());
+            material::l_shader_->set_uniform(shader_uniform::u_num_lights, (int)(end - start));
+
+            size_t curr = start; // Index in C++.
+            size_t index = 0; // Index in shader.
+            while (curr < end) {
+                const auto& t = lights_[curr].transform_;
+                const auto& l = lights_[curr].light_;
+
+                auto position_matrix = _view_matrix * t.model_matrix_;
+                auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
+                vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
+
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_mode0, l.get_mode());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_power0, l.get_power());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_colour0, l.get_colour());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_position_camera_space0, position_camera_space);
+                material::l_shader_->set_uniform(index + shader_uniform::u_light_direction_camera_space0, direction_vector);
+
+                ++curr;
+                ++index;
+            }
+
+            // Draw.
+            glDrawElementsInstanced(GL_TRIANGLES, screen_quad_->num_indices(), GL_UNSIGNED_INT, 0, 1);
+        }
+
+        lights_.clear();
     }
 }

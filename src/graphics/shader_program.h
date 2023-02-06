@@ -10,7 +10,7 @@
 #include "graphics/texture.h"
 
 namespace mkr {
-    #define max_lights 64
+    #define max_lights 32
 
     enum shader_uniform : uint32_t {
         // Vertex Shader
@@ -33,11 +33,28 @@ namespace mkr {
         u_texture_displacement_enabled,
 
         u_texture_skybox,
+
         u_texture_albedo,
         u_texture_normal,
         u_texture_specular,
         u_texture_gloss,
         u_texture_displacement,
+
+        u_texture_gbuffer_position,
+        u_texture_gbuffer_normal,
+        u_texture_gbuffer_albedo,
+        u_texture_gbuffer_specular,
+        u_texture_gbuffer_gloss,
+
+        u_texture_lbuffer_composite,
+        u_texture_lbuffer_diffuse,
+        u_texture_lbuffer_specular,
+
+        u_texture_fbuffer_composite,
+        u_texture_fbuffer_position,
+        u_texture_fbuffer_normal,
+
+        u_texture_pbuffer_composite,
 
         u_enable_lights,
         u_num_lights,
@@ -68,7 +85,7 @@ namespace mkr {
         const std::string name_;
         const render_pass render_pass_;
         GLuint program_handle_;
-        GLint uniform_handles_[num_shader_uniforms];
+        GLint uniform_handles_[num_shader_uniforms] = { 0 };
 
         static GLuint create_shader(GLenum _shader_type, const std::string& _shader_source);
 

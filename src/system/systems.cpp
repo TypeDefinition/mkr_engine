@@ -8,7 +8,7 @@ namespace mkr {
                         return;
                     }
 
-                    const auto* trans = _e.get<transform>();
+                    const auto trans = _e.get<transform>();
                     const matrix4x4 model_matrix = _parent_matrix * trans->model_matrix();
                     const quaternion rotation = _parent_rotation * trans->get_rotation();
                     const vector3 position{model_matrix[3][0], model_matrix[3][1], model_matrix[3][2]};

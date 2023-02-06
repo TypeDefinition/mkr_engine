@@ -163,12 +163,7 @@ namespace mkr {
     }
 
     // Meshes
-    std::shared_ptr<mesh> asset_loader::get_mesh(const std::string& _name) {
-        auto iter = meshes_.find(_name);
-        return (iter == meshes_.end()) ? nullptr : iter->second;
-    }
-
-    std::shared_ptr<mesh> asset_loader::make_skybox(const std::string& _name) {
+    std::shared_ptr<mesh> asset_loader::make_skybox() {
         std::vector<vertex> vertices(24);
         std::vector<uint32_t> indices;
 
@@ -342,12 +337,10 @@ namespace mkr {
         indices.push_back(23);
         indices.push_back(21);
 
-        auto mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
-        meshes_.insert({_name, mesh_ptr});
-        return mesh_ptr;
+        return std::make_shared<mesh>("skybox", vertices, indices);
     }
 
-    std::shared_ptr<mesh> asset_loader::make_screen_quad(const std::string& _name) {
+    std::shared_ptr<mesh> asset_loader::make_screen_quad() {
         std::vector<vertex> vertices(4);
 
         vertices[0].position_ = {-1.0f, -1.0f, 0.0f};
@@ -380,9 +373,12 @@ namespace mkr {
         indices[4] = 3;
         indices[5] = 1;
 
-        std::shared_ptr<mesh> mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
-        meshes_.insert({_name, mesh_ptr});
-        return mesh_ptr;
+        return std::make_shared<mesh>("screen_quad", vertices, indices);
+    }
+
+    std::shared_ptr<mesh> asset_loader::get_mesh(const std::string& _name) {
+        auto iter = meshes_.find(_name);
+        return (iter == meshes_.end()) ? nullptr : iter->second;
     }
 
     std::shared_ptr<mesh> asset_loader::make_triangle(const std::string& _name) {

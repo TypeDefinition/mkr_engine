@@ -71,17 +71,18 @@ namespace mkr {
                 if (!e) { return; }
                 if (e->state_ != button_state::pressed) { return; }
 
+                float velocity = 10.0f;
                 if (e->action_ == move_left) {
-                    translation_.x_ += application::instance().delta_time() * 2.0f;
+                    translation_.x_ += application::instance().delta_time() * velocity;
                 }
                 if (e->action_ == move_right) {
-                    translation_.x_ -= application::instance().delta_time() * 2.0f;
+                    translation_.x_ -= application::instance().delta_time() * velocity;
                 }
                 if (e->action_ == move_forward) {
-                    translation_.z_ += application::instance().delta_time() * 2.0f;
+                    translation_.z_ += application::instance().delta_time() * velocity;
                 }
                 if (e->action_ == move_backward) {
-                    translation_.z_ -= application::instance().delta_time() * 2.0f;
+                    translation_.z_ -= application::instance().delta_time() * velocity;
                 }
 
                 if (e->action_ == look_left) {

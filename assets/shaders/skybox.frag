@@ -14,5 +14,5 @@ uniform bool u_texture_skybox_enabled;
 uniform samplerCube u_texture_skybox;
 
 void main() {
-    io_frag_colour = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) : u_sky_colour;
+    io_frag_colour = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) * u_sky_colour : u_sky_colour;
 }

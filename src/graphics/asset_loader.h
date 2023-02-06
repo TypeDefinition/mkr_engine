@@ -6,6 +6,7 @@
 #include "graphics/material.h"
 #include "graphics/mesh.h"
 #include "graphics/texture.h"
+#include "graphics/skybox.h"
 
 namespace mkr {
     class asset_loader : public singleton<asset_loader> {
@@ -64,11 +65,11 @@ namespace mkr {
         std::shared_ptr<material> make_material(const std::string& _name);
 
         // Meshes
+        std::shared_ptr<mesh> make_skybox();
+
+        std::shared_ptr<mesh> make_screen_quad();
+
         std::shared_ptr<mesh> get_mesh(const std::string& _name);
-
-        std::shared_ptr<mesh> make_skybox(const std::string& _name);
-
-        std::shared_ptr<mesh> make_screen_quad(const std::string& _name);
 
         std::shared_ptr<mesh> make_quad(const std::string& _name);
 

@@ -51,6 +51,10 @@ namespace mkr {
 
         [[nodiscard]] inline const std::string& title() const { return title_; }
 
+        [[nodiscard]] inline uint32_t width() const { return width_; }
+
+        [[nodiscard]] inline uint32_t height() const { return height_; }
+
         inline void swap_buffers() { SDL_GL_SwapWindow(window_); }
     };
 }

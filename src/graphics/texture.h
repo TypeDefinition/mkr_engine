@@ -1,17 +1,37 @@
 #pragma once
 
+#include <array>
 #include <cmath>
 #include <SDL2/SDL_image.h>
 #include <GL/glew.h>
+#include <maths/maths_util.h>
+#include "graphics/pixel_format.h"
 
 namespace mkr {
     enum texture_unit {
         texture_skybox,
+
         texture_albedo,
         texture_normal,
         texture_specular,
         texture_gloss,
         texture_displacement,
+
+        texture_gbuffer_position,
+        texture_gbuffer_normal,
+        texture_gbuffer_albedo,
+        texture_gbuffer_specular,
+        texture_gbuffer_gloss,
+
+        texture_lbuffer_composite,
+        texture_lbuffer_diffuse,
+        texture_lbuffer_specular,
+
+        texture_fbuffer_composite,
+        texture_fbuffer_position,
+        texture_fbuffer_normal,
+
+        texture_pbuffer_composite,
     };
 
     enum texture_wrap_mode : GLint {
@@ -80,12 +100,15 @@ namespace mkr {
 
         [[nodiscard]] inline texture_wrap_mode wrap_mode() const { return wrap_mode_; }
 
+        [[nodiscard]] inline GLuint handle() const { return handle_; }
+
         inline void bind(texture_unit _texture_unit) { glBindTextureUnit(_texture_unit, handle_); }
     };
 
     class texture_2d : public texture {
     public:
-        texture_2d(const std::string& _name, uint32_t _width, uint32_t _height, const void* _data)
+        // Image
+        texture_2d(const std::string& _name, uint32_t _width, uint32_t _height, const void* _data, sized_format _format = sized_format::rgba8)
                 : texture(_name, _width, _height, texture_wrap_mode::repeat) {
             /**
              * IMPORTANT: Unlike glTexImage2D, we have to explicitly state the number of mipmaps to generate.
@@ -97,10 +120,10 @@ namespace mkr {
             glCreateTextures(GL_TEXTURE_2D, 1, &handle_);
 
             glTextureStorage2D(handle_, (GLsizei)mip_map_level(width_, height_),
-                               GL_RGBA8, ///< Format to store the texture data in OpenGL.
+                               (GLenum)_format, ///< Format to store the texture data in OpenGL.
                                (GLsizei)width_, (GLsizei)height_);
             glTextureSubImage2D(handle_, 0, 0, 0, (GLsizei)width_, (GLsizei)height_,
-                                GL_RGBA, ///< Format of the image data.
+                                (GLenum)pixel_format::sized_to_base(_format), ///< Format of the image data.
                                 GL_UNSIGNED_BYTE, _data);
 
             // Texture Parameter(s)
@@ -113,6 +136,18 @@ namespace mkr {
             glGenerateTextureMipmap(handle_);
         }
 
+        // Renderbuffer
+        texture_2d(const std::string& _name, uint32_t _width, uint32_t _height, sized_format _format)
+                : texture(_name, _width, _height, texture_wrap_mode::repeat) {
+            glCreateTextures(GL_TEXTURE_2D, 1, &handle_);
+            glTextureStorage2D(handle_, 1, (GLenum)_format, (GLsizei)width_, (GLsizei)height_);
+            glTextureParameteri(handle_, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTextureParameteri(handle_, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTextureParameteri(handle_, GL_TEXTURE_WRAP_S, wrap_mode_);
+            glTextureParameteri(handle_, GL_TEXTURE_WRAP_T, wrap_mode_);
+            glGenerateTextureMipmap(handle_);
+        }
+
         virtual ~texture_2d() {
             // Delete Texture
             glDeleteTextures(1, &handle_);
@@ -121,18 +156,18 @@ namespace mkr {
 
     class texture_cube : public texture {
     public:
-        texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, num_texture_cube_sides> _data)
+        texture_cube(const std::string& _name, uint32_t _width, uint32_t _height, std::array<const void*, num_texture_cube_sides> _data, sized_format _format = sized_format::rgba8)
                 : texture(_name, _width, _height, texture_wrap_mode::clamp_to_edge) {
             glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &handle_);
 
             glTextureStorage2D(handle_, (GLsizei)mip_map_level(width_, height_),
-                               GL_RGBA8, ///< Format to store the texture data in OpenGL. Standardise to RGBA8
+                               (GLenum)_format, ///< Format to store the texture data in OpenGL. Standardise to RGBA8
                                (GLsizei)width_, (GLsizei)height_);
 
             // Note that for cubemaps, we have to use glTextureSubImage3D instead of glTextureSubImage2D, but we still use glTextureStorage2D.
             for (auto i = 0; i < num_texture_cube_sides; ++i) {
                 glTextureSubImage3D(handle_, 0, 0, 0, i, (GLsizei)width_, (GLsizei)height_, 1,
-                                    GL_RGBA, ///< Format of the image data.
+                                    (GLenum)pixel_format::sized_to_base(_format), ///< Format of the image data.
                                     GL_UNSIGNED_BYTE, _data[i]);
             }
             GL_TEXTURE_CUBE_MAP_POSITIVE_X;

@@ -89,14 +89,14 @@ namespace mkr {
             flip_image_y(pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
         }
 
-        auto texture = std::make_shared<texture_2d>(_name, converted_surface->w, converted_surface->h, pixel_data);
+        auto texture_ptr = std::make_shared<texture_2d>(_name, converted_surface->w, converted_surface->h, pixel_data);
 
         SDL_FreeFormat(pixel_format);
         SDL_FreeSurface(raw_surface);
         SDL_FreeSurface(converted_surface);
 
-        texture_2ds_[_name] = texture;
-        return texture;
+        texture_2ds_[_name] = texture_ptr;
+        return texture_ptr;
     }
 
     // Texture Cube
@@ -130,7 +130,7 @@ namespace mkr {
             }
         }
 
-        std::shared_ptr<texture_cube> texture = std::make_shared<texture_cube>(_name, converted_surfaces[0]->w, converted_surfaces[0]->h,
+        std::shared_ptr<texture_cube> texture_ptr = std::make_shared<texture_cube>(_name, converted_surfaces[0]->w, converted_surfaces[0]->h,
                                                                                std::array<const void*, num_texture_cube_sides>{
                                                                                        converted_surfaces[0]->pixels,
                                                                                        converted_surfaces[1]->pixels,
@@ -146,11 +146,23 @@ namespace mkr {
             SDL_FreeSurface(converted_surfaces[i]);
         }
 
-        texture_cubes_[_name] = texture;
-        return texture;
+        texture_cubes_[_name] = texture_ptr;
+        return texture_ptr;
     }
 
-    // Mesh
+    // Materials
+    std::shared_ptr<material> asset_loader::get_material(const std::string& _name) {
+        auto iter = materials_.find(_name);
+        return (iter == materials_.end()) ? nullptr : iter->second;
+    }
+
+    std::shared_ptr<material> asset_loader::make_material(const std::string& _name) {
+        auto material_ptr = std::make_shared<material>();
+        materials_[_name] = material_ptr;
+        return material_ptr;
+    }
+
+    // Meshes
     std::shared_ptr<mesh> asset_loader::get_mesh(const std::string& _name) {
         auto iter = meshes_.find(_name);
         return (iter == meshes_.end()) ? nullptr : iter->second;

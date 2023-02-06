@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <common/singleton.h>
 #include "graphics/shader_program.h"
+#include "graphics/material.h"
 #include "graphics/mesh.h"
 #include "graphics/texture.h"
 
@@ -14,6 +15,7 @@ namespace mkr {
         std::unordered_map<std::string, std::shared_ptr<shader_program>> shader_programs_;
         std::unordered_map<std::string, std::shared_ptr<texture_2d>> texture_2ds_;
         std::unordered_map<std::string, std::shared_ptr<texture_cube>> texture_cubes_;
+        std::unordered_map<std::string, std::shared_ptr<material>> materials_;
         std::unordered_map<std::string, std::shared_ptr<mesh>> meshes_;
 
         /**
@@ -56,7 +58,12 @@ namespace mkr {
 
         std::shared_ptr<texture_cube> load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x = false, bool _flip_y = false);
 
-        // Mesh
+        // Materials
+        std::shared_ptr<material> get_material(const std::string& _name);
+
+        std::shared_ptr<material> make_material(const std::string& _name);
+
+        // Meshes
         std::shared_ptr<mesh> get_mesh(const std::string& _name);
 
         std::shared_ptr<mesh> make_skybox(const std::string& _name);

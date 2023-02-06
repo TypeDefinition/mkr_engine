@@ -27,8 +27,9 @@ namespace mkr {
         // Load Assets
         asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
         asset_loader::instance().load_obj("wall", "/mnt/ZorinWork/mkr_engine/assets/models/wall.obj");
-        asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
-        asset_loader::instance().load_texture_2d("test_texture", "/mnt/ZorinWork/mkr_engine/assets/textures/test.png");
+
+        auto mat = asset_loader::instance().make_material("wall");
+        mat->shader_ = asset_loader::instance().load_shader_program("forward_shader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/forward.frag"});
 
         // asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Albedo_2048x2048.png");
         // asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Normal_2048x2048.png");
@@ -36,9 +37,9 @@ namespace mkr {
         // asset_loader::instance().load_texture_2d("brick_wall_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Specular_2048x2048.png");
         // asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/Brick Wall/Brick_Wall_003_Displacement_2048x2048.png");
 
-        asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_albedo.jpg");
-        asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_normal.jpg");
-        asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_displacement.jpg");
+        mat->texture_albedo_ = asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_albedo.jpg");
+        mat->texture_normal_ = asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_normal.jpg");
+        mat->texture_displacement_ =asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_displacement.jpg");
 
         renderer::instance().set_skybox_shader(asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"}));
         renderer::instance().set_skybox_texture(asset_loader::instance().load_texture_cube("skybox", {
@@ -49,6 +50,8 @@ namespace mkr {
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_front.png",
                 "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/nebula/skybox_nebula_back.png",
         }));
+
+
     }
 
     void test_scene::init_systems() {
@@ -98,63 +101,10 @@ namespace mkr {
 
             mesh_renderer renderer;
             renderer.mesh_ = asset_loader::instance().get_mesh("wall");
-            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("brick_wall_albedo");
-            renderer.texture_normal_ = asset_loader::instance().get_texture_2d("brick_wall_normal");
-            // renderer.texture_specular_ = asset_loader::instance().get_texture_2d("brick_wall_specular");
-            // renderer.texture_gloss = asset_loader::instance().get_texture_2d("brick_wall_gloss");
-            renderer.texture_displacement_ = asset_loader::instance().get_texture_2d("brick_wall_displacement");
-            renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
+            renderer.material_ = asset_loader::instance().get_material("wall");
 
             entity0.set<transform>(trans).set<mesh_renderer>(renderer);
         }
-
-        auto entity1 = world_.entity();
-        {
-            transform trans;
-            trans.set_position({9.0f, 0.0f, 0.0f});
-
-            mesh_renderer renderer;
-            renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
-            renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
-
-            entity1.set<transform>(trans).set<mesh_renderer>(renderer);
-        }
-
-        auto entity2 = world_.entity();
-        {
-            transform trans;
-            trans.set_position({3.0f, 0.0f, 0.0f});
-
-            mesh_renderer renderer;
-            renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-            renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
-            renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
-
-            entity2.set<transform>(trans).set<mesh_renderer>(renderer);
-        }
-
-        entity2.child_of(entity1);
-        entity1.child_of(entity0);
-
-        /*int count = 20;
-        for (int x = 0; x <= count; x += 2) {
-            for (int y = 0; y <= count; y += 2) {
-                for (int z = 0; z <= count; z += 2) {
-                    auto cube = world_.entity();
-
-                    transform trans;
-                    trans.set_position({(float)x, (float)y, (float)z});
-
-                    mesh_renderer renderer;
-                    renderer.mesh_ = asset_loader::instance().get_mesh("cube");
-                    renderer.texture_albedo_ = asset_loader::instance().get_texture_2d("test_texture");
-                    renderer.shader_ = asset_loader::instance().get_shader_program("forward_shader");
-
-                    cube.set<transform>(trans).set<mesh_renderer>(renderer).add<root>();
-                }
-            }
-        }*/
 
         // Lights
         {

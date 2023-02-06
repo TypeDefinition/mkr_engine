@@ -237,7 +237,7 @@ vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal
 }
 
 vec4 get_albedo(const in vec2 _tex_coord) {
-    return u_texture_albedo_enabled ? texture(u_texture_albedo, _tex_coord) : u_albedo_colour;
+    return u_texture_albedo_enabled ? texture(u_texture_albedo, _tex_coord) * u_albedo_colour : u_albedo_colour;
 }
 
 vec3 get_normal(const in vec2 _tex_coord) {
@@ -265,7 +265,7 @@ vec4 get_specular(const in vec2 _tex_coord) {
 }
 
 float get_gloss(const in vec2 _tex_coord) {
-    return u_texture_gloss_enabled ? texture(u_texture_gloss, _tex_coord).r : u_gloss;
+    return u_texture_gloss_enabled ? texture(u_texture_gloss, _tex_coord).r * u_gloss : u_gloss;
 }
 
 vec2 get_tex_coord() {

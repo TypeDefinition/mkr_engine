@@ -46,7 +46,6 @@ namespace mkr {
         u_texture_gbuffer_specular,
         u_texture_gbuffer_gloss,
 
-        u_texture_lbuffer_composite,
         u_texture_lbuffer_diffuse,
         u_texture_lbuffer_specular,
 

@@ -150,6 +150,11 @@ namespace mkr {
             fbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
             dbuffer_->bind();
         }
+
+        lights_.clear();
+        deferred_objs_.clear();
+        forward_opaque_objs_.clear();
+        forward_transparent_objs_.clear();
     }
 
     void renderer::g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
@@ -212,8 +217,6 @@ namespace mkr {
                 glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
             }
         }
-
-        deferred_objs_.clear();
     }
 
     void renderer::l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
@@ -284,8 +287,6 @@ namespace mkr {
             // Draw.
             glDrawElementsInstanced(GL_TRIANGLES, screen_quad_->num_indices(), GL_UNSIGNED_INT, 0, 1);
         }
-
-        lights_.clear();
     }
 
     void renderer::f_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox) {
@@ -337,9 +338,10 @@ namespace mkr {
             shader->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
             shader->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
-            material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
-            material::l_shader_->set_uniform(shader_uniform::u_num_lights, (int)lights_.size());
-            for (auto i = 0; i < lights_.size(); ++i) {
+            const int32_t num_lights = maths_util::min<int32_t >(lights_.size(), max_lights);
+            shader->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
+            shader->set_uniform(shader_uniform::u_num_lights, num_lights);
+            for (auto i = 0; i < num_lights; ++i) {
                 const auto& t = lights_[i].transform_;
                 const auto& l = lights_[i].light_;
 
@@ -374,9 +376,6 @@ namespace mkr {
                 glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
             }
         }
-
-        forward_opaque_objs_.clear();
-        forward_transparent_objs_.clear();
 
         // Render skybox.
         if (_skybox && _skybox->shader_) {

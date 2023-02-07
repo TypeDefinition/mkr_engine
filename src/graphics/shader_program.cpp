@@ -183,8 +183,6 @@ namespace mkr {
                 set_uniform(shader_uniform::u_texture_lbuffer_specular, (int32_t)texture_unit::texture_lbuffer_specular);
                 break;
             case render_pass::forward:
-                set_uniform(shader_uniform::u_texture_lbuffer_composite, (int32_t)texture_unit::texture_lbuffer_composite);
-
                 set_uniform(shader_uniform::u_texture_albedo, (int32_t)texture_unit::texture_albedo);
                 set_uniform(shader_uniform::u_texture_normal, (int32_t)texture_unit::texture_normal);
                 set_uniform(shader_uniform::u_texture_specular, (int32_t)texture_unit::texture_specular);

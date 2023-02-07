@@ -7,7 +7,7 @@ const int light_point = 0;
 const int light_spot = 1;
 const int light_directional = 2;
 
-const int max_lights = 64;
+const int max_lights = 32;
 
 struct light {
     int mode_;

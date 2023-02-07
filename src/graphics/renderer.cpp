@@ -7,28 +7,6 @@
 #include "graphics/asset_loader.h"
 
 namespace mkr {
-    /*void renderer::draw_skybox() {
-        if (!skybox_shader_ || !skybox_mesh_) {
-            return;
-        }
-
-        glDisable(GL_DEPTH_TEST);
-
-        skybox_mesh_->bind();
-        skybox_mesh_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
-
-        if (skybox_texture_) {
-            skybox_texture_->bind(texture_unit::texture_skybox);
-        }
-
-        skybox_shader_->set_uniform(shader_uniform::u_texture_skybox_enabled, skybox_texture_ != nullptr);
-        skybox_shader_->set_uniform(shader_uniform::u_sky_colour, sky_colour_);
-        skybox_shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, skybox_view_projection_matrix);
-        skybox_shader_->use();
-
-        glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
-    }*/
-
     void renderer::init() {
         // Initialise SDL_image.
         int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP;
@@ -67,7 +45,7 @@ namespace mkr {
             throw std::runtime_error("glewInit failed");
         }
 
-        skybox_ = asset_loader::instance().make_skybox();
+        skybox_mesh_ = asset_loader::instance().make_skybox();
         screen_quad_ = asset_loader::instance().make_screen_quad();
 
         // Framebuffers
@@ -81,7 +59,17 @@ namespace mkr {
     void renderer::start() {
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_CULL_FACE);
+
+        // Depth
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
+
+        // Blend
+        glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        // Stencil
         // glEnable(GL_STENCIL_TEST);
         // glStencilMask(0xFF); // Each bit is written to the stencil buffer as-is.
         // glDisable(GL_STENCIL_TEST);
@@ -114,10 +102,24 @@ namespace mkr {
     }
 
     void renderer::update_objects(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
-        if (_mesh_renderer.material_->render_path_ == render_path::deferred) {
-            deferred_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
-        } else {
-            forward_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
+        switch (_mesh_renderer.material_->render_path_) {
+            case render_path::deferred:
+                if (material::g_shader_ && material::l_shader_) {
+                    deferred_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
+                }
+                break;
+            case render_path::forward_opaque:
+                if (_mesh_renderer.material_->f_shader_) {
+                    forward_opaque_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
+                }
+                break;
+            case render_path::forward_transparent:
+                if (_mesh_renderer.material_->f_shader_) {
+                    forward_transparent_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -139,14 +141,13 @@ namespace mkr {
                 projection_matrix = matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
             }
 
-            auto skybox_view_projection_matrix = projection_matrix * matrix_util::view_matrix(vector3::zero, trans.forward_, trans.up_);
-
             g_pass(view_matrix, projection_matrix);
             l_pass(view_matrix, view_forward, view_up, view_right);
+            f_pass(view_matrix, projection_matrix, view_forward, view_up, view_right, cam.skybox_);
 
             // Blit to default framebuffer.
-            lbuffer_->set_read_colour_attachment(lbuffer_composite);
-            lbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+            fbuffer_->set_read_colour_attachment(fbuffer_composite);
+            fbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
             dbuffer_->bind();
         }
     }
@@ -155,8 +156,10 @@ namespace mkr {
         // IMPORTANT: Disable blending so that and fragment with 0 in its alpha channel does not get discarded.
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
-        glDepthMask(GL_TRUE);
-        glDepthFunc(GL_LESS);
+        glEnable(GL_STENCIL_TEST);
+        glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
+        glStencilFunc(GL_ALWAYS, stencil_opaque_object, 0xFFFFFFFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
         // Bind buffer.
         gbuffer_->clear_colour_all();
@@ -215,6 +218,7 @@ namespace mkr {
 
     void renderer::l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
         glDisable(GL_DEPTH_TEST);
+        glDisable(GL_STENCIL_TEST);
 
         // Bind buffer.
         lbuffer_->clear_colour_all();
@@ -233,7 +237,7 @@ namespace mkr {
         material::l_shader_->use();
 
         // Lights.
-        material::l_shader_->set_uniform(shader_uniform::u_ambient_colour, ambient_colour_);
+        material::l_shader_->set_uniform(shader_uniform::u_ambient_colour, material::ambient_colour_);
         material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
 
         // Mesh.
@@ -282,5 +286,115 @@ namespace mkr {
         }
 
         lights_.clear();
+    }
+
+    void renderer::f_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox) {
+        // Render objects.
+        glEnable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_STENCIL_TEST);
+        glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
+        glStencilFunc(GL_ALWAYS, stencil_opaque_object, 0xFFFFFFFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
+        fbuffer_->clear_colour_all();
+        gbuffer_->blit_to(fbuffer_, false, true, true, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+        lbuffer_->set_read_colour_attachment(lbuffer_composite);
+        fbuffer_->set_draw_colour_attachment(fbuffer_composite);
+        lbuffer_->blit_to(fbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+        fbuffer_->set_draw_colour_attachment_all();
+        fbuffer_->bind();
+
+        auto view_projection_matrix = _projection_matrix * _view_matrix;
+        for (auto& material_iter: forward_opaque_objs_) {
+            auto material_ptr = material_iter.first;
+            auto shader = material_ptr->f_shader_;
+            shader->use();
+
+            // Bind textures.
+            if (material_ptr->texture_albedo_) { material_ptr->texture_albedo_->bind(texture_unit::texture_albedo); }
+            if (material_ptr->texture_normal_) { material_ptr->texture_normal_->bind(texture_unit::texture_normal); }
+            if (material_ptr->texture_specular_) { material_ptr->texture_specular_->bind(texture_unit::texture_specular); }
+            if (material_ptr->texture_gloss_) { material_ptr->texture_gloss_->bind(texture_unit::texture_gloss); }
+            if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
+
+            // Vertex shader uniforms.
+            shader->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
+            shader->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
+            shader->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+
+            // Fragment shader uniforms.
+            shader->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);
+            shader->set_uniform(shader_uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
+            shader->set_uniform(shader_uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
+            shader->set_uniform(shader_uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
+            shader->set_uniform(shader_uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+
+            shader->set_uniform(shader_uniform::u_ambient_colour, material_ptr->ambient_colour_);
+            shader->set_uniform(shader_uniform::u_albedo_colour, material_ptr->albedo_colour_);
+            shader->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
+            shader->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
+
+            material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
+            material::l_shader_->set_uniform(shader_uniform::u_num_lights, (int)lights_.size());
+            for (auto i = 0; i < lights_.size(); ++i) {
+                const auto& t = lights_[i].transform_;
+                const auto& l = lights_[i].light_;
+
+                auto position_matrix = _view_matrix * t.model_matrix_;
+                auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
+                vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
+
+                shader->set_uniform(i + shader_uniform::u_light_mode0, l.get_mode());
+                shader->set_uniform(i + shader_uniform::u_light_power0, l.get_power());
+                shader->set_uniform(i + shader_uniform::u_light_colour0, l.get_colour());
+                shader->set_uniform(i + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
+                shader->set_uniform(i + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
+                shader->set_uniform(i + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+                shader->set_uniform(i + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                shader->set_uniform(i + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+                shader->set_uniform(i + shader_uniform::u_light_position_camera_space0, position_camera_space);
+                shader->set_uniform(i + shader_uniform::u_light_direction_camera_space0, direction_vector);
+            }
+
+            // Draw to screen.
+            for (auto& mesh_iter: material_iter.second) {
+                auto mesh_ptr = mesh_iter.first;
+                auto& instances = mesh_iter.second;
+                std::for_each(instances.begin(), instances.end(), [=](mesh_instance& _inst) {
+                    const auto model_view_matrix = _view_matrix * _inst.model_matrix_;
+                    const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
+                    _inst.normal_matrix_ = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
+                });
+
+                mesh_ptr->bind();
+                mesh_ptr->set_instance_data(instances);
+                glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, instances.size());
+            }
+        }
+
+        forward_opaque_objs_.clear();
+        forward_transparent_objs_.clear();
+
+        // Render skybox.
+        if (_skybox && _skybox->shader_) {
+            glDisable(GL_DEPTH_TEST);
+            glEnable(GL_STENCIL_TEST);
+            glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
+            glStencilFunc(GL_NOTEQUAL, stencil_opaque_object, 0xFFFFFFFF);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+            if (_skybox->texture_) { _skybox->texture_->bind(texture_unit::texture_skybox); }
+            _skybox->shader_->use();
+            _skybox->shader_->set_uniform(shader_uniform::u_texture_skybox_enabled, _skybox->texture_ != nullptr);
+            _skybox->shader_->set_uniform(shader_uniform::u_sky_colour, _skybox->colour_);
+            _skybox->shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, _projection_matrix * matrix_util::view_matrix(vector3::zero, _view_forward, _view_up));
+
+            skybox_mesh_->bind();
+            skybox_mesh_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
+            glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
+        }
     }
 }

@@ -131,10 +131,6 @@ namespace mkr {
         diffuse_back_ = std::make_shared<texture_2d>("diffuse", _width, _height, sized_format::rgba8);
         specular_back_ = std::make_shared<texture_2d>("specular", _width, _height, sized_format::rgba8);
 
-        // Depth-Stencil attachments.
-        depth_stencil_attachment_ = std::make_shared<texture_2d>("depth_stencil", _width, _height, sized_format::depth24_stencil8);
-        glNamedFramebufferTexture(handle_, GL_DEPTH_STENCIL_ATTACHMENT, depth_stencil_attachment_->handle(), 0);
-
         // Completeness check.
         if (!is_complete()) {
             throw std::runtime_error("incomplete light buffer");

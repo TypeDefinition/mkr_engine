@@ -36,7 +36,7 @@ in io_block {
 };
 
 // Outputs
-layout (location = 0) out vec4 io_frag_colour;
+layout (location = 0) out vec4 io_composite;
 
 // Uniforms
 uniform vec4 u_ambient_colour;
@@ -184,19 +184,19 @@ vec4 light_diffuse(const in vec3 _vertex_position, const in vec3 _vertex_normal)
         switch (u_lights[i].mode_) {
             case light_point:
             colour += u_lights[i].colour_ *
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
-                light_attenuation(u_lights[i], _vertex_position);
+            diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+            light_attenuation(u_lights[i], _vertex_position);
             break;
             case light_spot:
             colour += u_lights[i].colour_ *
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+            diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+            light_attenuation(u_lights[i], _vertex_position) *
+            spotlight_effect(u_lights[i], _vertex_position);
             break;
             case light_directional:
             colour += u_lights[i].colour_ *
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
-                u_lights[i].power_;
+            diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+            u_lights[i].power_;
             break;
         }
     }
@@ -209,22 +209,22 @@ vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                light_attenuation(u_lights[i], _vertex_position);
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            light_attenuation(u_lights[i], _vertex_position);
             break;
             case light_spot:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            light_attenuation(u_lights[i], _vertex_position) *
+            spotlight_effect(u_lights[i], _vertex_position);
             break;
             case light_directional:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                u_lights[i].power_;
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            u_lights[i].power_;
             break;
         }
     }
@@ -271,7 +271,7 @@ void main() {
     const vec2 tex_coord = get_tex_coord();
 
     if (!u_enable_lights) {
-        io_frag_colour = get_albedo(tex_coord);
+        io_composite = get_albedo(tex_coord);
         return;
     }
 
@@ -284,5 +284,5 @@ void main() {
     vec4 diffuse_colour = albedo * light_diffuse(io_vertex_position, normal);
     vec4 specular_colour = specular * light_specular(io_vertex_position, normal, gloss);
 
-    io_frag_colour = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+    io_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
 }

@@ -3,6 +3,7 @@
 namespace mkr {
     enum class render_path {
         deferred,
-        forward,
+        forward_opaque,
+        forward_transparent,
     };
 }

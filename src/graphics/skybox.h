@@ -10,6 +10,6 @@ namespace mkr {
     public:
         std::shared_ptr<texture_cube> texture_;
         std::shared_ptr<shader_program> shader_;
-        colour sky_colour_ = colour::white;
+        colour colour_ = colour::white;
     };
 }

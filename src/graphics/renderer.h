@@ -15,6 +15,12 @@
 #include "component/tag.h"
 
 namespace mkr {
+    // There are 8 bits in the stencil buffer. We will use the higher 4-bits for our renderer.
+    // The lower 4-bits will be reserved for the future.
+    enum stencil_value : uint8_t {
+        stencil_opaque_object = 0x10,
+    };
+
     struct camera_data {
         global_transform transform_;
         camera camera_;
@@ -40,18 +46,18 @@ namespace mkr {
         std::shared_ptr<fbuffer> fbuffer_;
         std::shared_ptr<pbuffer> pbuffer_;
         std::shared_ptr<mesh> screen_quad_;
-        std::shared_ptr<mesh> skybox_;
+        std::shared_ptr<mesh> skybox_mesh_;
 
         // Camera
         std::priority_queue<camera_data> cameras_;
 
         // Lights
-        colour ambient_colour_ = colour::dark_grey;
         std::vector<light_data> lights_;
 
         // Objects
         std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> deferred_objs_;
-        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_objs_;
+        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_opaque_objs_;
+        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_transparent_objs_;
 
         renderer() {}
 
@@ -60,6 +66,7 @@ namespace mkr {
         void render();
         void g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
         void l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
+        void f_pass(const matrix4x4& _view_matrix,  const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox);
 
     public:
         void init();

@@ -12,6 +12,7 @@ namespace mkr {
         ~material() = default;
 
         static bool enable_lights_;
+        static colour ambient_colour_;
         static std::shared_ptr<shader_program> g_shader_, l_shader_;
         static std::vector<std::shared_ptr<shader_program>> p_shaders_;
 

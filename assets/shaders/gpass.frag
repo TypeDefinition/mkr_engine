@@ -36,11 +36,31 @@ uniform sampler2D u_texture_specular;
 uniform sampler2D u_texture_gloss;
 uniform sampler2D u_texture_displacement;
 
-vec2 parallax_occlusion_mapping(const vec2 _tex_coord) {
+vec2 parallax_mapping(const vec2 _tex_coord) {
+    // Get the direction of the camera to the fragment's surface in tangent space.
     vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
+    // Convert height map to depth map because depth looks nicer then height.
+    // A height of 0.9 is a depth of 0.1, a height of 0.4 is a depth of 0.6 etc.
     float depth = 1.0f - texture(u_texture_displacement, _tex_coord).r;
-    const vec2 max_uv_displacement = (view_direction.xy / -view_direction.z) * depth * u_displacement_scale;
 
+    // Note the division of view_direction.xy by view_direction.z.
+    // As the view_direction vector is normalized view_direction.z will be somewhere in the range between 0.0 and 1.0.
+    // When view_direction is largely parallel to the surface its z component is close to 0.0 and the division returns a much larger offset as
+    // compared to when view_direction is perpendicular to the surface.
+    // So basically we're increasing the size of the offset in such a way that it offsets the texture coordinates at a larger scale when
+    // looking at a surface from a steeper angle.
+
+    // Some people prefer to leave the division by view_direction.z out of the equation as normal Parallax Mapping could produce undesirable results at certain angles.
+    // This is called "Parallax Mapping with Offset Limiting".
+    // Choosing which technique to pick is usually a matter of personal preference.
+
+    // Do take note that if we divide by view_direction.z, make sure to negate it,
+    // as we are in tangent space, view_direction.z is a negative number, and any division by it will negate our result.
+    return (view_direction.xy / -view_direction.z) * depth * u_displacement_scale; // Parallax Mapping without Offset Limiting
+}
+
+vec2 parallax_occlusion_mapping(const vec2 _tex_coord) {
+    const vec2 max_uv_displacement = parallax_mapping(_tex_coord);
     const int min_displacement_samples = 8;
     const int max_displacement_samples = 32;
     const float dot_product = dot(io_vertex_normal, normalize(-io_vertex_position));

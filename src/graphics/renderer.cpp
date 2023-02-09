@@ -190,6 +190,8 @@ namespace mkr {
             material::gshader_->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
             material::gshader_->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
             material::gshader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+            material::gshader_->set_uniform(shader_uniform::u_texture_offset, material_ptr->texture_offset_);
+            material::gshader_->set_uniform(shader_uniform::u_texture_scale, material_ptr->texture_scale_);
 
             // Fragment shader uniforms.
             material::gshader_->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);
@@ -334,6 +336,8 @@ namespace mkr {
             shader->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
             shader->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
             shader->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+            shader->set_uniform(shader_uniform::u_texture_offset, material_ptr->texture_offset_);
+            shader->set_uniform(shader_uniform::u_texture_scale, material_ptr->texture_scale_);
 
             // Fragment shader uniforms.
             shader->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);

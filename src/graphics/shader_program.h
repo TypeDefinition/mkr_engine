@@ -17,6 +17,8 @@ namespace mkr {
         u_view_matrix, // G-Pass, F-Pass
         u_projection_matrix, // G-Pass, F-Pass
         u_view_projection_matrix, // G-Pass, F-Pass, Skybox
+        u_texture_offset, // G-Pass, F-Pass
+        u_texture_scale, // G-Pass, F-Pass
 
         // Fragment Shader
         u_sky_colour, // Skybox

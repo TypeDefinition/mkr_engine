@@ -26,9 +26,11 @@ out io_block {
 uniform mat4 u_view_matrix;
 uniform mat4 u_projection_matrix;
 uniform mat4 u_view_projection_matrix;
+uniform vec2 u_texture_offset;
+uniform vec2 u_texture_scale;
 
 void main() {
-    io_tex_coord = v_tex_coord;
+    io_tex_coord = (v_tex_coord + vec3(u_texture_offset, 0.0f)) * vec3(u_texture_scale, 1.0f);
 
     mat4 model_view_matrix = u_view_matrix * v_model_matrix;
     io_vertex_position = (model_view_matrix * vec4(v_position, 1.0f)).xyz;

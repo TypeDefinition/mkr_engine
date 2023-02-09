@@ -57,6 +57,8 @@ namespace mkr {
                 uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
                 uniform_handles_[shader_uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
                 uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                uniform_handles_[shader_uniform::u_texture_offset] = get_uniform_location("u_texture_offset");
+                uniform_handles_[shader_uniform::u_texture_scale] = get_uniform_location("u_texture_scale");
 
                 // Fragment Shader
                 uniform_handles_[shader_uniform::u_albedo_colour] = get_uniform_location("u_albedo_colour");
@@ -107,6 +109,8 @@ namespace mkr {
                 uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
                 uniform_handles_[shader_uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
                 uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                uniform_handles_[shader_uniform::u_texture_offset] = get_uniform_location("u_texture_offset");
+                uniform_handles_[shader_uniform::u_texture_scale] = get_uniform_location("u_texture_scale");
 
                 // Fragment Shader
                 uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");

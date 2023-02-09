@@ -1,3 +1,7 @@
 .idea
 cmake-build-debug
-assets/textures/materials
+assets/textures/materials/brick_wall
+assets/textures/materials/grass
+assets/textures/materials/metal
+assets/textures/materials/pavement
+assets/textures/materials/brick_wall

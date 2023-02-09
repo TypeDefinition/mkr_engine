@@ -11,7 +11,13 @@ namespace mkr {
 
         void init_controls();
 
-        void init_assets();
+        void init_meshes();
+
+        void init_textures();
+
+        void init_shaders();
+
+        void init_materials();
 
         void init_systems();
 

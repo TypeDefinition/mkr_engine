@@ -104,17 +104,17 @@ namespace mkr {
     void renderer::update_objects(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) {
         switch (_mesh_renderer.material_->render_path_) {
             case render_path::deferred:
-                if (material::g_shader_ && material::l_shader_) {
+                if (material::gshader_ && material::lshader_) {
                     deferred_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
                 }
                 break;
             case render_path::forward_opaque:
-                if (_mesh_renderer.material_->f_shader_) {
+                if (_mesh_renderer.material_->fshader_) {
                     forward_opaque_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
                 }
                 break;
             case render_path::forward_transparent:
-                if (_mesh_renderer.material_->f_shader_) {
+                if (_mesh_renderer.material_->fshader_) {
                     forward_transparent_objs_[_mesh_renderer.material_][_mesh_renderer.mesh_].push_back({_global_transform.model_matrix_, matrix3x3::identity()});
                 }
                 break;
@@ -173,7 +173,7 @@ namespace mkr {
         gbuffer_->clear_depth_stencil();
 
         // Use shader.
-        material::g_shader_->use();
+        material::gshader_->use();
 
         auto view_projection_matrix = _projection_matrix * _view_matrix;
         for (auto& material_iter: deferred_objs_) {
@@ -187,20 +187,20 @@ namespace mkr {
             if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
 
             // Vertex shader uniforms.
-            material::g_shader_->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
-            material::g_shader_->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
-            material::g_shader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
+            material::gshader_->set_uniform(shader_uniform::u_view_matrix, false, _view_matrix);
+            material::gshader_->set_uniform(shader_uniform::u_projection_matrix, false, _projection_matrix);
+            material::gshader_->set_uniform(shader_uniform::u_view_projection_matrix, false, view_projection_matrix);
 
             // Fragment shader uniforms.
-            material::g_shader_->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);
-            material::g_shader_->set_uniform(shader_uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
-            material::g_shader_->set_uniform(shader_uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            material::g_shader_->set_uniform(shader_uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
-            material::g_shader_->set_uniform(shader_uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+            material::gshader_->set_uniform(shader_uniform::u_texture_albedo_enabled, material_ptr->texture_albedo_ != nullptr);
+            material::gshader_->set_uniform(shader_uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
+            material::gshader_->set_uniform(shader_uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
+            material::gshader_->set_uniform(shader_uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
+            material::gshader_->set_uniform(shader_uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
 
-            material::g_shader_->set_uniform(shader_uniform::u_albedo_colour, material_ptr->albedo_colour_);
-            material::g_shader_->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
-            material::g_shader_->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
+            material::gshader_->set_uniform(shader_uniform::u_albedo_colour, material_ptr->albedo_colour_);
+            material::gshader_->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
+            material::gshader_->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Draw to screen.
             for (auto& mesh_iter: material_iter.second) {
@@ -235,11 +235,11 @@ namespace mkr {
         gbuffer_->get_colour_attachment(gbuffer_gloss)->bind(texture_unit::texture_frag_gloss);
 
         // Use shader.
-        material::l_shader_->use();
+        material::lshader_->use();
 
         // Lights.
-        material::l_shader_->set_uniform(shader_uniform::u_ambient_colour, material::ambient_colour_);
-        material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
+        material::lshader_->set_uniform(shader_uniform::u_ambient_colour, material::ambient_colour_);
+        material::lshader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
 
         // Bind mesh.
         screen_quad_->bind();
@@ -255,7 +255,7 @@ namespace mkr {
 
             size_t start = max_lights * p;
             size_t end = maths_util::min<size_t>(start + max_lights, lights_.size());
-            material::l_shader_->set_uniform(shader_uniform::u_num_lights, (int)(end - start));
+            material::lshader_->set_uniform(shader_uniform::u_num_lights, (int)(end - start));
 
             size_t curr = start; // Index in C++.
             size_t index = 0; // Index in shader.
@@ -267,16 +267,16 @@ namespace mkr {
                 auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
                 vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
 
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_mode0, l.get_mode());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_power0, l.get_power());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_colour0, l.get_colour());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_position_camera_space0, position_camera_space);
-                material::l_shader_->set_uniform(index + shader_uniform::u_light_direction_camera_space0, direction_vector);
+                material::lshader_->set_uniform(index + shader_uniform::u_light_mode0, l.get_mode());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_power0, l.get_power());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_colour0, l.get_colour());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+                material::lshader_->set_uniform(index + shader_uniform::u_light_position_camera_space0, position_camera_space);
+                material::lshader_->set_uniform(index + shader_uniform::u_light_direction_camera_space0, direction_vector);
 
                 ++curr;
                 ++index;
@@ -320,7 +320,7 @@ namespace mkr {
         auto view_projection_matrix = _projection_matrix * _view_matrix;
         for (auto& material_iter: forward_opaque_objs_) {
             auto material_ptr = material_iter.first;
-            auto shader = material_ptr->f_shader_;
+            auto shader = material_ptr->fshader_;
             shader->use();
 
             // Bind textures.
@@ -440,7 +440,7 @@ namespace mkr {
         screen_quad_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
 
         // Use shader.
-        for (auto shader : material::p_shaders_) {
+        for (auto shader : material::pshaders_) {
             pbuffer_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
             pbuffer_->swap_buffers();
 

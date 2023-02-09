@@ -13,11 +13,11 @@ namespace mkr {
 
         static bool enable_lights_;
         static colour ambient_colour_;
-        static std::shared_ptr<shader_program> g_shader_, l_shader_;
-        static std::vector<std::shared_ptr<shader_program>> p_shaders_;
+        static std::shared_ptr<shader_program> gshader_, lshader_;
+        static std::vector<std::shared_ptr<shader_program>> pshaders_;
 
         render_path render_path_ = render_path::deferred;
-        std::shared_ptr<shader_program> f_shader_; // Only used for forward rendering.
+        std::shared_ptr<shader_program> fshader_; // Only used for forward rendering.
 
         colour albedo_colour_ = colour::white;
         float gloss_ = 1.0f;

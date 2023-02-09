@@ -64,9 +64,10 @@ namespace mkr {
         virtual ~renderer() {}
 
         void render();
-        void g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
-        void l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
-        void f_pass(const matrix4x4& _view_matrix,  const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox);
+        void gpass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
+        void lpass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
+        void fpass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox);
+        void ppass(float _near, float _far);
 
     public:
         void init();

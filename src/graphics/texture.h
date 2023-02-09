@@ -9,28 +9,24 @@
 
 namespace mkr {
     enum texture_unit {
-        texture_skybox,
+        texture_skybox, // Skybox
 
-        texture_albedo,
-        texture_normal,
-        texture_specular,
-        texture_gloss,
-        texture_displacement,
+        texture_albedo, // G-Pass, F-Pass
+        texture_normal, // G-Pass, F-Pass
+        texture_specular, // G-Pass, F-Pass
+        texture_gloss, // G-Pass, F-Pass
+        texture_displacement, // G-Pass, F-Pass
 
-        texture_gbuffer_position,
-        texture_gbuffer_normal,
-        texture_gbuffer_albedo,
-        texture_gbuffer_specular,
-        texture_gbuffer_gloss,
+        texture_frag_position, // L-Pass, P-Pass
+        texture_frag_normal, // L-Pass, P-Pass
+        texture_frag_albedo, // L-Pass
+        texture_frag_specular, // L-Pass
+        texture_frag_gloss, // L-Pass
+        texture_light_diffuse, // L-Pass
+        texture_light_specular, // L-Pass
 
-        texture_lbuffer_diffuse,
-        texture_lbuffer_specular,
-
-        texture_fbuffer_composite,
-        texture_fbuffer_position,
-        texture_fbuffer_normal,
-
-        texture_pbuffer_composite,
+        texture_composite, // P-Pass
+        texture_depth_stencil, // P-Pass
     };
 
     enum texture_wrap_mode : GLint {

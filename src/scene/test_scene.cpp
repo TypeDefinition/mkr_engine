@@ -29,8 +29,13 @@ namespace mkr {
         {
             asset_loader::instance().load_obj("wall", "/mnt/ZorinWork/mkr_engine/assets/models/wall.obj");
             auto mat = asset_loader::instance().make_material("wall");
-            mat->g_shader_ = asset_loader::instance().load_shader_program("gpass", render_pass::geometry, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gpass.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gpass.frag"});
-            mat->l_shader_ = asset_loader::instance().load_shader_program("lpass", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lpass.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lpass.frag"});
+            mat->g_shader_ = asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.frag"});
+            mat->l_shader_ = asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.frag"});
+            mat->p_shaders_.push_back(asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_invert.frag"}));
+            // mat->p_shaders_.push_back(asset_loader::instance().load_shader_program("pshader_greyscale", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_greyscale.frag"}));
+            mat->p_shaders_.push_back(asset_loader::instance().load_shader_program("pshader_blur", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_blur.frag"}));
+            mat->p_shaders_.push_back(asset_loader::instance().load_shader_program("pshader_outline", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_outline.frag"}));
+            asset_loader::instance().get_shader_program("pshader_outline")->set_uniform("u_line_colour", colour::green);
             mat->texture_albedo_ = asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_albedo.jpg");
             mat->texture_normal_ = asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_normal.jpg");
             mat->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/bricks_displacement.jpg");
@@ -40,7 +45,7 @@ namespace mkr {
             asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
             auto mat = asset_loader::instance().make_material("cube");
             mat->render_path_ = render_path::forward_opaque;
-            mat->f_shader_ = asset_loader::instance().load_shader_program("fpass", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fpass.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fpass.frag"});
+            mat->f_shader_ = asset_loader::instance().load_shader_program("fshader", render_pass::forward, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.frag"});
             mat->texture_albedo_ = asset_loader::instance().load_texture_2d("brick_wall_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/tile_albedo.png");
             mat->texture_normal_ = asset_loader::instance().load_texture_2d("brick_wall_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/tile_normal.png");
             mat->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/tile_displacement.png");

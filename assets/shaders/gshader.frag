@@ -2,6 +2,12 @@
 
 /* IMPORTANT: All transforms in the fragment shader is in camera space, where the camera is at the origin. */
 
+layout (location = 0) out vec4 out_position;
+layout (location = 1) out vec4 out_normal;
+layout (location = 2) out vec4 out_albedo;
+layout (location = 3) out vec4 out_specular;
+layout (location = 4) out float out_gloss;
+
 // Inputs
 in io_block {
     vec3 io_tex_coord;
@@ -11,13 +17,6 @@ in io_block {
     mat3 io_tbn_matrix; // Converts from tangent space to camera space.
     mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
 };
-
-// Outputs
-layout (location = 0) out vec4 io_position;
-layout (location = 1) out vec4 io_normal;
-layout (location = 2) out vec4 io_albedo;
-layout (location = 3) out vec4 io_specular;
-layout (location = 4) out float io_gloss;
 
 // Uniforms
 uniform vec4 u_albedo_colour;
@@ -124,9 +123,9 @@ void main() {
     const vec4 specular = get_specular(tex_coord);
     const float gloss = get_gloss(tex_coord);
 
-    io_position = vec4(io_vertex_position, 1.0f);
-    io_normal = vec4(normal, 1.0f);
-    io_albedo = albedo;
-    io_specular = specular;
-    io_gloss = gloss;
+    out_position = vec4(io_vertex_position, 1.0f);
+    out_normal = vec4(normal, 1.0f);
+    out_albedo = albedo;
+    out_specular = specular;
+    out_gloss = gloss;
 }

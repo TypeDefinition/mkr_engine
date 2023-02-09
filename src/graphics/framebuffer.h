@@ -106,8 +106,6 @@ namespace mkr {
 
         virtual ~lbuffer();
 
-        virtual void clear_colour_all(const colour& _colour = colour::black);
-
         virtual void swap_buffers();
     };
 
@@ -121,9 +119,15 @@ namespace mkr {
 
     // Post-Process Buffer
     class pbuffer : public framebuffer {
+    protected:
+        // Similar to lbuffer.
+        std::shared_ptr<texture_2d> composite_back_;
+
     public:
         pbuffer(uint32_t _width, uint32_t _height);
 
         virtual ~pbuffer();
+
+        virtual void swap_buffers();
     };
 }

@@ -52,15 +52,6 @@ namespace mkr {
         // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
-            case render_pass::skybox:
-                // Vertex Shader
-                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
-
-                // Fragment Shader
-                uniform_handles_[shader_uniform::u_sky_colour] = get_uniform_location("u_sky_colour");
-                uniform_handles_[shader_uniform::u_texture_skybox_enabled] = get_uniform_location("u_texture_skybox_enabled");
-                uniform_handles_[shader_uniform::u_texture_skybox] = get_uniform_location("u_texture_skybox");
-                break;
             case render_pass::geometry:
                 // Vertex Shader
                 uniform_handles_[shader_uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
@@ -86,14 +77,14 @@ namespace mkr {
                 break;
             case render_pass::lighting:
                 // Fragment Shader
-                uniform_handles_[shader_uniform::u_texture_gbuffer_position] = get_uniform_location("u_texture_gbuffer_position");
-                uniform_handles_[shader_uniform::u_texture_gbuffer_normal] = get_uniform_location("u_texture_gbuffer_normal");
-                uniform_handles_[shader_uniform::u_texture_gbuffer_albedo] = get_uniform_location("u_texture_gbuffer_albedo");
-                uniform_handles_[shader_uniform::u_texture_gbuffer_specular] = get_uniform_location("u_texture_gbuffer_specular");
-                uniform_handles_[shader_uniform::u_texture_gbuffer_gloss] = get_uniform_location("u_texture_gbuffer_gloss");
+                uniform_handles_[shader_uniform::u_texture_frag_position] = get_uniform_location("u_texture_frag_position");
+                uniform_handles_[shader_uniform::u_texture_frag_normal] = get_uniform_location("u_texture_frag_normal");
+                uniform_handles_[shader_uniform::u_texture_frag_albedo] = get_uniform_location("u_texture_frag_albedo");
+                uniform_handles_[shader_uniform::u_texture_frag_specular] = get_uniform_location("u_texture_frag_specular");
+                uniform_handles_[shader_uniform::u_texture_frag_gloss] = get_uniform_location("u_texture_frag_gloss");
 
-                uniform_handles_[shader_uniform::u_texture_lbuffer_diffuse] = get_uniform_location("u_texture_lbuffer_diffuse");
-                uniform_handles_[shader_uniform::u_texture_lbuffer_specular] = get_uniform_location("u_texture_lbuffer_specular");
+                uniform_handles_[shader_uniform::u_texture_light_diffuse] = get_uniform_location("u_texture_light_diffuse");
+                uniform_handles_[shader_uniform::u_texture_light_specular] = get_uniform_location("u_texture_light_specular");
 
                 uniform_handles_[shader_uniform::u_ambient_colour] = get_uniform_location("u_ambient_colour");
                 uniform_handles_[shader_uniform::u_enable_lights] = get_uniform_location("u_enable_lights");
@@ -150,7 +141,26 @@ namespace mkr {
                     uniform_handles_[i + shader_uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
                 }
                 break;
+            case render_pass::skybox:
+                // Vertex Shader
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+
+                // Fragment Shader
+                uniform_handles_[shader_uniform::u_sky_colour] = get_uniform_location("u_sky_colour");
+                uniform_handles_[shader_uniform::u_texture_skybox_enabled] = get_uniform_location("u_texture_skybox_enabled");
+                uniform_handles_[shader_uniform::u_texture_skybox] = get_uniform_location("u_texture_skybox");
+                break;
             case render_pass::post_proc:
+                // Fragment Shader
+                uniform_handles_[shader_uniform::u_near] = get_uniform_location("u_near");
+                uniform_handles_[shader_uniform::u_far] = get_uniform_location("u_far");
+                uniform_handles_[shader_uniform::u_bottom_left] = get_uniform_location("u_bottom_left");
+                uniform_handles_[shader_uniform::u_top_right] = get_uniform_location("u_top_right");
+
+                uniform_handles_[shader_uniform::u_texture_frag_position] = get_uniform_location("u_texture_frag_position");
+                uniform_handles_[shader_uniform::u_texture_frag_normal] = get_uniform_location("u_texture_frag_normal");
+                uniform_handles_[shader_uniform::u_texture_composite] = get_uniform_location("u_texture_composite");
+                uniform_handles_[shader_uniform::u_texture_depth_stencil] = get_uniform_location("u_texture_depth_stencil");
                 break;
         }
     }
@@ -162,9 +172,6 @@ namespace mkr {
         // Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
         // Thus, we must texture_unit to a signed integer.
         switch (render_pass_) {
-            case render_pass::skybox:
-                set_uniform(shader_uniform::u_texture_skybox, (int32_t)texture_unit::texture_skybox);
-                break;
             case render_pass::geometry:
                 set_uniform(shader_uniform::u_texture_albedo, (int32_t)texture_unit::texture_albedo);
                 set_uniform(shader_uniform::u_texture_normal, (int32_t)texture_unit::texture_normal);
@@ -173,14 +180,13 @@ namespace mkr {
                 set_uniform(shader_uniform::u_texture_displacement, (int32_t)texture_unit::texture_displacement);
                 break;
             case render_pass::lighting:
-                set_uniform(shader_uniform::u_texture_gbuffer_position, (int32_t)texture_unit::texture_gbuffer_position);
-                set_uniform(shader_uniform::u_texture_gbuffer_normal, (int32_t)texture_unit::texture_gbuffer_normal);
-                set_uniform(shader_uniform::u_texture_gbuffer_albedo, (int32_t)texture_unit::texture_gbuffer_albedo);
-                set_uniform(shader_uniform::u_texture_gbuffer_specular, (int32_t)texture_unit::texture_gbuffer_specular);
-                set_uniform(shader_uniform::u_texture_gbuffer_gloss, (int32_t)texture_unit::texture_gbuffer_gloss);
-
-                set_uniform(shader_uniform::u_texture_lbuffer_diffuse, (int32_t)texture_unit::texture_lbuffer_diffuse);
-                set_uniform(shader_uniform::u_texture_lbuffer_specular, (int32_t)texture_unit::texture_lbuffer_specular);
+                set_uniform(shader_uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
+                set_uniform(shader_uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
+                set_uniform(shader_uniform::u_texture_frag_albedo, (int32_t)texture_unit::texture_frag_albedo);
+                set_uniform(shader_uniform::u_texture_frag_specular, (int32_t)texture_unit::texture_frag_specular);
+                set_uniform(shader_uniform::u_texture_frag_gloss, (int32_t)texture_unit::texture_frag_gloss);
+                set_uniform(shader_uniform::u_texture_light_diffuse, (int32_t)texture_unit::texture_light_diffuse);
+                set_uniform(shader_uniform::u_texture_light_specular, (int32_t)texture_unit::texture_light_specular);
                 break;
             case render_pass::forward:
                 set_uniform(shader_uniform::u_texture_albedo, (int32_t)texture_unit::texture_albedo);
@@ -189,12 +195,14 @@ namespace mkr {
                 set_uniform(shader_uniform::u_texture_gloss, (int32_t)texture_unit::texture_gloss);
                 set_uniform(shader_uniform::u_texture_displacement, (int32_t)texture_unit::texture_displacement);
                 break;
+            case render_pass::skybox:
+                set_uniform(shader_uniform::u_texture_skybox, (int32_t)texture_unit::texture_skybox);
+                break;
             case render_pass::post_proc:
-                set_uniform(shader_uniform::u_texture_fbuffer_composite, (int32_t)texture_unit::texture_fbuffer_composite);
-                set_uniform(shader_uniform::u_texture_fbuffer_position, (int32_t)texture_unit::texture_fbuffer_position);
-                set_uniform(shader_uniform::u_texture_fbuffer_normal, (int32_t)texture_unit::texture_fbuffer_normal);
-
-                set_uniform(shader_uniform::u_texture_pbuffer_composite, (int32_t)texture_unit::texture_pbuffer_composite);
+                set_uniform(shader_uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
+                set_uniform(shader_uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
+                set_uniform(shader_uniform::u_texture_composite, (int32_t)texture_unit::texture_composite);
+                set_uniform(shader_uniform::u_texture_depth_stencil, (int32_t)texture_unit::texture_depth_stencil);
                 break;
         }
     }
@@ -291,13 +299,11 @@ namespace mkr {
         glProgramUniform2i(program_handle_, get_uniform_location(_uniform_name), _value0, _value1);
     }
 
-    void
-    shader_program::set_uniform(const std::string& _uniform_name, int32_t _value0, int32_t _value1, int32_t _value2) {
+    void shader_program::set_uniform(const std::string& _uniform_name, int32_t _value0, int32_t _value1, int32_t _value2) {
         glProgramUniform3i(program_handle_, get_uniform_location(_uniform_name), _value0, _value1, _value2);
     }
 
-    void
-    shader_program::set_uniform(const std::string& _uniform_name, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3) {
+    void shader_program::set_uniform(const std::string& _uniform_name, int32_t _value0, int32_t _value1, int32_t _value2, int32_t _value3) {
         glProgramUniform4i(program_handle_, get_uniform_location(_uniform_name), _value0, _value1, _value2, _value3);
     }
 
@@ -310,13 +316,11 @@ namespace mkr {
         glProgramUniform2ui(program_handle_, get_uniform_location(_uniform_name), _value0, _value1);
     }
 
-    void
-    shader_program::set_uniform(const std::string& _uniform_name, uint32_t _value0, uint32_t _value1, uint32_t _value2) {
+    void shader_program::set_uniform(const std::string& _uniform_name, uint32_t _value0, uint32_t _value1, uint32_t _value2) {
         glProgramUniform3ui(program_handle_, get_uniform_location(_uniform_name), _value0, _value1, _value2);
     }
 
-    void
-    shader_program::set_uniform(const std::string& _uniform_name, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3) {
+    void shader_program::set_uniform(const std::string& _uniform_name, uint32_t _value0, uint32_t _value1, uint32_t _value2, uint32_t _value3) {
         glProgramUniform4ui(program_handle_, get_uniform_location(_uniform_name), _value0, _value1, _value2, _value3);
     }
 

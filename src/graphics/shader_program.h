@@ -14,46 +14,46 @@ namespace mkr {
 
     enum shader_uniform : uint32_t {
         // Vertex Shader
-        u_view_matrix,
-        u_projection_matrix,
-        u_view_projection_matrix,
+        u_view_matrix, // G-Pass, F-Pass
+        u_projection_matrix, // G-Pass, F-Pass
+        u_view_projection_matrix, // G-Pass, F-Pass, Skybox
 
         // Fragment Shader
-        u_sky_colour,
-        u_ambient_colour,
-        u_albedo_colour,
-        u_gloss,
-        u_displacement_scale,
+        u_sky_colour, // Skybox
+        u_ambient_colour, // L-Pass, F-Pass
+        u_albedo_colour, // G-Pass, F-Pass
+        u_gloss, // G-Pass, F-Pass
+        u_displacement_scale, // G-Pass, F-Pass
 
-        u_texture_skybox_enabled,
-        u_texture_albedo_enabled,
-        u_texture_normal_enabled,
-        u_texture_specular_enabled,
-        u_texture_gloss_enabled,
-        u_texture_displacement_enabled,
+        u_near, // P-Pass
+        u_far, // P-Pass
+        u_bottom_left, // P-Pass
+        u_top_right, // P-Pass
 
-        u_texture_skybox,
+        u_texture_skybox_enabled, // Skybox
+        u_texture_skybox, // Skybox
 
-        u_texture_albedo,
-        u_texture_normal,
-        u_texture_specular,
-        u_texture_gloss,
-        u_texture_displacement,
+        u_texture_albedo_enabled, // G-Pass, F-Pass
+        u_texture_normal_enabled, // G-Pass, F-Pass
+        u_texture_specular_enabled, // G-Pass, F-Pass
+        u_texture_gloss_enabled, // G-Pass, F-Pass
+        u_texture_displacement_enabled, // G-Pass, F-Pass
+        u_texture_albedo, // G-Pass, F-Pass
+        u_texture_normal, // G-Pass, F-Pass
+        u_texture_specular, // G-Pass, F-Pass
+        u_texture_gloss, // G-Pass, F-Pass
+        u_texture_displacement, // G-Pass, F-Pass
 
-        u_texture_gbuffer_position,
-        u_texture_gbuffer_normal,
-        u_texture_gbuffer_albedo,
-        u_texture_gbuffer_specular,
-        u_texture_gbuffer_gloss,
+        u_texture_frag_position, // L-Pass, P-Pass
+        u_texture_frag_normal, // L-Pass, P-Pass
+        u_texture_frag_albedo, // L-Pass
+        u_texture_frag_specular, // L-Pass
+        u_texture_frag_gloss, // L-Pass
+        u_texture_light_diffuse, // L-Pass
+        u_texture_light_specular, // L-Pass
 
-        u_texture_lbuffer_diffuse,
-        u_texture_lbuffer_specular,
-
-        u_texture_fbuffer_composite,
-        u_texture_fbuffer_position,
-        u_texture_fbuffer_normal,
-
-        u_texture_pbuffer_composite,
+        u_texture_composite, // P-Pass
+        u_texture_depth_stencil, // P-Pass
 
         u_enable_lights,
         u_num_lights,
@@ -72,10 +72,10 @@ namespace mkr {
     };
 
     enum class render_pass {
-        skybox,
         geometry,
         lighting,
         forward,
+        skybox,
         post_proc,
     };
 

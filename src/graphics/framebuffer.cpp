@@ -32,11 +32,7 @@ namespace mkr {
     void framebuffer::blit_to(std::shared_ptr<framebuffer> _other, bool _colour, bool _depth, bool _stencil,
                               int32_t _src_x0, int32_t _src_y0, int32_t _src_x1, int32_t _src_y1,
                               int32_t _dst_x0, int32_t _dst_y0, int32_t _dst_x1, int32_t _dst_y1) {
-        GLbitfield mask = 0;
-        mask |= (_colour ? GL_COLOR_BUFFER_BIT : 0);
-        mask |= (_depth ? GL_DEPTH_BUFFER_BIT : 0);
-        mask |= (_stencil ? GL_STENCIL_BUFFER_BIT : 0);
-
+        GLbitfield mask = (_colour ? GL_COLOR_BUFFER_BIT : 0) | (_depth ? GL_DEPTH_BUFFER_BIT : 0) | (_stencil ? GL_STENCIL_BUFFER_BIT : 0);
         // If filter is not GL_NEAREST and mask includes GL_DEPTH_BUFFER_BIT or GL_STENCIL_BUFFER_BIT, no data is transferred and a GL_INVALID_OPERATION error is generated.
         // So for simplicity let's just use GL_NEAREST. Don't act smart and use GL_LINEAR.
         glBlitNamedFramebuffer(handle_, _other->handle_, _src_x0, _src_y0, _src_x1, _src_y1, _dst_x0, _dst_y0, _dst_x1, _dst_y1, mask, GL_NEAREST);
@@ -141,11 +137,6 @@ namespace mkr {
         glDeleteFramebuffers(1, &handle_);
     }
 
-    void lbuffer::clear_colour_all(const colour& _colour) {
-        framebuffer::clear_colour_all(_colour);
-
-    }
-
     void lbuffer::swap_buffers() {
         colour_attachments_[lbuffer_diffuse].swap(diffuse_back_);
         colour_attachments_[lbuffer_specular].swap(specular_back_);
@@ -161,8 +152,8 @@ namespace mkr {
         // Colour attachments.
         colour_attachments_.resize(num_fbuffer_attachments);
         colour_attachments_[fbuffer_composite] = std::make_shared<texture_2d>("composite", _width, _height, sized_format::rgba8);
-        colour_attachments_[fbuffer_position] = std::make_shared<texture_2d>("diffuse", _width, _height, sized_format::rgba8);
-        colour_attachments_[fbuffer_normal] = std::make_shared<texture_2d>("specular", _width, _height, sized_format::rgba8);
+        colour_attachments_[fbuffer_position] = std::make_shared<texture_2d>("position", _width, _height, sized_format::rgba16f);
+        colour_attachments_[fbuffer_normal] = std::make_shared<texture_2d>("normal", _width, _height, sized_format::rgba16f);
         for (auto i = 0; i < colour_attachments_.size(); ++i) {
             glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + i, colour_attachments_[i]->handle(), 0);
         }
@@ -193,6 +184,8 @@ namespace mkr {
             glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + i, colour_attachments_[i]->handle(), 0);
         }
 
+        composite_back_ = std::make_shared<texture_2d>("composite", _width, _height, sized_format::rgba8);
+
         // Completeness check.
         if (!is_complete()) {
             throw std::runtime_error("incomplete forward buffer");
@@ -201,5 +194,10 @@ namespace mkr {
 
     pbuffer::~pbuffer() {
         glDeleteFramebuffers(1, &handle_);
+    }
+
+    void pbuffer::swap_buffers() {
+        colour_attachments_[pbuffer_composite].swap(composite_back_);
+        glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + pbuffer_composite, colour_attachments_[pbuffer_composite]->handle(), 0);
     }
 }

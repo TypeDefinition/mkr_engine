@@ -141,13 +141,14 @@ namespace mkr {
                 projection_matrix = matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
             }
 
-            g_pass(view_matrix, projection_matrix);
-            l_pass(view_matrix, view_forward, view_up, view_right);
-            f_pass(view_matrix, projection_matrix, view_forward, view_up, view_right, cam.skybox_);
+            gpass(view_matrix, projection_matrix);
+            lpass(view_matrix, view_forward, view_up, view_right);
+            fpass(view_matrix, projection_matrix, view_forward, view_up, view_right, cam.skybox_);
+            ppass(cam.near_plane_, cam.far_plane_);
 
             // Blit to default framebuffer.
-            fbuffer_->set_read_colour_attachment(fbuffer_composite);
-            fbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+            pbuffer_->set_read_colour_attachment(pbuffer_composite);
+            pbuffer_->blit_to(dbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
             dbuffer_->bind();
         }
 
@@ -157,7 +158,7 @@ namespace mkr {
         forward_transparent_objs_.clear();
     }
 
-    void renderer::g_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
+    void renderer::gpass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
         // IMPORTANT: Disable blending so that and fragment with 0 in its alpha channel does not get discarded.
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
@@ -166,11 +167,10 @@ namespace mkr {
         glStencilFunc(GL_ALWAYS, stencil_opaque_object, 0xFFFFFFFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-        // Bind buffer.
+        gbuffer_->bind();
+        gbuffer_->set_draw_colour_attachment_all();
         gbuffer_->clear_colour_all();
         gbuffer_->clear_depth_stencil();
-        gbuffer_->set_draw_colour_attachment_all();
-        gbuffer_->bind();
 
         // Use shader.
         material::g_shader_->use();
@@ -219,22 +219,20 @@ namespace mkr {
         }
     }
 
-    void renderer::l_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
+    void renderer::lpass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
+        glDisable(GL_BLEND);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_STENCIL_TEST);
 
-        // Bind buffer.
-        lbuffer_->clear_colour_all();
-        lbuffer_->clear_depth_stencil();
-        lbuffer_->set_draw_colour_attachment_all();
         lbuffer_->bind();
+        lbuffer_->set_draw_colour_attachment_all();
+        lbuffer_->clear_colour_all();
 
-        // Bind textures.
-        gbuffer_->get_colour_attachment(gbuffer_position)->bind(texture_unit::texture_gbuffer_position);
-        gbuffer_->get_colour_attachment(gbuffer_normal)->bind(texture_unit::texture_gbuffer_normal);
-        gbuffer_->get_colour_attachment(gbuffer_albedo)->bind(texture_unit::texture_gbuffer_albedo);
-        gbuffer_->get_colour_attachment(gbuffer_specular)->bind(texture_unit::texture_gbuffer_specular);
-        gbuffer_->get_colour_attachment(gbuffer_gloss)->bind(texture_unit::texture_gbuffer_gloss);
+        gbuffer_->get_colour_attachment(gbuffer_position)->bind(texture_unit::texture_frag_position);
+        gbuffer_->get_colour_attachment(gbuffer_normal)->bind(texture_unit::texture_frag_normal);
+        gbuffer_->get_colour_attachment(gbuffer_albedo)->bind(texture_unit::texture_frag_albedo);
+        gbuffer_->get_colour_attachment(gbuffer_specular)->bind(texture_unit::texture_frag_specular);
+        gbuffer_->get_colour_attachment(gbuffer_gloss)->bind(texture_unit::texture_frag_gloss);
 
         // Use shader.
         material::l_shader_->use();
@@ -243,7 +241,7 @@ namespace mkr {
         material::l_shader_->set_uniform(shader_uniform::u_ambient_colour, material::ambient_colour_);
         material::l_shader_->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
 
-        // Mesh.
+        // Bind mesh.
         screen_quad_->bind();
         screen_quad_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
 
@@ -251,8 +249,8 @@ namespace mkr {
         const auto num_pass = (lights_.size() / max_lights) + 1;
         for (size_t p = 0; p < num_pass; ++p) {
             // Swap the diffuse and specular buffers.
-            lbuffer_->get_colour_attachment(lbuffer_diffuse)->bind(texture_unit::texture_lbuffer_diffuse);
-            lbuffer_->get_colour_attachment(lbuffer_specular)->bind(texture_unit::texture_lbuffer_specular);
+            lbuffer_->get_colour_attachment(lbuffer_diffuse)->bind(texture_unit::texture_light_diffuse);
+            lbuffer_->get_colour_attachment(lbuffer_specular)->bind(texture_unit::texture_light_specular);
             lbuffer_->swap_buffers();
 
             size_t start = max_lights * p;
@@ -289,9 +287,9 @@ namespace mkr {
         }
     }
 
-    void renderer::f_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox) {
-        // Render objects.
-        glEnable(GL_BLEND);
+    void renderer::fpass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, std::shared_ptr<skybox> _skybox) {
+        // Render opaque objects.
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -300,13 +298,24 @@ namespace mkr {
         glStencilFunc(GL_ALWAYS, stencil_opaque_object, 0xFFFFFFFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
+        fbuffer_->bind();
+        fbuffer_->set_draw_colour_attachment_all();
         fbuffer_->clear_colour_all();
-        gbuffer_->blit_to(fbuffer_, false, true, true, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+
         lbuffer_->set_read_colour_attachment(lbuffer_composite);
         fbuffer_->set_draw_colour_attachment(fbuffer_composite);
         lbuffer_->blit_to(fbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+
+        gbuffer_->set_read_colour_attachment(gbuffer_position);
+        fbuffer_->set_draw_colour_attachment(fbuffer_position);
+        gbuffer_->blit_to(fbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+
+        gbuffer_->set_read_colour_attachment(gbuffer_normal);
+        fbuffer_->set_draw_colour_attachment(fbuffer_normal);
+        gbuffer_->blit_to(fbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+
+        gbuffer_->blit_to(fbuffer_, false, true, true, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
         fbuffer_->set_draw_colour_attachment_all();
-        fbuffer_->bind();
 
         auto view_projection_matrix = _projection_matrix * _view_matrix;
         for (auto& material_iter: forward_opaque_objs_) {
@@ -378,6 +387,11 @@ namespace mkr {
         }
 
         // Render skybox.
+        // Even though the skybox shader only writes to one colour attachment, we have to disable writing to the other colour attachments, otherwise they will have some undefined values written to them.
+        // As long as a colour attachment to set to be drawn to it, some value will be written to it no matter what, even if the shader does not specify.
+        // For the case of my computer, it will cause the values in fbuffer_composite to also be written to the other colour attachments.
+        // [https://stackoverflow.com/questions/39545966/opengl-3-0-framebuffer-outputting-to-attachments-without-me-specifying]
+        fbuffer_->set_draw_colour_attachment(fbuffer_composite);
         if (_skybox && _skybox->shader_) {
             glDisable(GL_DEPTH_TEST);
             glEnable(GL_STENCIL_TEST);
@@ -394,6 +408,48 @@ namespace mkr {
             skybox_mesh_->bind();
             skybox_mesh_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
             glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
+        }
+
+        // Render transparent objects.
+        fbuffer_->set_draw_colour_attachment_all();
+        glEnable(GL_BLEND);
+    }
+
+    void renderer::ppass(float _near, float _far) {
+        glDisable(GL_BLEND);
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_STENCIL_TEST);
+
+        pbuffer_->bind();
+        pbuffer_->set_draw_colour_attachment_all();
+        pbuffer_->clear_colour_all();
+
+        fbuffer_->set_read_colour_attachment(fbuffer_composite);
+        pbuffer_->set_draw_colour_attachment(pbuffer_composite);
+        fbuffer_->blit_to(pbuffer_, true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
+        pbuffer_->set_draw_colour_attachment_all();
+
+        // Bind textures.
+        fbuffer_->get_colour_attachment(fbuffer_position)->bind(texture_unit::texture_frag_position);
+        fbuffer_->get_colour_attachment(fbuffer_normal)->bind(texture_unit::texture_frag_normal);
+        pbuffer_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
+        fbuffer_->get_depth_stencil_attachment()->bind(texture_unit::texture_depth_stencil);
+
+        // Bind mesh.
+        screen_quad_->bind();
+        screen_quad_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
+
+        // Use shader.
+        for (auto shader : material::p_shaders_) {
+            pbuffer_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
+            pbuffer_->swap_buffers();
+
+            shader->use();
+            shader->set_uniform(shader_uniform::u_near, _near);
+            shader->set_uniform(shader_uniform::u_far, _far);
+            shader->set_uniform(shader_uniform::u_bottom_left, vector2::zero);
+            shader->set_uniform(shader_uniform::u_top_right, vector2{1920.0f, 1080.0f});
+            glDrawElementsInstanced(GL_TRIANGLES, screen_quad_->num_indices(), GL_UNSIGNED_INT, 0, 1);
         }
     }
 }

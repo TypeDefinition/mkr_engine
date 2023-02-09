@@ -2,6 +2,24 @@
 
 /* IMPORTANT: All transforms in the fragment shader is in camera space, where the camera is at the origin. */
 
+// An alternative to the layout qualifier is to use glBindFragDataLocation(GLuint program, GLuint colorNumber, const char * name) or
+// glBindFragDataLocationIndexed(GLuint program, GLuint colorNumber, GLuint index, const char *name) in the C++ code.
+// By using glBindFragDataLocation(GLuint program, GLuint colorNumber, const char * name), it is not necessary to use the layout qualifier and vice-versa.
+// However, if both are used and are in conflict, the layout qualifier in the vertex shader has priority.
+layout (location = 0) out vec4 out_composite;
+layout (location = 1) out vec4 out_position;
+layout (location = 2) out vec4 out_normal;
+
+// Inputs
+in io_block {
+    vec3 io_tex_coord;
+    vec3 io_vertex_position; // Vertex position in camera space.
+    vec3 io_vertex_normal; // Vertex normal in camera space.
+    mat3 io_normal_matrix;
+    mat3 io_tbn_matrix; // Converts from tangent space to camera space.
+    mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
+};
+
 // Variables
 const int light_point = 0;
 const int light_spot = 1;
@@ -24,19 +42,6 @@ struct light {
     vec3 position_camera_space_;
     vec3 direction_camera_space_;
 };
-
-// Inputs
-in io_block {
-    vec3 io_tex_coord;
-    vec3 io_vertex_position; // Vertex position in camera space.
-    vec3 io_vertex_normal; // Vertex normal in camera space.
-    mat3 io_normal_matrix;
-    mat3 io_tbn_matrix; // Converts from tangent space to camera space.
-    mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
-};
-
-// Outputs
-layout (location = 0) out vec4 io_composite;
 
 // Uniforms
 uniform vec4 u_ambient_colour;
@@ -209,22 +214,22 @@ vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-            u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-            light_attenuation(u_lights[i], _vertex_position);
+                u_lights[i].colour_ *
+                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                light_attenuation(u_lights[i], _vertex_position);
             break;
             case light_spot:
             colour +=
             u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-            light_attenuation(u_lights[i], _vertex_position) *
-            spotlight_effect(u_lights[i], _vertex_position);
+                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                light_attenuation(u_lights[i], _vertex_position) *
+                spotlight_effect(u_lights[i], _vertex_position);
             break;
             case light_directional:
             colour +=
-            u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-            u_lights[i].power_;
+                u_lights[i].colour_ *
+                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                u_lights[i].power_;
             break;
         }
     }
@@ -271,7 +276,7 @@ void main() {
     const vec2 tex_coord = get_tex_coord();
 
     if (!u_enable_lights) {
-        io_composite = get_albedo(tex_coord);
+        out_composite = get_albedo(tex_coord);
         return;
     }
 
@@ -284,5 +289,7 @@ void main() {
     vec4 diffuse_colour = albedo * light_diffuse(io_vertex_position, normal);
     vec4 specular_colour = specular * light_specular(io_vertex_position, normal, gloss);
 
-    io_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+    out_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+    out_position = vec4(io_vertex_position, 1.0f);
+    out_normal = vec4(io_vertex_normal, 1.0f);
 }

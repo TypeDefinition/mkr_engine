@@ -1,8 +1,13 @@
 #version 460 core
 
-layout (location = 0) out vec4 io_composite;
-layout (location = 1) out vec4 io_diffuse;
-layout (location = 2) out vec4 io_specular;
+layout (location = 0) out vec4 out_composite;
+layout (location = 1) out vec4 out_diffuse;
+layout (location = 2) out vec4 out_specular;
+
+// Inputs
+in io_block {
+    vec3 io_tex_coord;
+};
 
 // Variables
 const int light_point = 0;
@@ -27,21 +32,16 @@ struct light {
     vec3 direction_camera_space_;
 };
 
-// Inputs
-in io_block {
-    vec3 io_tex_coord;
-};
-
 // GPass to LPass
-uniform sampler2D u_texture_gbuffer_position;
-uniform sampler2D u_texture_gbuffer_normal;
-uniform sampler2D u_texture_gbuffer_albedo;
-uniform sampler2D u_texture_gbuffer_specular;
-uniform sampler2D u_texture_gbuffer_gloss;
+uniform sampler2D u_texture_frag_position;
+uniform sampler2D u_texture_frag_normal;
+uniform sampler2D u_texture_frag_albedo;
+uniform sampler2D u_texture_frag_specular;
+uniform sampler2D u_texture_frag_gloss;
 
 // LPass to LPass
-uniform sampler2D u_texture_lbuffer_diffuse;
-uniform sampler2D u_texture_lbuffer_specular;
+uniform sampler2D u_texture_light_diffuse;
+uniform sampler2D u_texture_light_specular;
 
 // Uniforms
 uniform vec4 u_ambient_colour;
@@ -140,23 +140,23 @@ vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal
 
 void main() {
     if (!u_enable_lights) {
-        io_composite = texture(u_texture_gbuffer_albedo, io_tex_coord.xy);
-        io_diffuse = texture(u_texture_lbuffer_diffuse, io_tex_coord.xy);
-        io_specular = texture(u_texture_lbuffer_specular, io_tex_coord.xy);
+        out_composite = texture(u_texture_frag_albedo, io_tex_coord.xy);
+        out_diffuse = texture(u_texture_light_diffuse, io_tex_coord.xy);
+        out_specular = texture(u_texture_light_specular, io_tex_coord.xy);
         return;
     }
 
-    const vec3 position = texture(u_texture_gbuffer_position, io_tex_coord.xy).rgb;
-    const vec3 normal = texture(u_texture_gbuffer_normal, io_tex_coord.xy).rgb;
-    const vec4 albedo = texture(u_texture_gbuffer_albedo, io_tex_coord.xy);
-    const vec4 specular = texture(u_texture_gbuffer_specular, io_tex_coord.xy);
-    const float gloss = texture(u_texture_gbuffer_gloss, io_tex_coord.xy).r;
+    const vec3 position = texture(u_texture_frag_position, io_tex_coord.xy).rgb;
+    const vec3 normal = texture(u_texture_frag_normal, io_tex_coord.xy).rgb;
+    const vec4 albedo = texture(u_texture_frag_albedo, io_tex_coord.xy);
+    const vec4 specular = texture(u_texture_frag_specular, io_tex_coord.xy);
+    const float gloss = texture(u_texture_frag_gloss, io_tex_coord.xy).r;
 
     const vec4 ambient_colour = albedo * u_ambient_colour;
-    const vec4 diffuse_colour = albedo * light_diffuse(position, normal) + texture(u_texture_lbuffer_diffuse, io_tex_coord.xy);
-    const vec4 specular_colour = specular * light_specular(position, normal, gloss) + texture(u_texture_lbuffer_specular, io_tex_coord.xy);
+    const vec4 diffuse_colour = albedo * light_diffuse(position, normal) + texture(u_texture_light_diffuse, io_tex_coord.xy);
+    const vec4 specular_colour = specular * light_specular(position, normal, gloss) + texture(u_texture_light_specular, io_tex_coord.xy);
 
-    io_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
-    io_diffuse = diffuse_colour;
-    io_specular = specular_colour;
+    out_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+    out_diffuse = diffuse_colour;
+    out_specular = specular_colour;
 }

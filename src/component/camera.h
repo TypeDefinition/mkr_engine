@@ -26,7 +26,7 @@ namespace mkr {
         /// Projection mode
         projection_mode mode_ = projection_mode::perspective;
         /// Near plane
-        float near_plane_ = 0.3f;
+        float near_plane_ = 0.5f;
         /// Far plane
         float far_plane_ = 500.0f;
         /// Aspect ratio

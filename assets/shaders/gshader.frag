@@ -35,6 +35,15 @@ uniform sampler2D u_texture_specular;
 uniform sampler2D u_texture_gloss;
 uniform sampler2D u_texture_displacement;
 
+const int debug_mode_off = 0;
+const int debug_mode_position = 1;
+const int debug_mode_normal = 2;
+const int debug_mode_albedo = 3;
+const int debug_mode_specular = 4;
+const int debug_mode_gloss = 5;
+
+uniform int u_debug_mode = 0;
+
 vec2 parallax_mapping(const vec2 _tex_coord) {
     // Get the direction of the camera to the fragment's surface in tangent space.
     vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
@@ -117,7 +126,11 @@ float get_gloss(const in vec2 _tex_coord) {
 }
 
 void main() {
-    const vec2 tex_coord = get_tex_coord();
+    vec2 tex_coord = get_tex_coord();
+    if (debug_mode_off != u_debug_mode) {
+        tex_coord = io_tex_coord.xy;
+    }
+
     const vec3 normal = get_normal(tex_coord);
     const vec4 albedo = get_albedo(tex_coord);
     const vec4 specular = get_specular(tex_coord);

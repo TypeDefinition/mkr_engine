@@ -33,7 +33,7 @@ namespace mkr {
 
     struct debug_control {
         event_listener input_listener_;
-        std::shared_ptr<shader_program> shader_;
+        std::shared_ptr<shader_program> gshader_, lshader_;
         std::shared_ptr<material> materials_1_[8];
         std::shared_ptr<material> materials_2_[8];
 
@@ -49,22 +49,28 @@ namespace mkr {
                 if (e->state_ != button_state::down) { return; }
 
                 if (e->action_ == debug_mode_off) {
-                    shader_->set_uniform("u_debug_mode", 0);
+                    gshader_->set_uniform("u_debug_mode", 0);
+                    lshader_->set_uniform("u_debug_mode", 0);
                 }
                 if (e->action_ == debug_mode_position) {
-                    shader_->set_uniform("u_debug_mode", 1);
+                    gshader_->set_uniform("u_debug_mode", 0);
+                    lshader_->set_uniform("u_debug_mode", 1);
                 }
                 if (e->action_ == debug_mode_normal) {
-                    shader_->set_uniform("u_debug_mode", 2);
+                    gshader_->set_uniform("u_debug_mode", 1);
+                    lshader_->set_uniform("u_debug_mode", 2);
                 }
                 if (e->action_ == debug_mode_albedo) {
-                    shader_->set_uniform("u_debug_mode", 3);
+                    gshader_->set_uniform("u_debug_mode", 3);
+                    lshader_->set_uniform("u_debug_mode", 3);
                 }
                 if (e->action_ == debug_mode_specular) {
-                    shader_->set_uniform("u_debug_mode", 4);
+                    gshader_->set_uniform("u_debug_mode", 4);
+                    lshader_->set_uniform("u_debug_mode", 4);
                 }
                 if (e->action_ == debug_mode_gloss) {
-                    shader_->set_uniform("u_debug_mode", 5);
+                    gshader_->set_uniform("u_debug_mode", 5);
+                    lshader_->set_uniform("u_debug_mode", 5);
                 }
                 if (e->action_ == debug_mode_material) {
                     for (auto i = 0; i < 8; ++i) {

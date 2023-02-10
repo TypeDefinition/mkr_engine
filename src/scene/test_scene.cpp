@@ -71,7 +71,8 @@ namespace mkr {
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_blur"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_outline"));
 
-        debug_control_.shader_ = asset_loader::instance().get_shader_program("lshader");
+        debug_control_.gshader_ = asset_loader::instance().get_shader_program("gshader");
+        debug_control_.lshader_ = asset_loader::instance().get_shader_program("lshader");
     }
 
     void test_scene::init_materials() {
@@ -220,7 +221,15 @@ namespace mkr {
             cam.skybox_->shader_ = asset_loader::instance().get_shader_program("skybox");
             cam.skybox_->texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
 
-            auto body = world_.entity().add<transform>().add<player_body>();
+            float angle = (360.0f / 8.0f) * (float)0;
+            float x = std::sin(angle * maths_util::deg2rad);
+            float z = std::cos(angle * maths_util::deg2rad);
+
+            transform body_trans;
+            body_trans.set_rotation(quaternion{vector3::y_axis, angle * maths_util::deg2rad});
+            body_trans.set_position(11.0f * vector3{float(x), 0.0f, float(z)});
+
+            auto body = world_.entity().set<transform>(body_trans).add<player_body>();
             auto head = world_.entity().set<transform>(head_trans).add<player_head>().set<camera>(cam);
             body.child_of(scene_root);
             head.child_of(body);

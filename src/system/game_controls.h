@@ -20,6 +20,51 @@ namespace mkr {
         look_right,
         look_up,
         look_down,
+
+        debug_mode_off,
+        debug_mode_position,
+        debug_mode_normal,
+        debug_mode_albedo,
+        debug_mode_specular,
+        debug_mode_gloss,
+    };
+
+    struct debug_control {
+        event_listener input_listener_;
+        std::shared_ptr<shader_program> shader_;
+
+        debug_control() {
+            // Input callback.
+            input_listener_.set_callback([&](const event* _event) {
+                const auto* e = dynamic_cast<const button_event*>(_event);
+                if (!e) { return; }
+                if (e->state_ != button_state::pressed) { return; }
+
+                if (e->action_ == debug_mode_off) {
+                    shader_->set_uniform("u_debug_mode", 0);
+                }
+                if (e->action_ == debug_mode_position) {
+                    shader_->set_uniform("u_debug_mode", 1);
+                }
+                if (e->action_ == debug_mode_normal) {
+                    shader_->set_uniform("u_debug_mode", 2);
+                }
+                if (e->action_ == debug_mode_albedo) {
+                    shader_->set_uniform("u_debug_mode", 3);
+                }
+                if (e->action_ == debug_mode_specular) {
+                    shader_->set_uniform("u_debug_mode", 4);
+                }
+                if (e->action_ == debug_mode_gloss) {
+                    shader_->set_uniform("u_debug_mode", 5);
+                }
+            });
+            input_manager::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);
+        }
+
+        ~debug_control() {
+            input_manager::instance().get_event_dispatcher()->remove_listener<button_event>(&input_listener_);
+        }
     };
 
     class head_control {
@@ -42,6 +87,10 @@ namespace mkr {
                 }
                 if (e->action_ == look_down) {
                     rotation_.x_ += 180.0f * application::instance().delta_time();
+                }
+
+                if (e->action_ == debug_mode_off) {
+
                 }
             });
             input_manager::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);

@@ -24,6 +24,13 @@ namespace mkr {
         input_manager::instance().register_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().register_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().register_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        input_manager::instance().register_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
+        input_manager::instance().register_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
+        input_manager::instance().register_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
+        input_manager::instance().register_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
+        input_manager::instance().register_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
+        input_manager::instance().register_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
     }
 
     void test_scene::init_textures() {
@@ -62,6 +69,8 @@ namespace mkr {
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_greyscale"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_blur"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_outline"));
+
+        debug_control_.shader_ = asset_loader::instance().get_shader_program("lshader");
     }
 
     void test_scene::init_materials() {
@@ -80,7 +89,7 @@ namespace mkr {
         brick_wall->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
         brick_wall->texture_gloss_ = asset_loader::instance().load_texture_2d("brick_wall_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
         brick_wall->texture_specular_ = asset_loader::instance().load_texture_2d("brick_wall_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_specular.png");
-        brick_wall->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
+        brick_wall->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         brick_wall->displacement_scale_ = 0.05f;
 
         auto metal_chain_mail = asset_loader::instance().make_material("metal_chain_mail");
@@ -171,6 +180,13 @@ namespace mkr {
         input_manager::instance().unregister_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().unregister_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().unregister_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        input_manager::instance().unregister_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
+        input_manager::instance().unregister_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
+        input_manager::instance().unregister_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
+        input_manager::instance().unregister_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
+        input_manager::instance().unregister_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
+        input_manager::instance().unregister_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
     }
 
     void test_scene::init() {

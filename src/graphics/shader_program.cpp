@@ -145,6 +145,10 @@ namespace mkr {
                     uniform_handles_[i + shader_uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
                 }
                 break;
+            case render_pass::shadow:
+                // Vertex Shader
+                uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
+                break;
             case render_pass::skybox:
                 // Vertex Shader
                 uniform_handles_[shader_uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");

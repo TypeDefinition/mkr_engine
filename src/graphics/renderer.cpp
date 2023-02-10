@@ -54,6 +54,7 @@ namespace mkr {
         lbuffer_ = std::make_shared<lbuffer>(app_window_->width(), app_window_->height());
         fbuffer_ = std::make_shared<fbuffer>(app_window_->width(), app_window_->height());
         pbuffer_ = std::make_shared<pbuffer>(app_window_->width(), app_window_->height());
+        sbuffer_ = std::make_shared<sbuffer>(1024, 1024);
     }
 
     void renderer::start() {
@@ -351,7 +352,7 @@ namespace mkr {
             shader->set_uniform(shader_uniform::u_gloss, material_ptr->gloss_);
             shader->set_uniform(shader_uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
-            const int32_t num_lights = maths_util::min<int32_t >(lights_.size(), max_lights);
+            const int32_t num_lights = maths_util::min<int32_t>(lights_.size(), max_lights);
             shader->set_uniform(shader_uniform::u_enable_lights, material::enable_lights_);
             shader->set_uniform(shader_uniform::u_num_lights, num_lights);
             for (auto i = 0; i < num_lights; ++i) {
@@ -444,7 +445,7 @@ namespace mkr {
         screen_quad_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
 
         // Use shader.
-        for (auto shader : material::pshaders_) {
+        for (auto shader: material::pshaders_) {
             pbuffer_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
             pbuffer_->swap_buffers();
 

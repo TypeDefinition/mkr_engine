@@ -45,6 +45,7 @@ namespace mkr {
         std::shared_ptr<lbuffer> lbuffer_;
         std::shared_ptr<fbuffer> fbuffer_;
         std::shared_ptr<pbuffer> pbuffer_;
+        std::shared_ptr<sbuffer> sbuffer_;
         std::shared_ptr<mesh> screen_quad_;
         std::shared_ptr<mesh> skybox_mesh_;
 

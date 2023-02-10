@@ -47,6 +47,7 @@ namespace mkr {
     void test_scene::init_shaders() {
         asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"});
         asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.frag"});
+        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"/mnt/ZorinWork/mkr_engine/assets/shaders/sshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/sshader.frag"});
         asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.frag"});
         asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.frag"});
         asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_invert.frag"});
@@ -56,6 +57,7 @@ namespace mkr {
 
         material::lshader_ = asset_loader::instance().get_shader_program("lshader");
         material::gshader_ = asset_loader::instance().get_shader_program("gshader");
+        material::sshader_ = asset_loader::instance().get_shader_program("sshader");
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_invert"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_greyscale"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_blur"));

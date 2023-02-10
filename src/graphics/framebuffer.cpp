@@ -200,4 +200,25 @@ namespace mkr {
         colour_attachments_[pbuffer_composite].swap(composite_back_);
         glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + pbuffer_composite, colour_attachments_[pbuffer_composite]->handle(), 0);
     }
+
+    // Shadow Buffer
+    sbuffer::sbuffer(uint32_t _width, uint32_t _height) {
+        // Create GL buffer.
+        glCreateFramebuffers(1, &handle_);
+
+        // Colour attachments.
+        glNamedFramebufferDrawBuffer(handle_, GL_NONE);
+
+        // Depth-Stencil attachments.
+        depth_stencil_attachment_ = std::make_shared<texture_2d>("depth_stencil", _width, _height, sized_format::depth24_stencil8);
+        glNamedFramebufferTexture(handle_, GL_DEPTH_STENCIL_ATTACHMENT, depth_stencil_attachment_->handle(), 0);
+
+        if (!is_complete()) {
+            throw std::runtime_error("incomplete shadow buffer");
+        }
+    }
+
+    sbuffer::~sbuffer() {
+        glDeleteFramebuffers(1, &handle_);
+    }
 }

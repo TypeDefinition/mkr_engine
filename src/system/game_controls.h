@@ -6,6 +6,7 @@
 #include "application/application.h"
 #include "component/transform.h"
 #include "component/camera.h"
+#include "graphics/asset_loader.h"
 
 namespace mkr {
     enum controls : input_action {
@@ -27,18 +28,25 @@ namespace mkr {
         debug_mode_albedo,
         debug_mode_specular,
         debug_mode_gloss,
+        debug_mode_material,
     };
 
     struct debug_control {
         event_listener input_listener_;
         std::shared_ptr<shader_program> shader_;
+        std::shared_ptr<material> materials_1_[8];
+        std::shared_ptr<material> materials_2_[8];
 
         debug_control() {
+            for (auto i = 0; i < 8; ++i) {
+                materials_1_[i] = asset_loader::instance().make_material("empty" + std::to_string(i));
+            }
+
             // Input callback.
             input_listener_.set_callback([&](const event* _event) {
                 const auto* e = dynamic_cast<const button_event*>(_event);
                 if (!e) { return; }
-                if (e->state_ != button_state::pressed) { return; }
+                if (e->state_ != button_state::down) { return; }
 
                 if (e->action_ == debug_mode_off) {
                     shader_->set_uniform("u_debug_mode", 0);
@@ -57,6 +65,15 @@ namespace mkr {
                 }
                 if (e->action_ == debug_mode_gloss) {
                     shader_->set_uniform("u_debug_mode", 5);
+                }
+                if (e->action_ == debug_mode_material) {
+                    for (auto i = 0; i < 8; ++i) {
+                        materials_1_[i]->texture_albedo_.swap(materials_2_[i]->texture_albedo_);
+                        materials_1_[i]->texture_normal_.swap(materials_2_[i]->texture_normal_);
+                        materials_1_[i]->texture_displacement_.swap(materials_2_[i]->texture_displacement_);
+                        materials_1_[i]->texture_gloss_.swap(materials_2_[i]->texture_gloss_);
+                        materials_1_[i]->texture_specular_.swap(materials_2_[i]->texture_specular_);
+                    }
                 }
             });
             input_manager::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);

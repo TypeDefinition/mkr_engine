@@ -31,6 +31,7 @@ namespace mkr {
         input_manager::instance().register_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
         input_manager::instance().register_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
         input_manager::instance().register_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
+        input_manager::instance().register_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
     }
 
     void test_scene::init_textures() {
@@ -154,6 +155,15 @@ namespace mkr {
         wooden_weave->texture_specular_ = asset_loader::instance().load_texture_2d("wooden_weave_002_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_specular.png");
         wooden_weave->texture_scale_ = vector2{1.0f, 1.0f} * 5.0f;
         wooden_weave->displacement_scale_ = 0.05f;
+
+        debug_control_.materials_2_[0] = brick_wall;
+        debug_control_.materials_2_[1] = metal_chain_mail;
+        debug_control_.materials_2_[2] = metal_pattern;
+        debug_control_.materials_2_[3] = metal_plate;
+        debug_control_.materials_2_[4] = rough_rock;
+        debug_control_.materials_2_[5] = rubble;
+        debug_control_.materials_2_[6] = pavement_brick;
+        debug_control_.materials_2_[7] = wooden_weave;
     }
 
     void test_scene::init_systems() {
@@ -187,6 +197,7 @@ namespace mkr {
         input_manager::instance().unregister_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
         input_manager::instance().unregister_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
         input_manager::instance().unregister_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
+        input_manager::instance().unregister_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
     }
 
     void test_scene::init() {

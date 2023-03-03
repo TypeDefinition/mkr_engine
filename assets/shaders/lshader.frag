@@ -50,6 +50,16 @@ uniform bool u_enable_lights;
 uniform int u_num_lights;
 uniform light u_lights[max_lights];
 
+// Debug
+const int debug_mode_off = 0;
+const int debug_mode_position = 1;
+const int debug_mode_normal = 2;
+const int debug_mode_albedo = 3;
+const int debug_mode_specular = 4;
+const int debug_mode_gloss = 5;
+
+uniform int u_debug_mode = 0;
+
 float light_attenuation(const in light _light, const in vec3 _vertex_position) {
     vec3 direction = _light.position_camera_space_ - _vertex_position;
     float distance_squared = dot(direction, direction);
@@ -116,22 +126,22 @@ vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                light_attenuation(u_lights[i], _vertex_position);
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            light_attenuation(u_lights[i], _vertex_position);
             break;
             case light_spot:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            light_attenuation(u_lights[i], _vertex_position) *
+            spotlight_effect(u_lights[i], _vertex_position);
             break;
             case light_directional:
             colour +=
-                u_lights[i].colour_ *
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-                u_lights[i].power_;
+            u_lights[i].colour_ *
+            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            u_lights[i].power_;
             break;
         }
     }
@@ -156,7 +166,27 @@ void main() {
     const vec4 diffuse_colour = albedo * light_diffuse(position, normal) + texture(u_texture_light_diffuse, io_tex_coord.xy);
     const vec4 specular_colour = specular * light_specular(position, normal, gloss) + texture(u_texture_light_specular, io_tex_coord.xy);
 
-    out_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+    switch (u_debug_mode) {
+        case debug_mode_position:
+            out_composite = vec4(position, 1.0f);
+            break;
+        case debug_mode_normal:
+            out_composite = vec4(normal, 1.0f);
+            break;
+        case debug_mode_albedo:
+            out_composite = albedo;
+            break;
+        case debug_mode_specular:
+            out_composite = specular;
+            break;
+        case debug_mode_gloss:
+            out_composite = vec4(gloss, gloss, gloss, 1.0f);
+            break;
+        default :
+            out_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
+            break;
+    }
+
     out_diffuse = diffuse_colour;
     out_specular = specular_colour;
 }

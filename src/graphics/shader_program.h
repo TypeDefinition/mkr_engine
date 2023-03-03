@@ -77,6 +77,7 @@ namespace mkr {
         geometry,
         lighting,
         forward,
+        shadow,
         skybox,
         post_proc,
     };

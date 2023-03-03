@@ -14,7 +14,7 @@ namespace mkr {
 
         static bool enable_lights_;
         static colour ambient_colour_;
-        static std::shared_ptr<shader_program> gshader_, lshader_;
+        static std::shared_ptr<shader_program> gshader_, lshader_, sshader_;
         static std::vector<std::shared_ptr<shader_program>> pshaders_;
 
         render_path render_path_ = render_path::deferred;

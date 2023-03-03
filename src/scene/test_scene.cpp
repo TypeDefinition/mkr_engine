@@ -24,6 +24,14 @@ namespace mkr {
         input_manager::instance().register_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().register_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().register_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        input_manager::instance().register_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
+        input_manager::instance().register_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
+        input_manager::instance().register_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
+        input_manager::instance().register_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
+        input_manager::instance().register_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
+        input_manager::instance().register_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
+        input_manager::instance().register_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
     }
 
     void test_scene::init_textures() {
@@ -47,6 +55,7 @@ namespace mkr {
     void test_scene::init_shaders() {
         asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
         asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"./../assets/shaders/gshader.vert"}, {"./../assets/shaders/gshader.frag"});
+        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"./../assets/shaders/sshader.vert"}, {"./../assets/shaders/sshader.frag"});
         asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"./../assets/shaders/lshader.vert"}, {"./../assets/shaders/lshader.frag"});
         asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"./../assets/shaders/fshader.vert"}, {"./../assets/shaders/fshader.frag"});
         asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_invert.frag"});
@@ -56,10 +65,14 @@ namespace mkr {
 
         material::lshader_ = asset_loader::instance().get_shader_program("lshader");
         material::gshader_ = asset_loader::instance().get_shader_program("gshader");
+        material::sshader_ = asset_loader::instance().get_shader_program("sshader");
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_invert"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_greyscale"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_blur"));
         // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_outline"));
+
+        debug_control_.gshader_ = asset_loader::instance().get_shader_program("gshader");
+        debug_control_.lshader_ = asset_loader::instance().get_shader_program("lshader");
     }
 
     void test_scene::init_materials() {
@@ -78,7 +91,7 @@ namespace mkr {
         brick_wall->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
         brick_wall->texture_gloss_ = asset_loader::instance().load_texture_2d("brick_wall_001_gloss", "./../assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
         brick_wall->texture_specular_ = asset_loader::instance().load_texture_2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
-        brick_wall->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
+        brick_wall->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         brick_wall->displacement_scale_ = 0.05f;
 
         auto metal_chain_mail = asset_loader::instance().make_material("metal_chain_mail");
@@ -143,6 +156,15 @@ namespace mkr {
         wooden_weave->texture_specular_ = asset_loader::instance().load_texture_2d("wooden_weave_002_specular", "./../assets/textures/materials/wood/wooden_weave_002_specular.png");
         wooden_weave->texture_scale_ = vector2{1.0f, 1.0f} * 5.0f;
         wooden_weave->displacement_scale_ = 0.05f;
+
+        debug_control_.materials_2_[0] = brick_wall;
+        debug_control_.materials_2_[1] = metal_chain_mail;
+        debug_control_.materials_2_[2] = metal_pattern;
+        debug_control_.materials_2_[3] = metal_plate;
+        debug_control_.materials_2_[4] = rough_rock;
+        debug_control_.materials_2_[5] = rubble;
+        debug_control_.materials_2_[6] = pavement_brick;
+        debug_control_.materials_2_[7] = wooden_weave;
     }
 
     void test_scene::init_systems() {
@@ -169,6 +191,14 @@ namespace mkr {
         input_manager::instance().unregister_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().unregister_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().unregister_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        input_manager::instance().unregister_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
+        input_manager::instance().unregister_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
+        input_manager::instance().unregister_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
+        input_manager::instance().unregister_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
+        input_manager::instance().unregister_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
+        input_manager::instance().unregister_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
+        input_manager::instance().unregister_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
     }
 
     void test_scene::init() {
@@ -191,7 +221,15 @@ namespace mkr {
             cam.skybox_->shader_ = asset_loader::instance().get_shader_program("skybox");
             cam.skybox_->texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
 
-            auto body = world_.entity().add<transform>().add<player_body>();
+            float angle = (360.0f / 8.0f) * (float)0;
+            float x = std::sin(angle * maths_util::deg2rad);
+            float z = std::cos(angle * maths_util::deg2rad);
+
+            transform body_trans;
+            body_trans.set_rotation(quaternion{vector3::y_axis, angle * maths_util::deg2rad});
+            body_trans.set_position(11.0f * vector3{float(x), 0.0f, float(z)});
+
+            auto body = world_.entity().set<transform>(body_trans).add<player_body>();
             auto head = world_.entity().set<transform>(head_trans).add<player_head>().set<camera>(cam);
             body.child_of(scene_root);
             head.child_of(body);

@@ -130,4 +130,12 @@ namespace mkr {
 
         virtual void swap_buffers();
     };
+
+    // Shadow Buffer
+    class sbuffer : public framebuffer {
+    public:
+        sbuffer(uint32_t _width, uint32_t _height);
+
+        virtual ~sbuffer();
+    };
 }

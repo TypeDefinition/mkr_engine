@@ -37,31 +37,31 @@ namespace mkr {
     void test_scene::init_textures() {
         // Skybox
         asset_loader::instance().load_texture_cube("skybox_sunset", {
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_right.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_left.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_top.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_bottom.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_front.png",
-                "/mnt/ZorinWork/mkr_engine/assets/textures/skyboxes/sunset/skybox_sunset_back.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_right.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_left.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_top.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_bottom.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_front.png",
+                "./../assets/textures/skyboxes/sunset/skybox_sunset_back.png",
         });
     }
 
     void test_scene::init_meshes() {
-        asset_loader::instance().load_obj("sphere", "/mnt/ZorinWork/mkr_engine/assets/models/sphere.obj");
-        asset_loader::instance().load_obj("cube", "/mnt/ZorinWork/mkr_engine/assets/models/cube.obj");
-        asset_loader::instance().load_obj("plane", "/mnt/ZorinWork/mkr_engine/assets/models/plane.obj");
+        asset_loader::instance().load_obj("sphere", "./../assets/models/sphere.obj");
+        asset_loader::instance().load_obj("cube", "./../assets/models/cube.obj");
+        asset_loader::instance().load_obj("plane", "./../assets/models/plane.obj");
     }
 
     void test_scene::init_shaders() {
-        asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/skybox.frag"});
-        asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/gshader.frag"});
-        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"/mnt/ZorinWork/mkr_engine/assets/shaders/sshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/sshader.frag"});
-        asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/lshader.frag"});
-        asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/fshader.frag"});
-        asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_invert.frag"});
-        asset_loader::instance().load_shader_program("pshader_greyscale", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_greyscale.frag"});
-        asset_loader::instance().load_shader_program("pshader_blur", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_blur.frag"});
-        asset_loader::instance().load_shader_program("pshader_outline", render_pass::post_proc, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader.vert"}, {"/mnt/ZorinWork/mkr_engine/assets/shaders/pshader_outline.frag"});
+        asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
+        asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"./../assets/shaders/gshader.vert"}, {"./../assets/shaders/gshader.frag"});
+        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"./../assets/shaders/sshader.vert"}, {"./../assets/shaders/sshader.frag"});
+        asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"./../assets/shaders/lshader.vert"}, {"./../assets/shaders/lshader.frag"});
+        asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"./../assets/shaders/fshader.vert"}, {"./../assets/shaders/fshader.frag"});
+        asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_invert.frag"});
+        asset_loader::instance().load_shader_program("pshader_greyscale", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_greyscale.frag"});
+        asset_loader::instance().load_shader_program("pshader_blur", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_blur.frag"});
+        asset_loader::instance().load_shader_program("pshader_outline", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_outline.frag"});
 
         material::lshader_ = asset_loader::instance().get_shader_program("lshader");
         material::gshader_ = asset_loader::instance().get_shader_program("gshader");
@@ -77,83 +77,83 @@ namespace mkr {
 
     void test_scene::init_materials() {
         auto tiles = asset_loader::instance().make_material("tiles");
-        tiles->texture_albedo_ = asset_loader::instance().load_texture_2d("tiles_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/tiles/tiles_001_albedo.png");
-        tiles->texture_normal_ = asset_loader::instance().load_texture_2d("tiles_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/tiles/tiles_001_normal.png");
-        tiles->texture_displacement_ = asset_loader::instance().load_texture_2d("tiles_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/tiles/tiles_001_displacement.png");
-        tiles->texture_gloss_ = asset_loader::instance().load_texture_2d("tiles_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/tiles/tiles_001_gloss.png");
-        tiles->texture_specular_ = asset_loader::instance().load_texture_2d("tiles_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/tiles/tiles_001_specular.png");
+        tiles->texture_albedo_ = asset_loader::instance().load_texture_2d("tiles_001_albedo", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
+        tiles->texture_normal_ = asset_loader::instance().load_texture_2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
+        tiles->texture_displacement_ = asset_loader::instance().load_texture_2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
+        tiles->texture_gloss_ = asset_loader::instance().load_texture_2d("tiles_001_gloss", "./../assets/textures/materials/tiles/tiles_001_gloss.png");
+        tiles->texture_specular_ = asset_loader::instance().load_texture_2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
         tiles->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
         tiles->displacement_scale_ = 0.1f;
 
         auto brick_wall = asset_loader::instance().make_material("brick_wall");
-        brick_wall->texture_albedo_ = asset_loader::instance().load_texture_2d("brick_wall_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
-        brick_wall->texture_normal_ = asset_loader::instance().load_texture_2d("brick_wall_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_normal.png");
-        brick_wall->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
-        brick_wall->texture_gloss_ = asset_loader::instance().load_texture_2d("brick_wall_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
-        brick_wall->texture_specular_ = asset_loader::instance().load_texture_2d("brick_wall_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/brick_wall/brick_wall_001_specular.png");
+        brick_wall->texture_albedo_ = asset_loader::instance().load_texture_2d("brick_wall_001_albedo", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
+        brick_wall->texture_normal_ = asset_loader::instance().load_texture_2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
+        brick_wall->texture_displacement_ = asset_loader::instance().load_texture_2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
+        brick_wall->texture_gloss_ = asset_loader::instance().load_texture_2d("brick_wall_001_gloss", "./../assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
+        brick_wall->texture_specular_ = asset_loader::instance().load_texture_2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
         brick_wall->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         brick_wall->displacement_scale_ = 0.05f;
 
         auto metal_chain_mail = asset_loader::instance().make_material("metal_chain_mail");
-        metal_chain_mail->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_chain_mail_001_albedo.png");
-        metal_chain_mail->texture_normal_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_chain_mail_001_normal.png");
-        metal_chain_mail->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_chain_mail_001_displacement.png");
-        metal_chain_mail->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_chain_mail_001_gloss.png");
-        metal_chain_mail->texture_specular_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_chain_mail_001_specular.png");
+        metal_chain_mail->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_albedo", "./../assets/textures/materials/metal/metal_chain_mail_001_albedo.png");
+        metal_chain_mail->texture_normal_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_normal", "./../assets/textures/materials/metal/metal_chain_mail_001_normal.png");
+        metal_chain_mail->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_displacement", "./../assets/textures/materials/metal/metal_chain_mail_001_displacement.png");
+        metal_chain_mail->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_gloss", "./../assets/textures/materials/metal/metal_chain_mail_001_gloss.png");
+        metal_chain_mail->texture_specular_ = asset_loader::instance().load_texture_2d("metal_chain_mail_001_specular", "./../assets/textures/materials/metal/metal_chain_mail_001_specular.png");
         metal_chain_mail->texture_scale_ = vector2{1.0f, 1.0f} * 8.0f;
         metal_chain_mail->displacement_scale_ = 0.05f;
 
         auto metal_pattern = asset_loader::instance().make_material("metal_pattern");
-        metal_pattern->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_pattern_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_pattern_001_albedo.png");
-        metal_pattern->texture_normal_ = asset_loader::instance().load_texture_2d("metal_pattern_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_pattern_001_normal.png");
-        metal_pattern->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_pattern_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_pattern_001_displacement.png");
-        metal_pattern->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_pattern_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_pattern_001_gloss.png");
-        metal_pattern->texture_specular_ = asset_loader::instance().load_texture_2d("metal_pattern_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_pattern_001_specular.png");
+        metal_pattern->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_pattern_001_albedo", "./../assets/textures/materials/metal/metal_pattern_001_albedo.png");
+        metal_pattern->texture_normal_ = asset_loader::instance().load_texture_2d("metal_pattern_001_normal", "./../assets/textures/materials/metal/metal_pattern_001_normal.png");
+        metal_pattern->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_pattern_001_displacement", "./../assets/textures/materials/metal/metal_pattern_001_displacement.png");
+        metal_pattern->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_pattern_001_gloss", "./../assets/textures/materials/metal/metal_pattern_001_gloss.png");
+        metal_pattern->texture_specular_ = asset_loader::instance().load_texture_2d("metal_pattern_001_specular", "./../assets/textures/materials/metal/metal_pattern_001_specular.png");
         metal_pattern->texture_scale_ = vector2{1.0f, 1.0f} * 2.0f;
         metal_pattern->displacement_scale_ = 0.1f;
 
         auto metal_plate = asset_loader::instance().make_material("metal_plate");
-        metal_plate->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_plate_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_plate_001_albedo.png");
-        metal_plate->texture_normal_ = asset_loader::instance().load_texture_2d("metal_plate_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_plate_001_normal.png");
-        metal_plate->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_plate_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_plate_001_displacement.png");
-        metal_plate->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_plate_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_plate_001_gloss.png");
-        metal_plate->texture_specular_ = asset_loader::instance().load_texture_2d("metal_plate_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/metal/metal_plate_001_specular.png");
+        metal_plate->texture_albedo_ = asset_loader::instance().load_texture_2d("metal_plate_001_albedo", "./../assets/textures/materials/metal/metal_plate_001_albedo.png");
+        metal_plate->texture_normal_ = asset_loader::instance().load_texture_2d("metal_plate_001_normal", "./../assets/textures/materials/metal/metal_plate_001_normal.png");
+        metal_plate->texture_displacement_ = asset_loader::instance().load_texture_2d("metal_plate_001_displacement", "./../assets/textures/materials/metal/metal_plate_001_displacement.png");
+        metal_plate->texture_gloss_ = asset_loader::instance().load_texture_2d("metal_plate_001_gloss", "./../assets/textures/materials/metal/metal_plate_001_gloss.png");
+        metal_plate->texture_specular_ = asset_loader::instance().load_texture_2d("metal_plate_001_specular", "./../assets/textures/materials/metal/metal_plate_001_specular.png");
         metal_plate->texture_scale_ = vector2{1.0f, 1.0f} * 12.0f;
         metal_plate->displacement_scale_ = 0.04f;
 
         auto rough_rock = asset_loader::instance().make_material("rough_rock");
-        rough_rock->texture_albedo_ = asset_loader::instance().load_texture_2d("rough_rock_004_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rough_rock/rough_rock_004_albedo.png");
-        rough_rock->texture_normal_ = asset_loader::instance().load_texture_2d("rough_rock_004_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rough_rock/rough_rock_004_normal.png");
-        rough_rock->texture_displacement_ = asset_loader::instance().load_texture_2d("rough_rock_004_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rough_rock/rough_rock_004_displacement.png");
-        rough_rock->texture_gloss_ = asset_loader::instance().load_texture_2d("rough_rock_004_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rough_rock/rough_rock_004_gloss.png");
-        rough_rock->texture_specular_ = asset_loader::instance().load_texture_2d("rough_rock_004_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rough_rock/rough_rock_004_specular.png");
+        rough_rock->texture_albedo_ = asset_loader::instance().load_texture_2d("rough_rock_004_albedo", "./../assets/textures/materials/rough_rock/rough_rock_004_albedo.png");
+        rough_rock->texture_normal_ = asset_loader::instance().load_texture_2d("rough_rock_004_normal", "./../assets/textures/materials/rough_rock/rough_rock_004_normal.png");
+        rough_rock->texture_displacement_ = asset_loader::instance().load_texture_2d("rough_rock_004_displacement", "./../assets/textures/materials/rough_rock/rough_rock_004_displacement.png");
+        rough_rock->texture_gloss_ = asset_loader::instance().load_texture_2d("rough_rock_004_gloss", "./../assets/textures/materials/rough_rock/rough_rock_004_gloss.png");
+        rough_rock->texture_specular_ = asset_loader::instance().load_texture_2d("rough_rock_004_specular", "./../assets/textures/materials/rough_rock/rough_rock_004_specular.png");
         rough_rock->texture_scale_ = vector2{1.0f, 1.0f} * 2.0f;
         rough_rock->displacement_scale_ = 0.02f;
 
         auto rubble = asset_loader::instance().make_material("rubble");
-        rubble->texture_albedo_ = asset_loader::instance().load_texture_2d("rubble_003_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rubble/rubble_003_albedo.png");
-        rubble->texture_normal_ = asset_loader::instance().load_texture_2d("rubble_003_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rubble/rubble_003_normal.png");
-        rubble->texture_displacement_ = asset_loader::instance().load_texture_2d("rubble_003_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rubble/rubble_003_displacement.png");
-        rubble->texture_gloss_ = asset_loader::instance().load_texture_2d("rubble_003_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rubble/rubble_003_gloss.png");
-        rubble->texture_specular_ = asset_loader::instance().load_texture_2d("rubble_003_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/rubble/rubble_003_specular.png");
+        rubble->texture_albedo_ = asset_loader::instance().load_texture_2d("rubble_003_albedo", "./../assets/textures/materials/rubble/rubble_003_albedo.png");
+        rubble->texture_normal_ = asset_loader::instance().load_texture_2d("rubble_003_normal", "./../assets/textures/materials/rubble/rubble_003_normal.png");
+        rubble->texture_displacement_ = asset_loader::instance().load_texture_2d("rubble_003_displacement", "./../assets/textures/materials/rubble/rubble_003_displacement.png");
+        rubble->texture_gloss_ = asset_loader::instance().load_texture_2d("rubble_003_gloss", "./../assets/textures/materials/rubble/rubble_003_gloss.png");
+        rubble->texture_specular_ = asset_loader::instance().load_texture_2d("rubble_003_specular", "./../assets/textures/materials/rubble/rubble_003_specular.png");
         rubble->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         rubble->displacement_scale_ = 0.03f;
 
         auto pavement_brick = asset_loader::instance().make_material("pavement_brick");
-        pavement_brick->texture_albedo_ = asset_loader::instance().load_texture_2d("pavement_brick_001_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/pavement/pavement_brick_001_albedo.png");
-        pavement_brick->texture_normal_ = asset_loader::instance().load_texture_2d("pavement_brick_001_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/pavement/pavement_brick_001_normal.png");
-        pavement_brick->texture_displacement_ = asset_loader::instance().load_texture_2d("pavement_brick_001_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/pavement/pavement_brick_001_displacement.png");
-        pavement_brick->texture_gloss_ = asset_loader::instance().load_texture_2d("pavement_brick_001_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/pavement/pavement_brick_001_gloss.png");
-        pavement_brick->texture_specular_ = asset_loader::instance().load_texture_2d("pavement_brick_001_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/pavement/pavement_brick_001_specular.png");
+        pavement_brick->texture_albedo_ = asset_loader::instance().load_texture_2d("pavement_brick_001_albedo", "./../assets/textures/materials/pavement/pavement_brick_001_albedo.png");
+        pavement_brick->texture_normal_ = asset_loader::instance().load_texture_2d("pavement_brick_001_normal", "./../assets/textures/materials/pavement/pavement_brick_001_normal.png");
+        pavement_brick->texture_displacement_ = asset_loader::instance().load_texture_2d("pavement_brick_001_displacement", "./../assets/textures/materials/pavement/pavement_brick_001_displacement.png");
+        pavement_brick->texture_gloss_ = asset_loader::instance().load_texture_2d("pavement_brick_001_gloss", "./../assets/textures/materials/pavement/pavement_brick_001_gloss.png");
+        pavement_brick->texture_specular_ = asset_loader::instance().load_texture_2d("pavement_brick_001_specular", "./../assets/textures/materials/pavement/pavement_brick_001_specular.png");
         pavement_brick->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         pavement_brick->displacement_scale_ = 0.1f;
 
         auto wooden_weave = asset_loader::instance().make_material("wooden_weave");
-        wooden_weave->texture_albedo_ = asset_loader::instance().load_texture_2d("wooden_weave_002_albedo", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_albedo.png");
-        wooden_weave->texture_normal_ = asset_loader::instance().load_texture_2d("wooden_weave_002_normal", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_normal.png");
-        wooden_weave->texture_displacement_ = asset_loader::instance().load_texture_2d("wooden_weave_002_displacement", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_displacement.png");
-        wooden_weave->texture_gloss_ = asset_loader::instance().load_texture_2d("wooden_weave_002_gloss", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_gloss.png");
-        wooden_weave->texture_specular_ = asset_loader::instance().load_texture_2d("wooden_weave_002_specular", "/mnt/ZorinWork/mkr_engine/assets/textures/materials/wood/wooden_weave_002_specular.png");
+        wooden_weave->texture_albedo_ = asset_loader::instance().load_texture_2d("wooden_weave_002_albedo", "./../assets/textures/materials/wood/wooden_weave_002_albedo.png");
+        wooden_weave->texture_normal_ = asset_loader::instance().load_texture_2d("wooden_weave_002_normal", "./../assets/textures/materials/wood/wooden_weave_002_normal.png");
+        wooden_weave->texture_displacement_ = asset_loader::instance().load_texture_2d("wooden_weave_002_displacement", "./../assets/textures/materials/wood/wooden_weave_002_displacement.png");
+        wooden_weave->texture_gloss_ = asset_loader::instance().load_texture_2d("wooden_weave_002_gloss", "./../assets/textures/materials/wood/wooden_weave_002_gloss.png");
+        wooden_weave->texture_specular_ = asset_loader::instance().load_texture_2d("wooden_weave_002_specular", "./../assets/textures/materials/wood/wooden_weave_002_specular.png");
         wooden_weave->texture_scale_ = vector2{1.0f, 1.0f} * 5.0f;
         wooden_weave->displacement_scale_ = 0.05f;
 

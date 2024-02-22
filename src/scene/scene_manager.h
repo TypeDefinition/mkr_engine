@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <flecs.h>
 #include <common/singleton.h>
 #include "scene/scene.h"

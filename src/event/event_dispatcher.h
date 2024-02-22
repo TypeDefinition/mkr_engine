@@ -5,17 +5,20 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-#include <common/family.h>
+#include <common/type_id.h>
 #include "event/event_listener.h"
 
 namespace mkr {
+    using event_id_t = mkr::type_id_t;
+    using event_id = mkr::type_id<event>;
+
     /**
         \brief An event_dispatcher is used to dispatch event(s) to event_listener(s) that are subscribed to this dispatcher. This uses the publisher-subscriber pattern.
     */
     class event_dispatcher {
     private:
         /// The event_listener(s) added to this event_dispatcher is sorted by the event type they are subscribed to.
-        std::unordered_map<int32_t, std::unordered_set<event_listener*>> listeners_;
+        std::unordered_map<event_id_t, std::unordered_set<event_listener*>> listeners_;
         std::mutex mutex_;
 
     public:
@@ -30,7 +33,7 @@ namespace mkr {
         template<typename T>
         void dispatch_event(event* _event) requires std::is_base_of_v<mkr::event, T> {
             std::lock_guard lock{mutex_};
-            for (auto listener : listeners_[family<event>::get_id<T>()]) {
+            for (auto listener : listeners_[event_id::value<T>()]) {
                 listener->invoke_callback(_event);
             }
         }
@@ -42,7 +45,7 @@ namespace mkr {
         template<typename T>
         void add_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
             std::lock_guard lock{mutex_};
-            listeners_[family<event>::get_id<T>()].insert(_listener);
+            listeners_[event_id::value<T>()].insert(_listener);
         }
 
         /**
@@ -52,7 +55,7 @@ namespace mkr {
         template<typename T>
         void remove_listener(event_listener* _listener) requires std::is_base_of_v<mkr::event, T> {
             std::lock_guard lock{mutex_};
-            listeners_[family<event>::get_id<T>()].erase(_listener);
+            listeners_[event_id::value<T>()].erase(_listener);
         }
     };
 }

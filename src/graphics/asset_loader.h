@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <unordered_map>
 #include <common/singleton.h>
 #include "graphics/shader_program.h"
@@ -13,11 +14,11 @@ namespace mkr {
         friend class singleton<asset_loader>;
 
     private:
-        std::unordered_map<std::string, std::shared_ptr<shader_program>> shader_programs_;
-        std::unordered_map<std::string, std::shared_ptr<texture_2d>> texture_2ds_;
-        std::unordered_map<std::string, std::shared_ptr<texture_cube>> texture_cubes_;
-        std::unordered_map<std::string, std::shared_ptr<material>> materials_;
-        std::unordered_map<std::string, std::shared_ptr<mesh>> meshes_;
+        std::unordered_map<std::string, std::unique_ptr<shader_program>> shader_programs_;
+        std::unordered_map<std::string, std::unique_ptr<texture_2d>> texture_2ds_;
+        std::unordered_map<std::string, std::unique_ptr<texture_cube>> texture_cubes_;
+        std::unordered_map<std::string, std::unique_ptr<material>> materials_;
+        std::unordered_map<std::string, std::unique_ptr<mesh>> meshes_;
 
         /**
             \brief Flip the image data horizontally.
@@ -45,36 +46,36 @@ namespace mkr {
 
     public:
         // Shaders
-        std::shared_ptr<shader_program> get_shader_program(const std::string& _name);
+        shader_program* get_shader_program(const std::string& _name);
 
-        std::shared_ptr<shader_program> load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files);
+        shader_program* load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files);
 
         // Texture 2D
-        std::shared_ptr<texture_2d> get_texture_2d(const std::string& _name);
+        texture_2d* get_texture_2d(const std::string& _name);
 
-        std::shared_ptr<texture_2d> load_texture_2d(const std::string& _name, const std::string& _file, bool _flip_x = false, bool _flip_y = false);
+        texture_2d* load_texture_2d(const std::string& _name, const std::string& _file, bool _flip_x = false, bool _flip_y = false);
 
         // Texture Cube
-        std::shared_ptr<texture_cube> get_texture_cube(const std::string& _name);
+        texture_cube* get_texture_cube(const std::string& _name);
 
-        std::shared_ptr<texture_cube> load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x = false, bool _flip_y = false);
+        texture_cube* load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x = false, bool _flip_y = false);
 
         // Materials
-        std::shared_ptr<material> get_material(const std::string& _name);
+        material* get_material(const std::string& _name);
 
-        std::shared_ptr<material> make_material(const std::string& _name);
+        material* make_material(const std::string& _name);
 
         // Meshes
-        std::shared_ptr<mesh> make_skybox();
+        static std::unique_ptr<mesh> make_skybox();
 
-        std::shared_ptr<mesh> make_screen_quad();
+        static std::unique_ptr<mesh> make_screen_quad();
 
-        std::shared_ptr<mesh> get_mesh(const std::string& _name);
+        static std::unique_ptr<mesh> make_triangle(const std::string& _name);
 
-        std::shared_ptr<mesh> make_quad(const std::string& _name);
+        static std::unique_ptr<mesh> make_quad(const std::string& _name);
 
-        std::shared_ptr<mesh> make_triangle(const std::string& _name);
+        mesh* load_obj(const std::string& _name, const std::string& _file);
 
-        std::shared_ptr<mesh> load_obj(const std::string& _name, const std::string& _file);
+        mesh* get_mesh(const std::string& _name);
     };
 }

@@ -1,10 +1,9 @@
 #include "scene/scene_manager.h"
-#include "scene/test_scene.h"
-#include <log/log.h>
+#include "game/scene/game_scene.h"
 
 namespace mkr {
     void scene_manager::init() {
-        scene_ = std::make_shared<test_scene>();
+        scene_ = std::make_unique<game_scene>();
         scene_->init();
     }
 

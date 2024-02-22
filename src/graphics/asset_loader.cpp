@@ -42,12 +42,12 @@ namespace mkr {
     }
 
     // Shaders
-    std::shared_ptr<shader_program> asset_loader::get_shader_program(const std::string& _name) {
+    shader_program* asset_loader::get_shader_program(const std::string& _name) {
         auto iter = shader_programs_.find(_name);
-        return (iter == shader_programs_.end()) ? nullptr : iter->second;
+        return (iter == shader_programs_.end()) ? nullptr : iter->second.get();
     }
 
-    std::shared_ptr<shader_program> asset_loader::load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files) {
+    shader_program* asset_loader::load_shader_program(const std::string& _name, render_pass _render_pass, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files) {
         std::vector<std::string> vs_sources;
         for (const auto& filename: _vs_files) {
             vs_sources.push_back(file_util::file_to_str(filename));
@@ -58,18 +58,17 @@ namespace mkr {
             fs_sources.push_back(file_util::file_to_str(filename));
         }
 
-        auto shader = std::make_shared<shader_program>(_name, _render_pass, vs_sources, fs_sources);
-        shader_programs_[_name] = shader;
-        return shader;
+        shader_programs_[_name] = std::make_unique<shader_program>(_name, _render_pass, vs_sources, fs_sources);
+        return shader_programs_[_name].get();
     }
 
     // Texture 2D
-    std::shared_ptr<texture_2d> asset_loader::get_texture_2d(const std::string& _name) {
+    texture_2d* asset_loader::get_texture_2d(const std::string& _name) {
         auto iter = texture_2ds_.find(_name);
-        return (iter == texture_2ds_.end()) ? nullptr : iter->second;
+        return (iter == texture_2ds_.end()) ? nullptr : iter->second.get();
     }
 
-    std::shared_ptr<texture_2d> asset_loader::load_texture_2d(const std::string& _name, const std::string& _file, bool _flip_x, bool _flip_y) {
+    texture_2d* asset_loader::load_texture_2d(const std::string& _name, const std::string& _file, bool _flip_x, bool _flip_y) {
         SDL_PixelFormat* pixel_format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
         SDL_Surface* raw_surface = IMG_Load(_file.c_str());
         if (raw_surface == nullptr) {
@@ -89,23 +88,22 @@ namespace mkr {
             flip_image_y(pixel_data, converted_surface->w, converted_surface->h, pixel_format->BytesPerPixel);
         }
 
-        auto texture_ptr = std::make_shared<texture_2d>(_name, converted_surface->w, converted_surface->h, pixel_data);
+        texture_2ds_[_name] = std::make_unique<texture_2d>(_name, converted_surface->w, converted_surface->h, pixel_data);
 
         SDL_FreeFormat(pixel_format);
         SDL_FreeSurface(raw_surface);
         SDL_FreeSurface(converted_surface);
 
-        texture_2ds_[_name] = texture_ptr;
-        return texture_ptr;
+        return texture_2ds_[_name].get();
     }
 
     // Texture Cube
-    std::shared_ptr<texture_cube> asset_loader::get_texture_cube(const std::string& _name) {
+    texture_cube* asset_loader::get_texture_cube(const std::string& _name) {
         auto iter = texture_cubes_.find(_name);
-        return (iter == texture_cubes_.end()) ? nullptr : iter->second;
+        return (iter == texture_cubes_.end()) ? nullptr : iter->second.get();
     }
 
-    std::shared_ptr<texture_cube> asset_loader::load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x, bool _flip_y) {
+    texture_cube* asset_loader::load_texture_cube(const std::string& _name, std::array<std::string, num_texture_cube_sides> _files, bool _flip_x, bool _flip_y) {
         SDL_PixelFormat* pixel_format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
         SDL_Surface* raw_surfaces[num_texture_cube_sides] = {nullptr};
         SDL_Surface* converted_surfaces[num_texture_cube_sides] = {nullptr};
@@ -130,7 +128,7 @@ namespace mkr {
             }
         }
 
-        std::shared_ptr<texture_cube> texture_ptr = std::make_shared<texture_cube>(_name, converted_surfaces[0]->w, converted_surfaces[0]->h,
+        texture_cubes_[_name] = std::make_unique<texture_cube>(_name, converted_surfaces[0]->w, converted_surfaces[0]->h,
                                                                                std::array<const void*, num_texture_cube_sides>{
                                                                                        converted_surfaces[0]->pixels,
                                                                                        converted_surfaces[1]->pixels,
@@ -146,24 +144,22 @@ namespace mkr {
             SDL_FreeSurface(converted_surfaces[i]);
         }
 
-        texture_cubes_[_name] = texture_ptr;
-        return texture_ptr;
+        return texture_cubes_[_name].get();
     }
 
     // Materials
-    std::shared_ptr<material> asset_loader::get_material(const std::string& _name) {
+    material* asset_loader::get_material(const std::string& _name) {
         auto iter = materials_.find(_name);
-        return (iter == materials_.end()) ? nullptr : iter->second;
+        return (iter == materials_.end()) ? nullptr : iter->second.get();
     }
 
-    std::shared_ptr<material> asset_loader::make_material(const std::string& _name) {
-        auto material_ptr = std::make_shared<material>();
-        materials_[_name] = material_ptr;
-        return material_ptr;
+    material* asset_loader::make_material(const std::string& _name) {
+        materials_[_name] = std::make_unique<material>();;
+        return materials_[_name].get();
     }
 
     // Meshes
-    std::shared_ptr<mesh> asset_loader::make_skybox() {
+    std::unique_ptr<mesh> asset_loader::make_skybox() {
         std::vector<vertex> vertices(24);
         std::vector<uint32_t> indices;
 
@@ -337,10 +333,10 @@ namespace mkr {
         indices.push_back(23);
         indices.push_back(21);
 
-        return std::make_shared<mesh>("skybox", vertices, indices);
+        return std::make_unique<mesh>("skybox", vertices, indices);
     }
 
-    std::shared_ptr<mesh> asset_loader::make_screen_quad() {
+    std::unique_ptr<mesh> asset_loader::make_screen_quad() {
         std::vector<vertex> vertices(4);
 
         vertices[0].position_ = {-1.0f, -1.0f, 0.0f};
@@ -373,15 +369,10 @@ namespace mkr {
         indices[4] = 3;
         indices[5] = 1;
 
-        return std::make_shared<mesh>("screen_quad", vertices, indices);
+        return std::make_unique<mesh>("screen_quad", vertices, indices);
     }
 
-    std::shared_ptr<mesh> asset_loader::get_mesh(const std::string& _name) {
-        auto iter = meshes_.find(_name);
-        return (iter == meshes_.end()) ? nullptr : iter->second;
-    }
-
-    std::shared_ptr<mesh> asset_loader::make_triangle(const std::string& _name) {
+    std::unique_ptr<mesh> asset_loader::make_triangle(const std::string& _name) {
         std::vector<vertex> vertices(3);
 
         vertices[0].position_ = {-0.5f, -0.5f, 0.0f};
@@ -406,12 +397,10 @@ namespace mkr {
         indices[1] = 1;
         indices[2] = 2;
 
-        std::shared_ptr<mesh> mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
-        meshes_.insert({_name, mesh_ptr});
-        return mesh_ptr;
+        return std::make_unique<mesh>(_name, vertices, indices);
     }
 
-    std::shared_ptr<mesh> asset_loader::make_quad(const std::string& _name) {
+    std::unique_ptr<mesh> asset_loader::make_quad(const std::string& _name) {
         std::vector<vertex> vertices(4);
 
         vertices[0].position_ = {-0.5f, -0.5f, 0.0f};
@@ -444,12 +433,10 @@ namespace mkr {
         indices[4] = 3;
         indices[5] = 1;
 
-        std::shared_ptr<mesh> mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
-        meshes_.insert({_name, mesh_ptr});
-        return mesh_ptr;
+        return std::make_unique<mesh>(_name, vertices, indices);
     }
 
-    std::shared_ptr<mesh> asset_loader::load_obj(const std::string& _name, const std::string& _file) {
+    mesh* asset_loader::load_obj(const std::string& _name, const std::string& _file) {
         // Vertex Data and Index Data
         std::vector<vertex> vertices;
         std::vector<uint32_t> indices;
@@ -560,8 +547,12 @@ namespace mkr {
         }
 
         // Create the mesh.
-        auto mesh_ptr = std::make_shared<mesh>(_name, vertices, indices);
-        meshes_.insert({_name, mesh_ptr});
-        return mesh_ptr;
+        meshes_[_name] = std::make_unique<mesh>(_name, vertices, indices);
+        return meshes_[_name].get();
+    }
+
+    mesh* asset_loader::get_mesh(const std::string& _name) {
+        auto iter = meshes_.find(_name);
+        return (iter == meshes_.end()) ? nullptr : iter->second.get();
     }
 }

@@ -10,7 +10,7 @@ namespace mkr {
         directional,
     };
 
-    class light {
+    class light_component {
     private:
         light_mode mode_ = light_mode::point;
         float power_ = 20.0f;
@@ -24,9 +24,9 @@ namespace mkr {
         float spotlight_outer_angle_ = 30.0f;
 
     public:
-        light() = default;
+        light_component() = default;
 
-        virtual ~light() = default;
+        virtual ~light_component() = default;
 
         inline light_mode get_mode() const { return mode_; }
 

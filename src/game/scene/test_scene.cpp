@@ -1,15 +1,7 @@
-#include <log/log.h>
-#include "scene/test_scene.h"
-#include "graphics/asset_loader.h"
-#include "graphics/renderer.h"
-#include "system/systems.h"
-#include "component/camera.h"
-#include "component/mesh_renderer.h"
-#include "component/transform.h"
-#include "component/light.h"
+#include "test_scene.h"
 
 namespace mkr {
-    struct display {};
+    /*struct display {};
 
     void test_scene::init_controls() {
         // Register Buttons
@@ -168,14 +160,14 @@ namespace mkr {
     }
 
     void test_scene::init_systems() {
-        world_.system<transform, const player_head>().each([&](transform& _transform, const player_head& _player_head) { head_control_(_transform, _player_head); });
-        world_.system<transform, const player_body>().each([&](transform& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
-        world_.system<transform, const display>().each([&](transform& _transform, const display& _display) { _transform.rotate(quaternion{vector3::y_axis, 10.0f * application::instance().delta_time() * maths_util::deg2rad}); });
+        world_.system<transform_component, const player_head>().each([&](transform_component& _transform, const player_head& _player_head) { head_control_(_transform, _player_head); });
+        world_.system<transform_component, const player_body>().each([&](transform_component& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
+        world_.system<transform_component, const display>().each([&](transform_component& _transform, const display& _display) { _transform.rotate(quaternion{vector3::y_axis, 10.0f * application::instance().delta_time() * maths_util::deg2rad}); });
 
         world_.system<const root>().each(calculate_transforms);
-        world_.system<const global_transform, const camera>().each([](const global_transform& _global_transform, const camera& _camera) { renderer::instance().update_cameras(_global_transform, _camera); });
-        world_.system<const global_transform, const light>().each([](const global_transform& _global_transform, const light& _light) { renderer::instance().update_lights(_global_transform, _light); });
-        world_.system<const global_transform, const mesh_renderer>().each([](const global_transform& _global_transform, const mesh_renderer& _mesh_renderer) { renderer::instance().update_objects(_global_transform, _mesh_renderer); });
+        world_.system<const local_to_world_component, const camera_component>().each([](const local_to_world_component& _global_transform, const camera_component& _camera) { renderer::instance().update_cameras(_global_transform, _camera); });
+        world_.system<const local_to_world_component, const light_component>().each([](const local_to_world_component& _global_transform, const light_component& _light) { renderer::instance().update_lights(_global_transform, _light); });
+        world_.system<const local_to_world_component, const render_component>().each([](const local_to_world_component& _global_transform, const render_component& _mesh_renderer) { renderer::instance().update_objects(_global_transform, _mesh_renderer); });
     }
 
     void test_scene::exit_controls() {
@@ -210,14 +202,14 @@ namespace mkr {
         init_systems();
 
         // Scene Root
-        auto scene_root = world_.entity().add<root>().add<transform>();
+        auto scene_root = world_.entity().add<root>().add<transform_component>();
 
         // Camera
         {
-            transform head_trans;
+            transform_component head_trans;
             head_trans.set_position({0.0f, 1.7f, 0.0f});
 
-            camera cam;
+            camera_component cam;
             cam.skybox_->shader_ = asset_loader::instance().get_shader_program("skybox");
             cam.skybox_->texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
 
@@ -225,27 +217,27 @@ namespace mkr {
             float x = std::sin(angle * maths_util::deg2rad);
             float z = std::cos(angle * maths_util::deg2rad);
 
-            transform body_trans;
+            transform_component body_trans;
             body_trans.set_rotation(quaternion{vector3::y_axis, angle * maths_util::deg2rad});
             body_trans.set_position(11.0f * vector3{float(x), 0.0f, float(z)});
 
-            auto body = world_.entity().set<transform>(body_trans).add<player_body>();
-            auto head = world_.entity().set<transform>(head_trans).add<player_head>().set<camera>(cam);
+            auto body = world_.entity().set<transform_component>(body_trans).add<player_body>();
+            auto head = world_.entity().set<transform_component>(head_trans).add<player_head>().set<camera_component>(cam);
             body.child_of(scene_root);
             head.child_of(body);
         }
 
         // Floor
         {
-            transform trans;
+            transform_component trans;
             trans.set_scale({100.0f, 1.0f, 100.0f});
             trans.set_position({0.0f, 0.0f, 0.0f});
 
-            mesh_renderer rend;
-            rend.mesh_ = asset_loader::instance().get_mesh("plane");
-            rend.material_ = asset_loader::instance().get_material("tiles");
+            render_component rend;
+            rend.mesh_ = "plane";
+            rend.material_ = "tiles";
 
-            world_.entity().set<transform>(trans).set<mesh_renderer>(rend).child_of(scene_root);
+            world_.entity().set<transform_component>(trans).set<render_component>(rend).child_of(scene_root);
         }
 
         // Spheres
@@ -256,34 +248,34 @@ namespace mkr {
             float x = std::sin(angle * maths_util::deg2rad);
             float z = std::cos(angle * maths_util::deg2rad);
 
-            transform sphere_trans;
+            transform_component sphere_trans;
             sphere_trans.set_position({x * sphere_radius, 1.5f, z * sphere_radius});
             sphere_trans.set_scale(3.0f * vector3{1.0f, 1.0f, 1.0f});
-            mesh_renderer sphere_rend;
-            sphere_rend.mesh_ = asset_loader::instance().get_mesh("sphere");
-            spheres[i] = world_.entity().set<transform>(sphere_trans).set<mesh_renderer>(sphere_rend).add<display>().child_of(scene_root);
+            render_component sphere_rend;
+            sphere_rend.mesh_ = "sphere";
+            spheres[i] = world_.entity().set<transform_component>(sphere_trans).set<render_component>(sphere_rend).add<display>().child_of(scene_root);
 
-            transform light_trans;
+            transform_component light_trans;
             light_trans.set_position({0.0f, 15.0f, 0.0f});
             light_trans.set_rotation(quaternion(vector3::y_axis, angle * maths_util::deg2rad) * quaternion(vector3::x_axis, 30.0f * maths_util::deg2rad));
-            light lt;
+            light_component lt;
             lt.set_mode(light_mode::spot);
             lt.set_power(200.0f);
-            world_.entity().set<transform>(light_trans).set<light>(lt).child_of(scene_root);
+            world_.entity().set<transform_component>(light_trans).set<light_component>(lt).child_of(scene_root);
         }
 
-        spheres[0].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("brick_wall");
-        spheres[1].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("metal_chain_mail");
-        spheres[2].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("metal_pattern");
-        spheres[3].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("metal_plate");
-        spheres[4].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("rough_rock");
-        spheres[5].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("rubble");
-        spheres[6].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("pavement_brick");
-        spheres[7].get_mut<mesh_renderer>()->material_ = asset_loader::instance().get_material("wooden_weave");
+        spheres[0].get_mut<render_component>()->material_ = "brick_wall";
+        spheres[1].get_mut<render_component>()->material_ = "metal_chain_mail";
+        spheres[2].get_mut<render_component>()->material_ = "metal_pattern";
+        spheres[3].get_mut<render_component>()->material_ = "metal_plate";
+        spheres[4].get_mut<render_component>()->material_ = "rough_rock";
+        spheres[5].get_mut<render_component>()->material_ = "rubble";
+        spheres[6].get_mut<render_component>()->material_ = "pavement_brick";
+        spheres[7].get_mut<render_component>()->material_ = "wooden_weave";
 
         // Lights
         {
-            transform trans;
+            transform_component trans;
             trans.set_position({0.0f, 0.0f, -10.0f});
 
             quaternion rotation_x, rotation_y;
@@ -291,11 +283,11 @@ namespace mkr {
             rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
             trans.set_rotation(rotation_y * rotation_x);
 
-            light lt;
+            light_component lt;
             lt.set_mode(light_mode::directional);
             lt.set_power(0.6f);
 
-            world_.entity().set<light>(lt).set<transform>(trans).child_of(scene_root);
+            world_.entity().set<light_component>(lt).set<transform_component>(trans).child_of(scene_root);
         }
     }
 
@@ -305,5 +297,5 @@ namespace mkr {
 
     void test_scene::exit() {
         exit_controls();
-    }
+    }*/
 }

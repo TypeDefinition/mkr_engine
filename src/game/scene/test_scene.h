@@ -1,10 +1,7 @@
 #pragma once
 
-#include "scene/scene.h"
-#include "system/game_controls.h"
-
 namespace mkr {
-    class test_scene : public scene {
+    /*class test_scene : public scene {
     private:
         head_control head_control_;
         body_control body_control_;
@@ -30,5 +27,5 @@ namespace mkr {
         virtual void update();
 
         virtual void exit();
-    };
+    };*/
 }

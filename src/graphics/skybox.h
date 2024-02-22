@@ -8,8 +8,8 @@
 namespace mkr {
     class skybox {
     public:
-        std::shared_ptr<texture_cube> texture_;
-        std::shared_ptr<shader_program> shader_;
+        texture_cube* texture_ = nullptr;
+        shader_program* shader_ = nullptr;
         colour colour_ = colour::white;
     };
 }

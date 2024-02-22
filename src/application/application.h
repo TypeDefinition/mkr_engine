@@ -13,8 +13,8 @@ namespace mkr {
         float delta_time_ = 0.0f;
         /// The duration that has passed since the application started.
         float time_elapsed_ = 0.0f;
-        /// A flag to exit the game loop. Set to true to quit the application.
-        std::atomic_bool terminate_ = false;
+        /// A flag to exit the game loop. Set to false to quit the application.
+        std::atomic_bool run_ = true;
 
         application() {}
 
@@ -25,7 +25,7 @@ namespace mkr {
 
         inline float time_elapsed() const { return time_elapsed_; }
 
-        void terminate() { terminate_ = true; }
+        void terminate() { run_ = false; }
 
         virtual void init();
 
@@ -33,4 +33,4 @@ namespace mkr {
 
         virtual void exit();
     };
-}
+} // mkr

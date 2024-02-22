@@ -63,8 +63,8 @@ namespace mkr {
             vao_->bind();
         }
 
-        void set_instance_data(const std::vector<mesh_instance>& _instances) {
-            vao_->get_vbo(vbo_index::instance_data)->set_data(sizeof(mesh_instance) * _instances.size(), (void*)_instances.data(), GL_STREAM_DRAW);
+        void set_instance_data(const std::vector<mesh_instance_data>& _instances) {
+            vao_->get_vbo(vbo_index::instance_data)->set_data(sizeof(mesh_instance_data) * _instances.size(), (void*)_instances.data(), GL_STREAM_DRAW);
         }
     };
 }

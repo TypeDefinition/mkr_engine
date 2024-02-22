@@ -1,7 +1,8 @@
 #pragma once
 
+#include <utility>
+#include <string>
 #include <flecs.h>
-#include "component/tag.h"
 
 namespace mkr {
     class scene {
@@ -18,9 +19,5 @@ namespace mkr {
         virtual void update() = 0;
 
         virtual void exit() = 0;
-
-        inline flecs::world& world() { return world_; }
-
-        inline const flecs::world& world() const { return world_; }
     };
-}
+} // mkr

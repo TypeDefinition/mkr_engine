@@ -8,11 +8,10 @@
 #include "graphics/app_window.h"
 #include "graphics/framebuffer.h"
 #include "graphics/material.h"
-#include "component/mesh_renderer.h"
-#include "component/transform.h"
-#include "component/camera.h"
-#include "component/light.h"
-#include "component/tag.h"
+#include "component/render_component.h"
+#include "component/transform_component.h"
+#include "component/camera_component.h"
+#include "component/light_component.h"
 
 namespace mkr {
     // There are 8 bits in the stencil buffer. We will use the higher 4-bits for our renderer.
@@ -22,8 +21,8 @@ namespace mkr {
     };
 
     struct camera_data {
-        global_transform transform_;
-        camera camera_;
+        transform_component transform_;
+        camera_component camera_;
 
         inline bool operator<(const camera_data& _rhs) const {
             return camera_.depth_ < _rhs.camera_.depth_;
@@ -31,8 +30,8 @@ namespace mkr {
     };
 
     struct light_data {
-        global_transform transform_;
-        light light_;
+        transform_component transform_;
+        light_component light_;
     };
 
     class renderer : public singleton<renderer> {
@@ -56,9 +55,9 @@ namespace mkr {
         std::vector<light_data> lights_;
 
         // Objects
-        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> deferred_objs_;
-        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_opaque_objs_;
-        std::unordered_map<std::shared_ptr<material>, std::unordered_map<std::shared_ptr<mesh>, std::vector<mesh_instance>>> forward_transparent_objs_;
+        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<mesh_instance_data>>> deferred_objs_;
+        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<mesh_instance_data>>> forward_opaque_objs_;
+        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<mesh_instance_data>>> forward_transparent_objs_;
 
         renderer() {}
 
@@ -79,10 +78,10 @@ namespace mkr {
 
         void exit();
 
-        void update_cameras(const global_transform& _global_transform, const camera& _camera);
+        void update_cameras(const transform_component& _transform, const camera_component& _camera);
 
-        void update_lights(const global_transform& _global_transform, const light& _light);
+        void update_lights(const transform_component& _transform, const light_component& _light);
 
-        void update_objects(const global_transform& _global_transform, const mesh_renderer& _mesh_renderer);
+        void update_objects(const transform_component& _transform, const render_component& _mesh_renderer);
     };
 }

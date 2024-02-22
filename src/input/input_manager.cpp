@@ -1,5 +1,5 @@
 #include <log/log.h>
-#include "application/sdl_event_poller.h"
+#include "application/sdl_message_pump.h"
 #include "input/input_helper.h"
 #include "input/input_manager.h"
 
@@ -32,7 +32,7 @@ namespace mkr {
         }
 
         sdl_event_listener.set_callback(std::bind(&input_manager::sdl_event_callback, this, std::placeholders::_1));
-        sdl_event_poller::instance().get_event_dispatcher().add_listener<sdl_event>(&sdl_event_listener);
+        sdl_message_pump::instance().get_event_dispatcher().add_listener<sdl_event>(&sdl_event_listener);
     }
 
     void input_manager::update() {
@@ -40,7 +40,7 @@ namespace mkr {
     }
 
     void input_manager::exit() {
-        sdl_event_poller::instance().get_event_dispatcher().remove_listener<sdl_event>(&sdl_event_listener);
+        sdl_message_pump::instance().get_event_dispatcher().remove_listener<sdl_event>(&sdl_event_listener);
         SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC);
     }
 

@@ -11,7 +11,7 @@ namespace mkr {
         vector3 tangent_;
     };
 
-    struct mesh_instance {
+    struct mesh_instance_data {
         matrix4x4 model_matrix_;
         matrix3x3 normal_matrix_;
     };

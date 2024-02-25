@@ -8,10 +8,11 @@
 #include "graphics/app_window.h"
 #include "graphics/framebuffer.h"
 #include "graphics/material.h"
-#include "component/render_component.h"
-#include "component/transform_component.h"
-#include "component/camera_component.h"
-#include "component/light_component.h"
+#include "component/mesh_render.h"
+#include "component/transform.h"
+#include "component/local_to_world.h"
+#include "component/camera.h"
+#include "component/light.h"
 
 namespace mkr {
     // There are 8 bits in the stencil buffer. We will use the higher 4-bits for our renderer.
@@ -21,8 +22,8 @@ namespace mkr {
     };
 
     struct camera_data {
-        transform_component transform_;
-        camera_component camera_;
+        local_to_world transform_;
+        camera camera_;
 
         inline bool operator<(const camera_data& _rhs) const {
             return camera_.depth_ < _rhs.camera_.depth_;
@@ -30,8 +31,8 @@ namespace mkr {
     };
 
     struct light_data {
-        transform_component transform_;
-        light_component light_;
+        local_to_world transform_;
+        light light_;
     };
 
     class renderer : public singleton<renderer> {
@@ -78,10 +79,10 @@ namespace mkr {
 
         void exit();
 
-        void update_cameras(const transform_component& _transform, const camera_component& _camera);
+        void update_cameras(const local_to_world& _transform, const camera& _camera);
 
-        void update_lights(const transform_component& _transform, const light_component& _light);
+        void update_lights(const local_to_world& _transform, const light& _light);
 
-        void update_objects(const transform_component& _transform, const render_component& _mesh_renderer);
+        void update_objects(const local_to_world& _transform, const mesh_render& _mesh_renderer);
     };
 }

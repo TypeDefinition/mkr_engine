@@ -10,7 +10,7 @@ namespace mkr {
         directional,
     };
 
-    class light_component {
+    class light {
     private:
         light_mode mode_ = light_mode::point;
         float power_ = 20.0f;
@@ -24,9 +24,9 @@ namespace mkr {
         float spotlight_outer_angle_ = 30.0f;
 
     public:
-        light_component() = default;
+        light() = default;
 
-        virtual ~light_component() = default;
+        virtual ~light() = default;
 
         inline light_mode get_mode() const { return mode_; }
 
@@ -56,12 +56,12 @@ namespace mkr {
 
         inline float get_spotlight_inner_angle() const { return maths_util::min<float>(spotlight_outer_angle_, spotlight_inner_angle_); }
 
-        inline void set_spotlight_inner_angle(float _angle) { spotlight_inner_angle_ = maths_util::clamp<float>(_angle, 1.0f, 89.0f); }
+        inline void set_spotlight_inner_angle(float _degree) { spotlight_inner_angle_ = maths_util::clamp<float>(_degree, 1.0f, 89.0f); }
 
         inline float get_spotlight_outer_consine() const { return std::cos(maths_util::deg2rad * get_spotlight_outer_angle()); }
 
         inline float get_spotlight_outer_angle() const { return spotlight_outer_angle_; }
 
-        inline void set_spotlight_outer_angle(float _angle) { spotlight_outer_angle_ = maths_util::clamp<float>(_angle, 1.0f, 89.0f); }
+        inline void set_spotlight_outer_angle(float _degree) { spotlight_outer_angle_ = maths_util::clamp<float>(_degree, 1.0f, 89.0f); }
     };
 }

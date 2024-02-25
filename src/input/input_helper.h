@@ -17,7 +17,7 @@ namespace mkr {
             \param _keycode The keycode.
             \return An input_mask representing the given input_context, controller_index and keycode.
         */
-        static input_mask get_input_mask(input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
+        static input_mask_t get_input_mask(input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
             uint64_t context_mask = (uint64_t) _input_context;
             context_mask <<= 48;
             context_mask &= 0xFFFF000000000000;
@@ -38,7 +38,7 @@ namespace mkr {
             \return The input_context of the input_mask.
             \sa get_input_mask, get_controller_index, get_keycode, compare_context, compare_controller_index, compare_keycode, compare_mask
         */
-        static input_context get_context(input_mask _input_mask) {
+        static input_context get_context(input_mask_t _input_mask) {
             _input_mask >>= 48;
             _input_mask &= 0x000000000000FFFF;
             return static_cast<input_context>(_input_mask);
@@ -50,7 +50,7 @@ namespace mkr {
             \return The controller index of the input mask.
             \sa get_input_mask, get_context, get_keycode, compare_context, compare_controller_index, compare_keycode, compare_mask
         */
-        static controller_index get_controller_index(input_mask _input_mask) {
+        static controller_index get_controller_index(input_mask_t _input_mask) {
             _input_mask >>= 32;
             _input_mask &= 0x000000000000FFFF;
             return static_cast<controller_index>(_input_mask);
@@ -62,7 +62,7 @@ namespace mkr {
             \return The keycode of the input mask.
             \sa get_input_mask, get_context, get_controller_index, compare_context, compare_controller_index, compare_keycode, compare_mask
         */
-        static mkr::keycode get_keycode(input_mask _input_mask) {
+        static mkr::keycode get_keycode(input_mask_t _input_mask) {
             _input_mask &= 0x00000000FFFFFFFF;
             return static_cast<mkr::keycode>(_input_mask);
         }
@@ -107,7 +107,7 @@ namespace mkr {
             \return Returns true result of comparing the masks' controller index, keycode and input context.
             \sa get_input_mask, get_context, get_controller_index, get_keycode, compare_context, compare_controller_index, compare_keycode
         */
-        static bool compare_mask(input_mask _mask_a, input_mask _mask_b) {
+        static bool compare_mask(input_mask_t _mask_a, input_mask_t _mask_b) {
             input_context context_a = get_context(_mask_a);
             input_context context_b = get_context(_mask_b);
 
@@ -122,4 +122,4 @@ namespace mkr {
                    compare_keycode(keycode_a, keycode_b);
         }
     };
-}
+} // mkr

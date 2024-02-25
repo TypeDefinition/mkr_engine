@@ -94,31 +94,31 @@ namespace mkr {
         IMG_Quit();
     }
 
-    void renderer::update_cameras(const transform_component& _transform, const camera_component& _camera) {
+    void renderer::update_cameras(const local_to_world& _transform, const camera& _camera) {
         cameras_.push({_transform, _camera});
     }
 
-    void renderer::update_lights(const transform_component& _transform, const light_component& _light) {
+    void renderer::update_lights(const local_to_world& _transform, const light& _light) {
         lights_.push_back({_transform, _light});
     }
 
-    void renderer::update_objects(const transform_component& _transform, const render_component& _mesh_renderer) {
+    void renderer::update_objects(const local_to_world& _transform, const mesh_render& _mesh_renderer) {
         auto obj_material = asset_loader::instance().get_material(_mesh_renderer.material_);
         auto obj_mesh = asset_loader::instance().get_mesh(_mesh_renderer.mesh_);
         switch (obj_material->render_path_) {
             case render_path::deferred:
                 if (material::gshader_ && material::lshader_) {
-                    deferred_objs_[obj_material][obj_mesh].push_back({_transform.world_transform_, matrix3x3::identity()});
+                    deferred_objs_[obj_material][obj_mesh].push_back({_transform.transform_, matrix3x3::identity()});
                 }
                 break;
             case render_path::forward_opaque:
                 if (obj_material->fshader_) {
-                    forward_opaque_objs_[obj_material][obj_mesh].push_back({_transform.world_transform_, matrix3x3::identity()});
+                    forward_opaque_objs_[obj_material][obj_mesh].push_back({_transform.transform_, matrix3x3::identity()});
                 }
                 break;
             case render_path::forward_transparent:
                 if (obj_material->fshader_) {
-                    forward_transparent_objs_[obj_material][obj_mesh].push_back({_transform.world_transform_, matrix3x3::identity()});
+                    forward_transparent_objs_[obj_material][obj_mesh].push_back({_transform.transform_, matrix3x3::identity()});
                 }
                 break;
             default:
@@ -133,10 +133,10 @@ namespace mkr {
             auto& trans = cam_data.transform_;
             auto& cam = cam_data.camera_;
 
-            auto view_matrix = matrix_util::view_matrix(trans.world_position_, trans.world_forward_, trans.world_up_);
-            auto view_forward = trans.world_forward_;
-            auto view_up = trans.world_up_;
-            auto view_right = -trans.world_left_;
+            auto view_matrix = matrix_util::view_matrix(trans.position_, trans.forward_, trans.up_);
+            auto view_forward = trans.forward_;
+            auto view_up = trans.up_;
+            auto view_right = -trans.left_;
             matrix4x4 projection_matrix;
             if (cam.mode_ == projection_mode::perspective) {
                 projection_matrix = matrix_util::perspective_matrix(cam.aspect_ratio_, cam.fov_, cam.near_plane_, cam.far_plane_);
@@ -268,9 +268,9 @@ namespace mkr {
                 const auto& t = lights_[curr].transform_;
                 const auto& l = lights_[curr].light_;
 
-                auto position_matrix = _view_matrix * t.world_transform_;
+                auto position_matrix = _view_matrix * t.transform_;
                 auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
-                vector3 direction_vector = vector3{_view_right.dot(t.world_forward_), _view_up.dot(t.world_forward_), _view_forward.dot(t.world_forward_)}.normalised();
+                vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
 
                 material::lshader_->set_uniform(index + shader_uniform::u_light_mode0, l.get_mode());
                 material::lshader_->set_uniform(index + shader_uniform::u_light_power0, l.get_power());
@@ -361,9 +361,9 @@ namespace mkr {
                 const auto& t = lights_[i].transform_;
                 const auto& l = lights_[i].light_;
 
-                auto position_matrix = _view_matrix * t.world_transform_;
+                auto position_matrix = _view_matrix * t.transform_;
                 auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
-                vector3 direction_vector = vector3{_view_right.dot(t.world_forward_), _view_up.dot(t.world_forward_), _view_forward.dot(t.world_forward_)}.normalised();
+                vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
 
                 shader->set_uniform(i + shader_uniform::u_light_mode0, l.get_mode());
                 shader->set_uniform(i + shader_uniform::u_light_power0, l.get_power());

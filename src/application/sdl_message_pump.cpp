@@ -3,7 +3,6 @@
 
 namespace mkr {
     void sdl_message_pump::init() {
-        run_ = dispatch_ = false;
         if (0 != SDL_InitSubSystem(SDL_INIT_EVENTS)) {
             const std::string err_msg = "SDL_INIT_EVENTS failed";
             log::error(err_msg);
@@ -16,26 +15,15 @@ namespace mkr {
         worker_thread_ = std::thread([&]() {
             while (run_) {
                 sdl_event e;
-                if (!dispatch_ && SDL_PollEvent(&e.sdl_event_)) {
-                    std::lock_guard lock{mutex_};
-                    event_queue_.push(e);
+                if (SDL_PollEvent(&e.sdl_event_)) {
+                    event_dispatcher_.dispatch_event<sdl_event>(&e);
                 }
             }
         });
     }
 
-    void sdl_message_pump::update() {
-        dispatch_ = true; // Allow dispatching to get mutex priority.
-        std::lock_guard lock{mutex_};
-        while (!event_queue_.empty()) {
-            event_dispatcher_.dispatch_event<sdl_event>(&event_queue_.front());
-            event_queue_.pop();
-        }
-        dispatch_ = false;
-    }
-
     void sdl_message_pump::stop() {
-        run_ = dispatch_ = false;
+        run_ = false;
         worker_thread_.join();
     }
 

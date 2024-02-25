@@ -17,20 +17,18 @@ namespace mkr {
         std::atomic_bool run_ = true;
 
         application() {}
-
         virtual ~application() {}
+
+        void init();
+        void start();
+        void update();
+        void stop();
+        void exit();
 
     public:
         inline float delta_time() const { return delta_time_; }
-
         inline float time_elapsed() const { return time_elapsed_; }
-
-        void terminate() { run_ = false; }
-
-        virtual void init();
-
+        inline void terminate() { run_ = false; }
         virtual void run();
-
-        virtual void exit();
     };
 } // mkr

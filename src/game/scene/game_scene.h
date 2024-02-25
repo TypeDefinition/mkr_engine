@@ -4,12 +4,14 @@
 #include "game/input/game_controls.h"
 #include "game/system/head_control_system.h"
 #include "game/system/body_control_system.h"
+#include "game/system/motion_test_system.h"
 
 namespace mkr {
     class game_scene : public scene {
     private:
         head_control_system hcs_;
         body_control_system bcs_;
+        motion_test_system mts_;
 
     protected:
         void init_input();

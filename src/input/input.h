@@ -35,10 +35,10 @@
 
 namespace mkr {
     /// \brief 64bit Input Mask
-    typedef uint64_t input_mask;
+    typedef uint64_t input_mask_t;
 
     /// \brief 32bit Input Action
-    typedef uint32_t input_action;
+    typedef uint32_t input_action_t;
 
     /// \brief 16bit Input Context
     enum input_context : uint16_t {
@@ -87,4 +87,4 @@ namespace mkr {
         controller_index_14 = 0x4000,
         controller_index_15 = 0x8000,
     };
-}
+} // mkr

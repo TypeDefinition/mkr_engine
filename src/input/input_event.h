@@ -1,16 +1,19 @@
 #pragma once
 
+#include <maths/vector2.h>
 #include "event/event.h"
 #include "input/input.h"
 
 namespace mkr {
     class input_event : public event {
     protected:
-        input_event(input_action _action)
-                : action_(_action) {}
+        input_event(input_action_t _action)
+            : action_(_action) {}
 
     public:
-        const input_action action_;
+        const input_action_t action_;
+
+        virtual ~input_event() {}
     };
 
     enum class button_state { down, pressed, up };
@@ -19,34 +22,35 @@ namespace mkr {
     public:
         const button_state state_;
 
-        button_event(input_action _action, button_state _state)
-                : input_event(_action), state_(_state) {}
+        button_event(input_action_t _action, button_state _state)
+            : input_event(_action), state_(_state) {}
+        virtual ~button_event() {}
     };
 
-    class cursor_position {
+    class axis_event : public input_event {
     public:
-        float x_, y_, z_;
+        const float value_;
 
-        cursor_position(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f)
-                : x_(_x), y_(_y), z_(_z) {}
+        axis_event(input_action_t _action, float _value)
+            : input_event(_action), value_(_value) {}
+        virtual ~axis_event() {}
     };
 
     class click_event : public button_event {
     public:
-        const cursor_position cursor_pos_;
+        const vector2 position_;
 
-        click_event(input_action _action, button_state _state, cursor_position _cursor_pos)
-                : button_event(_action, _state), cursor_pos_(_cursor_pos) {}
+        click_event(input_action_t _action, button_state _state, const vector2& _position)
+            : button_event(_action, _state), position_(_position) {}
+        virtual ~click_event() {}
     };
 
-    enum class axis { x, y, z };
-
-    class axis_event : public input_event {
+    class motion_event : public input_event {
     public:
-        const axis axis_;
-        const float value_;
+        const vector2 position_, delta_;
 
-        axis_event(input_action _action, axis _axis, float _value)
-                : input_event(_action), axis_(_axis), value_(_value) {}
+        motion_event(input_action_t _action, const vector2& _position, const vector2& _delta)
+            : input_event(_action), position_(_position), delta_(_delta) {}
+        virtual ~motion_event() {}
     };
-}
+} // mkr

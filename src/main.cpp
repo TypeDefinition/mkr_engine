@@ -1,11 +1,6 @@
 #include "application/application.h"
 
-using namespace mkr;
-
-int main() {
-    application::instance().init();
-    application::instance().run();
-    application::instance().exit();
-
+int main(int _argc, char* _argv[]) {
+    mkr::application::instance().run();
     return 0;
 }

@@ -3,7 +3,7 @@
 #include <string>
 
 namespace mkr {
-    struct render_component {
+    struct mesh_render {
         std::string material_;
         std::string mesh_;
     };

@@ -3,7 +3,8 @@
 #include "input/input.h"
 
 namespace mkr {
-    enum game_controls : input_action {
+    enum game_controls : input_action_t {
+        // Buttons
         quit = 0,
 
         move_left,
@@ -16,12 +17,13 @@ namespace mkr {
         look_up,
         look_down,
 
-        debug_mode_off,
-        debug_mode_position,
-        debug_mode_normal,
-        debug_mode_albedo,
-        debug_mode_specular,
-        debug_mode_gloss,
-        debug_mode_material,
+        look_horizontal,
+        look_vertical,
+
+        // Clicks
+        test_click,
+
+        // Motions
+        test_motion,
     };
-}
+} // mkr

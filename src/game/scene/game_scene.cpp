@@ -1,10 +1,11 @@
 #include "application/application.h"
 #include "input/input_manager.h"
 #include "graphics/asset_loader.h"
-#include "component/transform_component.h"
-#include "component/render_component.h"
-#include "component/light_component.h"
-#include "component/camera_component.h"
+#include "component/transform.h"
+#include "component/local_to_world.h"
+#include "component/mesh_render.h"
+#include "component/light.h"
+#include "component/camera.h"
 #include "graphics/renderer.h"
 #include "game/tag/tag.h"
 #include "game/scene/game_scene.h"
@@ -25,8 +26,8 @@ namespace mkr {
     }
 
     void game_scene::update() {
-        /*auto q = world_.query_builder<const transform_component, const g_transform_component>().term_at(2).optional().up().build();
-        q.each([](flecs::entity& _ent, const transform_component* _child, const g_transform_component* _parent) {
+        /*auto q = world_.query_builder<const transform, const g_transform>().term_at(2).optional().up().build();
+        q.each([](flecs::entity& _ent, const transform* _child, const g_transform* _parent) {
             matrix4x4 trans;
             quaternion rot;
             if (_parent) {
@@ -37,34 +38,34 @@ namespace mkr {
                 rot = _child->get_rotation();
             }
 
-            g_transform_component global_transform;
+            g_transform global_transform;
             global_transform.transform_ = trans;
             global_transform.rotation_ = rot;
             global_transform.position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
             global_transform.left_ = quaternion::rotate(vector3::x_axis, rot);
             global_transform.up_ = quaternion::rotate(vector3::y_axis, rot);
             global_transform.forward_ = quaternion::rotate(vector3::z_axis, rot);
-            _ent.set<g_transform_component>(global_transform);
+            _ent.set<g_transform>(global_transform);
         });*/
 
-        auto q = world_.query_builder<transform_component, const transform_component*>()
-            .term_at(2).parent()
-            .up().optional()
+        auto q = world_.query_builder<const transform, local_to_world, const local_to_world*>()
+            .term_at(3).parent()
+            .cascade().optional()
             .build();
-        q.iter([](flecs::iter& _iter, transform_component* _child, const transform_component* _parent) {
+        q.iter([](flecs::iter& _iter, const transform* _child, local_to_world* _out, const local_to_world* _parent) {
             for (auto i: _iter) {
                 matrix4x4 trans = _child[i].transform_matrix();
                 quaternion rot = _child[i].get_rotation();
                 if (_parent) {
-                    trans = _parent->world_transform_ * trans;
-                    rot = _parent->world_rotation_ * rot;
+                    trans = _parent->transform_ * trans;
+                    rot = _parent->rotation_ * rot;
                 }
-                _child[i].world_transform_ = trans;
-                _child[i].world_rotation_ = rot;
-                _child[i].world_position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
-                _child[i].world_left_ = quaternion::rotate(vector3::x_axis, rot);
-                _child[i].world_up_ = quaternion::rotate(vector3::y_axis, rot);
-                _child[i].world_forward_ = quaternion::rotate(vector3::z_axis, rot);
+                _out[i].transform_ = trans;
+                _out[i].rotation_ = rot;
+                _out[i].position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
+                _out[i].left_ = quaternion::rotate(vector3::x_axis, rot);
+                _out[i].up_ = quaternion::rotate(vector3::y_axis, rot);
+                _out[i].forward_ = quaternion::rotate(vector3::z_axis, rot);
             }
         });
 
@@ -76,6 +77,8 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
+        input_manager::instance().set_relative_mouse(true);
+
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
 
@@ -89,16 +92,20 @@ namespace mkr {
         input_manager::instance().register_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().register_button(look_down, input_context_default, controller_index_default, kc_down);
 
-        input_manager::instance().register_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
-        input_manager::instance().register_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
-        input_manager::instance().register_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
-        input_manager::instance().register_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
-        input_manager::instance().register_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
-        input_manager::instance().register_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
-        input_manager::instance().register_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
+        // Register Axes
+        input_manager::instance().register_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);
+        input_manager::instance().register_axis(look_vertical, input_context_default, controller_index_default, kc_mouse_axis_y);
+
+        // Register Clicks
+        input_manager::instance().register_click(test_click, input_context_default, controller_index_default, kc_mouse_right);
+
+        // Register Motions
+        // input_manager::instance().register_motion(test_motion, input_context_default, controller_index_default, kc_mouse_motion);
     }
 
     void game_scene::exit_input() {
+        input_manager::instance().set_relative_mouse(false);
+
         // Unregister Buttons
         input_manager::instance().unregister_button(quit, input_context_default, controller_index_default, kc_escape);
 
@@ -112,21 +119,23 @@ namespace mkr {
         input_manager::instance().unregister_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().unregister_button(look_down, input_context_default, controller_index_default, kc_down);
 
-        input_manager::instance().unregister_button(debug_mode_off, input_context_default, controller_index_default, kc_0);
-        input_manager::instance().unregister_button(debug_mode_position, input_context_default, controller_index_default, kc_1);
-        input_manager::instance().unregister_button(debug_mode_normal, input_context_default, controller_index_default, kc_2);
-        input_manager::instance().unregister_button(debug_mode_albedo, input_context_default, controller_index_default, kc_3);
-        input_manager::instance().unregister_button(debug_mode_specular, input_context_default, controller_index_default, kc_4);
-        input_manager::instance().unregister_button(debug_mode_gloss, input_context_default, controller_index_default, kc_5);
-        input_manager::instance().unregister_button(debug_mode_material, input_context_default, controller_index_default, kc_6);
+        // Unregister Axes
+        input_manager::instance().unregister_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);
+        input_manager::instance().unregister_axis(look_vertical, input_context_default, controller_index_default, kc_mouse_axis_y);
+
+        // Unregister Clicks
+        input_manager::instance().unregister_click(test_click, input_context_default, controller_index_default, kc_mouse_right);
+
+        // Unregister Motions
+        // input_manager::instance().unregister_motion(test_motion, input_context_default, controller_index_default, kc_mouse_motion);
     }
 
     void game_scene::init_systems() {
-        world_.system<transform_component, const head_tag>().each([&](transform_component& _trans, const head_tag _head) { hcs_(_trans, _head); });
-        world_.system<transform_component, const body_tag>().each([&](transform_component& _trans, const body_tag _body) { bcs_(_trans, _body); });
-        world_.system<const transform_component, const camera_component>().each([](const transform_component& _transform, const camera_component& _camera) { renderer::instance().update_cameras(_transform, _camera); });
-        world_.system<const transform_component, const light_component>().each([](const transform_component& _transform, const light_component& _light) { renderer::instance().update_lights(_transform, _light); });
-        world_.system<const transform_component, const render_component>().each([](const transform_component& _transform, const render_component& _mesh_renderer) { renderer::instance().update_objects(_transform, _mesh_renderer); });
+        world_.system<transform, const head_tag>().each([&](transform& _trans, const head_tag _head) { hcs_(_trans, _head); });
+        world_.system<transform, const body_tag>().each([&](transform& _trans, const body_tag _body) { bcs_(_trans, _body); });
+        world_.system<const local_to_world, const camera>().each([](const local_to_world& _transform, const camera& _camera) { renderer::instance().update_cameras(_transform, _camera); });
+        world_.system<const local_to_world, const light>().each([](const local_to_world& _transform, const light& _light) { renderer::instance().update_lights(_transform, _light); });
+        world_.system<const local_to_world, const mesh_render>().each([](const local_to_world& _transform, const mesh_render& _mesh_renderer) { renderer::instance().update_objects(_transform, _mesh_renderer); });
     }
 
     void game_scene::init_shaders() {
@@ -168,37 +177,37 @@ namespace mkr {
 
     void game_scene::init_levels() {
         // Floor
-        transform_component floor_trans;
+        transform floor_trans;
         floor_trans.set_scale({100.0f, 1.0f, 100.0f});
         floor_trans.set_position({0.0f, 0.0f, 0.0f});
-        render_component floor_rend;
+        mesh_render floor_rend;
         floor_rend.mesh_ = "plane";
         floor_rend.material_ = "tiles";
-        world_.entity("floor").set<transform_component>(floor_trans).set<render_component>(floor_rend);
+        world_.entity("floor").set<transform>(floor_trans).set<mesh_render>(floor_rend).add<local_to_world>();
 
         // Lights
-        transform_component light_trans;
+        transform light_trans;
         light_trans.set_position({0.0f, 0.0f, -10.0f});
         quaternion rotation_x, rotation_y;
         rotation_x.set_rotation(vector3::x_axis, 45.0f * maths_util::deg2rad);
         rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
         light_trans.set_rotation(rotation_y * rotation_x);
-        light_component lt;
+        light lt;
         lt.set_mode(light_mode::directional);
         lt.set_power(0.6f);
-        world_.entity("light").set<transform_component>(light_trans).set<light_component>(lt);
+        world_.entity("light").set<transform>(light_trans).set<light>(lt).add<local_to_world>();
     }
 
     void game_scene::init_player() {
-        transform_component head_trans;
+        transform head_trans;
         head_trans.set_position({0.0f, 1.7f, 0.0f});
 
-        camera_component cam;
+        camera cam;
         cam.skybox_->shader_ = asset_loader::instance().get_shader_program("skybox");
         cam.skybox_->texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
 
-        auto body = world_.entity("head").add<transform_component>().add<body_tag>();
-        auto head = world_.entity("body").set<transform_component>(head_trans).add<head_tag>().set<camera_component>(cam);
+        auto body = world_.entity("head").add<transform>().add<body_tag>().add<local_to_world>();
+        auto head = world_.entity("body").set<transform>(head_trans).add<head_tag>().set<camera>(cam).add<local_to_world>();
         head.child_of(body);
     }
 } // mkr

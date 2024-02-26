@@ -22,7 +22,7 @@ namespace mkr {
         ~viewport() {}
     };
 
-    struct camera_component {
+    struct camera {
         /// Projection mode
         projection_mode mode_ = projection_mode::perspective;
         /// Near plane

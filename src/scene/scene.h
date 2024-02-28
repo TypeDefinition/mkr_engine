@@ -16,7 +16,9 @@ namespace mkr {
 
         virtual void init() = 0;
 
+        virtual void pre_update() = 0;
         virtual void update() = 0;
+        virtual void post_update() = 0;
 
         virtual void exit() = 0;
     };

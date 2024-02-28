@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_mouse.h>
+#include "SDL2/SDL_gamecontroller.h"
 #include "input/keycode.h"
 
 namespace mkr {
@@ -10,7 +11,7 @@ namespace mkr {
     public:
         sdl_to_keycode() = delete;
 
-        static keycode from_keyboard(int32_t _sdl) {
+        static keycode from_keyboard_button(SDL_KeyCode _sdl) {
             switch (_sdl) {
                 case SDLK_UNKNOWN: return kc_unknown;
                 case SDLK_RETURN: return kc_return;
@@ -271,7 +272,7 @@ namespace mkr {
 
         }
 
-        static keycode from_mouse(int32_t _sdl) {
+        static keycode from_mouse_button(int32_t _sdl) {
             switch (_sdl) {
                 case SDL_BUTTON_LEFT: return kc_mouse_left;
                 case SDL_BUTTON_MIDDLE: return kc_mouse_middle;
@@ -279,6 +280,47 @@ namespace mkr {
                 case SDL_BUTTON_X1: return kc_mouse_x1;
                 case SDL_BUTTON_X2: return kc_mouse_x2;
                 default: return kc_unknown;
+            }
+        }
+
+        static keycode from_gamepad_button(SDL_GameControllerButton _sdl) {
+            switch (_sdl) {
+                case SDL_CONTROLLER_BUTTON_INVALID: return kc_gamepad_button_invalid;
+                case SDL_CONTROLLER_BUTTON_A: return kc_gamepad_button_a;
+                case SDL_CONTROLLER_BUTTON_B: return kc_gamepad_button_b;
+                case SDL_CONTROLLER_BUTTON_X: return kc_gamepad_button_x;
+                case SDL_CONTROLLER_BUTTON_Y: return kc_gamepad_button_y;
+                case SDL_CONTROLLER_BUTTON_BACK: return kc_gamepad_button_back;
+                case SDL_CONTROLLER_BUTTON_GUIDE: return kc_gamepad_button_guide;
+                case SDL_CONTROLLER_BUTTON_START: return kc_gamepad_button_start;
+                case SDL_CONTROLLER_BUTTON_LEFTSTICK: return kc_gamepad_button_lstick;
+                case SDL_CONTROLLER_BUTTON_RIGHTSTICK: return kc_gamepad_button_rstick;
+                case SDL_CONTROLLER_BUTTON_LEFTSHOULDER: return kc_gamepad_button_lshoulder;
+                case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER: return kc_gamepad_button_rshoulder;
+                case SDL_CONTROLLER_BUTTON_DPAD_UP: return kc_gamepad_button_dpad_up;
+                case SDL_CONTROLLER_BUTTON_DPAD_DOWN: return kc_gamepad_button_dpad_down;
+                case SDL_CONTROLLER_BUTTON_DPAD_LEFT: return kc_gamepad_button_dpad_left;
+                case SDL_CONTROLLER_BUTTON_DPAD_RIGHT: return kc_gamepad_button_dpad_right;
+                case SDL_CONTROLLER_BUTTON_MISC1: return kc_gamepad_button_misc1; // Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button.
+                case SDL_CONTROLLER_BUTTON_PADDLE1: return kc_gamepad_button_paddle1; // Xbox Elite paddle P1.
+                case SDL_CONTROLLER_BUTTON_PADDLE2: return kc_gamepad_button_paddle2; // Xbox Elite paddle P3.
+                case SDL_CONTROLLER_BUTTON_PADDLE3: return kc_gamepad_button_paddle3; // Xbox Elite paddle P2.
+                case SDL_CONTROLLER_BUTTON_PADDLE4: return kc_gamepad_button_paddle4; // Xbox Elite paddle P4.
+                case SDL_CONTROLLER_BUTTON_TOUCHPAD: return kc_gamepad_button_touchpad; // PS5 touchpad button.
+                default: return kc_gamepad_button_invalid;
+            }
+        }
+
+        static keycode from_gamepad_axis(SDL_GameControllerAxis _sdl) {
+            switch (_sdl) {
+                case SDL_CONTROLLER_AXIS_INVALID: return kc_gamepad_axis_invalid;
+                case SDL_CONTROLLER_AXIS_LEFTX: return kc_gamepad_axis_left_x;
+                case SDL_CONTROLLER_AXIS_LEFTY: return kc_gamepad_axis_left_y;
+                case SDL_CONTROLLER_AXIS_RIGHTX: return kc_gamepad_axis_right_x;
+                case SDL_CONTROLLER_AXIS_RIGHTY: return kc_gamepad_axis_right_y;
+                case SDL_CONTROLLER_AXIS_TRIGGERLEFT: return kc_gamepad_axis_trigger_left;
+                case SDL_CONTROLLER_AXIS_TRIGGERRIGHT: return kc_gamepad_axis_trigger_right;
+                default: return kc_gamepad_axis_invalid;
             }
         }
     };

@@ -5,7 +5,7 @@
 namespace mkr {
     enum keycode : uint32_t {
         /********************************** Buttons (For Button Handler) **********************************/
-        // Keyboard Button
+        // Keyboard Buttons
         kc_unknown,
         kc_return,
         kc_escape,
@@ -260,6 +260,30 @@ namespace mkr {
         kc_audio_rewind,
         kc_audio_fast_forward,
 
+        // Gamepad Buttons
+        kc_gamepad_button_invalid,
+        kc_gamepad_button_a,
+        kc_gamepad_button_b,
+        kc_gamepad_button_x,
+        kc_gamepad_button_y,
+        kc_gamepad_button_back,
+        kc_gamepad_button_guide,
+        kc_gamepad_button_start,
+        kc_gamepad_button_lstick,
+        kc_gamepad_button_rstick,
+        kc_gamepad_button_lshoulder,
+        kc_gamepad_button_rshoulder,
+        kc_gamepad_button_dpad_up,
+        kc_gamepad_button_dpad_down,
+        kc_gamepad_button_dpad_left,
+        kc_gamepad_button_dpad_right,
+        kc_gamepad_button_misc1,
+        kc_gamepad_button_paddle1,
+        kc_gamepad_button_paddle2,
+        kc_gamepad_button_paddle3,
+        kc_gamepad_button_paddle4,
+        kc_gamepad_button_touchpad,
+
         /********************************** Button/Clicks (For Button Handler/Click Handler) **********************************/
         // Mouse Buttons
         kc_mouse_left,
@@ -269,9 +293,18 @@ namespace mkr {
         kc_mouse_x2,
 
         /********************************** Axes (For Axes Handler) **********************************/
-        // Mouse Axis
+        // Mouse Axes
         kc_mouse_axis_x,
         kc_mouse_axis_y,
+
+        // Gamepad Axes
+        kc_gamepad_axis_invalid,
+        kc_gamepad_axis_left_x,
+        kc_gamepad_axis_left_y,
+        kc_gamepad_axis_right_x,
+        kc_gamepad_axis_right_y,
+        kc_gamepad_axis_trigger_left,
+        kc_gamepad_axis_trigger_right,
 
         /********************************** Motion (For Motion Handler) **********************************/
         // Mouse Motion

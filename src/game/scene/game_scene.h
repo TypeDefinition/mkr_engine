@@ -28,7 +28,9 @@ namespace mkr {
         virtual ~game_scene();
 
         void init() override;
+        void pre_update() override;
         void update() override;
+        void post_update() override;
         void exit() override;
     };
 } // mkr

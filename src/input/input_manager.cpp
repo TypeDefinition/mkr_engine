@@ -1,45 +1,50 @@
 #include <log/log.h>
+#include <maths/maths_util.h>
 #include "application/sdl_message_pump.h"
 #include "input/input_helper.h"
 #include "input/input_manager.h"
 #include "input/sdl_to_keycode.h"
+#include "input/sdl_to_controller_index.h"
 
 namespace mkr {
     void input_manager::sdl_event_callback(const event* _event) {
         const auto& e = static_cast<const sdl_event*>(_event)->sdl_event_;
         switch (e.type) {
+            // Keyboard
             case SDL_KEYDOWN: {
                 // Keyboard defaults to controller_index_0.
-                input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard(e.key.keysym.sym));
+                const input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard_button((SDL_KeyCode) e.key.keysym.sym));
                 button_handler_.on_key_down(mask);
                 axis_handler_.on_key_down(mask);
             }
                 break;
             case SDL_KEYUP: {
                 // Keyboard defaults to controller_index_0.
-                input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard(e.key.keysym.sym));
+                const input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard_button((SDL_KeyCode) e.key.keysym.sym));
                 button_handler_.on_key_up(mask);
                 axis_handler_.on_key_up(mask);
             }
                 break;
+
+            // Mouse
             case SDL_MOUSEBUTTONDOWN: {
                 // Mouse defaults to controller_index_0.
-                input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_mouse(e.button.button));
+                const input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_mouse_button(e.button.button));
                 button_handler_.on_key_down(mask);
                 click_handler_.on_key_down(mask);
             }
                 break;
             case SDL_MOUSEBUTTONUP: {
                 // Mouse defaults to controller_index_0.
-                input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_mouse(e.button.button));
+                const input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_mouse_button(e.button.button));
                 button_handler_.on_key_up(mask);
                 click_handler_.on_key_up(mask);
             }
                 break;
             case SDL_MOUSEMOTION: {
                 // Mouse defaults to controller_index_0.
-                vector2 pos{(float) e.motion.x, (float) e.motion.y};
-                vector2 delta{(float) e.motion.xrel, (float) e.motion.yrel};
+                const vector2 pos{(float) e.motion.x, (float) e.motion.y};
+                const vector2 delta{(float) e.motion.xrel, (float) e.motion.yrel};
 
                 // Clicks
                 if (e.motion.state & SDL_BUTTON_LMASK) {
@@ -66,12 +71,38 @@ namespace mkr {
                 motion_handler_.on_motion(input_helper::get_input_mask(input_context_, controller_index_0, kc_mouse_motion), pos, delta);
             }
                 break;
+
+            // Gamepad
+            case SDL_CONTROLLERAXISMOTION: {
+                // Normalise the axis value to between [-1, 1]. SDL gamepad axis values range is [-32768, 32767].
+                const auto value = maths_util::clamp<float>((float) e.caxis.value / 32767.0f, -1.0f, 1.0f);
+                const input_mask_t mask = input_helper::get_input_mask(input_context_,
+                                                                       sdl_to_controller_index::from_joystick_id(e.caxis.which),
+                                                                       sdl_to_keycode::from_gamepad_axis((SDL_GameControllerAxis) e.caxis.axis));
+                axis_handler_.on_axis(mask, value);
+            }
+                break;
+            case SDL_CONTROLLERBUTTONDOWN: {
+                const input_mask_t mask = input_helper::get_input_mask(input_context_,
+                                                                       sdl_to_controller_index::from_joystick_id(e.cbutton.which),
+                                                                       sdl_to_keycode::from_gamepad_button((SDL_GameControllerButton) e.cbutton.button));
+                button_handler_.on_key_down(mask);
+            }
+                break;
+            case SDL_CONTROLLERBUTTONUP: {
+                const input_mask_t mask = input_helper::get_input_mask(input_context_,
+                                                                       sdl_to_controller_index::from_joystick_id(e.cbutton.which),
+                                                                       sdl_to_keycode::from_gamepad_button((SDL_GameControllerButton) e.cbutton.button));
+                button_handler_.on_key_up(mask);
+            }
+                break;
             default:
                 break;
         }
     }
 
     void input_manager::init() {
+        SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
         if (0 != SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC)) {
             const std::string err_msg = "SDL_INIT_GAMECONTROLLER or SDL_INIT_JOYSTICK or SDL_INIT_HAPTIC failed";
             mkr::log::error(err_msg);

@@ -8,7 +8,9 @@ namespace mkr {
     }
 
     void scene_manager::update() {
+        scene_->pre_update();
         scene_->update();
+        scene_->post_update();
     }
 
     void scene_manager::exit() {

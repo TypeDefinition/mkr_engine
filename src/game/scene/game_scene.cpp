@@ -25,6 +25,9 @@ namespace mkr {
         init_player();
     }
 
+    void game_scene::pre_update() {
+    }
+
     void game_scene::update() {
         /*auto q = world_.query_builder<const transform, const g_transform>().term_at(2).optional().up().build();
         q.each([](flecs::entity& _ent, const transform* _child, const g_transform* _parent) {
@@ -72,12 +75,15 @@ namespace mkr {
         world_.progress(application::instance().delta_time());
     }
 
+    void game_scene::post_update() {
+    }
+
     void game_scene::exit() {
         exit_input();
     }
 
     void game_scene::init_input() {
-        input_manager::instance().set_relative_mouse(true);
+        // input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -91,6 +97,12 @@ namespace mkr {
         input_manager::instance().register_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().register_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().register_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        // Gamepad Buttons
+        input_manager::instance().register_button(look_left, input_context_default, controller_index_default, kc_gamepad_button_x);
+        input_manager::instance().register_button(look_right, input_context_default, controller_index_default, kc_gamepad_button_b);
+        input_manager::instance().register_button(look_up, input_context_default, controller_index_default, kc_gamepad_button_y);
+        input_manager::instance().register_button(look_down, input_context_default, controller_index_default, kc_gamepad_button_a);
 
         // Register Axes
         input_manager::instance().register_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);
@@ -121,6 +133,12 @@ namespace mkr {
         input_manager::instance().unregister_button(look_right, input_context_default, controller_index_default, kc_right);
         input_manager::instance().unregister_button(look_up, input_context_default, controller_index_default, kc_up);
         input_manager::instance().unregister_button(look_down, input_context_default, controller_index_default, kc_down);
+
+        // Gamepad Buttons
+        input_manager::instance().unregister_button(look_left, input_context_default, controller_index_default, kc_gamepad_button_x);
+        input_manager::instance().unregister_button(look_right, input_context_default, controller_index_default, kc_gamepad_button_b);
+        input_manager::instance().unregister_button(look_up, input_context_default, controller_index_default, kc_gamepad_button_y);
+        input_manager::instance().unregister_button(look_down, input_context_default, controller_index_default, kc_gamepad_button_a);
 
         // Unregister Axes
         input_manager::instance().unregister_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);

@@ -58,13 +58,13 @@ namespace mkr {
         }
     }
 
-    void button_handler::register_button(input_action_t _input_action, input_mask_t _input_mask) {
+    void button_handler::register_button(input_action_t _action, input_mask_t _button) {
         std::lock_guard<std::mutex> reg_lock{reg_mutex_};
-        registry_[_input_mask].insert(_input_action);
+        registry_[_button].insert(_action);
     }
 
-    void button_handler::unregister_button(input_action_t _input_action, input_mask_t _input_mask) {
+    void button_handler::unregister_button(input_action_t _action, input_mask_t _button) {
         std::lock_guard<std::mutex> reg_lock{reg_mutex_};
-        registry_[_input_mask].erase(_input_action);
+        registry_[_button].erase(_action);
     }
 } // mkr

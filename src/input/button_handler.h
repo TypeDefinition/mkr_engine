@@ -21,7 +21,7 @@ namespace mkr {
         void dispatch_events(event_dispatcher& _event_dispatcher);
         void on_key_down(input_mask_t _input_mask);
         void on_key_up(input_mask_t _input_mask);
-        void register_button(input_action_t _input_action, input_mask_t _input_mask);
-        void unregister_button(input_action_t _input_action, input_mask_t _input_mask);
+        void register_button(input_action_t _action, input_mask_t _button);
+        void unregister_button(input_action_t _action, input_mask_t _button);
     };
 } // mkr

@@ -24,7 +24,7 @@ namespace mkr {
         void on_key_down(input_mask_t _input_mask);
         void on_key_up(input_mask_t _input_mask);
         void on_motion(input_mask_t _input_mask, vector2 _position);
-        void register_click(input_action_t _input_action, input_mask_t _input_mask);
-        void unregister_click(input_action_t _input_action, input_mask_t _input_mask);
+        void register_click(input_action_t _action, input_mask_t _click);
+        void unregister_click(input_action_t _action, input_mask_t _click);
     };
 } // mkr

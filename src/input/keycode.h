@@ -4,7 +4,8 @@
 
 namespace mkr {
     enum keycode : uint32_t {
-        // Keyboard
+        /********************************** Buttons (For Button Handler) **********************************/
+        // Keyboard Button
         kc_unknown,
         kc_return,
         kc_escape,
@@ -259,6 +260,7 @@ namespace mkr {
         kc_audio_rewind,
         kc_audio_fast_forward,
 
+        /********************************** Button/Clicks (For Button Handler/Click Handler) **********************************/
         // Mouse Buttons
         kc_mouse_left,
         kc_mouse_right,
@@ -266,10 +268,12 @@ namespace mkr {
         kc_mouse_x1,
         kc_mouse_x2,
 
+        /********************************** Axes (For Axes Handler) **********************************/
         // Mouse Axis
         kc_mouse_axis_x,
         kc_mouse_axis_y,
 
+        /********************************** Motion (For Motion Handler) **********************************/
         // Mouse Motion
         kc_mouse_motion,
     };

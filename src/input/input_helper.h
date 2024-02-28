@@ -1,6 +1,7 @@
 #pragma once
 
 #include "input/input.h"
+#include "input/keycode.h"
 
 namespace mkr {
     /**

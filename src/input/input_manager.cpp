@@ -12,12 +12,14 @@ namespace mkr {
                 // Keyboard defaults to controller_index_0.
                 input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard(e.key.keysym.sym));
                 button_handler_.on_key_down(mask);
+                axis_handler_.on_key_down(mask);
             }
                 break;
             case SDL_KEYUP: {
                 // Keyboard defaults to controller_index_0.
                 input_mask_t mask = input_helper::get_input_mask(input_context_, controller_index_0, sdl_to_keycode::from_keyboard(e.key.keysym.sym));
                 button_handler_.on_key_up(mask);
+                axis_handler_.on_key_up(mask);
             }
                 break;
             case SDL_MOUSEBUTTONDOWN: {
@@ -92,35 +94,47 @@ namespace mkr {
         SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC);
     }
 
-    void input_manager::register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        button_handler_.register_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button) {
+        button_handler_.register_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _button));
     }
 
-    void input_manager::unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        button_handler_.unregister_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button) {
+        button_handler_.unregister_button(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _button));
     }
 
-    void input_manager::register_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        click_handler_.register_click(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::register_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click) {
+        click_handler_.register_click(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _click));
     }
 
-    void input_manager::unregister_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        click_handler_.unregister_click(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::unregister_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click) {
+        click_handler_.unregister_click(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _click));
     }
 
-    void input_manager::register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        axis_handler_.register_axis(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis) {
+        axis_handler_.register_axis(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _axis));
     }
 
-    void input_manager::unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        axis_handler_.unregister_axis(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis) {
+        axis_handler_.unregister_axis(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _axis));
     }
 
-    void input_manager::register_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        motion_handler_.register_motion(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button) {
+        axis_handler_.register_button(_input_action,
+                                      input_helper::get_input_mask(_input_context, _controller_index, _positive_button),
+                                      input_helper::get_input_mask(_input_context, _controller_index, _negative_button));
     }
 
-    void input_manager::unregister_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
-        motion_handler_.unregister_motion(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _keycode));
+    void input_manager::unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button) {
+        axis_handler_.unregister_button(_input_action,
+                                        input_helper::get_input_mask(_input_context, _controller_index, _positive_button),
+                                        input_helper::get_input_mask(_input_context, _controller_index, _negative_button));
+    }
+
+    void input_manager::register_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion) {
+        motion_handler_.register_motion(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _motion));
+    }
+
+    void input_manager::unregister_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion) {
+        motion_handler_.unregister_motion(_input_action, input_helper::get_input_mask(_input_context, _controller_index, _motion));
     }
 } // mkr

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "input/keycode.h"
-
 /**
     \file input.h
     \brief

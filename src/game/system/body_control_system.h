@@ -19,20 +19,30 @@ namespace mkr {
         body_control_system() {
             // Input callback.
             input_listener_.set_callback([&](const event* _event) {
-                const auto* be = dynamic_cast<const button_event*>(_event);
+                const float velocity = 10.0f;
+
+                /*const auto* be = dynamic_cast<const button_event*>(_event);
                 if (be && be->state_ == button_state::pressed) {
-                    const float velocity = 10.0f;
                     if (be->action_ == move_left) { translation_.x_ += application::instance().delta_time() * velocity; }
                     if (be->action_ == move_right) { translation_.x_ -= application::instance().delta_time() * velocity; }
                     if (be->action_ == move_forward) { translation_.z_ += application::instance().delta_time() * velocity; }
                     if (be->action_ == move_backward) { translation_.z_ -= application::instance().delta_time() * velocity; }
                     if (be->action_ == look_left) { rotation_.y_ += 180.0f * application::instance().delta_time(); }
                     if (be->action_ == look_right) { rotation_.y_ -= 180.0f * application::instance().delta_time(); }
-                }
+                }*/
 
                 const auto* ae = dynamic_cast<const axis_event*>(_event);
                 if (ae) {
+                    // Look
                     if (ae->action_ == look_horizontal) { rotation_.y_ -= ae->value_/10.0f; }
+
+                    // Move
+                    if (ae->action_ == move_forward) {
+                        translation_.z_ += application::instance().delta_time() * velocity * ae->value_;
+                    }
+                    if (ae->action_ == move_left) {
+                        translation_.x_ += application::instance().delta_time() * velocity * ae->value_;
+                    }
                 }
             });
             input_manager::instance().get_event_dispatcher()->add_listener<button_event>(&input_listener_);

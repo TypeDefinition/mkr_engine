@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <common/singleton.h>
+#include "input/keycode.h"
 #include "input/button_handler.h"
 #include "input/axis_handler.h"
 #include "input/click_handler.h"
@@ -49,16 +50,18 @@ namespace mkr {
          */
         inline void set_relative_mouse(bool _enabled) { SDL_SetRelativeMouseMode(_enabled ? SDL_TRUE : SDL_FALSE); }
 
-        void register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
-        void unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button);
+        void unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button);
 
-        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
-        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis);
+        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis);
+        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button);
+        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button);
 
-        void register_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
-        void unregister_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void register_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click);
+        void unregister_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click);
 
-        void register_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
-        void unregister_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _keycode);
+        void register_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion);
+        void unregister_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion);
     };
 } // mkr

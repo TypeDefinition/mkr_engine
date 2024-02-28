@@ -96,6 +96,9 @@ namespace mkr {
         input_manager::instance().register_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);
         input_manager::instance().register_axis(look_vertical, input_context_default, controller_index_default, kc_mouse_axis_y);
 
+        input_manager::instance().register_axis(move_forward, input_context_default, controller_index_default, kc_w, kc_s);
+        input_manager::instance().register_axis(move_left, input_context_default, controller_index_default, kc_a, kc_d);
+
         // Register Clicks
         input_manager::instance().register_click(test_click, input_context_default, controller_index_default, kc_mouse_right);
 
@@ -122,6 +125,9 @@ namespace mkr {
         // Unregister Axes
         input_manager::instance().unregister_axis(look_horizontal, input_context_default, controller_index_default, kc_mouse_axis_x);
         input_manager::instance().unregister_axis(look_vertical, input_context_default, controller_index_default, kc_mouse_axis_y);
+
+        input_manager::instance().unregister_axis(move_forward, input_context_default, controller_index_default, kc_w, kc_s);
+        input_manager::instance().unregister_axis(move_left, input_context_default, controller_index_default, kc_a, kc_d);
 
         // Unregister Clicks
         input_manager::instance().unregister_click(test_click, input_context_default, controller_index_default, kc_mouse_right);

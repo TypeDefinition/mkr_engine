@@ -4,10 +4,10 @@
     \file input.h
     \brief
         When making games, for portability purposes, as well as our own sanity, we do not want to hardcode physical buttons to specific actions in our games.
-        We should use a layer of abstraction. This is where our input system comes in.\n\n
+        We should use a layer of abstraction. This is where our input system comes in.\n
 
         input_action (32bit unsigned integer) -
-            An input action is the name we give to our actions. Examples can be JUMP, WALK or SHOOT.
+            An input action is the name we give to our actions. Examples can be JUMP, WALK or SHOOT. This is defined by the user.
 
         input_mask (16bit input_context + 16bit controller_index + 32bit keycode) -
             A 64bit mask made by combining an input_context, a controller_index and a keycode.
@@ -28,9 +28,8 @@
             We can represent these controllers using controller_index. As controller_index has 16bits, we can have up to 16 controllers.
 
         keycode -
-            This is a 32bit unsigned integer that represents the physical key being pressed. For the full list of available keycodes, check keycode.h.
+            This is a 32bit unsigned integer that represents the physical key being pressed. For the full list of available keycodes, refer to keycode.h.
 */
-
 namespace mkr {
     /// \brief 64bit Input Mask
     typedef uint64_t input_mask_t;

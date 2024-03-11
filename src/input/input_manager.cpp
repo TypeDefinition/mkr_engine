@@ -75,7 +75,7 @@ namespace mkr {
             // Gamepad
             case SDL_CONTROLLERAXISMOTION: {
                 // Normalise the axis value to between [-1, 1]. SDL gamepad axis values range is [-32768, 32767].
-                const auto value = maths_util::clamp<float>((float) e.caxis.value / 32767.0f, -1.0f, 1.0f);
+                const auto value = e.caxis.value < 0 ? (float) e.caxis.value / -32768.0f : (float) e.caxis.value / 32767.0f;
                 const input_mask_t mask = input_helper::get_input_mask(input_context_,
                                                                        sdl_to_controller_index::from_joystick_id(e.caxis.which),
                                                                        sdl_to_keycode::from_gamepad_axis((SDL_GameControllerAxis) e.caxis.axis));

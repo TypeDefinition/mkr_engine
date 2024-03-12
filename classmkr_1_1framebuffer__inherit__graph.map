@@ -1,0 +1,9 @@
+<map id="mkr::framebuffer" name="mkr::framebuffer">
+<area shape="rect" id="node1" title=" " alt="" coords="383,5,627,332"/>
+<area shape="rect" id="node2" href="$classmkr_1_1dbuffer.html" title=" " alt="" coords="5,380,231,516"/>
+<area shape="rect" id="node3" href="$classmkr_1_1fbuffer.html" title=" " alt="" coords="255,402,357,494"/>
+<area shape="rect" id="node4" href="$classmkr_1_1gbuffer.html" title=" " alt="" coords="381,402,485,494"/>
+<area shape="rect" id="node5" href="$classmkr_1_1lbuffer.html" title=" " alt="" coords="509,387,647,509"/>
+<area shape="rect" id="node6" href="$classmkr_1_1pbuffer.html" title=" " alt="" coords="671,395,821,501"/>
+<area shape="rect" id="node7" href="$classmkr_1_1sbuffer.html" title=" " alt="" coords="845,402,948,494"/>
+</map>

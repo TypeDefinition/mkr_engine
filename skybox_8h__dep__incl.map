@@ -1,0 +1,10 @@
+<map id="src/graphics/skybox.h" name="src/graphics/skybox.h">
+<area shape="rect" id="node1" title=" " alt="" coords="386,5,549,32"/>
+<area shape="rect" id="node2" href="$camera_8h.html" title=" " alt="" coords="312,80,495,107"/>
+<area shape="rect" id="node7" href="$asset__loader_8h.html" title=" " alt="" coords="463,155,602,196"/>
+<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="250,244,415,285"/>
+<area shape="rect" id="node4" href="$renderer_8h.html" title=" " alt="" coords="206,162,377,189"/>
+<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="5,251,225,278"/>
+<area shape="rect" id="node6" href="$renderer_8cpp.html" title=" " alt="" coords="440,251,625,278"/>
+<area shape="rect" id="node8" href="$asset__loader_8cpp.html" title=" " alt="" coords="650,244,789,285"/>
+</map>

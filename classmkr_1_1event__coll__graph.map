@@ -1,0 +1,3 @@
+<map id="mkr::event" name="mkr::event">
+<area shape="rect" id="node1" title="event(s) contain data that is dispatched by an event_dispatcher, and is received by an event_listener..." alt="" coords="5,5,100,97"/>
+</map>

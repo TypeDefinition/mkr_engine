@@ -1,0 +1,9 @@
+<map id="mkr::event" name="mkr::event">
+<area shape="rect" id="node1" title="event(s) contain data that is dispatched by an event_dispatcher, and is received by an event_listener..." alt="" coords="259,5,353,97"/>
+<area shape="rect" id="node2" href="$classmkr_1_1input__event.html" title=" " alt="" coords="164,145,299,237"/>
+<area shape="rect" id="node7" href="$classmkr_1_1sdl__event.html" title=" " alt="" coords="323,153,441,230"/>
+<area shape="rect" id="node3" href="$classmkr_1_1axis__event.html" title=" " alt="" coords="5,293,135,385"/>
+<area shape="rect" id="node4" href="$classmkr_1_1button__event.html" title=" " alt="" coords="159,293,303,385"/>
+<area shape="rect" id="node6" href="$classmkr_1_1motion__event.html" title=" " alt="" coords="328,285,476,392"/>
+<area shape="rect" id="node5" href="$classmkr_1_1click__event.html" title=" " alt="" coords="165,440,297,532"/>
+</map>

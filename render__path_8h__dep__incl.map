@@ -1,0 +1,11 @@
+<map id="src/graphics/render_path.h" name="src/graphics/render_path.h">
+<area shape="rect" id="node1" title=" " alt="" coords="454,5,601,47"/>
+<area shape="rect" id="node2" href="$material_8h.html" title=" " alt="" coords="442,95,613,121"/>
+<area shape="rect" id="node3" href="$asset__loader_8h.html" title=" " alt="" coords="458,169,597,211"/>
+<area shape="rect" id="node7" href="$material_8cpp.html" title=" " alt="" coords="621,177,807,203"/>
+<area shape="rect" id="node8" href="$renderer_8h.html" title=" " alt="" coords="258,177,429,203"/>
+<area shape="rect" id="node4" href="$game__scene_8cpp.html" title=" " alt="" coords="250,259,415,300"/>
+<area shape="rect" id="node5" href="$asset__loader_8cpp.html" title=" " alt="" coords="650,259,789,300"/>
+<area shape="rect" id="node6" href="$renderer_8cpp.html" title=" " alt="" coords="440,266,625,293"/>
+<area shape="rect" id="node9" href="$application_8cpp.html" title=" " alt="" coords="5,266,225,293"/>
+</map>

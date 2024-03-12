@@ -1,0 +1,4 @@
+<map id="mkr::event_listener" name="mkr::event_listener">
+<area shape="rect" id="node1" title="Used to subscribe to an event_dispatcher to receive event(s) from that event_dispatcher...." alt="" coords="9,160,160,281"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,164,97"/>
+</map>

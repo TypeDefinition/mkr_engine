@@ -1,0 +1,11 @@
+<map id="mkr::game_scene" name="mkr::game_scene">
+<area shape="rect" id="node1" title=" " alt="" coords="295,587,435,869"/>
+<area shape="rect" id="node2" href="$classmkr_1_1scene.html" title=" " alt="" coords="5,359,132,524"/>
+<area shape="rect" id="node3" title=" " alt="" coords="39,182,98,259"/>
+<area shape="rect" id="node4" href="$classmkr_1_1motion__test__system.html" title=" " alt="" coords="600,388,791,495"/>
+<area shape="rect" id="node5" href="$classmkr_1_1event__listener.html" title="Used to subscribe to an event_dispatcher to receive event(s) from that event_dispatcher...." alt="" coords="484,160,635,281"/>
+<area shape="rect" id="node7" href="$classmkr_1_1body__control__system.html" title=" " alt="" coords="157,388,354,495"/>
+<area shape="rect" id="node9" href="$classmkr_1_1head__control__system.html" title=" " alt="" coords="378,388,575,495"/>
+<area shape="rect" id="node6" title=" " alt="" coords="480,5,639,97"/>
+<area shape="rect" id="node8" title=" " alt="" coords="232,182,303,259"/>
+</map>

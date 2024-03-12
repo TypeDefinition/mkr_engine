@@ -13,8 +13,8 @@ namespace mkr {
     class light {
     private:
         light_mode mode_ = light_mode::point;
-        float power_ = 20.0f;
         colour colour_ = colour::white;
+        float power_ = 1.0f;
 
         float attenuation_constant_ = 1.0f;
         float attenuation_linear_ = 1.0f;

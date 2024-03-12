@@ -47,7 +47,6 @@ namespace mkr {
     void test_scene::init_shaders() {
         asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
         asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"./../assets/shaders/gshader.vert"}, {"./../assets/shaders/gshader.frag"});
-        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"./../assets/shaders/sshader.vert"}, {"./../assets/shaders/sshader.frag"});
         asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"./../assets/shaders/lshader.vert"}, {"./../assets/shaders/lshader.frag"});
         asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"./../assets/shaders/fshader.vert"}, {"./../assets/shaders/fshader.frag"});
         asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_invert.frag"});

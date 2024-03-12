@@ -1,12 +1,17 @@
 #include "application/application.h"
 #include "input/input_manager.h"
-#include "graphics/asset_loader.h"
+#include "graphics/asset_loader/asset_loader.h"
 #include "component/transform.h"
 #include "component/local_to_world.h"
-#include "component/mesh_render.h"
+#include "component/render_mesh.h"
 #include "component/light.h"
 #include "component/camera.h"
-#include "graphics/renderer.h"
+#include "graphics/renderer/graphics_renderer.h"
+#include "graphics/shader/forward_shader.h"
+#include "graphics/shader/geometry_shader.h"
+#include "graphics/shader/light_shader.h"
+#include "graphics/shader/post_proc_shader.h"
+#include "graphics/shader/skybox_shader.h"
 #include "game/tag/tag.h"
 #include "game/scene/game_scene.h"
 
@@ -26,53 +31,6 @@ namespace mkr {
     }
 
     void game_scene::pre_update() {
-    }
-
-    void game_scene::update() {
-        /*auto q = world_.query_builder<const transform, const g_transform>().term_at(2).optional().up().build();
-        q.each([](flecs::entity& _ent, const transform* _child, const g_transform* _parent) {
-            matrix4x4 trans;
-            quaternion rot;
-            if (_parent) {
-                trans = _parent->transform_ * _child->transform_matrix();
-                rot = _parent->rotation_ * _child->get_rotation();
-            } else {
-                trans = _child->transform_matrix();
-                rot = _child->get_rotation();
-            }
-
-            g_transform global_transform;
-            global_transform.transform_ = trans;
-            global_transform.rotation_ = rot;
-            global_transform.position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
-            global_transform.left_ = quaternion::rotate(vector3::x_axis, rot);
-            global_transform.up_ = quaternion::rotate(vector3::y_axis, rot);
-            global_transform.forward_ = quaternion::rotate(vector3::z_axis, rot);
-            _ent.set<g_transform>(global_transform);
-        });*/
-
-        auto q = world_.query_builder<const transform, local_to_world, const local_to_world*>()
-            .term_at(3).parent()
-            .cascade().optional()
-            .build();
-        q.iter([](flecs::iter& _iter, const transform* _child, local_to_world* _out, const local_to_world* _parent) {
-            for (auto i: _iter) {
-                matrix4x4 trans = _child[i].transform_matrix();
-                quaternion rot = _child[i].get_rotation();
-                if (_parent) {
-                    trans = _parent->transform_ * trans;
-                    rot = _parent->rotation_ * rot;
-                }
-                _out[i].transform_ = trans;
-                _out[i].rotation_ = rot;
-                _out[i].position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
-                _out[i].left_ = quaternion::rotate(vector3::x_axis, rot);
-                _out[i].up_ = quaternion::rotate(vector3::y_axis, rot);
-                _out[i].forward_ = quaternion::rotate(vector3::z_axis, rot);
-            }
-        });
-
-        world_.progress(application::instance().delta_time());
     }
 
     void game_scene::post_update() {
@@ -157,34 +115,41 @@ namespace mkr {
     void game_scene::init_systems() {
         world_.system<transform, const head_tag>().each([&](transform& _trans, const head_tag _head) { hcs_(_trans, _head); });
         world_.system<transform, const body_tag>().each([&](transform& _trans, const body_tag _body) { bcs_(_trans, _body); });
-        world_.system<const local_to_world, const camera>().each([](const local_to_world& _transform, const camera& _camera) { renderer::instance().update_cameras(_transform, _camera); });
-        world_.system<const local_to_world, const light>().each([](const local_to_world& _transform, const light& _light) { renderer::instance().update_lights(_transform, _light); });
-        world_.system<const local_to_world, const mesh_render>().each([](const local_to_world& _transform, const mesh_render& _mesh_renderer) { renderer::instance().update_objects(_transform, _mesh_renderer); });
+
+        // Render systems.
+        world_.system<const local_to_world, const camera>().each([](const local_to_world& _transform, const camera& _camera) { graphics_renderer::instance().submit_camera(_transform, _camera); });
+        world_.system<const local_to_world, const light>().each([](const local_to_world& _transform, const light& _light) { graphics_renderer::instance().submit_light(_transform, _light); });
+        world_.system<const local_to_world, const render_mesh>().each([](const local_to_world& _transform, const render_mesh& _mesh_renderer) { graphics_renderer::instance().submit_mesh(_transform, _mesh_renderer); });
     }
 
     void game_scene::init_shaders() {
-        asset_loader::instance().load_shader_program("skybox", render_pass::skybox, {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
-        asset_loader::instance().load_shader_program("gshader", render_pass::geometry, {"./../assets/shaders/gshader.vert"}, {"./../assets/shaders/gshader.frag"});
-        asset_loader::instance().load_shader_program("sshader", render_pass::shadow, {"./../assets/shaders/sshader.vert"}, {"./../assets/shaders/sshader.frag"});
-        asset_loader::instance().load_shader_program("lshader", render_pass::lighting, {"./../assets/shaders/lshader.vert"}, {"./../assets/shaders/lshader.frag"});
-        asset_loader::instance().load_shader_program("fshader", render_pass::lighting, {"./../assets/shaders/fshader.vert"}, {"./../assets/shaders/fshader.frag"});
-        asset_loader::instance().load_shader_program("pshader_invert", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_invert.frag"});
-        asset_loader::instance().load_shader_program("pshader_greyscale", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_greyscale.frag"});
-        asset_loader::instance().load_shader_program("pshader_blur", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_blur.frag"});
-        asset_loader::instance().load_shader_program("pshader_outline", render_pass::post_proc, {"./../assets/shaders/pshader.vert"}, {"./../assets/shaders/pshader_outline.frag"});
+        asset_loader::instance().load_shader_program<skybox_shader>("skybox", {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
+        asset_loader::instance().load_shader_program<forward_shader>("forward_shader", {"./../assets/shaders/forward.vert"}, {"./../assets/shaders/forward.frag"});
+        asset_loader::instance().load_shader_program<geometry_shader>("geometry_shader", {"./../assets/shaders/geometry.vert"}, {"./../assets/shaders/geometry.frag"});
+        asset_loader::instance().load_shader_program<light_shader>("light_shader", {"./../assets/shaders/light.vert"}, {"./../assets/shaders/light.frag"});
+        asset_loader::instance().load_shader_program<post_proc_shader>("post_proc_invert", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_invert.frag"});
+        asset_loader::instance().load_shader_program<post_proc_shader>("post_proc_greyscale", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_greyscale.frag"});
+        asset_loader::instance().load_shader_program<post_proc_shader>("post_proc_blur", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_blur.frag"});
+        asset_loader::instance().load_shader_program<post_proc_shader>("post_proc_outline", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_outline.frag"});
 
-        material::lshader_ = asset_loader::instance().get_shader_program("lshader");
-        material::gshader_ = asset_loader::instance().get_shader_program("gshader");
-        material::sshader_ = asset_loader::instance().get_shader_program("sshader");
-        // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_invert"));
-        // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_greyscale"));
-        // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_blur"));
-        // material::pshaders_.push_back(asset_loader::instance().get_shader_program("pshader_outline"));
+        material::geometry_shader_ = asset_loader::instance().get_shader_program("geometry_shader");
+        material::light_shader_ = asset_loader::instance().get_shader_program("light_shader");
     }
 
     void game_scene::init_materials() {
+        // Skybox
+        asset_loader::instance().load_texture_cube("skybox_sunset", {
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_right.png",
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_left.png",
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_top.png",
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_bottom.png",
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_front.png",
+            "./../assets/textures/skyboxes/sunset/skybox_sunset_back.png",
+        });
+
+        // Floor
         auto tiles = asset_loader::instance().make_material("tiles");
-        tiles->texture_albedo_ = asset_loader::instance().load_texture_2d("tiles_001_albedo", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
+        tiles->texture_diffuse_ = asset_loader::instance().load_texture_2d("tiles_001_albedo", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
         tiles->texture_normal_ = asset_loader::instance().load_texture_2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
         tiles->texture_displacement_ = asset_loader::instance().load_texture_2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
         tiles->texture_gloss_ = asset_loader::instance().load_texture_2d("tiles_001_gloss", "./../assets/textures/materials/tiles/tiles_001_gloss.png");
@@ -204,10 +169,10 @@ namespace mkr {
         transform floor_trans;
         floor_trans.set_scale({100.0f, 1.0f, 100.0f});
         floor_trans.set_position({0.0f, 0.0f, 0.0f});
-        mesh_render floor_rend;
-        floor_rend.mesh_ = "plane";
-        floor_rend.material_ = "tiles";
-        world_.entity("floor").set<transform>(floor_trans).set<mesh_render>(floor_rend).add<local_to_world>();
+        render_mesh floor_rend;
+        floor_rend.mesh_ = asset_loader::instance().get_mesh("plane");
+        floor_rend.material_ = asset_loader::instance().get_material("tiles");
+        world_.entity("floor").set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
 
         // Lights
         transform light_trans;
@@ -227,8 +192,8 @@ namespace mkr {
         head_trans.set_position({0.0f, 1.7f, 0.0f});
 
         camera cam;
-        cam.skybox_->shader_ = asset_loader::instance().get_shader_program("skybox");
-        cam.skybox_->texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
+        cam.skybox_.shader_ = asset_loader::instance().get_shader_program("skybox");
+        cam.skybox_.texture_ = asset_loader::instance().get_texture_cube("skybox_sunset");
 
         auto body = world_.entity("head").add<transform>().add<body_tag>().add<local_to_world>();
         auto head = world_.entity("body").set<transform>(head_trans).add<head_tag>().set<camera>(cam).add<local_to_world>();

@@ -29,7 +29,6 @@ namespace mkr {
 
         void init() override;
         void pre_update() override;
-        void update() override;
         void post_update() override;
         void exit() override;
     };

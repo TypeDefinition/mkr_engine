@@ -1,9 +1,9 @@
 #pragma once
 
 #include <memory>
-#include "graphics/shader_program.h"
-#include "graphics/texture.h"
-#include "graphics/skybox.h"
+#include "graphics/shader/shader_program.h"
+#include "graphics/texture/texture.h"
+#include "graphics/texture/skybox.h"
 
 namespace mkr {
     enum projection_mode {
@@ -40,6 +40,6 @@ namespace mkr {
         /// Viewport
         viewport viewport_;
         /// Skybox
-        std::shared_ptr<skybox> skybox_ = std::make_shared<skybox>();
+        skybox skybox_;
     };
 }

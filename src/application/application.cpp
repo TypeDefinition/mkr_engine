@@ -3,7 +3,8 @@
 #include "application/application.h"
 #include "application/sdl_message_pump.h"
 #include "input/input_manager.h"
-#include "graphics/renderer.h"
+#include "graphics/renderer/graphics_renderer.h"
+#include "graphics/asset_loader/asset_loader.h"
 #include "scene/scene_manager.h"
 
 namespace mkr {
@@ -24,7 +25,8 @@ namespace mkr {
 
         // Systems
         input_manager::instance().init();
-        renderer::instance().init();
+        asset_loader::instance().init();
+        graphics_renderer::instance().init();
         scene_manager::instance().init();
     }
 
@@ -33,7 +35,7 @@ namespace mkr {
         sdl_message_pump::instance().start();
 
         // Systems
-        renderer::instance().start();
+        graphics_renderer::instance().start();
     }
 
     void application::update() {
@@ -50,7 +52,7 @@ namespace mkr {
             // Systems
             input_manager::instance().update();
             scene_manager::instance().update();
-            renderer::instance().update();
+            graphics_renderer::instance().update();
         }
     }
 
@@ -65,7 +67,8 @@ namespace mkr {
 
         // Exit systems.
         input_manager::instance().exit();
-        renderer::instance().exit();
+        asset_loader::instance().exit();
+        graphics_renderer::instance().exit();
         scene_manager::instance().exit();
 
         // Destroy Message Pump
@@ -73,7 +76,8 @@ namespace mkr {
 
         // Destroy systems.
         input_manager::destroy();
-        renderer::destroy();
+        asset_loader::destroy();
+        graphics_renderer::destroy();
         scene_manager::destroy();
 
         // Exit logging last to allow systems to keep logging till the end.

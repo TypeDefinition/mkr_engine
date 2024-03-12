@@ -9,10 +9,10 @@ in io_block {
 };
 
 // Uniforms
-uniform vec4 u_sky_colour;
+uniform vec4 u_skybox_colour;
 uniform bool u_texture_skybox_enabled;
 uniform samplerCube u_texture_skybox;
 
 void main() {
-    out_composite = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) * u_sky_colour : u_sky_colour;
+    out_composite = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) * u_skybox_colour : u_skybox_colour;
 }

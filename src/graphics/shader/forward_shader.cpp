@@ -1,4 +1,5 @@
 #include "graphics/shader/forward_shader.h"
+#include "graphics/shader/texture_unit.h"
 
 namespace mkr {
     forward_shader::forward_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)

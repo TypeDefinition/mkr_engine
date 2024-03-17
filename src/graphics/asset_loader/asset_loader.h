@@ -7,7 +7,7 @@
 #include "graphics/material/material.h"
 #include "graphics/mesh/mesh.h"
 #include "graphics/texture/texture.h"
-#include "graphics/texture/skybox.h"
+#include "graphics/lighting/skybox.h"
 #include "util/file_util.h"
 
 namespace mkr {

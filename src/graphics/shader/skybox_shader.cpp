@@ -1,4 +1,5 @@
 #include "graphics/shader/skybox_shader.h"
+#include "graphics/shader/texture_unit.h"
 
 namespace mkr {
     skybox_shader::skybox_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)

@@ -1,4 +1,5 @@
 #include "graphics/shader/geometry_shader.h"
+#include "graphics/shader/texture_unit.h"
 
 namespace mkr {
     geometry_shader::geometry_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)

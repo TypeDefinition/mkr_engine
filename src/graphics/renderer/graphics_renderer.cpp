@@ -4,6 +4,7 @@
 #include "graphics/renderer/graphics_renderer.h"
 #include "graphics/lighting/lighting.h"
 #include "graphics/asset_loader/asset_loader.h"
+#include "graphics/shader/texture_unit.h"
 #include "graphics/shader/forward_shader.h"
 #include "graphics/shader/geometry_shader.h"
 #include "graphics/shader/light_shader.h"

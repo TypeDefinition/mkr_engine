@@ -3,7 +3,7 @@
 #include <memory>
 #include "graphics/shader/shader_program.h"
 #include "graphics/texture/texture.h"
-#include "graphics/texture/skybox.h"
+#include "graphics/lighting/skybox.h"
 
 namespace mkr {
     enum projection_mode {

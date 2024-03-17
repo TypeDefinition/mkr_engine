@@ -7,7 +7,6 @@
 #include <maths/vector2.h>
 #include <maths/vector3.h>
 #include <maths/matrix.h>
-#include "graphics/texture/texture.h"
 
 namespace mkr {
     class shader_program {

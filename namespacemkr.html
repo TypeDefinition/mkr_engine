@@ -131,6 +131,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1lighting.html">lighting</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1skybox.html">skybox</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1material.html">material</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1ebo.html">ebo</a></td></tr>
@@ -164,8 +166,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1skybox__shader.html">skybox_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1pixel__format.html">pixel_format</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1skybox.html">skybox</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture.html">texture</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -311,6 +311,28 @@ Enumerations</h2></td></tr>
 <tr class="memitem:a1af81b2d0e3cf9b89ab132aaeea299e2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2">stencil_value</a> : uint8_t { <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2ac8985da789fcecc895354b4bcc89eb79">stencil_opaque</a> = 0x10
  }</td></tr>
 <tr class="separator:a1af81b2d0e3cf9b89ab132aaeea299e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704df">texture_unit</a> : int32_t { <br />
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c">texture_skybox</a> = 0
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">texture_diffuse</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5">texture_normal</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89">texture_specular</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79">texture_gloss</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e">texture_displacement</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfab5e15f29cadab8f1f8081341bff5f3f0">texture_frag_position</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa95f748d4b1ef941454f52af4ecee820b">texture_frag_normal</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfafe46177cc5a88a581cf68ce5317c7be2">texture_frag_diffuse</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa78ab070005550fa9389ab539d705e8e6">texture_frag_specular</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa31365efb3f17ef94ebed82d6d78d235c">texture_frag_gloss</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa9bf1291d9a8e08e853c51eb192817f86">texture_light_diffuse</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa375ec01642107a6178872e8055cc66ad">texture_light_specular</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfaed244b158e2663c712a3bffe60427194">texture_composite</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8d0729a76366b9369a2eea61fb64cefe">texture_depth_stencil</a>
+<br />
+ }</td></tr>
+<tr class="separator:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52701c5d62bfbb1573e954a1606e0ac5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5">sized_format</a> : GLenum { <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5a90a071d6a73f529da5efeb75b4cec839">r8</a> = GL_R8
 , <a class="el" href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5a29019c9737116550a940597aeca95304">r8_snorm</a> = GL_R8_SNORM
@@ -415,28 +437,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a9354e34d9d79843b494a892b06f6b58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74772d000a9dee6b4f8f94fc45e9d5e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1">texture_unit</a> { <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a3e73636b1d3567f3e4554e27f48c2e4c">texture_skybox</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a279c221a440a6e199736a992a2e13873">texture_diffuse</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a2e6f41bb29037dc80504b943a03a37f5">texture_normal</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a77f77f76d87adf102db0c97761a32f89">texture_specular</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a28836e1906c467f91fe721f876196f79">texture_gloss</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a713a31f5dc6be65e75247060dc49742e">texture_displacement</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1ab5e15f29cadab8f1f8081341bff5f3f0">texture_frag_position</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a95f748d4b1ef941454f52af4ecee820b">texture_frag_normal</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1afe46177cc5a88a581cf68ce5317c7be2">texture_frag_diffuse</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a78ab070005550fa9389ab539d705e8e6">texture_frag_specular</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a31365efb3f17ef94ebed82d6d78d235c">texture_frag_gloss</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a9bf1291d9a8e08e853c51eb192817f86">texture_light_diffuse</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a375ec01642107a6178872e8055cc66ad">texture_light_specular</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1aed244b158e2663c712a3bffe60427194">texture_composite</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a8d0729a76366b9369a2eea61fb64cefe">texture_depth_stencil</a>
-<br />
- }</td></tr>
-<tr class="separator:a74772d000a9dee6b4f8f94fc45e9d5e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1950a0152d09799e11f899663b467d4d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a1950a0152d09799e11f899663b467d4d">texture_wrap_mode</a> : GLint { <a class="el" href="namespacemkr.html#a1950a0152d09799e11f899663b467d4dadd264de8204155acbc650e4516133dba">repeat</a> = GL_REPEAT
 , <a class="el" href="namespacemkr.html#a1950a0152d09799e11f899663b467d4da01182e7c3c122280f7b92f3ee7eca68f">mirrored_repeat</a> = GL_MIRRORED_REPEAT
 , <a class="el" href="namespacemkr.html#a1950a0152d09799e11f899663b467d4daf2bc88d61a25e30b341310d1b944d9fb">clamp_to_edge</a> = GL_CLAMP_TO_EDGE
@@ -1660,40 +1660,40 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="af9699c6cd4b2d098438685dbd2f0d3ceaa7d34a212650da2d69500e5cee8bbec6"></a>num_texture_cube_sides&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00052">52</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00112">112</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
 
 </div>
 </div>
-<a id="a74772d000a9dee6b4f8f94fc45e9d5e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74772d000a9dee6b4f8f94fc45e9d5e1">&#9670;&nbsp;</a></span>texture_unit</h2>
+<a id="a3f278ec75926bdfd4b49d1fd23c704df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f278ec75926bdfd4b49d1fd23c704df">&#9670;&nbsp;</a></span>texture_unit</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1">mkr::texture_unit</a></td>
+          <td class="memname">enum <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704df">mkr::texture_unit</a> : int32_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a3e73636b1d3567f3e4554e27f48c2e4c"></a>texture_skybox&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a279c221a440a6e199736a992a2e13873"></a>texture_diffuse&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a2e6f41bb29037dc80504b943a03a37f5"></a>texture_normal&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a77f77f76d87adf102db0c97761a32f89"></a>texture_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a28836e1906c467f91fe721f876196f79"></a>texture_gloss&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a713a31f5dc6be65e75247060dc49742e"></a>texture_displacement&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1ab5e15f29cadab8f1f8081341bff5f3f0"></a>texture_frag_position&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a95f748d4b1ef941454f52af4ecee820b"></a>texture_frag_normal&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1afe46177cc5a88a581cf68ce5317c7be2"></a>texture_frag_diffuse&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a78ab070005550fa9389ab539d705e8e6"></a>texture_frag_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a31365efb3f17ef94ebed82d6d78d235c"></a>texture_frag_gloss&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a9bf1291d9a8e08e853c51eb192817f86"></a>texture_light_diffuse&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a375ec01642107a6178872e8055cc66ad"></a>texture_light_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1aed244b158e2663c712a3bffe60427194"></a>texture_composite&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a74772d000a9dee6b4f8f94fc45e9d5e1a8d0729a76366b9369a2eea61fb64cefe"></a>texture_depth_stencil&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c"></a>texture_skybox&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873"></a>texture_diffuse&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5"></a>texture_normal&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89"></a>texture_specular&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79"></a>texture_gloss&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e"></a>texture_displacement&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfab5e15f29cadab8f1f8081341bff5f3f0"></a>texture_frag_position&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa95f748d4b1ef941454f52af4ecee820b"></a>texture_frag_normal&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfafe46177cc5a88a581cf68ce5317c7be2"></a>texture_frag_diffuse&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa78ab070005550fa9389ab539d705e8e6"></a>texture_frag_specular&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa31365efb3f17ef94ebed82d6d78d235c"></a>texture_frag_gloss&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa9bf1291d9a8e08e853c51eb192817f86"></a>texture_light_diffuse&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa375ec01642107a6178872e8055cc66ad"></a>texture_light_specular&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfaed244b158e2663c712a3bffe60427194"></a>texture_composite&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa8d0729a76366b9369a2eea61fb64cefe"></a>texture_depth_stencil&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00011">11</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="texture__unit_8h_source.html#l00006">6</a> of file <a class="el" href="texture__unit_8h_source.html">texture_unit.h</a>.</p>
 
 </div>
 </div>
@@ -1714,7 +1714,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a1950a0152d09799e11f899663b467d4daf2bc88d61a25e30b341310d1b944d9fb"></a>clamp_to_edge&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00032">32</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00011">11</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
 
 </div>
 </div>

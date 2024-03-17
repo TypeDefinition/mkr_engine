@@ -67,9 +67,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
-<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classmkr_1_1shader__program-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mkr::shader_program Class Reference</div>  </div>
@@ -77,6 +77,12 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="shader__program_8h_source.html">shader_program.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mkr::shader_program:</div>
+<div class="dyncontent">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmkr_1_1shader__program__inherit__graph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
 <div class="dynheader">
 Collaboration diagram for mkr::shader_program:</div>
 <div class="dyncontent">
@@ -86,8 +92,8 @@ Collaboration diagram for mkr::shader_program:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6f3778f3054ea32f860f4ff80554631c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a6f3778f3054ea32f860f4ff80554631c">shader_program</a> (const std::string &amp;_name, <a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a> _render_pass, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources)</td></tr>
-<tr class="separator:a6f3778f3054ea32f860f4ff80554631c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af071501a7f30a37b62170ce32e10d766"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">shader_program</a> (const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</td></tr>
+<tr class="separator:af071501a7f30a37b62170ce32e10d766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dc34eb66d84e537eb57a5a990c07b5d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a5dc34eb66d84e537eb57a5a990c07b5d">~shader_program</a> ()</td></tr>
 <tr class="separator:a5dc34eb66d84e537eb57a5a990c07b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af718c8520b6836cd7f2f6a47fc5863c4"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af718c8520b6836cd7f2f6a47fc5863c4">name</a> () const</td></tr>
@@ -207,39 +213,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af9465656750519d5f8e17a35de13c57e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af9465656750519d5f8e17a35de13c57e">set_uniform</a> (uint32_t _shader_uniform, const vector3 &amp;_value)</td></tr>
 <tr class="separator:af9465656750519d5f8e17a35de13c57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae2de92f53c1cffff4698e33132b02b2c"><td class="memItemLeft" align="right" valign="top">GLint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#ae2de92f53c1cffff4698e33132b02b2c">get_uniform_location</a> (const std::string &amp;_uniform_name) const</td></tr>
 <tr class="separator:ae2de92f53c1cffff4698e33132b02b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a328f5fe4615104aac9f6fc3bb9e4d24a"><td class="memItemLeft" align="right" valign="top">GLint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a328f5fe4615104aac9f6fc3bb9e4d24a">get_attrib_location</a> (const std::string &amp;_attrib_name) const</td></tr>
 <tr class="separator:a328f5fe4615104aac9f6fc3bb9e4d24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d564f0ae227d9d8de4d5d9a6e15f458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a5d564f0ae227d9d8de4d5d9a6e15f458">assign_uniforms</a> ()</td></tr>
-<tr class="separator:a5d564f0ae227d9d8de4d5d9a6e15f458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabbb2dd5a311c679e2992da7aaa58a0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#aabbb2dd5a311c679e2992da7aaa58a0d">assign_textures</a> ()</td></tr>
-<tr class="separator:aabbb2dd5a311c679e2992da7aaa58a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
-Static Private Member Functions</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:ace38803f5311d28c3df5e3ae3a9eb448"><td class="memItemLeft" align="right" valign="top">static GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#ace38803f5311d28c3df5e3ae3a9eb448">create_shader</a> (GLenum _shader_type, const std::string &amp;_shader_source)</td></tr>
 <tr class="separator:ace38803f5311d28c3df5e3ae3a9eb448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
 <tr class="memitem:a956a1a83a5b4490e96ec175fe5222d50"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a956a1a83a5b4490e96ec175fe5222d50">name_</a></td></tr>
 <tr class="separator:a956a1a83a5b4490e96ec175fe5222d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ffe594fa2a627542ba4a10685c3c8f5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a5ffe594fa2a627542ba4a10685c3c8f5">render_pass_</a></td></tr>
-<tr class="separator:a5ffe594fa2a627542ba4a10685c3c8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c7fcd0a8951f6d1fec954c6b4932609"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a></td></tr>
 <tr class="separator:a0c7fcd0a8951f6d1fec954c6b4932609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeac142124ec9587dac3b509b1db850be"><td class="memItemLeft" align="right" valign="top">GLint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#aeac142124ec9587dac3b509b1db850be">uniform_handles_</a> [<a class="el" href="namespacemkr.html#a007a4c1386423f6aa608e6c8cd1c63d0ac3a138a218ee1158457af67f94b60883">num_shader_uniforms</a>] = { 0 }</td></tr>
-<tr class="separator:aeac142124ec9587dac3b509b1db850be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab19fc1a13631f92ce9aaf300ae584b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; GLint[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a2ab19fc1a13631f92ce9aaf300ae584b">uniform_handles_</a></td></tr>
+<tr class="separator:a2ab19fc1a13631f92ce9aaf300ae584b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00085">85</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00013">13</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6f3778f3054ea32f860f4ff80554631c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f3778f3054ea32f860f4ff80554631c">&#9670;&nbsp;</a></span>shader_program()</h2>
+<a id="af071501a7f30a37b62170ce32e10d766"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af071501a7f30a37b62170ce32e10d766">&#9670;&nbsp;</a></span>shader_program()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,12 +253,6 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a>&#160;</td>
-          <td class="paramname"><em>_render_pass</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>_vs_sources</em>, </td>
         </tr>
@@ -266,7 +260,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>_fs_sources</em>&#160;</td>
+          <td class="paramname"><em>_fs_sources</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>_num_uniforms</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -277,7 +277,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Now that we are done creating the shader program, we no longer need the shaders, and they can be deleted. It is also possible to store the shaders to create other shader programs, but there isn't a compelling reason to do so since we can just re-create them again if necessary.</p>
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00218">218</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00047">47</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,65 +304,11 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00276">276</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00107">107</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aabbb2dd5a311c679e2992da7aaa58a0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabbb2dd5a311c679e2992da7aaa58a0d">&#9670;&nbsp;</a></span>assign_textures()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mkr::shader_program::assign_textures </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00176">176</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5d564f0ae227d9d8de4d5d9a6e15f458"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d564f0ae227d9d8de4d5d9a6e15f458">&#9670;&nbsp;</a></span>assign_uniforms()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mkr::shader_program::assign_uniforms </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00047">47</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
-
-</div>
-</div>
 <a id="ace38803f5311d28c3df5e3ae3a9eb448"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ace38803f5311d28c3df5e3ae3a9eb448">&#9670;&nbsp;</a></span>create_shader()</h2>
 
@@ -392,7 +338,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -420,7 +366,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -448,7 +394,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -480,7 +426,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00107">107</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00030">30</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +462,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00353">353</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00184">184</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -552,7 +498,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00365">365</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00196">196</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -588,7 +534,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00377">377</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00208">208</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -624,7 +570,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00369">369</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00200">200</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -660,7 +606,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00357">357</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00188">188</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -696,7 +642,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00381">381</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00212">212</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -732,7 +678,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00373">373</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00204">204</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,7 +714,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00385">385</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00216">216</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -804,7 +750,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00361">361</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00192">192</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -834,7 +780,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00336">336</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00167">167</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -870,7 +816,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00340">340</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00171">171</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -912,7 +858,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00344">344</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00175">175</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -960,7 +906,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00348">348</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00179">179</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -990,7 +936,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00390">390</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00221">221</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1020,7 +966,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00395">395</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00226">226</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1050,7 +996,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00400">400</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00231">231</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1080,7 +1026,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00285">285</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00116">116</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1116,7 +1062,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00289">289</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00120">120</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1158,7 +1104,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00293">293</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00124">124</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1206,7 +1152,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00297">297</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00128">128</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1236,7 +1182,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00302">302</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00133">133</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1272,7 +1218,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00306">306</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00137">137</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1314,7 +1260,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00310">310</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00141">141</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1362,7 +1308,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00314">314</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00145">145</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1392,7 +1338,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00319">319</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00150">150</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1428,7 +1374,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00323">323</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00154">154</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1470,7 +1416,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00327">327</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00158">158</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1518,7 +1464,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00331">331</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00162">162</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1554,7 +1500,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00473">473</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00304">304</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1590,7 +1536,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00485">485</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00316">316</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1626,7 +1572,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00497">497</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00328">328</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1662,7 +1608,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00489">489</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00320">320</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1698,7 +1644,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00477">477</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00308">308</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1734,7 +1680,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00501">501</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00332">332</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1770,7 +1716,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00493">493</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00324">324</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1806,7 +1752,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00505">505</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00336">336</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1842,7 +1788,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00481">481</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00312">312</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1872,7 +1818,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00456">456</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00287">287</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1908,7 +1854,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00460">460</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00291">291</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1950,7 +1896,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00464">464</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00295">295</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -1998,7 +1944,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00468">468</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00299">299</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2028,7 +1974,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00510">510</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00341">341</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2058,7 +2004,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00515">515</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00346">346</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2088,7 +2034,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00520">520</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00351">351</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2118,7 +2064,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00405">405</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00236">236</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2154,7 +2100,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00409">409</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00240">240</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2196,7 +2142,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00413">413</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00244">244</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2244,7 +2190,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00417">417</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00248">248</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2274,7 +2220,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00422">422</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00253">253</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2310,7 +2256,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00426">426</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00257">257</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2352,7 +2298,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00430">430</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00261">261</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2400,7 +2346,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00434">434</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00265">265</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2430,7 +2376,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00439">439</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00270">270</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2466,7 +2412,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00443">443</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00274">274</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2508,7 +2454,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00447">447</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00278">278</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2556,7 +2502,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00451">451</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00282">282</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2575,7 +2521,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00280">280</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8cpp_source.html#l00111">111</a> of file <a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a>.</p>
 
 </div>
 </div>
@@ -2595,12 +2541,12 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00087">87</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00015">15</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
 
 </div>
 </div>
@@ -2619,17 +2565,17 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00089">89</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00016">16</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
 
 </div>
 </div>
-<a id="a5ffe594fa2a627542ba4a10685c3c8f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ffe594fa2a627542ba4a10685c3c8f5">&#9670;&nbsp;</a></span>render_pass_</h2>
+<a id="a2ab19fc1a13631f92ce9aaf300ae584b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ab19fc1a13631f92ce9aaf300ae584b">&#9670;&nbsp;</a></span>uniform_handles_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2638,47 +2584,23 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a> mkr::shader_program::render_pass_</td>
+          <td class="memname">std::unique_ptr&lt;GLint[]&gt; mkr::shader_program::uniform_handles_</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00088">88</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
-
-</div>
-</div>
-<a id="aeac142124ec9587dac3b509b1db850be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeac142124ec9587dac3b509b1db850be">&#9670;&nbsp;</a></span>uniform_handles_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GLint mkr::shader_program::uniform_handles_[<a class="el" href="namespacemkr.html#a007a4c1386423f6aa608e6c8cd1c63d0ac3a138a218ee1158457af67f94b60883">num_shader_uniforms</a>] = { 0 }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00090">90</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="shader__program_8h_source.html#l00017">17</a> of file <a class="el" href="shader__program_8h_source.html">shader_program.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/graphics/<a class="el" href="shader__program_8h_source.html">shader_program.h</a></li>
-<li>src/graphics/<a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a></li>
+<li>src/graphics/shader/<a class="el" href="shader__program_8h_source.html">shader_program.h</a></li>
+<li>src/graphics/shader/<a class="el" href="shader__program_8cpp_source.html">shader_program.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

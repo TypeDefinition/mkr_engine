@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
@@ -94,14 +95,12 @@ Collaboration diagram for mkr::asset_loader:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a6894ab694cb89c80a5bc2e6bc9e94cd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a6894ab694cb89c80a5bc2e6bc9e94cd3">init</a> ()</td></tr>
+<tr class="separator:a6894ab694cb89c80a5bc2e6bc9e94cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca5a5913df7bdc827dd8d31493a29945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#aca5a5913df7bdc827dd8d31493a29945">exit</a> ()</td></tr>
+<tr class="separator:aca5a5913df7bdc827dd8d31493a29945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ba52fab03598aa262e610b4e2e5de42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1shader__program.html">shader_program</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a0ba52fab03598aa262e610b4e2e5de42">get_shader_program</a> (const std::string &amp;_name)</td></tr>
 <tr class="separator:a0ba52fab03598aa262e610b4e2e5de42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a555bf1ebbe6f01a23767c0d8cc9aff13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1shader__program.html">shader_program</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a555bf1ebbe6f01a23767c0d8cc9aff13">load_shader_program</a> (const std::string &amp;_name, <a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a> _render_pass, const std::vector&lt; std::string &gt; &amp;_vs_files, const std::vector&lt; std::string &gt; &amp;_fs_files)</td></tr>
-<tr class="separator:a555bf1ebbe6f01a23767c0d8cc9aff13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a99871f6423b414cf17432951a007f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a5a99871f6423b414cf17432951a007f2">get_texture_2d</a> (const std::string &amp;_name)</td></tr>
-<tr class="separator:a5a99871f6423b414cf17432951a007f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8b7ae4fafa2e50083cbc31e71d570f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#ad8b7ae4fafa2e50083cbc31e71d570f5">load_texture_2d</a> (const std::string &amp;_name, const std::string &amp;_file, bool _flip_x=false, bool _flip_y=false)</td></tr>
-<tr class="separator:ad8b7ae4fafa2e50083cbc31e71d570f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fadc144566a467d731000be76f638cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1texture__cube.html">texture_cube</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a9fadc144566a467d731000be76f638cb">get_texture_cube</a> (const std::string &amp;_name)</td></tr>
 <tr class="separator:a9fadc144566a467d731000be76f638cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afefe55b9cb2849ace48fbf0972a2a3a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1texture__cube.html">texture_cube</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#afefe55b9cb2849ace48fbf0972a2a3a9">load_texture_cube</a> (const std::string &amp;_name, std::array&lt; std::string, <a class="el" href="namespacemkr.html#af9699c6cd4b2d098438685dbd2f0d3ceaa7d34a212650da2d69500e5cee8bbec6">num_texture_cube_sides</a> &gt; _files, bool _flip_x=false, bool _flip_y=false)</td></tr>
@@ -125,6 +124,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a6e2277aec0b8b652d6fe60bfe2c49cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c34d3747159a2e14c2a8318e2e5bdc7"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classmkr_1_1mesh.html">mesh</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a5c34d3747159a2e14c2a8318e2e5bdc7">make_quad</a> (const std::string &amp;_name)</td></tr>
 <tr class="separator:a5c34d3747159a2e14c2a8318e2e5bdc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a70ec9f21ec0e9282447c037abc14693b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a70ec9f21ec0e9282447c037abc14693b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classmkr_1_1shader__program.html">shader_program</a> *load_shader_program(const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_files, const std::vector&lt; std::string &gt; &amp;_fs_files) requires std <a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmkr_1_1asset__loader.html#a70ec9f21ec0e9282447c037abc14693b">load_texture_2d</a> (const std::string &amp;_name, const std::string &amp;_file, bool _flip_x=false, bool _flip_y=false)</td></tr>
+<tr class="separator:a70ec9f21ec0e9282447c037abc14693b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -162,7 +167,7 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00013">13</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00014">14</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acf7f63eeedb90d7f8896170d9e9be3a4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acf7f63eeedb90d7f8896170d9e9be3a4">&#9670;&nbsp;</a></span>asset_loader()</h2>
@@ -187,11 +192,30 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00043">43</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00044">44</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aca5a5913df7bdc827dd8d31493a29945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca5a5913df7bdc827dd8d31493a29945">&#9670;&nbsp;</a></span>exit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mkr::asset_loader::exit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00018">18</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ac18090fd9d18ea9cb19203a17e2afe4c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac18090fd9d18ea9cb19203a17e2afe4c">&#9670;&nbsp;</a></span>flip_image_x()</h2>
 
@@ -250,7 +274,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function assumes that the image data is row major. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00008">8</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00022">22</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -312,7 +336,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function assumes that the image data is row major. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00028">28</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00042">42</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -332,7 +356,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00151">151</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00150">150</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -352,7 +376,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00554">554</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00553">553</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -372,27 +396,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00045">45</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5a99871f6423b414cf17432951a007f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a99871f6423b414cf17432951a007f2">&#9670;&nbsp;</a></span>get_texture_2d()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> * mkr::asset_loader::get_texture_2d </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00066">66</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00059">59</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +416,26 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00101">101</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00100">100</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6894ab694cb89c80a5bc2e6bc9e94cd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6894ab694cb89c80a5bc2e6bc9e94cd3">&#9670;&nbsp;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mkr::asset_loader::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00008">8</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -442,91 +465,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00439">439</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a555bf1ebbe6f01a23767c0d8cc9aff13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a555bf1ebbe6f01a23767c0d8cc9aff13">&#9670;&nbsp;</a></span>load_shader_program()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmkr_1_1shader__program.html">shader_program</a> * mkr::asset_loader::load_shader_program </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacemkr.html#a26cb22321d3ba6cfd259c1fdc3c4e3c7">render_pass</a>&#160;</td>
-          <td class="paramname"><em>_render_pass</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>_vs_files</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>_fs_files</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00050">50</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ad8b7ae4fafa2e50083cbc31e71d570f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8b7ae4fafa2e50083cbc31e71d570f5">&#9670;&nbsp;</a></span>load_texture_2d()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> * mkr::asset_loader::load_texture_2d </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_file</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>_flip_x</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>_flip_y</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00071">71</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00438">438</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -568,7 +507,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00106">106</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00105">105</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -588,7 +527,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00156">156</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00155">155</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -616,7 +555,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00403">403</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00402">402</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -643,7 +582,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00339">339</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00338">338</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +609,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00162">162</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00161">161</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -698,7 +637,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00375">375</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8cpp_source.html#l00374">374</a> of file <a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a>.</p>
 
 </div>
 </div>
@@ -725,7 +664,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00045">45</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00046">46</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
@@ -755,6 +694,24 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a70ec9f21ec0e9282447c037abc14693b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70ec9f21ec0e9282447c037abc14693b">&#9670;&nbsp;</a></span>load_texture_2d</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> * mkr::asset_loader::load_texture_2d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00075">75</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+
+</div>
+</div>
 <a id="a3b8057feb9b664ac19c75ce043b7de6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3b8057feb9b664ac19c75ce043b7de6b">&#9670;&nbsp;</a></span>materials_</h2>
 
@@ -775,7 +732,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00020">20</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00021">21</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
@@ -799,7 +756,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00021">21</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00022">22</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
@@ -823,7 +780,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00017">17</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00018">18</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
@@ -847,7 +804,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00018">18</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00019">19</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
@@ -871,13 +828,13 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00019">19</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="asset__loader_8h_source.html#l00020">20</a> of file <a class="el" href="asset__loader_8h_source.html">asset_loader.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/graphics/<a class="el" href="asset__loader_8h_source.html">asset_loader.h</a></li>
-<li>src/graphics/<a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a></li>
+<li>src/graphics/asset_loader/<a class="el" href="asset__loader_8h_source.html">asset_loader.h</a></li>
+<li>src/graphics/asset_loader/<a class="el" href="asset__loader_8cpp_source.html">asset_loader.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

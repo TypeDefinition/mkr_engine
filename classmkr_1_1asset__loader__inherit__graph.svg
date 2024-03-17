@@ -13,33 +13,33 @@
 <g id="node1" class="node">
 <title>Node1</title>
 <g id="a_node1"><a xlink:title=" ">
-<polygon fill="#bfbfbf" stroke="black" points="2.5,-0.5 2.5,-288.5 143.5,-288.5 143.5,-0.5 2.5,-0.5"/>
+<polygon fill="#bfbfbf" stroke="black" points="5,-0.5 5,-288.5 141,-288.5 141,-0.5 5,-0.5"/>
 <text text-anchor="middle" x="73" y="-276.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::asset_loader</text>
-<polyline fill="none" stroke="black" points="2.5,-269.5 143.5,-269.5 "/>
-<text text-anchor="start" x="10.5" y="-257.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; shader_programs_</text>
-<text text-anchor="start" x="10.5" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_2ds_</text>
-<text text-anchor="start" x="10.5" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_cubes_</text>
-<text text-anchor="start" x="10.5" y="-224.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; materials_</text>
-<text text-anchor="start" x="10.5" y="-213.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; meshes_</text>
-<polyline fill="none" stroke="black" points="2.5,-206.5 143.5,-206.5 "/>
-<text text-anchor="start" x="10.5" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_shader_program()</text>
-<text text-anchor="start" x="10.5" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_shader_program()</text>
-<text text-anchor="start" x="10.5" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture_2d()</text>
-<text text-anchor="start" x="10.5" y="-161.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_texture_2d()</text>
-<text text-anchor="start" x="10.5" y="-150.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture_cube()</text>
-<text text-anchor="start" x="10.5" y="-139.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_texture_cube()</text>
-<text text-anchor="start" x="10.5" y="-128.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_material()</text>
-<text text-anchor="start" x="10.5" y="-117.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_material()</text>
-<text text-anchor="start" x="10.5" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_obj()</text>
-<text text-anchor="start" x="10.5" y="-95.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_mesh()</text>
-<text text-anchor="start" x="10.5" y="-84.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_skybox()</text>
-<text text-anchor="start" x="10.5" y="-73.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_screen_quad()</text>
-<text text-anchor="start" x="10.5" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_triangle()</text>
-<text text-anchor="start" x="10.5" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_quad()</text>
-<text text-anchor="start" x="10.5" y="-40.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; asset_loader()</text>
-<text text-anchor="start" x="10.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~asset_loader()</text>
-<text text-anchor="start" x="10.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; flip_image_x()</text>
-<text text-anchor="start" x="10.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; flip_image_y()</text>
+<polyline fill="none" stroke="black" points="5,-269.5 141,-269.5 "/>
+<text text-anchor="start" x="13" y="-257.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_texture_2d</text>
+<text text-anchor="start" x="13" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; shader_programs_</text>
+<text text-anchor="start" x="13" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_2ds_</text>
+<text text-anchor="start" x="13" y="-224.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_cubes_</text>
+<text text-anchor="start" x="13" y="-213.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; materials_</text>
+<text text-anchor="start" x="13" y="-202.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; meshes_</text>
+<polyline fill="none" stroke="black" points="5,-195.5 141,-195.5 "/>
+<text text-anchor="start" x="13" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ init()</text>
+<text text-anchor="start" x="13" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ exit()</text>
+<text text-anchor="start" x="13" y="-161.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_shader_program()</text>
+<text text-anchor="start" x="13" y="-150.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture_cube()</text>
+<text text-anchor="start" x="13" y="-139.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_texture_cube()</text>
+<text text-anchor="start" x="13" y="-128.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_material()</text>
+<text text-anchor="start" x="13" y="-117.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_material()</text>
+<text text-anchor="start" x="13" y="-106.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ load_obj()</text>
+<text text-anchor="start" x="13" y="-95.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_mesh()</text>
+<text text-anchor="start" x="13" y="-84.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_skybox()</text>
+<text text-anchor="start" x="13" y="-73.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_screen_quad()</text>
+<text text-anchor="start" x="13" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_triangle()</text>
+<text text-anchor="start" x="13" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_quad()</text>
+<text text-anchor="start" x="13" y="-40.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; asset_loader()</text>
+<text text-anchor="start" x="13" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~asset_loader()</text>
+<text text-anchor="start" x="13" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; flip_image_x()</text>
+<text text-anchor="start" x="13" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; flip_image_y()</text>
 </a>
 </g>
 </g>

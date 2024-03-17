@@ -51,31 +51,31 @@
 <!-- Node3 -->
 <g id="node4" class="node">
 <title>Node3</title>
-<g id="a_node4"><a xlink:href="classmkr_1_1input__manager.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="109.5,-114.5 109.5,-133.5 225.5,-133.5 225.5,-114.5 109.5,-114.5"/>
-<text text-anchor="middle" x="167.5" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::input_manager</text>
+<g id="a_node4"><a xlink:href="classmkr_1_1graphics__renderer.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="102.5,-114.5 102.5,-133.5 232.5,-133.5 232.5,-114.5 102.5,-114.5"/>
+<text text-anchor="middle" x="167.5" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::graphics_renderer</text>
 </a>
 </g>
 </g>
 <!-- Node0&#45;&gt;Node3 -->
 <g id="edge3" class="edge">
 <title>Node0&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M72.09,-110.66C83.8,-112.32 96.83,-114.16 109.38,-115.93"/>
+<path fill="none" stroke="midnightblue" d="M72.12,-110.67C81.64,-112.01 92.02,-113.48 102.31,-114.93"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="72.58,-107.2 62.18,-109.26 71.6,-114.13 72.58,-107.2"/>
 </g>
 <!-- Node4 -->
 <g id="node5" class="node">
 <title>Node4</title>
-<g id="a_node5"><a xlink:href="classmkr_1_1renderer.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="126,-76.5 126,-95.5 209,-95.5 209,-76.5 126,-76.5"/>
-<text text-anchor="middle" x="167.5" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::renderer</text>
+<g id="a_node5"><a xlink:href="classmkr_1_1input__manager.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="109.5,-76.5 109.5,-95.5 225.5,-95.5 225.5,-76.5 109.5,-76.5"/>
+<text text-anchor="middle" x="167.5" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::input_manager</text>
 </a>
 </g>
 </g>
 <!-- Node0&#45;&gt;Node4 -->
 <g id="edge4" class="edge">
 <title>Node0&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M72.34,-99.3C89.29,-96.91 108.98,-94.13 125.96,-91.73"/>
+<path fill="none" stroke="midnightblue" d="M72.09,-99.34C83.8,-97.68 96.83,-95.84 109.38,-94.07"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="71.6,-95.87 62.18,-100.74 72.58,-102.8 71.6,-95.87"/>
 </g>
 <!-- Node5 -->

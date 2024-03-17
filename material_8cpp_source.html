@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>mkr_engine: src/graphics/material.cpp Source File</title>
+<title>mkr_engine: src/graphics/material/material.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li><li class="navelem"><a class="el" href="dir_197fd57399807dedf8b39125c6572e99.html">material</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -69,24 +69,18 @@ $(function() {
 <div class="title">material.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="material_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="material_8h.html">graphics/material.h</a>&quot;</span></div>
+<a href="material_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="material_8h.html">graphics/material/material.h</a>&quot;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classmkr_1_1material.html#a2f7c69a2cdbefaab4450b7d643b61d34">material::enable_lights_</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    colour <a class="code" href="classmkr_1_1material.html#ad6544d66680cfb0a5feaf0eb82e4b264">material::ambient_colour_</a> = colour::constexpr_dark_grey();</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    shader_program* <a class="code" href="classmkr_1_1material.html#a1ff071cb276021548aa7cecbaec8c251">material::gshader_</a>;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    shader_program* <a class="code" href="classmkr_1_1material.html#a0d8a0a09b8e3fea52e35046cc6c887fb">material::lshader_</a>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    shader_program* <a class="code" href="classmkr_1_1material.html#a6b14919e8f66828511e379c6b14f38a0">material::sshader_</a>;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    std::vector&lt;shader_program*&gt; <a class="code" href="classmkr_1_1material.html#a5b30e8aba3a1fc3e71dfd932b7a52ac9">material::pshaders_</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
-<div class="ttc" id="aclassmkr_1_1material_html_a0d8a0a09b8e3fea52e35046cc6c887fb"><div class="ttname"><a href="classmkr_1_1material.html#a0d8a0a09b8e3fea52e35046cc6c887fb">mkr::material::lshader_</a></div><div class="ttdeci">static shader_program * lshader_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00017">material.h:17</a></div></div>
-<div class="ttc" id="aclassmkr_1_1material_html_a1ff071cb276021548aa7cecbaec8c251"><div class="ttname"><a href="classmkr_1_1material.html#a1ff071cb276021548aa7cecbaec8c251">mkr::material::gshader_</a></div><div class="ttdeci">static shader_program * gshader_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00017">material.h:17</a></div></div>
-<div class="ttc" id="aclassmkr_1_1material_html_a2f7c69a2cdbefaab4450b7d643b61d34"><div class="ttname"><a href="classmkr_1_1material.html#a2f7c69a2cdbefaab4450b7d643b61d34">mkr::material::enable_lights_</a></div><div class="ttdeci">static bool enable_lights_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00015">material.h:15</a></div></div>
-<div class="ttc" id="aclassmkr_1_1material_html_a5b30e8aba3a1fc3e71dfd932b7a52ac9"><div class="ttname"><a href="classmkr_1_1material.html#a5b30e8aba3a1fc3e71dfd932b7a52ac9">mkr::material::pshaders_</a></div><div class="ttdeci">static std::vector&lt; shader_program * &gt; pshaders_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00018">material.h:18</a></div></div>
-<div class="ttc" id="aclassmkr_1_1material_html_a6b14919e8f66828511e379c6b14f38a0"><div class="ttname"><a href="classmkr_1_1material.html#a6b14919e8f66828511e379c6b14f38a0">mkr::material::sshader_</a></div><div class="ttdeci">static shader_program * sshader_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00017">material.h:17</a></div></div>
-<div class="ttc" id="aclassmkr_1_1material_html_ad6544d66680cfb0a5feaf0eb82e4b264"><div class="ttname"><a href="classmkr_1_1material.html#ad6544d66680cfb0a5feaf0eb82e4b264">mkr::material::ambient_colour_</a></div><div class="ttdeci">static colour ambient_colour_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00016">material.h:16</a></div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    shader_program* <a class="code" href="classmkr_1_1material.html#ad2f7bdd6e381175da6aca200fb726c14">material::geometry_shader_</a>;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    shader_program* <a class="code" href="classmkr_1_1material.html#a61d1dd0c97915c693a1c1a284b748060">material::light_shader_</a>;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    std::vector&lt;shader_program*&gt; <a class="code" href="classmkr_1_1material.html#ab7dda89afb9f70c97ad6ed4954e559d9">material::post_proc_shaders_</a>;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
+<div class="ttc" id="aclassmkr_1_1material_html_a61d1dd0c97915c693a1c1a284b748060"><div class="ttname"><a href="classmkr_1_1material.html#a61d1dd0c97915c693a1c1a284b748060">mkr::material::light_shader_</a></div><div class="ttdeci">static shader_program * light_shader_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00018">material.h:18</a></div></div>
+<div class="ttc" id="aclassmkr_1_1material_html_ab7dda89afb9f70c97ad6ed4954e559d9"><div class="ttname"><a href="classmkr_1_1material.html#ab7dda89afb9f70c97ad6ed4954e559d9">mkr::material::post_proc_shaders_</a></div><div class="ttdeci">static std::vector&lt; shader_program * &gt; post_proc_shaders_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00019">material.h:19</a></div></div>
+<div class="ttc" id="aclassmkr_1_1material_html_ad2f7bdd6e381175da6aca200fb726c14"><div class="ttname"><a href="classmkr_1_1material.html#ad2f7bdd6e381175da6aca200fb726c14">mkr::material::geometry_shader_</a></div><div class="ttdeci">static shader_program * geometry_shader_</div><div class="ttdef"><b>Definition:</b> <a href="material_8h_source.html#l00017">material.h:17</a></div></div>
 <div class="ttc" id="amaterial_8h_html"><div class="ttname"><a href="material_8h.html">material.h</a></div></div>
-<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00009">application.cpp:9</a></div></div>
+<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

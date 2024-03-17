@@ -1,10 +1,12 @@
-<map id="src/graphics/material.h" name="src/graphics/material.h">
-<area shape="rect" id="node1" title=" " alt="" coords="442,5,613,32"/>
-<area shape="rect" id="node2" href="$asset__loader_8h.html" title=" " alt="" coords="458,80,597,121"/>
-<area shape="rect" id="node6" href="$material_8cpp.html" title=" " alt="" coords="621,87,807,114"/>
-<area shape="rect" id="node7" href="$renderer_8h.html" title=" " alt="" coords="258,87,429,114"/>
-<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="250,169,415,211"/>
-<area shape="rect" id="node4" href="$asset__loader_8cpp.html" title=" " alt="" coords="650,169,789,211"/>
-<area shape="rect" id="node5" href="$renderer_8cpp.html" title=" " alt="" coords="440,177,625,203"/>
-<area shape="rect" id="node8" href="$application_8cpp.html" title=" " alt="" coords="5,177,225,203"/>
+<map id="src/graphics/material/material.h" name="src/graphics/material/material.h">
+<area shape="rect" id="node1" title=" " alt="" coords="267,5,426,47"/>
+<area shape="rect" id="node2" href="$render__mesh_8h.html" title=" " alt="" coords="90,95,254,136"/>
+<area shape="rect" id="node4" href="$graphics__renderer_8h.html" title=" " alt="" coords="242,184,401,225"/>
+<area shape="rect" id="node8" href="$asset__loader_8h.html" title=" " alt="" coords="425,184,593,225"/>
+<area shape="rect" id="node10" href="$material_8cpp.html" title=" " alt="" coords="410,95,569,136"/>
+<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="5,273,171,315"/>
+<area shape="rect" id="node7" href="$scene_8cpp.html" title=" " alt="" coords="65,191,217,218"/>
+<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="195,281,415,307"/>
+<area shape="rect" id="node6" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="439,273,609,315"/>
+<area shape="rect" id="node9" href="$asset__loader_8cpp.html" title=" " alt="" coords="633,273,815,315"/>
 </map>

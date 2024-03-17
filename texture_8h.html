@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>mkr_engine: src/graphics/texture.h File Reference</title>
+<title>mkr_engine: src/graphics/texture/texture.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li><li class="navelem"><a class="el" href="dir_b4c964e5db30d266dfe13cf364455343.html">texture</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -78,11 +78,11 @@ $(function() {
 <code>#include &lt;SDL2/SDL_image.h&gt;</code><br />
 <code>#include &lt;GL/glew.h&gt;</code><br />
 <code>#include &lt;maths/maths_util.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="pixel__format_8h_source.html">graphics/pixel_format.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="pixel__format_8h_source.html">graphics/texture/pixel_format.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for texture.h:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="texture_8h__incl.svg" width="100%" height="440"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="texture_8h__incl.svg" width="100%" height="462"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -112,7 +112,7 @@ Namespaces</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:a74772d000a9dee6b4f8f94fc45e9d5e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1">mkr::texture_unit</a> { <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a3e73636b1d3567f3e4554e27f48c2e4c">mkr::texture_skybox</a>
-, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a8ad2e117b9fb826e8e45bf395a87b564">mkr::texture_albedo</a>
+, <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a279c221a440a6e199736a992a2e13873">mkr::texture_diffuse</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a2e6f41bb29037dc80504b943a03a37f5">mkr::texture_normal</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a77f77f76d87adf102db0c97761a32f89">mkr::texture_specular</a>
 , <br />
@@ -121,7 +121,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1ab5e15f29cadab8f1f8081341bff5f3f0">mkr::texture_frag_position</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a95f748d4b1ef941454f52af4ecee820b">mkr::texture_frag_normal</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1acb1b7da88a13e78d6aea30c83d0ca244">mkr::texture_frag_albedo</a>
+&#160;&#160;<a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1afe46177cc5a88a581cf68ce5317c7be2">mkr::texture_frag_diffuse</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a78ab070005550fa9389ab539d705e8e6">mkr::texture_frag_specular</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a31365efb3f17ef94ebed82d6d78d235c">mkr::texture_frag_gloss</a>
 , <a class="el" href="namespacemkr.html#a74772d000a9dee6b4f8f94fc45e9d5e1a9bf1291d9a8e08e853c51eb192817f86">mkr::texture_light_diffuse</a>

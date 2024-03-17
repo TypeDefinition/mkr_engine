@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>mkr_engine: src/graphics/pixel_format.h Source File</title>
+<title>mkr_engine: src/graphics/texture/pixel_format.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_560415a5d2bc4999842279f4fc1debef.html">graphics</a></li><li class="navelem"><a class="el" href="dir_b4c964e5db30d266dfe13cf364455343.html">texture</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -270,15 +270,14 @@ $(function() {
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                <span class="keywordflow">default</span>:</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;invalid sized format&quot;</span>);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                    <span class="keywordflow">return</span> <a class="code" href="namespacemkr.html#a9354e34d9d79843b494a892b06f6b58da7082a31b8759c9d59795876351ec63aa">base_format::rgba</a>;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            };</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    };</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            };</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    };</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;}</div>
 <div class="ttc" id="aclassmkr_1_1pixel__format_html"><div class="ttname"><a href="classmkr_1_1pixel__format.html">mkr::pixel_format</a></div><div class="ttdef"><b>Definition:</b> <a href="pixel__format_8h_source.html#l00097">pixel_format.h:97</a></div></div>
 <div class="ttc" id="aclassmkr_1_1pixel__format_html_a0806d5c8dba9555cd9f4e42aa194bcbc"><div class="ttname"><a href="classmkr_1_1pixel__format.html#a0806d5c8dba9555cd9f4e42aa194bcbc">mkr::pixel_format::pixel_format</a></div><div class="ttdeci">pixel_format()=delete</div></div>
 <div class="ttc" id="aclassmkr_1_1pixel__format_html_ac743651276db5fc5b05dbb0cea475fcc"><div class="ttname"><a href="classmkr_1_1pixel__format.html#ac743651276db5fc5b05dbb0cea475fcc">mkr::pixel_format::sized_to_base</a></div><div class="ttdeci">static base_format sized_to_base(sized_format _format)</div><div class="ttdef"><b>Definition:</b> <a href="pixel__format_8h_source.html#l00101">pixel_format.h:101</a></div></div>
-<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00009">application.cpp:9</a></div></div>
+<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="anamespacemkr_html_a52701c5d62bfbb1573e954a1606e0ac5"><div class="ttname"><a href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5">mkr::sized_format</a></div><div class="ttdeci">sized_format</div><div class="ttdef"><b>Definition:</b> <a href="pixel__format_8h_source.html#l00007">pixel_format.h:7</a></div></div>
 <div class="ttc" id="anamespacemkr_html_a52701c5d62bfbb1573e954a1606e0ac5a064ca6097e909ada0f88c5f383c5e022"><div class="ttname"><a href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5a064ca6097e909ada0f88c5f383c5e022">mkr::sized_format::depth_component32f</a></div><div class="ttdeci">@ depth_component32f</div></div>
 <div class="ttc" id="anamespacemkr_html_a52701c5d62bfbb1573e954a1606e0ac5a08f96498f8fd4789c31474f66fcafe9f"><div class="ttname"><a href="namespacemkr.html#a52701c5d62bfbb1573e954a1606e0ac5a08f96498f8fd4789c31474f66fcafe9f">mkr::sized_format::rg8_snorm</a></div><div class="ttdeci">@ rg8_snorm</div></div>

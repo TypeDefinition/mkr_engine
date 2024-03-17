@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classmkr_1_1shader__uniform.html" title=" " alt="" coords="5,5,164,47"/>
+<area shape="rect" id="node1" href="$classmkr_1_1shader__program.html" title=" " alt="" coords="5,107,168,133"/>
+<area shape="rect" id="node2" href="$classmkr_1_1forward__shader.html" title=" " alt="" coords="223,5,380,32"/>
+<area shape="rect" id="node3" href="$classmkr_1_1geometry__shader.html" title=" " alt="" coords="216,56,387,83"/>
+<area shape="rect" id="node4" href="$classmkr_1_1light__shader.html" title=" " alt="" coords="233,107,369,133"/>
+<area shape="rect" id="node5" href="$classmkr_1_1post__proc__shader.html" title=" " alt="" coords="216,157,387,184"/>
+<area shape="rect" id="node6" href="$classmkr_1_1skybox__shader.html" title=" " alt="" coords="225,208,378,235"/>
 </map>

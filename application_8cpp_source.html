@@ -74,96 +74,101 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="application_8h.html">application/application.h</a>&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sdl__message__pump_8h.html">application/sdl_message_pump.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="input__manager_8h.html">input/input_manager.h</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="renderer_8h.html">graphics/renderer.h</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="scene__manager_8h.html">scene/scene_manager.h</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="namespacemkr.html">    9</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">   10</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">application::run</a>() {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <a class="code" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">init</a>();</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">start</a>();</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">update</a>();</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">stop</a>();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">exit</a>();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    }</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">   18</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">application::init</a>() {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="comment">// Initialise logging first to allow systems to start logging.</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        log::init();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="comment">// Message Pump</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        sdl_message_pump::instance().init();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="comment">// Systems</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        input_manager::instance().init();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        renderer::instance().init();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        scene_manager::instance().init();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">   31</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">application::start</a>() {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">// Message Pump</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        sdl_message_pump::instance().start();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="comment">// Systems</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        renderer::instance().start();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">   39</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">application::update</a>() {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        uint64_t prev_frame_time = 0;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        uint64_t curr_frame_time = SDL_GetPerformanceCounter();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3">run_</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">while</span> (<a class="code" href="classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3">run_</a>) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            prev_frame_time = curr_frame_time;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            curr_frame_time = SDL_GetPerformanceCounter();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">delta_time_</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(curr_frame_time - prev_frame_time) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceFrequency());</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classmkr_1_1application.html#abd92c01be0e30c6f86117d894d81f66b">time_elapsed_</a> += <a class="code" href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">delta_time_</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="comment">// Systems</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            input_manager::instance().update();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            scene_manager::instance().update();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            renderer::instance().update();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">   57</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">application::stop</a>() {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">// Message Pump</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        sdl_message_pump::instance().stop();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">   62</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">application::exit</a>() {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">// Exit Message Pump</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        sdl_message_pump::instance().exit(); <span class="comment">// Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">// Exit systems.</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        input_manager::instance().exit();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        renderer::instance().exit();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        scene_manager::instance().exit();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">// Destroy Message Pump</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        sdl_message_pump::destroy();</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="graphics__renderer_8h.html">graphics/renderer/graphics_renderer.h</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="asset__loader_8h.html">graphics/asset_loader/asset_loader.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="scene__manager_8h.html">scene/scene_manager.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="namespacemkr.html">   10</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">   11</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">application::run</a>() {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">init</a>();</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">start</a>();</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">update</a>();</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">stop</a>();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">exit</a>();</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">   19</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">application::init</a>() {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="comment">// Initialise logging first to allow systems to start logging.</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        log::init();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">// Message Pump</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        sdl_message_pump::instance().init();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">// Systems</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        input_manager::instance().init();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        asset_loader::instance().init();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        graphics_renderer::instance().init();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        scene_manager::instance().init();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">   33</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">application::start</a>() {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">// Message Pump</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        sdl_message_pump::instance().start();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment">// Systems</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        graphics_renderer::instance().start();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">   41</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">application::update</a>() {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        uint64_t prev_frame_time = 0;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        uint64_t curr_frame_time = SDL_GetPerformanceCounter();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3">run_</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">while</span> (<a class="code" href="classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3">run_</a>) {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            prev_frame_time = curr_frame_time;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            curr_frame_time = SDL_GetPerformanceCounter();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">delta_time_</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(curr_frame_time - prev_frame_time) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(SDL_GetPerformanceFrequency());</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <a class="code" href="classmkr_1_1application.html#abd92c01be0e30c6f86117d894d81f66b">time_elapsed_</a> += <a class="code" href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">delta_time_</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="comment">// Systems</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            input_manager::instance().update();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            scene_manager::instance().update();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            graphics_renderer::instance().update();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">   59</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">application::stop</a>() {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// Message Pump</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        sdl_message_pump::instance().stop();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">   64</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">application::exit</a>() {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="comment">// Exit Message Pump</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        sdl_message_pump::instance().exit(); <span class="comment">// Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">// Exit systems.</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        input_manager::instance().exit();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        asset_loader::instance().exit();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        graphics_renderer::instance().exit();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        scene_manager::instance().exit();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">// Destroy systems.</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        input_manager::destroy();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        renderer::destroy();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        scene_manager::destroy();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="comment">// Exit logging last to allow systems to keep logging till the end.</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        log::exit();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <span class="comment">// mkr</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">// Destroy Message Pump</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        sdl_message_pump::destroy();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="comment">// Destroy systems.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        input_manager::destroy();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        asset_loader::destroy();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        graphics_renderer::destroy();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        scene_manager::destroy();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="comment">// Exit logging last to allow systems to keep logging till the end.</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        log::exit();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;} <span class="comment">// mkr</span></div>
 <div class="ttc" id="aapplication_8h_html"><div class="ttname"><a href="application_8h.html">application.h</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_a18861413cf32e4cc41fe403c07def095"><div class="ttname"><a href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">mkr::application::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00018">application.cpp:18</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_a3ab088525585026e3f79d62aa53a5ec8"><div class="ttname"><a href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">mkr::application::exit</a></div><div class="ttdeci">void exit()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00062">application.cpp:62</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_a4e480a7865b221bf4b52bbc6de240e7d"><div class="ttname"><a href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">mkr::application::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00057">application.cpp:57</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_a786aedb13ed6cad792216356dd61d13c"><div class="ttname"><a href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">mkr::application::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
+<div class="ttc" id="aasset__loader_8h_html"><div class="ttname"><a href="asset__loader_8h.html">asset_loader.h</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_a18861413cf32e4cc41fe403c07def095"><div class="ttname"><a href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">mkr::application::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00019">application.cpp:19</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_a3ab088525585026e3f79d62aa53a5ec8"><div class="ttname"><a href="classmkr_1_1application.html#a3ab088525585026e3f79d62aa53a5ec8">mkr::application::exit</a></div><div class="ttdeci">void exit()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00064">application.cpp:64</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_a4e480a7865b221bf4b52bbc6de240e7d"><div class="ttname"><a href="classmkr_1_1application.html#a4e480a7865b221bf4b52bbc6de240e7d">mkr::application::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00059">application.cpp:59</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_a786aedb13ed6cad792216356dd61d13c"><div class="ttname"><a href="classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c">mkr::application::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00011">application.cpp:11</a></div></div>
 <div class="ttc" id="aclassmkr_1_1application_html_a866ef9c16ef2e48bb6b5f21d8f39edc3"><div class="ttname"><a href="classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3">mkr::application::run_</a></div><div class="ttdeci">std::atomic_bool run_</div><div class="ttdoc">A flag to exit the game loop. Set to false to quit the application.</div><div class="ttdef"><b>Definition:</b> <a href="application_8h_source.html#l00017">application.h:17</a></div></div>
 <div class="ttc" id="aclassmkr_1_1application_html_abd92c01be0e30c6f86117d894d81f66b"><div class="ttname"><a href="classmkr_1_1application.html#abd92c01be0e30c6f86117d894d81f66b">mkr::application::time_elapsed_</a></div><div class="ttdeci">float time_elapsed_</div><div class="ttdoc">The duration that has passed since the application started.</div><div class="ttdef"><b>Definition:</b> <a href="application_8h_source.html#l00015">application.h:15</a></div></div>
 <div class="ttc" id="aclassmkr_1_1application_html_ac8e3ce23e342f9a3754e626f739bcc34"><div class="ttname"><a href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">mkr::application::delta_time_</a></div><div class="ttdeci">float delta_time_</div><div class="ttdoc">The duration taken for the current frame.</div><div class="ttdef"><b>Definition:</b> <a href="application_8h_source.html#l00013">application.h:13</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_add826604c63ca6cf3bdc9a87fe7c93ac"><div class="ttname"><a href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">mkr::application::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00031">application.cpp:31</a></div></div>
-<div class="ttc" id="aclassmkr_1_1application_html_afbc060074a726b69e55c650a93d68bcd"><div class="ttname"><a href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">mkr::application::update</a></div><div class="ttdeci">void update()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00039">application.cpp:39</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_add826604c63ca6cf3bdc9a87fe7c93ac"><div class="ttname"><a href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">mkr::application::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00033">application.cpp:33</a></div></div>
+<div class="ttc" id="aclassmkr_1_1application_html_afbc060074a726b69e55c650a93d68bcd"><div class="ttname"><a href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">mkr::application::update</a></div><div class="ttdeci">void update()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00041">application.cpp:41</a></div></div>
+<div class="ttc" id="agraphics__renderer_8h_html"><div class="ttname"><a href="graphics__renderer_8h.html">graphics_renderer.h</a></div></div>
 <div class="ttc" id="ainput__manager_8h_html"><div class="ttname"><a href="input__manager_8h.html">input_manager.h</a></div></div>
-<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00009">application.cpp:9</a></div></div>
-<div class="ttc" id="arenderer_8h_html"><div class="ttname"><a href="renderer_8h.html">renderer.h</a></div></div>
+<div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="ascene__manager_8h_html"><div class="ttname"><a href="scene__manager_8h.html">scene_manager.h</a></div></div>
 <div class="ttc" id="asdl__message__pump_8h_html"><div class="ttname"><a href="sdl__message__pump_8h.html">sdl_message_pump.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

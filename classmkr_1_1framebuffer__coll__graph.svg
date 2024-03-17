@@ -42,7 +42,7 @@
 <title>Node2</title>
 <g id="a_node2"><a xlink:title=" ">
 <polygon fill="white" stroke="#bfbfbf" points="0,-276 0,-333 169,-333 169,-276 0,-276"/>
-<text text-anchor="middle" x="84.5" y="-321" font-family="Helvetica,sans-Serif" font-size="10.00">shared_ptr&lt; mkr::texture_2d &gt;</text>
+<text text-anchor="middle" x="84.5" y="-321" font-family="Helvetica,sans-Serif" font-size="10.00">unique_ptr&lt; mkr::texture_2d &gt;</text>
 <polyline fill="none" stroke="#bfbfbf" points="0,-314 169,-314 "/>
 <text text-anchor="middle" x="84.5" y="-302" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
 <polyline fill="none" stroke="#bfbfbf" points="0,-295 169,-295 "/>
@@ -62,7 +62,7 @@
 <title>Node3</title>
 <g id="a_node3"><a xlink:title=" ">
 <polygon fill="white" stroke="#bfbfbf" points="187,-270.5 187,-338.5 334,-338.5 334,-270.5 187,-270.5"/>
-<text text-anchor="start" x="195" y="-326.5" font-family="Helvetica,sans-Serif" font-size="10.00">vector&lt; std::shared</text>
+<text text-anchor="start" x="195" y="-326.5" font-family="Helvetica,sans-Serif" font-size="10.00">vector&lt; std::unique</text>
 <text text-anchor="middle" x="260.5" y="-315.5" font-family="Helvetica,sans-Serif" font-size="10.00">_ptr&lt; mkr::texture_2d &gt; &gt;</text>
 <polyline fill="none" stroke="#bfbfbf" points="187,-308.5 334,-308.5 "/>
 <text text-anchor="middle" x="260.5" y="-296.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>

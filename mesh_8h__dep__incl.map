@@ -1,13 +1,13 @@
 <map id="src/graphics/mesh/mesh.h" name="src/graphics/mesh/mesh.h">
-<area shape="rect" id="node1" title=" " alt="" coords="264,5,456,32"/>
-<area shape="rect" id="node2" href="$render__mesh_8h.html" title=" " alt="" coords="34,169,198,211"/>
-<area shape="rect" id="node8" href="$asset__loader_8h.html" title=" " alt="" coords="435,259,603,300"/>
-<area shape="rect" id="node10" href="$skybox_8h.html" title=" " alt="" coords="284,80,437,121"/>
-<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="56,348,222,389"/>
-<area shape="rect" id="node4" href="$graphics__renderer_8h.html" title=" " alt="" coords="252,259,410,300"/>
-<area shape="rect" id="node7" href="$scene_8cpp.html" title=" " alt="" coords="24,266,176,293"/>
-<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="440,355,660,382"/>
-<area shape="rect" id="node6" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="246,348,416,389"/>
-<area shape="rect" id="node9" href="$asset__loader_8cpp.html" title=" " alt="" coords="684,348,866,389"/>
-<area shape="rect" id="node11" href="$camera_8h.html" title=" " alt="" coords="230,177,413,203"/>
+<area shape="rect" id="node1" title=" " alt="" coords="191,5,383,32"/>
+<area shape="rect" id="node2" href="$render__mesh_8h.html" title=" " alt="" coords="209,169,373,211"/>
+<area shape="rect" id="node8" href="$skybox_8h.html" title=" " alt="" coords="400,80,553,121"/>
+<area shape="rect" id="node10" href="$mesh__builder_8h.html" title=" " alt="" coords="133,80,313,121"/>
+<area shape="rect" id="node11" href="$mesh__manager_8h.html" title=" " alt="" coords="5,169,185,211"/>
+<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="98,348,263,389"/>
+<area shape="rect" id="node4" href="$graphics__renderer_8h.html" title=" " alt="" coords="432,259,591,300"/>
+<area shape="rect" id="node7" href="$scene_8cpp.html" title=" " alt="" coords="205,266,357,293"/>
+<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="300,355,520,382"/>
+<area shape="rect" id="node6" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="544,348,713,389"/>
+<area shape="rect" id="node9" href="$camera_8h.html" title=" " alt="" coords="397,177,580,203"/>
 </map>

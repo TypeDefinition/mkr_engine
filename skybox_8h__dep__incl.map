@@ -1,11 +1,9 @@
 <map id="src/graphics/lighting/skybox.h" name="src/graphics/lighting/skybox.h">
-<area shape="rect" id="node1" title=" " alt="" coords="241,5,394,47"/>
-<area shape="rect" id="node2" href="$camera_8h.html" title=" " alt="" coords="162,95,345,121"/>
-<area shape="rect" id="node8" href="$asset__loader_8h.html" title=" " alt="" coords="416,169,584,211"/>
-<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="75,259,240,300"/>
-<area shape="rect" id="node4" href="$graphics__renderer_8h.html" title=" " alt="" coords="233,169,391,211"/>
-<area shape="rect" id="node7" href="$scene_8cpp.html" title=" " alt="" coords="5,177,157,203"/>
-<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="458,266,678,293"/>
-<area shape="rect" id="node6" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="265,259,434,300"/>
-<area shape="rect" id="node9" href="$asset__loader_8cpp.html" title=" " alt="" coords="702,259,885,300"/>
+<area shape="rect" id="node1" title=" " alt="" coords="203,5,357,47"/>
+<area shape="rect" id="node2" href="$camera_8h.html" title=" " alt="" coords="189,95,371,121"/>
+<area shape="rect" id="node3" href="$game__scene_8cpp.html" title=" " alt="" coords="5,259,171,300"/>
+<area shape="rect" id="node4" href="$graphics__renderer_8h.html" title=" " alt="" coords="201,169,359,211"/>
+<area shape="rect" id="node7" href="$scene_8cpp.html" title=" " alt="" coords="384,177,536,203"/>
+<area shape="rect" id="node5" href="$application_8cpp.html" title=" " alt="" coords="195,266,415,293"/>
+<area shape="rect" id="node6" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="439,259,609,300"/>
 </map>

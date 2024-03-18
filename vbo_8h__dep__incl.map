@@ -1,15 +1,15 @@
 <map id="src/graphics/mesh/vbo.h" name="src/graphics/mesh/vbo.h">
-<area shape="rect" id="node1" title=" " alt="" coords="270,5,450,32"/>
-<area shape="rect" id="node2" href="$vao_8h.html" title=" " alt="" coords="270,80,450,107"/>
-<area shape="rect" id="node3" href="$mesh_8h.html" title=" " alt="" coords="264,155,456,181"/>
-<area shape="rect" id="node4" href="$render__mesh_8h.html" title=" " alt="" coords="34,319,198,360"/>
-<area shape="rect" id="node10" href="$asset__loader_8h.html" title=" " alt="" coords="435,408,603,449"/>
-<area shape="rect" id="node12" href="$skybox_8h.html" title=" " alt="" coords="284,229,437,271"/>
-<area shape="rect" id="node5" href="$game__scene_8cpp.html" title=" " alt="" coords="56,497,222,539"/>
-<area shape="rect" id="node6" href="$graphics__renderer_8h.html" title=" " alt="" coords="252,408,410,449"/>
-<area shape="rect" id="node9" href="$scene_8cpp.html" title=" " alt="" coords="24,415,176,442"/>
-<area shape="rect" id="node7" href="$application_8cpp.html" title=" " alt="" coords="440,505,660,531"/>
-<area shape="rect" id="node8" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="246,497,416,539"/>
-<area shape="rect" id="node11" href="$asset__loader_8cpp.html" title=" " alt="" coords="684,497,866,539"/>
-<area shape="rect" id="node13" href="$camera_8h.html" title=" " alt="" coords="230,326,413,353"/>
+<area shape="rect" id="node1" title=" " alt="" coords="197,5,377,32"/>
+<area shape="rect" id="node2" href="$vao_8h.html" title=" " alt="" coords="197,80,377,107"/>
+<area shape="rect" id="node3" href="$mesh_8h.html" title=" " alt="" coords="191,155,383,181"/>
+<area shape="rect" id="node4" href="$render__mesh_8h.html" title=" " alt="" coords="209,319,373,360"/>
+<area shape="rect" id="node10" href="$skybox_8h.html" title=" " alt="" coords="400,229,553,271"/>
+<area shape="rect" id="node12" href="$mesh__builder_8h.html" title=" " alt="" coords="133,229,313,271"/>
+<area shape="rect" id="node13" href="$mesh__manager_8h.html" title=" " alt="" coords="5,319,185,360"/>
+<area shape="rect" id="node5" href="$game__scene_8cpp.html" title=" " alt="" coords="98,497,263,539"/>
+<area shape="rect" id="node6" href="$graphics__renderer_8h.html" title=" " alt="" coords="432,408,591,449"/>
+<area shape="rect" id="node9" href="$scene_8cpp.html" title=" " alt="" coords="205,415,357,442"/>
+<area shape="rect" id="node7" href="$application_8cpp.html" title=" " alt="" coords="300,505,520,531"/>
+<area shape="rect" id="node8" href="$graphics__renderer_8cpp.html" title=" " alt="" coords="544,497,713,539"/>
+<area shape="rect" id="node11" href="$camera_8h.html" title=" " alt="" coords="397,326,580,353"/>
 </map>

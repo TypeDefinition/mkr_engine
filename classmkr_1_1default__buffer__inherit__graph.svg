@@ -33,9 +33,9 @@
 <polygon fill="white" stroke="black" points="0,-138.5 0,-382.5 183,-382.5 183,-138.5 0,-138.5"/>
 <text text-anchor="middle" x="91.5" y="-370.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::framebuffer</text>
 <polyline fill="none" stroke="black" points="0,-363.5 183,-363.5 "/>
-<text text-anchor="start" x="8" y="-351.5" font-family="Helvetica,sans-Serif" font-size="10.00"># colour_attachments_</text>
-<text text-anchor="start" x="8" y="-340.5" font-family="Helvetica,sans-Serif" font-size="10.00"># depth_stencil_attachment_</text>
-<text text-anchor="start" x="8" y="-329.5" font-family="Helvetica,sans-Serif" font-size="10.00"># handle_</text>
+<text text-anchor="start" x="8" y="-351.5" font-family="Helvetica,sans-Serif" font-size="10.00"># handle_</text>
+<text text-anchor="start" x="8" y="-340.5" font-family="Helvetica,sans-Serif" font-size="10.00"># colour_attachments_</text>
+<text text-anchor="start" x="8" y="-329.5" font-family="Helvetica,sans-Serif" font-size="10.00"># depth_stencil_attachment_</text>
 <polyline fill="none" stroke="black" points="0,-322.5 183,-322.5 "/>
 <text text-anchor="start" x="8" y="-310.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ ~framebuffer()</text>
 <text text-anchor="start" x="8" y="-299.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ is_complete()</text>

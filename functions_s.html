@@ -64,9 +64,6 @@ $(function() {
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_s"></a>- s -</h3><ul>
-<li>s_buff_
-: <a class="el" href="classmkr_1_1graphics__renderer.html#a434e6d0aa77db02218b1194438804022">mkr::graphics_renderer</a>
-</li>
 <li>scale()
 : <a class="el" href="classmkr_1_1transform.html#a3f155cba206702633cb530c35cc1904a">mkr::transform</a>
 </li>
@@ -125,7 +122,7 @@ $(function() {
 : <a class="el" href="classmkr_1_1vbo.html#ae645880b2470c1f2341fdbadfe058a1b">mkr::vbo</a>
 </li>
 <li>set_draw_colour_attachment()
-: <a class="el" href="classmkr_1_1framebuffer.html#ad1648ff9597bb11211f9081a19d8af98">mkr::framebuffer</a>
+: <a class="el" href="classmkr_1_1framebuffer.html#ae752f08814b3b0a724c221ee6c9a3559">mkr::framebuffer</a>
 </li>
 <li>set_draw_colour_attachment_all()
 : <a class="el" href="classmkr_1_1default__buffer.html#a012bf1ecbc13ba3988ecab6ba969ecc0">mkr::default_buffer</a>
@@ -150,7 +147,7 @@ $(function() {
 : <a class="el" href="classmkr_1_1light.html#aeab559ebaaeace55566eda0f1de164ba">mkr::light</a>
 </li>
 <li>set_read_colour_attachment()
-: <a class="el" href="classmkr_1_1framebuffer.html#aea17eab71d4ea21a59476ea70d879a22">mkr::framebuffer</a>
+: <a class="el" href="classmkr_1_1framebuffer.html#a958085cd70092cc52216322f0bbb81ba">mkr::framebuffer</a>
 </li>
 <li>set_relative_mouse()
 : <a class="el" href="classmkr_1_1input__manager.html#af503387f2abe5c3b8354314ba8a7339c">mkr::input_manager</a>
@@ -179,20 +176,17 @@ $(function() {
 <li>shader_
 : <a class="el" href="classmkr_1_1skybox.html#a1000d3b9dd0012fc18c6f0ea77c07dde">mkr::skybox</a>
 </li>
+<li>shader_manager()
+: <a class="el" href="classmkr_1_1shader__manager.html#a48ae7be449dec16d1d32952463870ec7">mkr::shader_manager</a>
+</li>
 <li>shader_program()
 : <a class="el" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">mkr::shader_program</a>
 </li>
-<li>shader_programs_
-: <a class="el" href="classmkr_1_1asset__loader.html#a2c69135568c04b1e7a0174515f641cc0">mkr::asset_loader</a>
-</li>
-<li>shadow_buffer()
-: <a class="el" href="classmkr_1_1shadow__buffer.html#a8d529fe763e97d1a087f594f083949cd">mkr::shadow_buffer</a>
+<li>shaders_
+: <a class="el" href="classmkr_1_1shader__manager.html#a95ef63e9f9cfce5d4cb8bb01b2959c60">mkr::shader_manager</a>
 </li>
 <li>singleton&lt; application &gt;
 : <a class="el" href="classmkr_1_1application.html#aace90ff6a5326958a4676752dc88003e">mkr::application</a>
-</li>
-<li>singleton&lt; asset_loader &gt;
-: <a class="el" href="classmkr_1_1asset__loader.html#a20daea81dde0d9a300d02bcc36fa2f93">mkr::asset_loader</a>
 </li>
 <li>singleton&lt; graphics_renderer &gt;
 : <a class="el" href="classmkr_1_1graphics__renderer.html#af62551d384ed0da279e6d075daf05341">mkr::graphics_renderer</a>
@@ -200,11 +194,23 @@ $(function() {
 <li>singleton&lt; input_manager &gt;
 : <a class="el" href="classmkr_1_1input__manager.html#a1519d9a8e67a49531dc6d95eda84f600">mkr::input_manager</a>
 </li>
+<li>singleton&lt; material_manager &gt;
+: <a class="el" href="classmkr_1_1material__manager.html#a0ee8ed5758457fde0b35388d9dcda7b1">mkr::material_manager</a>
+</li>
+<li>singleton&lt; mesh_manager &gt;
+: <a class="el" href="classmkr_1_1mesh__manager.html#addcc0e06e5eef9cee9a19bbbfe20cc06">mkr::mesh_manager</a>
+</li>
 <li>singleton&lt; scene_manager &gt;
 : <a class="el" href="classmkr_1_1scene__manager.html#a9a421f4d4c650c79da8c3d1a02494983">mkr::scene_manager</a>
 </li>
 <li>singleton&lt; sdl_message_pump &gt;
 : <a class="el" href="classmkr_1_1sdl__message__pump.html#a24e0eba2dd9776462ae4a253c479c1f9">mkr::sdl_message_pump</a>
+</li>
+<li>singleton&lt; shader_manager &gt;
+: <a class="el" href="classmkr_1_1shader__manager.html#ad078fa131d1b8689735e07795758b0b2">mkr::shader_manager</a>
+</li>
+<li>singleton&lt; texture_manager &gt;
+: <a class="el" href="classmkr_1_1texture__manager.html#a81437260a07e4294a0f64990b297c09e">mkr::texture_manager</a>
 </li>
 <li>sized_to_base()
 : <a class="el" href="classmkr_1_1pixel__format.html#ac743651276db5fc5b05dbb0cea475fcc">mkr::pixel_format</a>
@@ -217,6 +223,10 @@ $(function() {
 </li>
 <li>skybox_shader()
 : <a class="el" href="classmkr_1_1skybox__shader.html#ad434d7a1088a7f6be64559546c3815db">mkr::skybox_shader</a>
+</li>
+<li>specular
+: <a class="el" href="classmkr_1_1geometry__buffer.html#a467d61e8eb9c64589ba555ca2cfca283a8d5e89b5d172040209e89221eb7640a5">mkr::geometry_buffer</a>
+, <a class="el" href="classmkr_1_1light__buffer.html#ac90ccba151b319eabfda95f96c9bf333ae6bf4074a587895ae26ae464d53779b9">mkr::light_buffer</a>
 </li>
 <li>specular_back_
 : <a class="el" href="classmkr_1_1light__buffer.html#ae9896888aa6909fb4892f38e5e42661d">mkr::light_buffer</a>

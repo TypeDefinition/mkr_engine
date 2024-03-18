@@ -24,9 +24,9 @@ namespace mkr {
                 _out[i].transform_ = trans;
                 _out[i].rotation_ = rot;
                 _out[i].position_ = vector3{trans[3][0], trans[3][1], trans[3][2]};
-                _out[i].left_ = quaternion::rotate(vector3::x_axis, rot);
-                _out[i].up_ = quaternion::rotate(vector3::y_axis, rot);
-                _out[i].forward_ = quaternion::rotate(vector3::z_axis, rot);
+                _out[i].left_ = quaternion::rotate(vector3::x_axis(), rot);
+                _out[i].up_ = quaternion::rotate(vector3::y_axis(), rot);
+                _out[i].forward_ = quaternion::rotate(vector3::z_axis(), rot);
             }
         });
         world_.progress(application::instance().delta_time());

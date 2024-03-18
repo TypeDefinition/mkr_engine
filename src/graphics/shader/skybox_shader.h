@@ -16,18 +16,8 @@ namespace mkr {
         };
 
     protected:
-        /**
-         * Assign uniforms to uniform_handles_.
-         */
         void assign_uniforms();
 
-        /**
-         * Assign textures to GL_TEXTURE0 to GL_TEXTUREN.
-         * For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions
-         * that may be used to load uniform variables defined as sampler types.
-         * Loading samplers with any other function will result in a GL_INVALID_OPERATION error.
-         * Thus, we must cast texture_unit to a signed integer.
-         */
         void assign_textures();
 
     public:

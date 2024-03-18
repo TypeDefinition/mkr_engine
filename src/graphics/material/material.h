@@ -17,20 +17,22 @@ namespace mkr {
         static shader_program* geometry_shader_; // Deferred Shading (Shared)
         static shader_program* light_shader_; // Deferred Shading (Shared)
         static std::vector<shader_program*> post_proc_shaders_; // Post-Processing (Shared)
+        static shader_program* shadow_shader_2d_;
+        static shader_program* shadow_shader_cube_;
 
         // Phong Shading
-        colour diffuse_colour_ = colour::white;
-        colour specular_colour_ = colour::white;
-        float gloss_ = 1.0f;
+        colour diffuse_colour_ = colour::white();
+        colour specular_colour_ = colour::white();
+        float gloss_ = 32.0f;
         float displacement_scale_ = 0.02f;
 
         // Textures
-        texture_2d* texture_diffuse_;
-        texture_2d* texture_specular_;
-        texture_2d* texture_gloss_;
-        texture_2d* texture_normal_;
-        texture_2d* texture_displacement_;
-        vector2 texture_offset_ = vector2::zero;
+        texture2d* texture_diffuse_;
+        texture2d* texture_specular_;
+        texture2d* texture_gloss_;
+        texture2d* texture_normal_;
+        texture2d* texture_displacement_;
+        vector2 texture_offset_ = vector2::zero();
         vector2 texture_scale_ = vector2{1.0f, 1.0f};
     };
 }

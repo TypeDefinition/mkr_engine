@@ -1,19 +1,19 @@
 #include "graphics/framebuffer/framebuffer.h"
 
 namespace mkr {
-    texture_2d* framebuffer::get_colour_attachment(int32_t _attachment) {
+    texture* framebuffer::get_colour_attachment(int32_t _attachment) {
         return colour_attachments_[_attachment].get();
     }
 
-    const texture_2d* framebuffer::get_colour_attachment(int32_t _attachment) const {
+    const texture* framebuffer::get_colour_attachment(int32_t _attachment) const {
         return colour_attachments_[_attachment].get();
     }
 
-    texture_2d* framebuffer::get_depth_stencil_attachment() {
+    texture* framebuffer::get_depth_stencil_attachment() {
         return depth_stencil_attachment_.get();
     }
 
-    const texture_2d* framebuffer::get_depth_stencil_attachment() const {
+    const texture* framebuffer::get_depth_stencil_attachment() const {
         return depth_stencil_attachment_.get();
     }
 

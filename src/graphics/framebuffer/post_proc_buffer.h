@@ -4,7 +4,6 @@
 #include "graphics/framebuffer/framebuffer.h"
 
 namespace mkr {
-    // Post-Process Buffer
     class post_proc_buffer : public framebuffer {
     public:
         enum colour_attachments : int32_t {
@@ -14,7 +13,7 @@ namespace mkr {
 
     protected:
         // Similar to lbuffer.
-        std::unique_ptr<texture_2d> composite_back_;
+        std::unique_ptr<texture> composite_back_;
 
     public:
         post_proc_buffer(uint32_t _width, uint32_t _height);

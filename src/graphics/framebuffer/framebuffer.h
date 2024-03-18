@@ -12,23 +12,28 @@ namespace mkr {
     class framebuffer {
     protected:
         GLuint handle_ = 0;
-        std::vector<std::unique_ptr<texture_2d>> colour_attachments_;
-        std::unique_ptr<texture_2d> depth_stencil_attachment_;
+        std::vector<std::unique_ptr<texture>> colour_attachments_;
+        std::unique_ptr<texture> depth_stencil_attachment_;
+        const uint32_t width_, height_;
 
-        framebuffer() = default;
+        framebuffer(uint32_t _width, uint32_t _height) : width_(_width), height_(_height) {}
 
     public:
         virtual ~framebuffer() = default;
 
         bool is_complete() const;
 
-        texture_2d* get_colour_attachment(int32_t _attachment);
+        inline uint32_t width() const { return width_; }
 
-        const texture_2d* get_colour_attachment(int32_t _attachment) const;
+        inline uint32_t height() const { return height_; }
 
-        texture_2d* get_depth_stencil_attachment();
+        texture* get_colour_attachment(int32_t _attachment);
 
-        const texture_2d* get_depth_stencil_attachment() const;
+        const texture* get_colour_attachment(int32_t _attachment) const;
+
+        texture* get_depth_stencil_attachment();
+
+        const texture* get_depth_stencil_attachment() const;
 
         void bind();
 
@@ -42,10 +47,16 @@ namespace mkr {
 
         virtual void set_draw_colour_attachment_all();
 
-        virtual void clear_colour(int32_t _attachment, const colour& _colour = colour::black);
+        virtual void clear_colour(int32_t _attachment, const colour& _colour = colour::black());
 
-        virtual void clear_colour_all(const colour& _colour = colour::black);
+        virtual void clear_colour_all(const colour& _colour = colour::black());
 
         virtual void clear_depth_stencil(float _depth = 1.0f, int32_t _stencil = 0);
+
+        static void bind_default_buffer() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
+
+        static void clear_default_buffer_colour(const colour& _colour = colour::black()) { glClearNamedFramebufferfv(0, GL_COLOR, 0, (GLfloat*)&_colour.r_); }
+
+        static void clear_default_depth_stencil(float _depth = 1.0f, int32_t _stencil = 0) { glClearNamedFramebufferfi(0, GL_DEPTH_STENCIL, 0, _depth, _stencil); }
     };
 }

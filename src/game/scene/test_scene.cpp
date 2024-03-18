@@ -161,7 +161,7 @@ namespace mkr {
     void test_scene::init_systems() {
         world_.system<transform, const player_head>().each([&](transform& _transform, const player_head& _player_head) { head_control_(_transform, _player_head); });
         world_.system<transform, const player_body>().each([&](transform& _transform, const player_body& _player_body) { body_control_(_transform, _player_body); });
-        world_.system<transform, const display>().each([&](transform& _transform, const display& _display) { _transform.rotate(quaternion{vector3::y_axis, 10.0f * application::instance().delta_time() * maths_util::deg2rad}); });
+        world_.system<transform, const display>().each([&](transform& _transform, const display& _display) { _transform.rotate(quaternion{vector3::y_axis(), 10.0f * application::instance().delta_time() * maths_util::deg2rad}); });
 
         world_.system<const root>().each(calculate_transforms);
         world_.system<const local_to_world_component, const camera>().each([](const local_to_world_component& _global_transform, const camera& _camera) { renderer::instance().update_cameras(_global_transform, _camera); });
@@ -217,7 +217,7 @@ namespace mkr {
             float z = std::cos(angle * maths_util::deg2rad);
 
             transform body_trans;
-            body_trans.set_rotation(quaternion{vector3::y_axis, angle * maths_util::deg2rad});
+            body_trans.set_rotation(quaternion{vector3::y_axis(), angle * maths_util::deg2rad});
             body_trans.set_position(11.0f * vector3{float(x), 0.0f, float(z)});
 
             auto body = world_.entity().set<transform>(body_trans).add<player_body>();
@@ -256,7 +256,7 @@ namespace mkr {
 
             transform light_trans;
             light_trans.set_position({0.0f, 15.0f, 0.0f});
-            light_trans.set_rotation(quaternion(vector3::y_axis, angle * maths_util::deg2rad) * quaternion(vector3::x_axis, 30.0f * maths_util::deg2rad));
+            light_trans.set_rotation(quaternion(vector3::y_axis(), angle * maths_util::deg2rad) * quaternion(vector3::x_axis(), 30.0f * maths_util::deg2rad));
             light lt;
             lt.set_mode(light_mode::spot);
             lt.set_power(200.0f);
@@ -278,8 +278,8 @@ namespace mkr {
             trans.set_position({0.0f, 0.0f, -10.0f});
 
             quaternion rotation_x, rotation_y;
-            rotation_x.set_rotation(vector3::x_axis, 45.0f * maths_util::deg2rad);
-            rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
+            rotation_x.set_rotation(vector3::x_axis(), 45.0f * maths_util::deg2rad);
+            rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
             trans.set_rotation(rotation_y * rotation_x);
 
             light lt;

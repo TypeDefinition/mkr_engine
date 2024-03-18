@@ -30,18 +30,18 @@ namespace mkr {
             uniform_handles_[i + uniform::u_light_attenuation_quadratic0] = get_uniform_location("u_lights[" + std::to_string(i) + "].attenuation_quadratic_");
             uniform_handles_[i + uniform::u_light_spotlight_inner_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_inner_cosine_");
             uniform_handles_[i + uniform::u_light_spotlight_outer_cosine0] = get_uniform_location("u_lights[" + std::to_string(i) + "].spotlight_outer_cosine_");
-            uniform_handles_[i + uniform::u_light_position_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_camera_space_");
-            uniform_handles_[i + uniform::u_light_direction_camera_space0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_camera_space_");
+            uniform_handles_[i + uniform::u_light_position0] = get_uniform_location("u_lights[" + std::to_string(i) + "].position_");
+            uniform_handles_[i + uniform::u_light_direction0] = get_uniform_location("u_lights[" + std::to_string(i) + "].direction_");
         }
     }
 
     void light_shader::assign_textures() {
-        set_uniform(uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
-        set_uniform(uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
-        set_uniform(uniform::u_texture_frag_diffuse, (int32_t)texture_unit::texture_frag_diffuse);
-        set_uniform(uniform::u_texture_frag_specular, (int32_t)texture_unit::texture_frag_specular);
-        set_uniform(uniform::u_texture_frag_gloss, (int32_t)texture_unit::texture_frag_gloss);
-        set_uniform(uniform::u_texture_light_diffuse, (int32_t)texture_unit::texture_light_diffuse);
-        set_uniform(uniform::u_texture_light_specular, (int32_t)texture_unit::texture_light_specular);
+        // set_uniform(uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
+        // set_uniform(uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
+        // set_uniform(uniform::u_texture_frag_diffuse, (int32_t)texture_unit::texture_frag_diffuse);
+        // set_uniform(uniform::u_texture_frag_specular, (int32_t)texture_unit::texture_frag_specular);
+        // set_uniform(uniform::u_texture_frag_gloss, (int32_t)texture_unit::texture_frag_gloss);
+        // set_uniform(uniform::u_texture_light_diffuse, (int32_t)texture_unit::texture_light_diffuse);
+        // set_uniform(uniform::u_texture_light_specular, (int32_t)texture_unit::texture_light_specular);
     }
 } // mkr

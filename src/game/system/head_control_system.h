@@ -55,8 +55,8 @@ namespace mkr {
         }
 
         void operator()(transform& _transform, const head_tag& _head) {
-            _transform.rotate(quaternion{vector3::x_axis, rotation_.x_ * maths_util::deg2rad});
-            rotation_ = vector3::zero;
+            _transform.rotate(quaternion{vector3::x_axis(), rotation_.x_ * maths_util::deg2rad});
+            rotation_ = vector3::zero();
         }
     };
 } // mkr

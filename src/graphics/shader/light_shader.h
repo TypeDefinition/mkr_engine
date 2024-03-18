@@ -5,7 +5,7 @@
 namespace mkr {
     class light_shader : public shader_program {
     public:
-        static constexpr uint32_t max_lights = 32;
+        static constexpr uint32_t max_lights = 8;
 
         enum uniform : uint32_t {
             u_texture_frag_position,
@@ -27,10 +27,10 @@ namespace mkr {
             u_light_attenuation_quadratic0 = max_lights + u_light_attenuation_linear0, // Light Attenuation Quadratic 0 to N
             u_light_spotlight_inner_cosine0 = max_lights + u_light_attenuation_quadratic0, // Light Spotlight Inner Cosine 0 to N
             u_light_spotlight_outer_cosine0 = max_lights + u_light_spotlight_inner_cosine0, // Light Spotlight Outer Cosine 0 to N
-            u_light_position_camera_space0 = max_lights + u_light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
-            u_light_direction_camera_space0 = max_lights + u_light_position_camera_space0, // Light Direction Camera Space 0 to N
+            u_light_position0 = max_lights + u_light_spotlight_outer_cosine0, // Light Position Camera Space 0 to N
+            u_light_direction0 = max_lights + u_light_position0, // Light Direction Camera Space 0 to N
 
-            num_shader_uniforms = max_lights + u_light_direction_camera_space0,
+            num_shader_uniforms = max_lights + u_light_direction0,
         };
 
     protected:

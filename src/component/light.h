@@ -13,15 +13,17 @@ namespace mkr {
     class light {
     private:
         light_mode mode_ = light_mode::point;
-        colour colour_ = colour::white;
+        colour colour_ = colour::white();
         float power_ = 1.0f;
 
         float attenuation_constant_ = 1.0f;
-        float attenuation_linear_ = 1.0f;
-        float attenuation_quadratic_ = 1.0f;
+        float attenuation_linear_ = 0.0045f;
+        float attenuation_quadratic_ = 0.0075f;
 
-        float spotlight_inner_angle_ = 10.0f;
-        float spotlight_outer_angle_ = 30.0f;
+        float spotlight_inner_angle_ = maths_util::deg2rad * 60.0f;
+        float spotlight_outer_angle_ = maths_util::deg2rad * 90.0f;
+
+        float shadow_distance_ = 50.0f; // Only for spot and point light. Maximum distance that the light can cast a shadow.
 
     public:
         light() = default;
@@ -52,16 +54,20 @@ namespace mkr {
 
         inline void set_attenuation_quadratic(float _attenuation) { attenuation_quadratic_ = maths_util::max<float>(_attenuation, 0.0f); }
 
-        inline float get_spotlight_inner_consine() const { return std::cos(maths_util::deg2rad * get_spotlight_inner_angle()); }
+        inline float get_spotlight_inner_consine() const { return std::cos(0.5f * spotlight_inner_angle_); }
 
-        inline float get_spotlight_inner_angle() const { return maths_util::min<float>(spotlight_outer_angle_, spotlight_inner_angle_); }
+        inline float get_spotlight_inner_angle() const { return spotlight_inner_angle_; }
 
-        inline void set_spotlight_inner_angle(float _degree) { spotlight_inner_angle_ = maths_util::clamp<float>(_degree, 1.0f, 89.0f); }
+        inline void set_spotlight_inner_angle(float _radians) { spotlight_inner_angle_ = maths_util::clamp<float>(_radians, maths_util::deg2rad, maths_util::deg2rad * 179.0f); }
 
-        inline float get_spotlight_outer_consine() const { return std::cos(maths_util::deg2rad * get_spotlight_outer_angle()); }
+        inline float get_spotlight_outer_consine() const { return std::cos(0.5f * spotlight_outer_angle_); }
 
         inline float get_spotlight_outer_angle() const { return spotlight_outer_angle_; }
 
-        inline void set_spotlight_outer_angle(float _degree) { spotlight_outer_angle_ = maths_util::clamp<float>(_degree, 1.0f, 89.0f); }
+        inline void set_spotlight_outer_angle(float _radians) { spotlight_outer_angle_ = maths_util::clamp<float>(_radians, maths_util::deg2rad, maths_util::deg2rad * 179.0f); }
+
+        inline float get_shadow_distance() const { return shadow_distance_; }
+
+        inline void set_shadow_distance(float _distance) { shadow_distance_ = _distance; }
     };
 }

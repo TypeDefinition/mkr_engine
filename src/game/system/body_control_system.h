@@ -54,13 +54,13 @@ namespace mkr {
         }
 
         void operator()(transform& _transform, const body_tag& _body) {
-            _transform.rotate(quaternion{vector3::y_axis, rotation_.y_ * maths_util::deg2rad});
-            rotation_ = vector3::zero;
+            _transform.rotate(quaternion{vector3::y_axis(), rotation_.y_ * maths_util::deg2rad});
+            rotation_ = vector3::zero();
 
             auto forward = _transform.forward() * translation_.z_;
             auto left = _transform.left() * translation_.x_;
             _transform.translate(forward + left);
-            translation_ = vector3::zero;
+            translation_ = vector3::zero();
         }
     };
 } // mkr

@@ -39,5 +39,26 @@ namespace mkr {
             shaders_[_name] = std::make_unique<T>(_name, vs_sources, fs_sources);
             return shaders_[_name].get();
         }
+
+        template<typename T>
+        shader_program* make_shader(const std::string& _name, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _gs_files, const std::vector<std::string>& _fs_files) requires std::is_base_of_v<shader_program, T> {
+            std::vector<std::string> vs_sources;
+            for (const auto& filename : _vs_files) {
+                vs_sources.push_back(file_util::file_to_str(filename));
+            }
+
+            std::vector<std::string> gs_sources;
+            for (const auto& filename : _gs_files) {
+                gs_sources.push_back(file_util::file_to_str(filename));
+            }
+
+            std::vector<std::string> fs_sources;
+            for (const auto& filename : _fs_files) {
+                fs_sources.push_back(file_util::file_to_str(filename));
+            }
+
+            shaders_[_name] = std::make_unique<T>(_name, vs_sources, gs_sources, fs_sources);
+            return shaders_[_name].get();
+        }
     };
 }

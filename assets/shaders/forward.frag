@@ -6,49 +6,36 @@
 // glBindFragDataLocationIndexed(GLuint program, GLuint colorNumber, GLuint index, const char *name) in the C++ code.
 // By using glBindFragDataLocation(GLuint program, GLuint colorNumber, const char * name), it is not necessary to use the layout qualifier and vice-versa.
 // However, if both are used and are in conflict, the layout qualifier in the vertex shader has priority.
-layout (location = 0) out vec4 out_composite;
+layout (location = 0) out vec4 out_colour;
 layout (location = 1) out vec4 out_position;
 layout (location = 2) out vec4 out_normal;
 
 // Inputs
 in io_block {
     vec3 io_tex_coord;
-    vec3 io_vertex_position;// Vertex position in camera space.
-    vec3 io_vertex_normal;// Vertex normal in camera space.
-    mat3 io_normal_matrix;
+    vec3 io_position;// Vertex position in camera space.
+    vec3 io_normal;// Vertex normal in camera space.
     mat3 io_tbn_matrix;// Converts from tangent space to camera space.
-    mat3 io_tbn_inv_matrix;// Converts from camera space to tangent space.
+    mat3 io_inv_tbn_matrix;// Converts from camera space to tangent space.
 };
 
-// Variables
+// Constants
 const int light_point = 0;
 const int light_spot = 1;
 const int light_directional = 2;
+const int max_lights = 4;
 
-const int max_lights = 32;
+// Transform
+uniform mat4 u_view_matrix;
+uniform mat4 u_inv_view_matrix;
 
-struct light {
-    int mode_;
-    float power_;
-    vec4 colour_;
-
-    float attenuation_constant_;
-    float attenuation_linear_;
-    float attenuation_quadratic_;
-
-    float spotlight_inner_cosine_;
-    float spotlight_outer_cosine_;
-
-    vec3 position_camera_space_;
-    vec3 direction_camera_space_;
-};
-
-// Uniforms
+// Material
 uniform vec4 u_diffuse_colour;
 uniform vec4 u_specular_colour;
 uniform float u_gloss;
 uniform float u_displacement_scale;
 
+// Texture
 uniform bool u_texture_diffuse_enabled;
 uniform bool u_texture_normal_enabled;
 uniform bool u_texture_specular_enabled;
@@ -61,13 +48,40 @@ uniform sampler2D u_texture_specular;
 uniform sampler2D u_texture_gloss;
 uniform sampler2D u_texture_displacement;
 
-uniform vec4 u_ambient_light;
+// Shadow
+uniform sampler2D u_texture_shadows[max_lights];
+uniform samplerCube u_cubemap_shadows[max_lights];
+
+// Light
+struct light {
+    int mode_;
+    float power_;
+    vec4 colour_;
+
+    float attenuation_constant_;
+    float attenuation_linear_;
+    float attenuation_quadratic_;
+
+    float spotlight_inner_cosine_;
+    float spotlight_outer_cosine_;
+
+    vec3 position_;
+    vec3 direction_;
+
+    float shadow_distance_;
+    mat4 view_projection_matrix_;
+};
+
 uniform int u_num_lights;
+uniform vec4 u_ambient_light;
 uniform light u_lights[max_lights];
+
+// Variables
+bool g_cast_shadow[max_lights];
 
 vec2 parallax(const vec2 _tex_coord) {
     // Get the direction of the camera to the fragment's surface in tangent space.
-    vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
+    vec3 view_direction = normalize(io_inv_tbn_matrix * io_position);
     // Convert height map to depth map because depth looks nicer then height.
     // A height of 0.9 is a depth of 0.1, a height of 0.4 is a depth of 0.6 etc.
     float depth = 1.0f - texture(u_texture_displacement, _tex_coord).r;
@@ -107,7 +121,7 @@ vec2 parallax_occlusion(const vec2 _tex_coord) {
     // By doing this, we can select how many samples we actually want to calculate.
     const int min_displacement_samples = 8;
     const int max_displacement_samples = 16;
-    const float dot_product = dot(io_vertex_normal, normalize(-io_vertex_position));
+    const float dot_product = dot(io_normal, normalize(-io_position));
     const int num_samples = int(mix(max_displacement_samples, min_displacement_samples, dot_product));
 
     float previous_layer_depth = 0.0f;
@@ -135,102 +149,87 @@ vec2 parallax_occlusion(const vec2 _tex_coord) {
     return max_uv_displacement;
 }
 
-float light_attenuation(const in light _light, const in vec3 _vertex_position) {
-    vec3 direction = _light.position_camera_space_ - _vertex_position;
+float light_attenuation(const in light _light, const in vec3 _frag_position) {
+    vec3 direction = _light.position_ - _frag_position;
     float distance_squared = dot(direction, direction);
     float distance = sqrt(distance_squared);
     return _light.power_ / max(1.0f, _light.attenuation_constant_ + (_light.attenuation_linear_ * distance) + (_light.attenuation_quadratic_ * distance_squared));
 }
 
-vec3 vertex_to_light(const in light _light, const in vec3 _vertex_position) {
-    // Directional Light
-    if (_light.mode_ == light_directional) {
-        return normalize(-_light.direction_camera_space_);
-    }
+float spotlight_effect(const in light _light, const in vec3 _frag_position) {
+    vec3 light_to_frag = normalize(_frag_position - _light.position_);
+    vec3 spot_direction = normalize(_light.direction_);
+    float cosine_angle = dot(light_to_frag, spot_direction);// A·B = |A||B|cos(θ), where |A| = |B| = 1.
 
-    // Point Light & Spot Light
-    return normalize(_light.position_camera_space_ - _vertex_position);
+    // As long as the angle between the light direction and light_direction is within the inner cosine, the light is at full power. The light power will falloff as it approaches the outer cosine.
+    return clamp((cosine_angle - _light.spotlight_outer_cosine_) / (_light.spotlight_inner_cosine_ - _light.spotlight_outer_cosine_), 0.0f, 1.0f);
 }
 
-float spotlight_effect(const in light _light, const in vec3 _vertex_position) {
-    vec3 light_to_vertex = normalize(_vertex_position - _light.position_camera_space_);
-    float vertex_angle_cosine = dot(light_to_vertex, _light.direction_camera_space_);
-
-    // As long as the angle between the light direction and light_to_vertex is within the inner cosine, the light is at full power. The light power will falloff as it approaches the outer cosine.
-    return clamp((vertex_angle_cosine - _light.spotlight_outer_cosine_) / (_light.spotlight_inner_cosine_ - _light.spotlight_outer_cosine_), 0.0f, 1.0f);
+float diffuse_intensity(const in light _light, const in vec3 _frag_position, const in vec3 _frag_normal) {
+    vec3 frag_to_light = _light.mode_ == light_directional ? normalize(-_light.direction_) : normalize(_light.position_ - _frag_position);
+    return clamp(dot(frag_to_light, _frag_normal), 0.0f, 1.0f);
 }
 
-float diffuse_intensity(const in light _light, const in vec3 _vertex_position, const in vec3 _vertex_normal) {
-    return clamp(dot(vertex_to_light(_light, _vertex_position), _vertex_normal), 0.0f, 1.0f);
+float specular_intensity(const in light _light, const in vec3 _frag_position, const in vec3 _frag_normal, float _gloss) {
+    vec3 light_to_frag = _light.mode_ == light_directional ? normalize(_light.direction_) : normalize(_frag_position - _light.position_);
+    vec3 view_direction = normalize(-_frag_position);
+    return pow(max(dot(reflect(light_to_frag, _frag_normal), view_direction), 0.0f), _gloss);
 }
 
-float specular_intensity(const in light _light, const in vec3 _vertex_position, const in vec3 _vertex_normal, float _gloss) {
-    /*
-    To get out specular intensity, we need the dot product of the reflection of the light_to_vertex vector and the vertex_to_camera vector.
-
-    The reflect function expects the first vector to point from the light source towards the fragment's position,
-    but vertex_to_light is currently pointing the other way around: from the fragment towards the light source.
-    To make sure we get the correct reflect vector we reverse its direction by negating vertex_to_light.
-    The second argument expects a normal vector so we supply the normalized norm vector.
-
-    But instead of doing that, the other way is to simply leave vertex_to_light the way it is, and dot product it
-    with the camera_to_vertex vector instead. To understand why this works, the reflect(genType I, genType N) function
-    works by returning the result of I - 2*dot(N, I) * N. Draw this on a piece of paper with a vector and a normal and see how it reflects.
-    */
-    vec3 specular_direction = reflect(vertex_to_light(_light, _vertex_position), _vertex_normal);
-    vec3 view_direction = normalize(_vertex_position);
-
-    return pow(max(dot(specular_direction, view_direction), 0.0f), _gloss);
-}
-
-vec4 light_diffuse(const in vec3 _vertex_position, const in vec3 _vertex_normal) {
+vec4 light_diffuse(const in vec3 _frag_position, const in vec3 _frag_normal) {
     vec4 colour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     for (int i = 0; i < u_num_lights; ++i) {
+        if (g_cast_shadow[i]) { continue; } // Check if there is shadow.
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+                diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position);
             break;
             case light_spot:
             colour +=
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+                diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position) *
+                spotlight_effect(u_lights[i], _frag_position);
             break;
             case light_directional:
             colour +=
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+                diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
                 u_lights[i].colour_ * u_lights[i].power_;
+            break;
+            default:
             break;
         }
     }
     return colour;
 }
 
-vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal, float _gloss) {
+vec4 light_specular(const in vec3 _frag_position, const in vec3 _frag_normal, float _gloss) {
     vec4 colour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     for (int i = 0; i < u_num_lights; ++i) {
+        if (g_cast_shadow[i]) { continue; } // Check if there is shadow.
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position);
             break;
             case light_spot:
             colour +=
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position) *
+                spotlight_effect(u_lights[i], _frag_position);
             break;
             case light_directional:
             colour +=
-                specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+                specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
                 u_lights[i].colour_ * u_lights[i].power_;
+            break;
+            default:
             break;
         }
     }
@@ -256,7 +255,7 @@ vec3 get_normal(const in vec2 _tex_coord) {
         // Convert the normal from tangent space to camera space.
         return io_tbn_matrix * normal;
     }
-    return io_vertex_normal;
+    return io_normal;
 }
 
 vec4 get_diffuse(const in vec2 _tex_coord) {
@@ -271,16 +270,69 @@ float get_gloss(const in vec2 _tex_coord) {
     return u_texture_gloss_enabled ? texture(u_texture_gloss, _tex_coord).r * u_gloss : u_gloss;
 }
 
+bool cast_point_shadow(const in light _light, const in samplerCube _cubemap, const in vec3 _frag_normal, float _bias) {
+    // Only cast shadows on surfaces facing the light.
+    if (dot(io_position - _light.position_, _frag_normal) > 0.0f) { return false; }
+
+    vec4 frag_world_pos =  u_inv_view_matrix * vec4(io_position, 1.0f); // World space.
+    vec4 light_world_pos =  u_inv_view_matrix * vec4(_light.position_, 1.0f); // World space.
+    const vec3 tex_coord = (frag_world_pos - light_world_pos).xyz;
+
+    // Distance from light to shadow.
+    const float shadow_dist = texture(_cubemap, tex_coord).r;
+
+    // Distance from light to fragment.
+    const float frag_dist = length(io_position - _light.position_) / _light.shadow_distance_;
+
+    // Cast a shadow if the fragment distance is further than the shadow distance, and the fragment distance is within the shadow casting distance.
+    return shadow_dist + _bias < frag_dist && frag_dist < 1.0f;
+}
+
+bool cast_spot_shadow(const in light _light, const in sampler2D _texture, const in vec3 _frag_normal, float _bias) {
+    // Only cast shadows on surfaces facing the light.
+    if (dot(_light.direction_, _frag_normal) > 0.0f) { return false; }
+
+    const vec4 light_clip_pos = _light.view_projection_matrix_ * u_inv_view_matrix * vec4(io_position, 1.0f); // Fragment position in the light's clip space.
+    const vec3 light_ndc_pos = light_clip_pos.xyz / light_clip_pos.w; // Fragment position in the light's NDC space.
+    const vec2 tex_coord = (light_ndc_pos.xy * 0.5f) + vec2(0.5f, 0.5f); // Normalise from the [-1, 1] range to the [0, 1] range.
+
+    // Distance from light to shadow.
+    const float shadow_dist = texture(_texture, tex_coord).r;
+
+    // Distance from light to fragment.
+    const float frag_dist = 0.5f * light_ndc_pos.z + 0.5f; // Normalise from the [-1, 1] range to the [0, 1] range.
+
+    // Cast a shadow if the fragment distance is further than the shadow distance, and the fragment distance is within the shadow casting distance.
+    return shadow_dist + _bias < frag_dist && frag_dist < 1.0f;
+}
+
+bool cast_directional_shadow(const in light _light, const in sampler2D _texture, const in vec3 _frag_normal, float _bias) {
+    return cast_spot_shadow(_light, _texture, _frag_normal, _bias);
+}
+
+void check_cast_shadow(const in vec3 _frag_normal) {
+    const float bias = 0.005f;
+    for (int i = 0; i < u_num_lights; ++i) {
+        g_cast_shadow[i] =
+            (u_lights[i].mode_ == light_point && cast_point_shadow(u_lights[i], u_cubemap_shadows[i], _frag_normal, bias)) ||
+            (u_lights[i].mode_ == light_spot && cast_spot_shadow(u_lights[i], u_texture_shadows[i], _frag_normal, bias)) ||
+            (u_lights[i].mode_ == light_directional && cast_directional_shadow(u_lights[i], u_texture_shadows[i], _frag_normal, bias));
+    }
+}
+
 void main() {
     const vec2 tex_coord = get_tex_coord();
     const vec3 normal = get_normal(tex_coord);
     const float gloss = get_gloss(tex_coord);
 
-    const vec4 ambient_colour = u_ambient_light;
-    const vec4 diffuse_colour = get_diffuse(tex_coord) * light_diffuse(io_vertex_position, normal);
-    const vec4 specular_colour = get_specular(tex_coord) * light_specular(io_vertex_position, normal, gloss);
+    check_cast_shadow(normal);
 
-    out_composite = vec4((ambient_colour + diffuse_colour + specular_colour).rgb, 1.0f);
-    out_position = vec4(io_vertex_position, 1.0f);
-    out_normal = vec4(io_vertex_normal, 1.0f);
+    const vec4 diffuse = get_diffuse(tex_coord) * light_diffuse(io_position, normal);
+    const vec4 specular = get_specular(tex_coord) * light_specular(io_position, normal, gloss);
+    const vec4 ambient = get_diffuse(tex_coord) * u_ambient_light;
+    const vec3 phong = (ambient + diffuse + specular).rgb;
+
+    out_colour = vec4(phong, 1.0f);
+    out_position = vec4(io_position, 1.0f);
+    out_normal = vec4(io_normal, 1.0f);
 }

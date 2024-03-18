@@ -26,15 +26,15 @@ namespace mkr {
         /// Projection mode
         projection_mode mode_ = projection_mode::perspective;
         /// Near plane
-        float near_plane_ = 0.5f;
+        float near_plane_ = 0.05f;
         /// Far plane
-        float far_plane_ = 500.0f;
+        float far_plane_ = 100.0f;
         /// Aspect ratio
         float aspect_ratio_ = 16.0f / 9.0f;
-        /// Perspective field of view
-        float fov_ = 45.0F;
-        /// Orthographic Size
-        float ortho_size_ = 5.0F;
+        /// Perspective field of view (between 0.00001 to 179)
+        float fov_ = 70.0f;
+        /// Size of the vertical viewing volume
+        float ortho_size_ = 2.0f;
         /// Camera depth
         uint8_t depth_ = 0;
         /// Viewport

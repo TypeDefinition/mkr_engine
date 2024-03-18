@@ -10,11 +10,11 @@ layout (location = 4) out float out_gloss;
 // Inputs
 in io_block {
     vec3 io_tex_coord;
-    vec3 io_vertex_position; // Vertex position in camera space.
-    vec3 io_vertex_normal; // Vertex normal in camera space.
+    vec3 io_position; // Vertex position in camera space.
+    vec3 io_normal; // Vertex normal in camera space.
     mat3 io_normal_matrix;
     mat3 io_tbn_matrix; // Converts from tangent space to camera space.
-    mat3 io_tbn_inv_matrix; // Converts from camera space to tangent space.
+    mat3 io_inv_tbn_matrix; // Converts from camera space to tangent space.
 };
 
 // Uniforms
@@ -36,7 +36,7 @@ uniform sampler2D u_texture_gloss;
 uniform sampler2D u_texture_displacement;
 
 vec2 parallax(const vec2 _tex_coord) {
-    vec3 view_direction = normalize(io_tbn_inv_matrix * io_vertex_position);
+    vec3 view_direction = normalize(io_inv_tbn_matrix * io_position);
     float depth = 1.0f - texture(u_texture_displacement, _tex_coord).r;
     return (view_direction.xy / -view_direction.z) * depth * u_displacement_scale; // Parallax Mapping without Offset Limiting
 }
@@ -45,7 +45,7 @@ vec2 parallax_occlusion(const vec2 _tex_coord) {
     const vec2 max_uv_displacement = parallax(_tex_coord);
     const int min_displacement_samples = 8;
     const int max_displacement_samples = 32;
-    const float dot_product = dot(io_vertex_normal, normalize(-io_vertex_position));
+    const float dot_product = dot(io_normal, normalize(-io_position));
     const int num_samples = int(mix(max_displacement_samples, min_displacement_samples, dot_product));
 
     float previous_layer_depth = 0.0f;
@@ -82,7 +82,7 @@ vec3 get_normal(const in vec2 _tex_coord) {
         normal = normalize(normal);
         return io_tbn_matrix * normal;
     }
-    return io_vertex_normal;
+    return io_normal;
 }
 
 vec4 get_diffuse(const in vec2 _tex_coord) {
@@ -100,7 +100,7 @@ float get_gloss(const in vec2 _tex_coord) {
 void main() {
     const vec2 tex_coord = get_tex_coord();
 
-    out_position = vec4(io_vertex_position, 1.0f);
+    out_position = vec4(io_position, 1.0f);
     out_normal = vec4(get_normal(tex_coord), 1.0f);
     out_diffuse = get_diffuse(tex_coord);
     out_specular = get_specular(tex_coord);

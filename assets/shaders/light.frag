@@ -14,7 +14,7 @@ const int light_point = 0;
 const int light_spot = 1;
 const int light_directional = 2;
 
-const int max_lights = 32;
+const int max_lights = 8;
 
 struct light {
     int mode_;
@@ -48,56 +48,56 @@ uniform vec4 u_ambient_light;
 uniform int u_num_lights;
 uniform light u_lights[max_lights];
 
-float light_attenuation(const in light _light, const in vec3 _vertex_position) {
-    vec3 direction = _light.position_camera_space_ - _vertex_position;
+float light_attenuation(const in light _light, const in vec3 _frag_position) {
+    vec3 direction = _light.position_camera_space_ - _frag_position;
     float distance_squared = dot(direction, direction);
     float distance = sqrt(distance_squared);
     return _light.power_ / max(1.0f, _light.attenuation_constant_ + (_light.attenuation_linear_ * distance) + (_light.attenuation_quadratic_ * distance_squared));
 }
 
-vec3 vertex_to_light(const in light _light, const in vec3 _vertex_position) {
+vec3 vertex_to_light(const in light _light, const in vec3 _frag_position) {
     if (_light.mode_ == light_directional) {
         return normalize(-_light.direction_camera_space_);
     }
-    return normalize(_light.position_camera_space_ - _vertex_position);
+    return normalize(_light.position_camera_space_ - _frag_position);
 }
 
-float spotlight_effect(const in light _light, const in vec3 _vertex_position) {
-    vec3 light_to_vertex = normalize(_vertex_position - _light.position_camera_space_);
+float spotlight_effect(const in light _light, const in vec3 _frag_position) {
+    vec3 light_to_vertex = normalize(_frag_position - _light.position_camera_space_);
     float vertex_angle_cosine = dot(light_to_vertex, _light.direction_camera_space_);
     return clamp((vertex_angle_cosine - _light.spotlight_outer_cosine_) / (_light.spotlight_inner_cosine_ - _light.spotlight_outer_cosine_), 0.0f, 1.0f);
 }
 
-float diffuse_intensity(const in light _light, const in vec3 _vertex_position, const in vec3 _vertex_normal) {
-    return clamp(dot(vertex_to_light(_light, _vertex_position), _vertex_normal), 0.0f, 1.0f);
+float diffuse_intensity(const in light _light, const in vec3 _frag_position, const in vec3 _frag_normal) {
+    return clamp(dot(vertex_to_light(_light, _frag_position), _frag_normal), 0.0f, 1.0f);
 }
 
-float specular_intensity(const in light _light, const in vec3 _vertex_position, const in vec3 _vertex_normal, float _gloss) {
-    vec3 specular_direction = reflect(vertex_to_light(_light, _vertex_position), _vertex_normal);
-    vec3 view_direction = normalize(_vertex_position);
+float specular_intensity(const in light _light, const in vec3 _frag_position, const in vec3 _frag_normal, float _gloss) {
+    vec3 specular_direction = reflect(vertex_to_light(_light, _frag_position), _frag_normal);
+    vec3 view_direction = normalize(_frag_position);
     return pow(max(dot(specular_direction, view_direction), 0.0f), _gloss);
 }
 
-vec4 light_diffuse(const in vec3 _vertex_position, const in vec3 _vertex_normal) {
+vec4 light_diffuse(const in vec3 _frag_position, const in vec3 _frag_normal) {
     vec4 colour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     for (int i = 0; i < u_num_lights; ++i) {
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+                diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position);
             break;
             case light_spot:
             colour +=
-                diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+                diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
                 u_lights[i].colour_ * u_lights[i].power_ *
-                light_attenuation(u_lights[i], _vertex_position) *
-                spotlight_effect(u_lights[i], _vertex_position);
+                light_attenuation(u_lights[i], _frag_position) *
+                spotlight_effect(u_lights[i], _frag_position);
             break;
             case light_directional:
             colour += u_lights[i].colour_ *
-            diffuse_intensity(u_lights[i], _vertex_position, _vertex_normal) *
+            diffuse_intensity(u_lights[i], _frag_position, _frag_normal) *
             u_lights[i].power_;
             break;
         }
@@ -105,27 +105,27 @@ vec4 light_diffuse(const in vec3 _vertex_position, const in vec3 _vertex_normal)
     return colour;
 }
 
-vec4 light_specular(const in vec3 _vertex_position, const in vec3 _vertex_normal, float _gloss) {
+vec4 light_specular(const in vec3 _frag_position, const in vec3 _frag_normal, float _gloss) {
     vec4 colour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     for (int i = 0; i < u_num_lights; ++i) {
         switch (u_lights[i].mode_) {
             case light_point:
             colour +=
             u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-            light_attenuation(u_lights[i], _vertex_position);
+            specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
+            light_attenuation(u_lights[i], _frag_position);
             break;
             case light_spot:
             colour +=
             u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
-            light_attenuation(u_lights[i], _vertex_position) *
-            spotlight_effect(u_lights[i], _vertex_position);
+            specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
+            light_attenuation(u_lights[i], _frag_position) *
+            spotlight_effect(u_lights[i], _frag_position);
             break;
             case light_directional:
             colour +=
             u_lights[i].colour_ *
-            specular_intensity(u_lights[i], _vertex_position, _vertex_normal, _gloss) *
+            specular_intensity(u_lights[i], _frag_position, _frag_normal, _gloss) *
             u_lights[i].power_;
             break;
         }

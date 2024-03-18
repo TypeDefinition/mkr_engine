@@ -4,7 +4,6 @@
 #include "graphics/framebuffer/framebuffer.h"
 
 namespace mkr {
-    // Geometry Buffer
     class geometry_buffer : public framebuffer {
     public:
         enum colour_attachments : int32_t {

@@ -226,6 +226,42 @@ namespace mkr {
             return std::make_unique<mesh>(_name, vertices, indices);
         }
 
+        static std::unique_ptr<mesh> make_debug_quad(const std::string& _name) {
+            std::vector<vertex> vertices(4);
+
+            vertices[0].position_ = {0.0f, 0.0f, 0.0f};
+            vertices[1].position_ = {1.0f, 1.0f, 0.0f};
+            vertices[2].position_ = {0.0f, 1.0f, 0.0f};
+            vertices[3].position_ = {1.0f, 0.0f, 0.0f};
+
+            vertices[0].normal_ = {0.0f, 0.0f, 1.0f};
+            vertices[1].normal_ = {0.0f, 0.0f, 1.0f};
+            vertices[2].normal_ = {0.0f, 0.0f, 1.0f};
+            vertices[3].normal_ = {0.0f, 0.0f, 1.0f};
+
+            vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
+            vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
+            vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
+            vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};
+
+            vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};
+            vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};
+            vertices[2].tangent_ = {1.0f, 0.0f, 0.0f};
+            vertices[3].tangent_ = {1.0f, 0.0f, 0.0f};
+
+            std::vector<uint32_t> indices(6);
+
+            indices[0] = 0;
+            indices[1] = 1;
+            indices[2] = 2;
+
+            indices[3] = 0;
+            indices[4] = 3;
+            indices[5] = 1;
+
+            return std::make_unique<mesh>(_name, vertices, indices);
+        }
+
         static std::unique_ptr<mesh> load_obj(const std::string &_name, const std::string &_file) {
             // Vertex Data and Index Data
             std::vector<vertex> vertices;

@@ -12,7 +12,7 @@ namespace mkr {
         vector3 scale_;
 
     public:
-        transform(const vector3& _position = vector3::zero,
+        transform(const vector3& _position = vector3::zero(),
                   const quaternion& _rotation = quaternion(),
                   const vector3& _scale = {1.0f, 1.0f, 1.0f})
                 : position_(_position), rotation_(_rotation), scale_(_scale) {}
@@ -55,11 +55,11 @@ namespace mkr {
             return *this;
         }
 
-        [[nodiscard]] inline vector3 left() const { return quaternion::rotate(vector3::x_axis, rotation_); }
+        [[nodiscard]] inline vector3 left() const { return quaternion::rotate(vector3::x_axis(), rotation_); }
 
-        [[nodiscard]] inline vector3 up() const { return quaternion::rotate(vector3::y_axis, rotation_); }
+        [[nodiscard]] inline vector3 up() const { return quaternion::rotate(vector3::y_axis(), rotation_); }
 
-        [[nodiscard]] inline vector3 forward() const { return quaternion::rotate(vector3::z_axis, rotation_); }
+        [[nodiscard]] inline vector3 forward() const { return quaternion::rotate(vector3::z_axis(), rotation_); }
 
         [[nodiscard]] inline matrix4x4 translation_matrix() const { return matrix_util::translation_matrix(position_); }
 

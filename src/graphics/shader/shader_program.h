@@ -24,6 +24,8 @@ namespace mkr {
     public:
         shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms);
 
+        shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _gs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms);
+
         virtual ~shader_program();
 
         inline const std::string& name() const { return name_; }

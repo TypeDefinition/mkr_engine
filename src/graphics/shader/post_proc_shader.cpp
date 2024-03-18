@@ -22,9 +22,9 @@ namespace mkr {
     }
 
     void post_proc_shader::assign_textures() {
-        set_uniform(uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
-        set_uniform(uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
-        set_uniform(uniform::u_texture_depth_stencil, (int32_t)texture_unit::texture_depth_stencil);
-        set_uniform(uniform::u_texture_composite, (int32_t)texture_unit::texture_composite);
+        // set_uniform(uniform::u_texture_frag_position, (int32_t)texture_unit::texture_frag_position);
+        // set_uniform(uniform::u_texture_frag_normal, (int32_t)texture_unit::texture_frag_normal);
+        // set_uniform(uniform::u_texture_depth_stencil, (int32_t)texture_unit::texture_depth_stencil);
+        // set_uniform(uniform::u_texture_composite, (int32_t)texture_unit::texture_composite);
     }
 } // mkr

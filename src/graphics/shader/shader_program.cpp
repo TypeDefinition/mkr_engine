@@ -45,7 +45,7 @@ namespace mkr {
     }
 
     shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms)
-            : name_{_name} {
+        : name_{_name} {
         mkr::log::info("creating shader program {}", _name.c_str());
 
         // Allocate uniform handle array.
@@ -56,18 +56,18 @@ namespace mkr {
 
         // Create the shaders.
         std::vector<GLuint> vs_handles;
-        for (const auto& _vs_source: _vs_sources) {
+        for (const auto& src : _vs_sources) {
             // Create the fragment shader. OpenGL supports multiple vertex shaders per shader program.
-            GLuint handle = create_shader(GL_VERTEX_SHADER, _vs_source);
+            GLuint handle = create_shader(GL_VERTEX_SHADER, src);
             vs_handles.push_back(handle);
             // Attach the shader to the program.
             glAttachShader(program_handle_, handle);
         }
 
         std::vector<GLuint> fs_handles;
-        for (const auto& _fs_source: _fs_sources) {
+        for (const auto& src : _fs_sources) {
             // Create the fragment shader. OpenGL supports multiple fragment shaders per shader program.
-            GLuint handle = create_shader(GL_FRAGMENT_SHADER, _fs_source);
+            GLuint handle = create_shader(GL_FRAGMENT_SHADER, src);
             fs_handles.push_back(handle);
             // Attach the shader to the program.
             glAttachShader(program_handle_, handle);
@@ -80,13 +80,85 @@ namespace mkr {
          * Now that we are done creating the shader program, we no longer need the shaders, and they can be deleted.
          * It is also possible to store the shaders to create other shader programs,
          * but there isn't a compelling reason to do so since we can just re-create them again if necessary. */
-        for (GLuint vs_handle: vs_handles) {
-            glDetachShader(program_handle_, vs_handle);
-            glDeleteShader(vs_handle);
+        for (GLuint handle : vs_handles) {
+            glDetachShader(program_handle_, handle);
+            glDeleteShader(handle);
         }
-        for (GLuint fs_handle: fs_handles) {
-            glDetachShader(program_handle_, fs_handle);
-            glDeleteShader(fs_handle);
+        for (GLuint handle : fs_handles) {
+            glDetachShader(program_handle_, handle);
+            glDeleteShader(handle);
+        }
+
+        // Verify link status.
+        GLint status = 0;
+        glGetProgramiv(program_handle_, GL_LINK_STATUS, &status);
+        if (status == GL_FALSE) {
+            GLint log_length = 0;
+            glGetProgramiv(program_handle_, GL_INFO_LOG_LENGTH, &log_length);
+            std::unique_ptr<GLchar> info_log{new GLchar[log_length]};
+            glGetProgramInfoLog(program_handle_, log_length, &log_length, info_log.get());
+            mkr::log::error(info_log.get());
+            throw std::runtime_error(info_log.get());
+        }
+
+        mkr::log::info("shader program {} created", _name.c_str());
+    }
+
+    shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _gs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms) {
+        mkr::log::info("creating shader program {}", _name.c_str());
+
+        // Allocate uniform handle array.
+        uniform_handles_ = std::make_unique<GLint[]>(_num_uniforms);
+
+        // Create the shader program.
+        program_handle_ = glCreateProgram();
+
+        // Create the shaders.
+        std::vector<GLuint> vs_handles;
+        for (const auto& src : _vs_sources) {
+            // Create the fragment shader. OpenGL supports multiple vertex shaders per shader program.
+            GLuint handle = create_shader(GL_VERTEX_SHADER, src);
+            vs_handles.push_back(handle);
+            // Attach the shader to the program.
+            glAttachShader(program_handle_, handle);
+        }
+
+        std::vector<GLuint> gs_handles;
+        for (const auto& src : _gs_sources) {
+            // Create the fragment shader. OpenGL supports multiple vertex shaders per shader program.
+            GLuint handle = create_shader(GL_GEOMETRY_SHADER, src);
+            gs_handles.push_back(handle);
+            // Attach the shader to the program.
+            glAttachShader(program_handle_, handle);
+        }
+
+        std::vector<GLuint> fs_handles;
+        for (const auto& src : _fs_sources) {
+            // Create the fragment shader. OpenGL supports multiple fragment shaders per shader program.
+            GLuint handle = create_shader(GL_FRAGMENT_SHADER, src);
+            fs_handles.push_back(handle);
+            // Attach the shader to the program.
+            glAttachShader(program_handle_, handle);
+        }
+
+        // Link the shader program. Now that we have attached the shaders, this will use the attached shaders to create an executable that will run on the programmable vertex processor.
+        glLinkProgram(program_handle_);
+
+        /**
+         * Now that we are done creating the shader program, we no longer need the shaders, and they can be deleted.
+         * It is also possible to store the shaders to create other shader programs,
+         * but there isn't a compelling reason to do so since we can just re-create them again if necessary. */
+        for (GLuint handle : vs_handles) {
+            glDetachShader(program_handle_, handle);
+            glDeleteShader(handle);
+        }
+        for (GLuint handle : gs_handles) {
+            glDetachShader(program_handle_, handle);
+            glDeleteShader(handle);
+        }
+        for (GLuint handle : fs_handles) {
+            glDetachShader(program_handle_, handle);
+            glDeleteShader(handle);
         }
 
         // Verify link status.

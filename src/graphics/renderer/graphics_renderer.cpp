@@ -3,13 +3,13 @@
 #include <log/log.h>
 #include "graphics/renderer/graphics_renderer.h"
 #include "graphics/lighting/lighting.h"
-#include "graphics/asset_loader/asset_loader.h"
 #include "graphics/shader/texture_unit.h"
 #include "graphics/shader/forward_shader.h"
 #include "graphics/shader/geometry_shader.h"
 #include "graphics/shader/light_shader.h"
 #include "graphics/shader/post_proc_shader.h"
 #include "graphics/shader/skybox_shader.h"
+#include "graphics/mesh/mesh_builder.h"
 
 namespace mkr {
     void graphics_renderer::init() {
@@ -42,8 +42,8 @@ namespace mkr {
             throw std::runtime_error("glewInit failed");
         }
 
-        skybox_mesh_ = asset_loader::instance().make_skybox();
-        screen_quad_ = asset_loader::instance().make_screen_quad();
+        skybox_mesh_ = mesh_builder::make_skybox("skybox");
+        screen_quad_ = mesh_builder::make_screen_quad("screen_quad");
 
         // Framebuffers
         d_buff_ = std::make_unique<default_buffer>();
@@ -51,7 +51,6 @@ namespace mkr {
         l_buff_ = std::make_unique<light_buffer>(app_window_->width(), app_window_->height());
         f_buff_ = std::make_unique<forward_buffer>(app_window_->width(), app_window_->height());
         pp_buff_ = std::make_unique<post_proc_buffer>(app_window_->width(), app_window_->height());
-        s_buff_ = std::make_unique<shadow_buffer>(1024, 1024);
     }
 
     void graphics_renderer::start() {
@@ -115,7 +114,7 @@ namespace mkr {
             post_proc_pass(cam.near_plane_, cam.far_plane_);
 
             // Blit to default framebuffer.
-            pp_buff_->set_read_colour_attachment(pbuffer_composite);
+            pp_buff_->set_read_colour_attachment(post_proc_buffer::colour_attachments::composite);
             pp_buff_->blit_to(d_buff_.get(), true, false, false, 0, 0, window_width_, window_height_, 0, 0, window_width_, window_height_);
             d_buff_->bind();
 
@@ -136,7 +135,7 @@ namespace mkr {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_STENCIL_TEST);
         glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
-        glStencilFunc(GL_ALWAYS, stencil_opaque, 0xFFFFFFFF);
+        glStencilFunc(GL_ALWAYS, 0x10, 0xFFFFFFFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
         g_buff_->bind();
@@ -205,11 +204,11 @@ namespace mkr {
         l_buff_->set_draw_colour_attachment_all();
         l_buff_->clear_colour_all();
 
-        g_buff_->get_colour_attachment(gbuffer_position)->bind(texture_unit::texture_frag_position);
-        g_buff_->get_colour_attachment(gbuffer_normal)->bind(texture_unit::texture_frag_normal);
-        g_buff_->get_colour_attachment(gbuffer_albedo)->bind(texture_unit::texture_frag_diffuse);
-        g_buff_->get_colour_attachment(gbuffer_specular)->bind(texture_unit::texture_frag_specular);
-        g_buff_->get_colour_attachment(gbuffer_gloss)->bind(texture_unit::texture_frag_gloss);
+        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::position)->bind(texture_unit::texture_frag_position);
+        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::normal)->bind(texture_unit::texture_frag_normal);
+        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::diffuse)->bind(texture_unit::texture_frag_diffuse);
+        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::specular)->bind(texture_unit::texture_frag_specular);
+        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::gloss)->bind(texture_unit::texture_frag_gloss);
 
         // Use shader.
         material::light_shader_->use();
@@ -225,8 +224,8 @@ namespace mkr {
         const auto num_pass = (lights_.size() / light_shader::max_lights) + 1;
         for (size_t p = 0; p < num_pass; ++p) {
             // Swap the diffuse and specular buffers.
-            l_buff_->get_colour_attachment(lbuffer_diffuse)->bind(texture_unit::texture_light_diffuse);
-            l_buff_->get_colour_attachment(lbuffer_specular)->bind(texture_unit::texture_light_specular);
+            l_buff_->get_colour_attachment(light_buffer::colour_attachments::diffuse)->bind(texture_unit::texture_light_diffuse);
+            l_buff_->get_colour_attachment(light_buffer::colour_attachments::specular)->bind(texture_unit::texture_light_specular);
             l_buff_->swap_buffers();
 
             size_t start = light_shader::max_lights * p;
@@ -271,23 +270,23 @@ namespace mkr {
         glDepthFunc(GL_LESS);
         glEnable(GL_STENCIL_TEST);
         glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
-        glStencilFunc(GL_ALWAYS, stencil_opaque, 0xFFFFFFFF);
+        glStencilFunc(GL_ALWAYS, 0x10, 0xFFFFFFFF);
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
         f_buff_->bind();
         f_buff_->set_draw_colour_attachment_all();
         f_buff_->clear_colour_all();
 
-        l_buff_->set_read_colour_attachment(lbuffer_composite);
-        f_buff_->set_draw_colour_attachment(fbuffer_composite);
+        l_buff_->set_read_colour_attachment(light_buffer::colour_attachments::composite);
+        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::composite);
         l_buff_->blit_to(f_buff_.get(), true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
 
-        g_buff_->set_read_colour_attachment(gbuffer_position);
-        f_buff_->set_draw_colour_attachment(fbuffer_position);
+        g_buff_->set_read_colour_attachment(geometry_buffer::colour_attachments::position);
+        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::position);
         g_buff_->blit_to(f_buff_.get(), true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
 
-        g_buff_->set_read_colour_attachment(gbuffer_normal);
-        f_buff_->set_draw_colour_attachment(fbuffer_normal);
+        g_buff_->set_read_colour_attachment(geometry_buffer::colour_attachments::normal);
+        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::normal);
         g_buff_->blit_to(f_buff_.get(), true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
 
         g_buff_->blit_to(f_buff_.get(), false, true, true, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
@@ -371,12 +370,12 @@ namespace mkr {
         // As long as a colour attachment to set to be drawn to it, some value will be written to it no matter what, even if the shader does not specify.
         // For the case of my computer, it will cause the values in fbuffer_composite to also be written to the other colour attachments.
         // [https://stackoverflow.com/questions/39545966/opengl-3-0-framebuffer-outputting-to-attachments-without-me-specifying]
-        f_buff_->set_draw_colour_attachment(fbuffer_composite);
+        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::composite);
         if (_skybox.shader_) {
             glDisable(GL_DEPTH_TEST);
             glEnable(GL_STENCIL_TEST);
             glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
-            glStencilFunc(GL_NOTEQUAL, stencil_opaque, 0xFFFFFFFF);
+            glStencilFunc(GL_NOTEQUAL, 0x10, 0xFFFFFFFF);
             glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
             if (_skybox.texture_) { _skybox.texture_->bind(texture_unit::texture_skybox); }
@@ -404,15 +403,15 @@ namespace mkr {
         pp_buff_->set_draw_colour_attachment_all();
         pp_buff_->clear_colour_all();
 
-        f_buff_->set_read_colour_attachment(fbuffer_composite);
-        pp_buff_->set_draw_colour_attachment(pbuffer_composite);
+        f_buff_->set_read_colour_attachment(forward_buffer::colour_attachments::composite);
+        pp_buff_->set_draw_colour_attachment(post_proc_buffer::colour_attachments::composite);
         f_buff_->blit_to(pp_buff_.get(), true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
         pp_buff_->set_draw_colour_attachment_all();
 
         // Bind textures.
-        f_buff_->get_colour_attachment(fbuffer_position)->bind(texture_unit::texture_frag_position);
-        f_buff_->get_colour_attachment(fbuffer_normal)->bind(texture_unit::texture_frag_normal);
-        pp_buff_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
+        f_buff_->get_colour_attachment(forward_buffer::colour_attachments::position)->bind(texture_unit::texture_frag_position);
+        f_buff_->get_colour_attachment(forward_buffer::colour_attachments::normal)->bind(texture_unit::texture_frag_normal);
+        pp_buff_->get_colour_attachment(post_proc_buffer::colour_attachments::composite)->bind(texture_unit::texture_composite);
         f_buff_->get_depth_stencil_attachment()->bind(texture_unit::texture_depth_stencil);
 
         // Bind mesh.
@@ -421,7 +420,7 @@ namespace mkr {
 
         // Use shader.
         for (auto shader : material::post_proc_shaders_) {
-            pp_buff_->get_colour_attachment(pbuffer_composite)->bind(texture_unit::texture_composite);
+            pp_buff_->get_colour_attachment(post_proc_buffer::colour_attachments::composite)->bind(texture_unit::texture_composite);
             pp_buff_->swap_buffers();
 
             shader->use();

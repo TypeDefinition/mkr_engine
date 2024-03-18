@@ -6,6 +6,14 @@
 namespace mkr {
     // Light Buffer
     class light_buffer : public framebuffer {
+    public:
+        enum colour_attachments : int32_t {
+            composite = 0, // The scene rendered with geometry and lights.
+            diffuse, // Light diffuse colour to be used as an input by the next pass in order to support unlimited lights.
+            specular, // Light specular colour to be used as an input by the next pass in order to support unlimited lights.
+            num_attachments,
+        };
+
     protected:
         // In order to support unlimited lights, it may be necessary to run the lighting pass multiple times.
         // For each run, we calculate the lighting of each light of this run. Then we read the buffers of the previous runs to get their values.

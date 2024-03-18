@@ -1,15 +1,11 @@
 #include "graphics/framebuffer/framebuffer.h"
 
 namespace mkr {
-    // Framebuffer
-    framebuffer::framebuffer()
-            : handle_(0) {}
-
-    texture_2d* framebuffer::get_colour_attachment(colour_attachments _attachment) {
+    texture_2d* framebuffer::get_colour_attachment(int32_t _attachment) {
         return colour_attachments_[_attachment].get();
     }
 
-    const texture_2d* framebuffer::get_colour_attachment(colour_attachments _attachment) const {
+    const texture_2d* framebuffer::get_colour_attachment(int32_t _attachment) const {
         return colour_attachments_[_attachment].get();
     }
 
@@ -38,11 +34,11 @@ namespace mkr {
         glBlitNamedFramebuffer(handle_, _other->handle_, _src_x0, _src_y0, _src_x1, _src_y1, _dst_x0, _dst_y0, _dst_x1, _dst_y1, mask, GL_NEAREST);
     }
 
-    void framebuffer::set_read_colour_attachment(colour_attachments _attachment) {
+    void framebuffer::set_read_colour_attachment(int32_t _attachment) {
         glNamedFramebufferReadBuffer(handle_, GL_COLOR_ATTACHMENT0 + _attachment);
     }
 
-    void framebuffer::set_draw_colour_attachment(colour_attachments _attachment) {
+    void framebuffer::set_draw_colour_attachment(int32_t _attachment) {
         glNamedFramebufferDrawBuffer(handle_, GL_COLOR_ATTACHMENT0 + _attachment);
     }
 
@@ -54,7 +50,7 @@ namespace mkr {
         glNamedFramebufferDrawBuffers(handle_, (GLsizei)indices.size(), indices.data());
     }
 
-    void framebuffer::clear_colour(colour_attachments _attachment, const colour& _colour) {
+    void framebuffer::clear_colour(int32_t _attachment, const colour& _colour) {
         glClearNamedFramebufferfv(handle_, GL_COLOR, _attachment, (GLfloat*)&_colour.r_);
     }
 

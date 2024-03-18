@@ -1,7 +1,6 @@
 #include "graphics/framebuffer/default_buffer.h"
 
 namespace mkr {
-    // Default Buffer
     void default_buffer::set_draw_colour_attachment_all() {
         glNamedFramebufferDrawBuffer(handle_, GL_COLOR_ATTACHMENT0);
     }

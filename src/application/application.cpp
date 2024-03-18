@@ -4,7 +4,7 @@
 #include "application/sdl_message_pump.h"
 #include "input/input_manager.h"
 #include "graphics/renderer/graphics_renderer.h"
-#include "graphics/asset_loader/asset_loader.h"
+#include "graphics/texture/texture_loader.h"
 #include "scene/scene_manager.h"
 
 namespace mkr {
@@ -24,8 +24,8 @@ namespace mkr {
         sdl_message_pump::instance().init();
 
         // Systems
+        texture_loader::init();
         input_manager::instance().init();
-        asset_loader::instance().init();
         graphics_renderer::instance().init();
         scene_manager::instance().init();
     }
@@ -66,8 +66,8 @@ namespace mkr {
         sdl_message_pump::instance().exit(); // Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.
 
         // Exit systems.
+        texture_loader::exit();
         input_manager::instance().exit();
-        asset_loader::instance().exit();
         graphics_renderer::instance().exit();
         scene_manager::instance().exit();
 
@@ -76,7 +76,6 @@ namespace mkr {
 
         // Destroy systems.
         input_manager::destroy();
-        asset_loader::destroy();
         graphics_renderer::destroy();
         scene_manager::destroy();
 

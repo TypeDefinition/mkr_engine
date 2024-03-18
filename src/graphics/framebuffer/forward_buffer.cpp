@@ -6,10 +6,10 @@ namespace mkr {
         glCreateFramebuffers(1, &handle_);
 
         // Colour attachments.
-        colour_attachments_.resize(num_fbuffer_attachments);
-        colour_attachments_[fbuffer_composite] = std::make_unique<texture_2d>("composite", _width, _height, sized_format::rgba8);
-        colour_attachments_[fbuffer_position] = std::make_unique<texture_2d>("position", _width, _height, sized_format::rgba16f);
-        colour_attachments_[fbuffer_normal] = std::make_unique<texture_2d>("normal", _width, _height, sized_format::rgba16f);
+        colour_attachments_.resize(colour_attachments::num_attachments);
+        colour_attachments_[colour_attachments::composite] = std::make_unique<texture_2d>("composite", _width, _height, sized_format::rgba8);
+        colour_attachments_[colour_attachments::position] = std::make_unique<texture_2d>("position", _width, _height, sized_format::rgba16f);
+        colour_attachments_[colour_attachments::normal] = std::make_unique<texture_2d>("normal", _width, _height, sized_format::rgba16f);
         for (auto i = 0; i < colour_attachments_.size(); ++i) {
             glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + i, colour_attachments_[i]->handle(), 0);
         }

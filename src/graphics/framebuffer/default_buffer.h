@@ -4,10 +4,9 @@
 #include "graphics/framebuffer/framebuffer.h"
 
 namespace mkr {
-    // Default Buffer
     class default_buffer : public framebuffer {
     public:
-        default_buffer() = default;
+        default_buffer() { handle_ = 0; }
 
         virtual ~default_buffer() = default;
 

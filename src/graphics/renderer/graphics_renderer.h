@@ -10,7 +10,6 @@
 #include "graphics/framebuffer/geometry_buffer.h"
 #include "graphics/framebuffer/light_buffer.h"
 #include "graphics/framebuffer/post_proc_buffer.h"
-#include "graphics/framebuffer/shadow_buffer.h"
 #include "graphics/framebuffer/forward_buffer.h"
 #include "graphics/material/material.h"
 #include "graphics/mesh/mesh_instance_data.h"
@@ -21,10 +20,16 @@
 #include "component/light.h"
 
 namespace mkr {
-    // There are 8 bits in the stencil buffer. We will use the higher 4-bits for our renderer.
-    // The lower 4-bits will be reserved for the future.
+    // There are 8 bits in the stencil buffer.
     enum stencil_value : uint8_t {
-        stencil_opaque = 0x10,
+        placeholder0 = 1,
+        placeholder1 = 2,
+        placeholder2 = 4,
+        placeholder3 = 8,
+        placeholder4 = 16,
+        placeholder5 = 32,
+        placeholder6 = 64,
+        placeholder7 = 128,
     };
 
     class graphics_renderer : public singleton<graphics_renderer> {
@@ -53,7 +58,6 @@ namespace mkr {
         std::unique_ptr<light_buffer> l_buff_;
         std::unique_ptr<forward_buffer> f_buff_;
         std::unique_ptr<post_proc_buffer> pp_buff_;
-        std::unique_ptr<shadow_buffer> s_buff_;
 
         // Screen Meshes
         std::unique_ptr<mesh> screen_quad_;

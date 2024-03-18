@@ -184,7 +184,7 @@ namespace mkr {
                 for (auto& model_matrix : model_matrices) {
                     const auto model_view_matrix = _view_matrix * model_matrix;
                     const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
-                    const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
+                    const auto normal_matrix = matrix_util::minor_matrix(model_view_inverse.transposed(), 3, 3);
                     batch.push_back({model_matrix, normal_matrix});
                 }
 
@@ -355,7 +355,7 @@ namespace mkr {
                 for (auto& model_matrix : model_matrices) {
                     const auto model_view_matrix = _view_matrix * model_matrix;
                     const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
-                    const auto normal_matrix = matrix_util::minor_matrix(matrix_util::transpose_matrix(model_view_inverse), 3, 3);
+                    const auto normal_matrix = matrix_util::minor_matrix(model_view_inverse.transposed(), 3, 3);
                     batch.push_back({model_matrix, normal_matrix});
                 }
 

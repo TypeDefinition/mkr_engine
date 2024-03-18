@@ -44,7 +44,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        // input_manager::instance().set_relative_mouse(true);
+        input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -159,6 +159,17 @@ namespace mkr {
         tiles->texture_specular_ = texture_manager::instance().make_texture_2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
         tiles->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
         tiles->displacement_scale_ = 0.1f;
+        tiles->forward_shader_ = shader_manager::instance().get_shader("forward_shader");
+
+        // Cube
+        auto brick_wall = material_manager::instance().make_material("brick_wall");
+        brick_wall->texture_diffuse_ = texture_manager::instance().make_texture_2d("brick_wall_001_albedo", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
+        brick_wall->texture_normal_ = texture_manager::instance().make_texture_2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
+        brick_wall->texture_displacement_ = texture_manager::instance().make_texture_2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
+        brick_wall->texture_gloss_ = texture_manager::instance().make_texture_2d("brick_wall_001_gloss", "./../assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
+        brick_wall->texture_specular_ = texture_manager::instance().make_texture_2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
+        brick_wall->displacement_scale_ = 0.05f;
+        brick_wall->forward_shader_ = shader_manager::instance().get_shader("forward_shader");
     }
 
     void game_scene::init_meshes() {
@@ -172,10 +183,18 @@ namespace mkr {
         transform floor_trans;
         floor_trans.set_scale({100.0f, 1.0f, 100.0f});
         floor_trans.set_position({0.0f, 0.0f, 0.0f});
-        render_mesh floor_rend;
+        render_mesh floor_rend{};
         floor_rend.mesh_ = mesh_manager::instance().get_mesh("plane");
         floor_rend.material_ = material_manager::instance().get_material("tiles");
         world_.entity("floor").set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
+
+        // Cube
+        transform cube_trans;
+        cube_trans.set_position({2.0f, 1.5f, 5.0f});
+        render_mesh cube_rend{};
+        cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
+        cube_rend.material_ = material_manager::instance().get_material("brick_wall");
+        world_.entity("cube").set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
 
         // Lights
         transform light_trans;

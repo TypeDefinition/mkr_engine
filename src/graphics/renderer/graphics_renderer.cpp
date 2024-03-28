@@ -92,31 +92,36 @@ namespace mkr {
     void graphics_renderer::render() {
         // Render the scene once for every camera.
         while (!cameras_.empty()) {
-            auto& cam_data = cameras_.top();
-            auto& trans = cam_data.transform_;
-            auto& cam = cam_data.camera_;
+            auto& trans = cameras_.top().transform_;
+            auto& cam = cameras_.top().camera_;
+
+            // In OpenGL convention, the camera looks down the -z axis.
+            const auto& view_dir_x = -trans.left_;
+            const auto& view_dir_y = trans.up_;
+            const auto& view_dir_z = -trans.forward_;
 
             // View Matrix
             const auto view_matrix = matrix_util::view_matrix(trans.position_, trans.forward_, trans.up_);
-            const auto& view_forward = trans.forward_;
-            const auto& view_up = trans.up_;
-            const auto& view_right = -trans.left_;
-
             // Projection Matrix
             const matrix4x4 projection_matrix = (cam.mode_ == projection_mode::perspective)
                                           ? matrix_util::perspective_matrix(cam.aspect_ratio_, cam.fov_, cam.near_plane_, cam.far_plane_)
                                           : matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
 
+            d_buff_->bind();
+            d_buff_->clear_colour_all();
+            d_buff_->clear_depth_stencil();
+            forward_pass(view_matrix, projection_matrix, view_dir_z, view_dir_y, view_dir_x);
+
             // Render Passes
-            geometry_pass(view_matrix, projection_matrix);
-            light_pass(view_matrix, view_forward, view_up, view_right);
-            forward_pass(view_matrix, projection_matrix, view_forward, view_up, view_right, cam.skybox_);
-            post_proc_pass(cam.near_plane_, cam.far_plane_);
+            // geometry_pass(view_matrix, projection_matrix);
+            // light_pass(view_matrix, view_forward, view_up, view_right);
+            // forward_pass(view_matrix, projection_matrix, view_forward, view_up, view_right, cam.skybox_);
+            // post_proc_pass(cam.near_plane_, cam.far_plane_);
 
             // Blit to default framebuffer.
-            pp_buff_->set_read_colour_attachment(post_proc_buffer::colour_attachments::composite);
-            pp_buff_->blit_to(d_buff_.get(), true, false, false, 0, 0, window_width_, window_height_, 0, 0, window_width_, window_height_);
-            d_buff_->bind();
+            // pp_buff_->set_read_colour_attachment(post_proc_buffer::colour_attachments::composite);
+            // pp_buff_->blit_to(d_buff_.get(), true, false, false, 0, 0, window_width_, window_height_, 0, 0, window_width_, window_height_);
+            // d_buff_->bind();
 
             // Pop camera off the priority queue.
             cameras_.pop();
@@ -129,7 +134,7 @@ namespace mkr {
         forward_transparent_meshes_.clear();
     }
 
-    void graphics_renderer::geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
+    /* void graphics_renderer::geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
         // IMPORTANT: Disable blending so that and fragment with 0 in its alpha channel does not get discarded.
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
@@ -193,9 +198,9 @@ namespace mkr {
                 glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, model_matrices.size());
             }
         }
-    }
+    } */
 
-    void graphics_renderer::light_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
+    /* void graphics_renderer::light_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right) {
         glDisable(GL_BLEND);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_STENCIL_TEST);
@@ -260,20 +265,15 @@ namespace mkr {
             // Draw.
             glDrawElementsInstanced(GL_TRIANGLES, screen_quad_->num_indices(), GL_UNSIGNED_INT, 0, 1);
         }
-    }
+    } */
 
-    void graphics_renderer::forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, const skybox& _skybox) {
+    void graphics_renderer::forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_dir_z, const vector3& _view_dir_y, const vector3& _view_dir_x) {
         // Render opaque objects.
-        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
-        glEnable(GL_STENCIL_TEST);
-        glStencilMask(0xFFFFFFFF); // Each bit is written to the stencil buffer as-is.
-        glStencilFunc(GL_ALWAYS, 0x10, 0xFFFFFFFF);
-        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-        f_buff_->bind();
+        /* f_buff_->bind();
         f_buff_->set_draw_colour_attachment_all();
         f_buff_->clear_colour_all();
 
@@ -290,7 +290,7 @@ namespace mkr {
         g_buff_->blit_to(f_buff_.get(), true, false, false, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
 
         g_buff_->blit_to(f_buff_.get(), false, true, true, 0, 0, 1920, 1080, 0, 0, 1920, 1080);
-        f_buff_->set_draw_colour_attachment_all();
+        f_buff_->set_draw_colour_attachment_all(); */
 
         auto view_projection_matrix = _projection_matrix * _view_matrix;
         for (auto& material_iter : forward_opaque_meshes_) {
@@ -332,7 +332,7 @@ namespace mkr {
 
                 auto position_matrix = _view_matrix * t.transform_;
                 auto position_camera_space = vector3{position_matrix[3][0], position_matrix[3][1], position_matrix[3][2]};
-                vector3 direction_vector = vector3{_view_right.dot(t.forward_), _view_up.dot(t.forward_), _view_forward.dot(t.forward_)}.normalised();
+                vector3 direction_camera_space = vector3{_view_dir_x.dot(t.forward_), _view_dir_y.dot(t.forward_), _view_dir_z.dot(t.forward_)}.normalised();
 
                 shader->set_uniform(i + forward_shader::uniform::u_light_mode0, l.get_mode());
                 shader->set_uniform(i + forward_shader::uniform::u_light_power0, l.get_power());
@@ -342,8 +342,8 @@ namespace mkr {
                 shader->set_uniform(i + forward_shader::uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
                 shader->set_uniform(i + forward_shader::uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
                 shader->set_uniform(i + forward_shader::uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
-                shader->set_uniform(i + forward_shader::uniform::u_light_position_camera_space0, position_camera_space);
-                shader->set_uniform(i + forward_shader::uniform::u_light_direction_camera_space0, direction_vector);
+                shader->set_uniform(i + forward_shader::uniform::u_light_position0, position_camera_space);
+                shader->set_uniform(i + forward_shader::uniform::u_light_direction0, direction_camera_space);
             }
 
             // Draw to screen.
@@ -353,8 +353,7 @@ namespace mkr {
 
                 std::vector<mesh_instance_data> batch;
                 for (auto& model_matrix : model_matrices) {
-                    const auto model_view_matrix = _view_matrix * model_matrix;
-                    const auto model_view_inverse = matrix_util::inverse_matrix(model_view_matrix).value_or(matrix4x4::identity());
+                    const auto model_view_inverse = matrix_util::inverse_matrix(_view_matrix * model_matrix).value_or(matrix4x4::identity());
                     const auto normal_matrix = matrix_util::minor_matrix(model_view_inverse.transposed(), 3, 3);
                     batch.push_back({model_matrix, normal_matrix});
                 }
@@ -370,7 +369,7 @@ namespace mkr {
         // As long as a colour attachment to set to be drawn to it, some value will be written to it no matter what, even if the shader does not specify.
         // For the case of my computer, it will cause the values in fbuffer_composite to also be written to the other colour attachments.
         // [https://stackoverflow.com/questions/39545966/opengl-3-0-framebuffer-outputting-to-attachments-without-me-specifying]
-        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::composite);
+        /* f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::composite);
         if (_skybox.shader_) {
             glDisable(GL_DEPTH_TEST);
             glEnable(GL_STENCIL_TEST);
@@ -387,14 +386,13 @@ namespace mkr {
             skybox_mesh_->bind();
             skybox_mesh_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
             glDrawElementsInstanced(GL_TRIANGLES, skybox_mesh_->num_indices(), GL_UNSIGNED_INT, 0, 1);
-        }
+        } */
 
         // Render transparent objects.
-        f_buff_->set_draw_colour_attachment_all();
-        glEnable(GL_BLEND);
+        // f_buff_->set_draw_colour_attachment_all();
     }
 
-    void graphics_renderer::post_proc_pass(float _near, float _far) {
+    /* void graphics_renderer::post_proc_pass(float _near, float _far) {
         glDisable(GL_BLEND);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_STENCIL_TEST);
@@ -430,7 +428,7 @@ namespace mkr {
             shader->set_uniform(post_proc_shader::uniform::u_top_right, vector2{1920.0f, 1080.0f});
             glDrawElementsInstanced(GL_TRIANGLES, screen_quad_->num_indices(), GL_UNSIGNED_INT, 0, 1);
         }
-    }
+    } */
 
     void graphics_renderer::submit_camera(const local_to_world& _transform, const camera& _camera) {
         cameras_.push({_transform, _camera});

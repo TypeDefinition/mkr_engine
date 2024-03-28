@@ -12,6 +12,6 @@ namespace mkr {
 
         virtual void set_draw_colour_attachment_all();
 
-        virtual void clear_colour_all(const colour& _colour = colour::black);
+        virtual void clear_colour_all(const colour& _colour = colour::black());
     };
 } // mkr

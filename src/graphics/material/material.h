@@ -19,9 +19,9 @@ namespace mkr {
         static std::vector<shader_program*> post_proc_shaders_; // Post-Processing (Shared)
 
         // Phong Shading
-        colour diffuse_colour_ = colour::white;
-        colour specular_colour_ = colour::white;
-        float gloss_ = 1.0f;
+        colour diffuse_colour_ = colour::white();
+        colour specular_colour_ = colour::white();
+        float gloss_ = 32.0f;
         float displacement_scale_ = 0.02f;
 
         // Textures

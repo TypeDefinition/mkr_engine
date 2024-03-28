@@ -160,6 +160,7 @@ namespace mkr {
         tiles->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
         tiles->displacement_scale_ = 0.1f;
         tiles->forward_shader_ = shader_manager::instance().get_shader("forward_shader");
+        tiles->render_path_ = render_path::forward_opaque;
 
         // Cube
         auto brick_wall = material_manager::instance().make_material("brick_wall");
@@ -170,6 +171,13 @@ namespace mkr {
         brick_wall->texture_specular_ = texture_manager::instance().make_texture_2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
         brick_wall->displacement_scale_ = 0.05f;
         brick_wall->forward_shader_ = shader_manager::instance().get_shader("forward_shader");
+        brick_wall->render_path_ = render_path::forward_opaque;
+
+        // Cube
+        auto green = material_manager::instance().make_material("green");
+        green->diffuse_colour_ = colour::green();
+        green->forward_shader_ = shader_manager::instance().get_shader("forward_shader");
+        green->render_path_ = render_path::forward_opaque;
     }
 
     void game_scene::init_meshes() {
@@ -190,23 +198,56 @@ namespace mkr {
 
         // Cube
         transform cube_trans;
-        cube_trans.set_position({2.0f, 1.5f, 5.0f});
+        cube_trans.set_position({5.0f, 1.5f, 5.0f});
         render_mesh cube_rend{};
         cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
         cube_rend.material_ = material_manager::instance().get_material("brick_wall");
         world_.entity("cube").set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
 
+        // Sphere
+        transform sphere_trans;
+        sphere_trans.set_position({0.0f, 1.5f, 10.0f});
+        render_mesh sphere_rend{};
+        sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+        sphere_rend.material_ = material_manager::instance().get_material("green");
+        world_.entity("sphere").set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+
         // Lights
-        transform light_trans;
-        light_trans.set_position({0.0f, 0.0f, -10.0f});
-        quaternion rotation_x, rotation_y;
-        rotation_x.set_rotation(vector3::x_axis, 45.0f * maths_util::deg2rad);
-        rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
-        light_trans.set_rotation(rotation_y * rotation_x);
-        light lt;
-        lt.set_mode(light_mode::directional);
-        lt.set_power(0.6f);
-        world_.entity("light").set<transform>(light_trans).set<light>(lt).add<local_to_world>();
+        {
+            transform light_trans;
+            light_trans.set_position({0.0f, 5.0f, -10.0f});
+            quaternion rotation_x, rotation_y;
+            rotation_x.set_rotation(vector3::x_axis, 45.0f * maths_util::deg2rad);
+            rotation_y.set_rotation(vector3::y_axis, 45.0f * maths_util::deg2rad);
+            light_trans.set_rotation(rotation_y * rotation_x);
+            light lt;
+            lt.set_mode(light_mode::directional);
+            lt.set_power(1.0f);
+            world_.entity("directional light").set<transform>(light_trans).set<light>(lt).add<local_to_world>();
+        }
+
+        // Spotlight
+        {
+            transform light_trans;
+            light_trans.set_position({0.0f, 5.0f, 10.0f});
+            quaternion rotation_x;
+            rotation_x.set_rotation(vector3::x_axis, 60.0f * maths_util::deg2rad);
+            light_trans.set_rotation(rotation_x);
+            light lt;
+            lt.set_mode(light_mode::spot);
+            lt.set_power(1.0f);
+            world_.entity("spot light").set<transform>(light_trans).set<light>(lt).add<local_to_world>();
+        }
+
+        // Point Light
+        {
+            transform light_trans;
+            light_trans.set_position({-20.0f, 5.0f, 0.0f});
+            light lt;
+            lt.set_mode(light_mode::point);
+            lt.set_power(1.0f);
+            world_.entity("point light").set<transform>(light_trans).set<light>(lt).add<local_to_world>();
+        }
     }
 
     void game_scene::init_player() {

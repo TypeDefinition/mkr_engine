@@ -78,10 +78,10 @@ namespace mkr {
         virtual ~graphics_renderer() {}
 
         void render();
-        void geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
-        void light_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
-        void forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right, const skybox& _skybox);
-        void post_proc_pass(float _near, float _far);
+        // void geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
+        // void light_pass(const matrix4x4& _view_matrix, const vector3& _view_forward, const vector3& _view_up, const vector3& _view_right);
+        void forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const vector3& _view_dir_z, const vector3& _view_dir_y, const vector3& _view_dir_x);
+        // void post_proc_pass(float _near, float _far);
 
     public:
         void init();

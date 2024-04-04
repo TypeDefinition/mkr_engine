@@ -297,127 +297,164 @@ $(function() {
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="keywordflow">return</span> std::make_unique&lt;mesh&gt;(_name, vertices, indices);</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        }</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">  229</a></span>&#160;        <span class="keyword">static</span> std::unique_ptr&lt;mesh&gt; <a class="code" href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">load_obj</a>(<span class="keyword">const</span> std::string &amp;_name, <span class="keyword">const</span> std::string &amp;_file) {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            <span class="comment">// Vertex Data and Index Data</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            std::vector&lt;vertex&gt; vertices;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            std::vector&lt;uint32_t&gt; indices;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <span class="comment">// Vertex Attribute(s)</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            std::vector&lt;vector3&gt; positions;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            std::vector&lt;vector3&gt; normals;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            std::vector&lt;vector3&gt; tex_coords;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <span class="comment">// Read the file.</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            std::string file_str = <a class="code" href="classmkr_1_1file__util.html#a4f37845d070c91ff23fa0785b98db89d">file_util::file_to_str</a>(_file);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            std::stringstream ss(file_str.c_str());</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <span class="keywordflow">while</span> (ss.good()) {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                std::string line;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                std::getline(ss, line, <span class="charliteral">&#39;\n&#39;</span>);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                <span class="comment">// Position</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;v &quot;</span>, line.c_str(), 2) == 0) {</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                    std::sscanf(line.c_str() + 2, <span class="stringliteral">&quot;%f%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.y_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.z_);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                    positions.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>);</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                }</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                <span class="comment">// TexCoord</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;vt &quot;</span>, line.c_str(), 3) == 0) {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                    std::sscanf(line.c_str() + 3, <span class="stringliteral">&quot;%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.y_);</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                    tex_coords.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                }</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                <span class="comment">// Normal</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;vn &quot;</span>, line.c_str(), 3) == 0) {</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                    std::sscanf(line.c_str() + 3, <span class="stringliteral">&quot;%f%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.y_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.z_);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                    normals.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                <span class="comment">// Faces</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;f &quot;</span>, line.c_str(), 2) == 0) {</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                    uint32_t position_indices[3];</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                    uint32_t tex_coord_indices[3];</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                    uint32_t normal_indices[3];</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                    int32_t matches = std::sscanf(</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                            line.c_str() + 2,</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                            <span class="stringliteral">&quot;%d/%d/%d %d/%d/%d %d/%d/%d\n&quot;</span>,</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                            &amp;position_indices[0], &amp;tex_coord_indices[0], &amp;normal_indices[0],</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                            &amp;position_indices[1], &amp;tex_coord_indices[1], &amp;normal_indices[1],</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                            &amp;position_indices[2], &amp;tex_coord_indices[2], &amp;normal_indices[2]</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                    );</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                    <span class="keywordflow">if</span> (matches != 9) {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                        std::string msg = <span class="stringliteral">&quot;Cannot load mesh [&quot;</span> + _file + <span class="stringliteral">&quot;]. Make sure that the mesh is triangulated!&quot;</span>;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                        log::error(msg);</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                    }</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                    <span class="comment">// Add the Vertex.</span></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 3; ++i) {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a> <a class="code" href="structmkr_1_1vertex.html">vertex</a>;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#ad2045f8f3cc23bc61d9c11113dd03c43">position_</a> = positions[position_indices[i] - 1]; <span class="comment">// -1 because .OBJ starts their index at 1.</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a919b863885b18c198d5990500aac4945">normal_</a> = normals[normal_indices[i] - 1];</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a09534f469c83020a5f11837374ca6ced">tex_coord_</a> = tex_coords[tex_coord_indices[i] - 1];</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                        vertices.push_back(<a class="code" href="structmkr_1_1vertex.html">vertex</a>);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                    }</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                }</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            }</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="comment">// Index the vertices. (This defeats the point of indexing, since vertex data is still repeated, but creating a proper solution is too troublesome for now.)</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; vertices.size(); ++i) {</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                indices.push_back(i);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;            }</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            <span class="comment">// Set Tangents</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; indices.size(); i += 3) {</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                <span class="comment">// This gives us 2 of the 3 edges.</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                matrix3x2 edges;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                edges[0][0] = vertices[indices[i + 1]].position_.x_ - vertices[indices[i]].position_.x_;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                edges[1][0] = vertices[indices[i + 1]].position_.y_ - vertices[indices[i]].position_.y_;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                edges[2][0] = vertices[indices[i + 1]].position_.z_ - vertices[indices[i]].position_.z_;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                edges[0][1] = vertices[indices[i + 2]].position_.x_ - vertices[indices[i]].position_.x_;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                edges[1][1] = vertices[indices[i + 2]].position_.y_ - vertices[indices[i]].position_.y_;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                edges[2][1] = vertices[indices[i + 2]].position_.z_ - vertices[indices[i]].position_.z_;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                <span class="comment">// We have the length of 2 edges, and we know that each the edges can be represented by</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                <span class="comment">// some length of the tangent + some length of the bitangent.</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                <span class="comment">// One way we can find that length is by using the UV coordinates.</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                <span class="comment">// So for example, we know that for one of the edges,</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                <span class="comment">// the ratio of the edge along the tangent axis (also the same as the U axis for the texture coordinates) is U1 - U0 and.</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                <span class="comment">// the ratio of the edge along the bitangent axis (also the same as the U axis for the texture coordinates) is V1 - V0.</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                matrix2x2 tangent_to_bitangent_ratio;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                tangent_to_bitangent_ratio[0][0] = vertices[indices[i + 1]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                tangent_to_bitangent_ratio[1][0] = vertices[indices[i + 1]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                tangent_to_bitangent_ratio[0][1] = vertices[indices[i + 2]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                tangent_to_bitangent_ratio[1][1] = vertices[indices[i + 2]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                matrix3x2 tangents = matrix_util::inverse_matrix(tangent_to_bitangent_ratio).value_or(matrix2x2::identity()) * edges;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                vertices[indices[i + 0]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                vertices[indices[i + 1]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                vertices[indices[i + 2]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;            }</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; vert: vertices) {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                vert.tangent_.normalise();</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            }</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            <span class="comment">// Create the mesh.</span></div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;            <span class="keyword">auto</span> m = std::make_unique&lt;mesh&gt;(_name, vertices, indices);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            <span class="keywordflow">return</span> m;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        }</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    };</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;} <span class="comment">// mkr</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#aa01d15bf7073d36cda6c4ab4634db93a">  229</a></span>&#160;        <span class="keyword">static</span> std::unique_ptr&lt;mesh&gt; <a class="code" href="classmkr_1_1mesh__builder.html#aa01d15bf7073d36cda6c4ab4634db93a">make_debug_quad</a>(<span class="keyword">const</span> std::string&amp; _name) {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            std::vector&lt;vertex&gt; vertices(4);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            vertices[0].position_ = {0.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            vertices[1].position_ = {1.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            vertices[2].position_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            vertices[3].position_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            vertices[0].normal_ = {0.0f, 0.0f, 1.0f};</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            vertices[1].normal_ = {0.0f, 0.0f, 1.0f};</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            vertices[2].normal_ = {0.0f, 0.0f, 1.0f};</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            vertices[3].normal_ = {0.0f, 0.0f, 1.0f};</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            vertices[2].tangent_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            vertices[3].tangent_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            std::vector&lt;uint32_t&gt; indices(6);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            indices[0] = 0;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            indices[1] = 1;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            indices[2] = 2;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            indices[3] = 0;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            indices[4] = 3;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            indices[5] = 1;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            <span class="keywordflow">return</span> std::make_unique&lt;mesh&gt;(_name, vertices, indices);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        }</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">  265</a></span>&#160;        <span class="keyword">static</span> std::unique_ptr&lt;mesh&gt; <a class="code" href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">load_obj</a>(<span class="keyword">const</span> std::string &amp;_name, <span class="keyword">const</span> std::string &amp;_file) {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            <span class="comment">// Vertex Data and Index Data</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            std::vector&lt;vertex&gt; vertices;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            std::vector&lt;uint32_t&gt; indices;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="comment">// Vertex Attribute(s)</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            std::vector&lt;vector3&gt; positions;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            std::vector&lt;vector3&gt; normals;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            std::vector&lt;vector3&gt; tex_coords;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            <span class="comment">// Read the file.</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            std::string file_str = <a class="code" href="classmkr_1_1file__util.html#a4f37845d070c91ff23fa0785b98db89d">file_util::file_to_str</a>(_file);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            std::stringstream ss(file_str.c_str());</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="keywordflow">while</span> (ss.good()) {</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                std::string line;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                std::getline(ss, line, <span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                <span class="comment">// Position</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;v &quot;</span>, line.c_str(), 2) == 0) {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                    std::sscanf(line.c_str() + 2, <span class="stringliteral">&quot;%f%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.y_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>.z_);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                    positions.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">position</a>);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="comment">// TexCoord</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;vt &quot;</span>, line.c_str(), 3) == 0) {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                    std::sscanf(line.c_str() + 3, <span class="stringliteral">&quot;%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.y_);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                    tex_coords.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                <span class="comment">// Normal</span></div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;vn &quot;</span>, line.c_str(), 3) == 0) {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                    std::sscanf(line.c_str() + 3, <span class="stringliteral">&quot;%f%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.y_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>.z_);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                    normals.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">normal</a>);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                }</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                <span class="comment">// Faces</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;f &quot;</span>, line.c_str(), 2) == 0) {</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                    uint32_t position_indices[3];</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                    uint32_t tex_coord_indices[3];</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                    uint32_t normal_indices[3];</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    int32_t matches = std::sscanf(</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                            line.c_str() + 2,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                            <span class="stringliteral">&quot;%d/%d/%d %d/%d/%d %d/%d/%d\n&quot;</span>,</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                            &amp;position_indices[0], &amp;tex_coord_indices[0], &amp;normal_indices[0],</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                            &amp;position_indices[1], &amp;tex_coord_indices[1], &amp;normal_indices[1],</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                            &amp;position_indices[2], &amp;tex_coord_indices[2], &amp;normal_indices[2]</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                    );</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                    <span class="keywordflow">if</span> (matches != 9) {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                        std::string msg = <span class="stringliteral">&quot;Cannot load mesh [&quot;</span> + _file + <span class="stringliteral">&quot;]. Make sure that the mesh is triangulated!&quot;</span>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                        log::error(msg);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                    }</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                    <span class="comment">// Add the Vertex.</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 3; ++i) {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a> <a class="code" href="structmkr_1_1vertex.html">vertex</a>;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#ad2045f8f3cc23bc61d9c11113dd03c43">position_</a> = positions[position_indices[i] - 1]; <span class="comment">// -1 because .OBJ starts their index at 1.</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a919b863885b18c198d5990500aac4945">normal_</a> = normals[normal_indices[i] - 1];</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a09534f469c83020a5f11837374ca6ced">tex_coord_</a> = tex_coords[tex_coord_indices[i] - 1];</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                        vertices.push_back(<a class="code" href="structmkr_1_1vertex.html">vertex</a>);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                    }</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                }</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;            }</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            <span class="comment">// Index the vertices. (This defeats the point of indexing, since vertex data is still repeated, but creating a proper solution is too troublesome for now.)</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; vertices.size(); ++i) {</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                indices.push_back(i);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            }</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            <span class="comment">// Set Tangents</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;            <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; indices.size(); i += 3) {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                <span class="comment">// This gives us 2 of the 3 edges.</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                matrix3x2 edges;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                edges[0][0] = vertices[indices[i + 1]].position_.x_ - vertices[indices[i]].position_.x_;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                edges[1][0] = vertices[indices[i + 1]].position_.y_ - vertices[indices[i]].position_.y_;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                edges[2][0] = vertices[indices[i + 1]].position_.z_ - vertices[indices[i]].position_.z_;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                edges[0][1] = vertices[indices[i + 2]].position_.x_ - vertices[indices[i]].position_.x_;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;                edges[1][1] = vertices[indices[i + 2]].position_.y_ - vertices[indices[i]].position_.y_;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;                edges[2][1] = vertices[indices[i + 2]].position_.z_ - vertices[indices[i]].position_.z_;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;                <span class="comment">// We have the length of 2 edges, and we know that each the edges can be represented by</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                <span class="comment">// some length of the tangent + some length of the bitangent.</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                <span class="comment">// One way we can find that length is by using the UV coordinates.</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                <span class="comment">// So for example, we know that for one of the edges,</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                <span class="comment">// the ratio of the edge along the tangent axis (also the same as the U axis for the texture coordinates) is U1 - U0 and.</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                <span class="comment">// the ratio of the edge along the bitangent axis (also the same as the U axis for the texture coordinates) is V1 - V0.</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                matrix2x2 tangent_to_bitangent_ratio;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;                tangent_to_bitangent_ratio[0][0] = vertices[indices[i + 1]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;                tangent_to_bitangent_ratio[1][0] = vertices[indices[i + 1]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;                tangent_to_bitangent_ratio[0][1] = vertices[indices[i + 2]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;                tangent_to_bitangent_ratio[1][1] = vertices[indices[i + 2]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                matrix3x2 tangents = matrix_util::inverse_matrix(tangent_to_bitangent_ratio).value_or(matrix2x2::identity()) * edges;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;                vertices[indices[i + 0]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;                vertices[indices[i + 1]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;                vertices[indices[i + 2]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;            }</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160; </div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; vert: vertices) {</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                vert.tangent_.normalise();</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;            }</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;            <span class="comment">// Create the mesh.</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;            <span class="keyword">auto</span> m = std::make_unique&lt;mesh&gt;(_name, vertices, indices);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;            <span class="keywordflow">return</span> m;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    };</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;} <span class="comment">// mkr</span></div>
 <div class="ttc" id="aclassmkr_1_1file__util_html_a4f37845d070c91ff23fa0785b98db89d"><div class="ttname"><a href="classmkr_1_1file__util.html#a4f37845d070c91ff23fa0785b98db89d">mkr::file_util::file_to_str</a></div><div class="ttdeci">static std::string file_to_str(const std::string &amp;_filename)</div><div class="ttdef"><b>Definition:</b> <a href="file__util_8h_source.html#l00012">file_util.h:12</a></div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html"><div class="ttname"><a href="classmkr_1_1mesh__builder.html">mkr::mesh_builder</a></div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00012">mesh_builder.h:12</a></div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_a1ee30c09ea44ff55deb6143a1d45bec4"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a1ee30c09ea44ff55deb6143a1d45bec4">mkr::mesh_builder::mesh_builder</a></div><div class="ttdeci">mesh_builder()=delete</div></div>
-<div class="ttc" id="aclassmkr_1_1mesh__builder_html_a66d5eced8c2a5c419553ccd996438fea"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">mkr::mesh_builder::load_obj</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; load_obj(const std::string &amp;_name, const std::string &amp;_file)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00229">mesh_builder.h:229</a></div></div>
+<div class="ttc" id="aclassmkr_1_1mesh__builder_html_a66d5eced8c2a5c419553ccd996438fea"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">mkr::mesh_builder::load_obj</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; load_obj(const std::string &amp;_name, const std::string &amp;_file)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00265">mesh_builder.h:265</a></div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_a755d646cc88bda260d2766c18cad1c64"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a755d646cc88bda260d2766c18cad1c64">mkr::mesh_builder::make_screen_quad</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_screen_quad(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00193">mesh_builder.h:193</a></div></div>
+<div class="ttc" id="aclassmkr_1_1mesh__builder_html_aa01d15bf7073d36cda6c4ab4634db93a"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#aa01d15bf7073d36cda6c4ab4634db93a">mkr::mesh_builder::make_debug_quad</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_debug_quad(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00229">mesh_builder.h:229</a></div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_ac38c3807cf8fc57625fb610cf7839f06"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">mkr::mesh_builder::make_skybox</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_skybox(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00016">mesh_builder.h:16</a></div></div>
 <div class="ttc" id="afile__util_8h_html"><div class="ttname"><a href="file__util_8h.html">file_util.h</a></div></div>
 <div class="ttc" id="amesh_8h_html"><div class="ttname"><a href="mesh_8h.html">mesh.h</a></div></div>

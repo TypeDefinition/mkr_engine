@@ -79,7 +79,7 @@ $(function() {
 <div class="dynheader">
 Collaboration diagram for mkr::texture_loader:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmkr_1_1texture__loader__coll__graph.svg" width="178" height="176"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmkr_1_1texture__loader__coll__graph.svg" width="162" height="176"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
@@ -94,10 +94,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a10c984af0fe87d98bec1a39586f97c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad750b732bd424117c645de9af7e07074"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture__loader.html#ad750b732bd424117c645de9af7e07074">exit</a> ()</td></tr>
 <tr class="separator:ad750b732bd424117c645de9af7e07074"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a266b99e830798707da9435d3e9a55c36"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture__loader.html#a266b99e830798707da9435d3e9a55c36">load_texture_2d</a> (const std::string &amp;_name, const std::string &amp;_file, bool _flip_x, bool _flip_y)</td></tr>
-<tr class="separator:a266b99e830798707da9435d3e9a55c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a02dbb38253f21211588389611beb65"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classmkr_1_1texture__cube.html">texture_cube</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture__loader.html#a8a02dbb38253f21211588389611beb65">load_texture_cube</a> (const std::string &amp;_name, std::array&lt; std::string, <a class="el" href="namespacemkr.html#af9699c6cd4b2d098438685dbd2f0d3ceaa7d34a212650da2d69500e5cee8bbec6">num_texture_cube_sides</a> &gt; _files, bool _flip_x, bool _flip_y)</td></tr>
-<tr class="separator:a8a02dbb38253f21211588389611beb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b30ccf8648a96c47bd707213890f1b8"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classmkr_1_1texture2d.html">texture2d</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture__loader.html#a1b30ccf8648a96c47bd707213890f1b8">load_texture2d</a> (const std::string &amp;_name, const std::string &amp;_file, bool _flip_x, bool _flip_y)</td></tr>
+<tr class="separator:a1b30ccf8648a96c47bd707213890f1b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a16b672d1a633f32732e5945331b15"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classmkr_1_1cubemap.html">cubemap</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1texture__loader.html#af4a16b672d1a633f32732e5945331b15">load_cubemap</a> (const std::string &amp;_name, std::array&lt; std::string, <a class="el" href="namespacemkr.html#a09c92574cd3d2f5c038ef61954fbe9a7a845568667ea5f4e95ba71b1a4e7db9a5">num_cubemap_sides</a> &gt; _files, bool _flip_x, bool _flip_y)</td></tr>
+<tr class="separator:af4a16b672d1a633f32732e5945331b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
@@ -316,8 +316,8 @@ Static Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a266b99e830798707da9435d3e9a55c36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a266b99e830798707da9435d3e9a55c36">&#9670;&nbsp;</a></span>load_texture_2d()</h2>
+<a id="af4a16b672d1a633f32732e5945331b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4a16b672d1a633f32732e5945331b15">&#9670;&nbsp;</a></span>load_cubemap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +326,57 @@ Static Private Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::unique_ptr&lt;<a class="el" href="classmkr_1_1texture__2d.html">texture_2d</a>&gt; mkr::texture_loader::load_texture_2d </td>
+          <td class="memname">static std::unique_ptr&lt;<a class="el" href="classmkr_1_1cubemap.html">cubemap</a>&gt; mkr::texture_loader::load_cubemap </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; std::string, <a class="el" href="namespacemkr.html#a09c92574cd3d2f5c038ef61954fbe9a7a845568667ea5f4e95ba71b1a4e7db9a5">num_cubemap_sides</a> &gt;&#160;</td>
+          <td class="paramname"><em>_files</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_flip_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_flip_y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="texture__loader_8h_source.html#l00112">112</a> of file <a class="el" href="texture__loader_8h_source.html">texture_loader.h</a>.</p>
+
+</div>
+</div>
+<a id="a1b30ccf8648a96c47bd707213890f1b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b30ccf8648a96c47bd707213890f1b8">&#9670;&nbsp;</a></span>load_texture2d()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::unique_ptr&lt;<a class="el" href="classmkr_1_1texture2d.html">texture2d</a>&gt; mkr::texture_loader::load_texture2d </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>_name</em>, </td>
@@ -363,56 +413,6 @@ Static Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="texture__loader_8h_source.html#l00083">83</a> of file <a class="el" href="texture__loader_8h_source.html">texture_loader.h</a>.</p>
-
-</div>
-</div>
-<a id="a8a02dbb38253f21211588389611beb65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a02dbb38253f21211588389611beb65">&#9670;&nbsp;</a></span>load_texture_cube()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::unique_ptr&lt;<a class="el" href="classmkr_1_1texture__cube.html">texture_cube</a>&gt; mkr::texture_loader::load_texture_cube </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::array&lt; std::string, <a class="el" href="namespacemkr.html#af9699c6cd4b2d098438685dbd2f0d3ceaa7d34a212650da2d69500e5cee8bbec6">num_texture_cube_sides</a> &gt;&#160;</td>
-          <td class="paramname"><em>_files</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>_flip_x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>_flip_y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="texture__loader_8h_source.html#l00112">112</a> of file <a class="el" href="texture__loader_8h_source.html">texture_loader.h</a>.</p>
 
 </div>
 </div>

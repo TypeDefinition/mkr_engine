@@ -1,5 +1,5 @@
 <map id="mkr::texture" name="mkr::texture">
-<area shape="rect" id="node1" title=" " alt="" coords="76,5,223,259"/>
-<area shape="rect" id="node2" href="$classmkr_1_1texture__2d.html" title=" " alt="" coords="5,307,133,413"/>
-<area shape="rect" id="node3" href="$classmkr_1_1texture__cube.html" title=" " alt="" coords="158,314,301,406"/>
+<area shape="rect" id="node1" title=" " alt="" coords="63,5,210,229"/>
+<area shape="rect" id="node2" href="$classmkr_1_1cubemap.html" title=" " alt="" coords="5,277,124,384"/>
+<area shape="rect" id="node3" href="$classmkr_1_1texture2d.html" title=" " alt="" coords="148,277,269,384"/>
 </map>

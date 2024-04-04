@@ -62,7 +62,6 @@ var menudata={children:[
 {text:"o",url:"namespacemembers_eval_o.html#index_o"},
 {text:"p",url:"namespacemembers_eval_p.html#index_p"},
 {text:"q",url:"namespacemembers_eval_q.html#index_q"},
-{text:"r",url:"namespacemembers_eval_r.html#index_r"},
 {text:"s",url:"namespacemembers_eval_s.html#index_s"},
 {text:"t",url:"namespacemembers_eval_t.html#index_t"},
 {text:"v",url:"namespacemembers_eval_v.html#index_v"}]}]}]},

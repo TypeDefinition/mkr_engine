@@ -68,7 +68,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classmkr_1_1forward__shader-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -95,10 +94,10 @@ Public Types</h2></td></tr>
 <tr class="memitem:a31b23f8fca76f9fc4dd4ff11f07e6ffc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffc">uniform</a> : uint32_t { <br />
 &#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca10eb7227fcf9289fa25976a96d80ba1e">u_view_matrix</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca71513721f68ce686038d3dca4c62524e">u_projection_matrix</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4343ebf9b65fab24f6f66d9dfc1ae12e">u_view_projection_matrix</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca7bb0104b3e27e29731ba638fc134eace">u_texture_offset</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaef21eff0922abe0ca74c0ee9c00935">u_texture_scale</a>
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaef21eff0922abe0ca74c0ee9c00935">u_texture_scale</a>
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca377d7b548f78159c2a8d22d74d65a77f">u_inv_view_matrix</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9d4d0c8ea3bc601826f289a8789c578d">u_diffuse_colour</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca955253e62254cd267addddf88882de24">u_specular_colour</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca0872448724496f696ebe5e9bf0c5d1b1">u_gloss</a>
@@ -116,22 +115,27 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415">u_texture_specular</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca0c8e803cd330c7236ecec19f876646aa">u_texture_gloss</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca89e067d3fb9dea4abbf733435b24574b">u_texture_displacement</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca04909bebc2437bb9a0bcb2cee98beeee">u_texture_shadows0</a>
+, <br />
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaea9ce1f92f8f4552f06e5082aa0a11">u_cubemap_shadows0</a> = lighting::max_lights + u_texture_shadows0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf34c58ac3facc896eb29a6fdeedb70cb">u_num_lights</a> = lighting::max_lights + u_cubemap_shadows0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcad8ec8ab6dfada2b70a157bef0ca0aae1">u_ambient_light</a>
-, <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf34c58ac3facc896eb29a6fdeedb70cb">u_num_lights</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca8dd74e054868d5e1451e80609780cb06">u_light_mode0</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca277e474ab504487585e4a1f776f38d8a">u_light_power0</a> = max_lights + u_light_mode0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca02c9e0c3befcaa5f51291aa26e6ab447">u_light_colour0</a> = max_lights + u_light_power0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca26f8208ac80e767e65253560f52ca44b">u_light_attenuation_constant0</a> = max_lights + u_light_colour0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5060d4cfa34d8d933b39fbc2866d1c93">u_light_attenuation_linear0</a> = max_lights + u_light_attenuation_constant0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf21ce35a65b2f3d4cb7ef8979e61924e">u_light_attenuation_quadratic0</a> = max_lights + u_light_attenuation_linear0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcab3eae4baef33eb3918a497d22b6c39bf">u_light_spotlight_inner_cosine0</a> = max_lights + u_light_attenuation_quadratic0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca277e474ab504487585e4a1f776f38d8a">u_light_power0</a> = lighting::max_lights + u_light_mode0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca02c9e0c3befcaa5f51291aa26e6ab447">u_light_colour0</a> = lighting::max_lights + u_light_power0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca26f8208ac80e767e65253560f52ca44b">u_light_attenuation_constant0</a> = lighting::max_lights + u_light_colour0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5060d4cfa34d8d933b39fbc2866d1c93">u_light_attenuation_linear0</a> = lighting::max_lights + u_light_attenuation_constant0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaa6723e82d3844d7003a33e2cf536a586">u_light_spotlight_outer_cosine0</a> = max_lights + u_light_spotlight_inner_cosine0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca74c8678418e617cfdef23e1a4339e020">u_light_position_camera_space0</a> = max_lights + u_light_spotlight_outer_cosine0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca7fe2b74532b4286478e6b5a24170a680">u_light_direction_camera_space0</a> = max_lights + u_light_position_camera_space0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6f39b6bf50be6db010d2eeba63443769">num_shader_uniforms</a> = max_lights + u_light_direction_camera_space0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf21ce35a65b2f3d4cb7ef8979e61924e">u_light_attenuation_quadratic0</a> = lighting::max_lights + u_light_attenuation_linear0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcab3eae4baef33eb3918a497d22b6c39bf">u_light_spotlight_inner_cosine0</a> = lighting::max_lights + u_light_attenuation_quadratic0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaa6723e82d3844d7003a33e2cf536a586">u_light_spotlight_outer_cosine0</a> = lighting::max_lights + u_light_spotlight_inner_cosine0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4a7546db8dbdd49fcb4aa78e5538bd66">u_light_position0</a> = lighting::max_lights + u_light_spotlight_outer_cosine0
+, <br />
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9b032964a55bdffcd2d785a7f5db38de">u_light_direction0</a> = lighting::max_lights + u_light_position0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca2eaf06af48fb3af510ca44d06f416b26">u_light_shadow_distance0</a> = lighting::max_lights + u_light_direction0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4bea6146e49003338f2a582ab4e9d2b4">u_light_view_projection_matrix0</a> = lighting::max_lights + u_light_shadow_distance0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6f39b6bf50be6db010d2eeba63443769">num_shader_uniforms</a> = lighting::max_lights + u_light_view_projection_matrix0
 <br />
  }</td></tr>
 <tr class="separator:a31b23f8fca76f9fc4dd4ff11f07e6ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +149,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classmkr_1_1shader__program"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmkr_1_1shader__program')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmkr_1_1shader__program.html">mkr::shader_program</a></td></tr>
 <tr class="memitem:af071501a7f30a37b62170ce32e10d766 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">shader_program</a> (const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</td></tr>
 <tr class="separator:af071501a7f30a37b62170ce32e10d766 inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1313ede21c9f1b9cec9df8b121df6bc9 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a1313ede21c9f1b9cec9df8b121df6bc9">shader_program</a> (const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_gs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</td></tr>
+<tr class="separator:a1313ede21c9f1b9cec9df8b121df6bc9 inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dc34eb66d84e537eb57a5a990c07b5d inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a5dc34eb66d84e537eb57a5a990c07b5d">~shader_program</a> ()</td></tr>
 <tr class="separator:a5dc34eb66d84e537eb57a5a990c07b5d inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af718c8520b6836cd7f2f6a47fc5863c4 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af718c8520b6836cd7f2f6a47fc5863c4">name</a> () const</td></tr>
@@ -264,11 +270,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af9465656750519d5f8e17a35de13c57e inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af9465656750519d5f8e17a35de13c57e">set_uniform</a> (uint32_t _shader_uniform, const vector3 &amp;_value)</td></tr>
 <tr class="separator:af9465656750519d5f8e17a35de13c57e inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2231c6c49254df374d3247ea38d2fd86"><td class="memItemLeft" align="right" valign="top">static constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1forward__shader.html#a2231c6c49254df374d3247ea38d2fd86">max_lights</a> = 32</td></tr>
-<tr class="separator:a2231c6c49254df374d3247ea38d2fd86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2499cd09be5296ce6d7a6b923bb0c092"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1forward__shader.html#a2499cd09be5296ce6d7a6b923bb0c092">assign_uniforms</a> ()</td></tr>
@@ -296,7 +297,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00006">6</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00007">7</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a31b23f8fca76f9fc4dd4ff11f07e6ffc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31b23f8fca76f9fc4dd4ff11f07e6ffc">&#9670;&nbsp;</a></span>uniform</h2>
@@ -312,9 +313,9 @@ Additional Inherited Members</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca10eb7227fcf9289fa25976a96d80ba1e"></a>u_view_matrix&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca71513721f68ce686038d3dca4c62524e"></a>u_projection_matrix&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca4343ebf9b65fab24f6f66d9dfc1ae12e"></a>u_view_projection_matrix&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca7bb0104b3e27e29731ba638fc134eace"></a>u_texture_offset&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaef21eff0922abe0ca74c0ee9c00935"></a>u_texture_scale&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca377d7b548f78159c2a8d22d74d65a77f"></a>u_inv_view_matrix&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca9d4d0c8ea3bc601826f289a8789c578d"></a>u_diffuse_colour&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca955253e62254cd267addddf88882de24"></a>u_specular_colour&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca0872448724496f696ebe5e9bf0c5d1b1"></a>u_gloss&#160;</td><td class="fielddoc"></td></tr>
@@ -329,8 +330,10 @@ Additional Inherited Members</h2></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415"></a>u_texture_specular&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca0c8e803cd330c7236ecec19f876646aa"></a>u_texture_gloss&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca89e067d3fb9dea4abbf733435b24574b"></a>u_texture_displacement&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcad8ec8ab6dfada2b70a157bef0ca0aae1"></a>u_ambient_light&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca04909bebc2437bb9a0bcb2cee98beeee"></a>u_texture_shadows0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaea9ce1f92f8f4552f06e5082aa0a11"></a>u_cubemap_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaf34c58ac3facc896eb29a6fdeedb70cb"></a>u_num_lights&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcad8ec8ab6dfada2b70a157bef0ca0aae1"></a>u_ambient_light&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca8dd74e054868d5e1451e80609780cb06"></a>u_light_mode0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca277e474ab504487585e4a1f776f38d8a"></a>u_light_power0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca02c9e0c3befcaa5f51291aa26e6ab447"></a>u_light_colour0&#160;</td><td class="fielddoc"></td></tr>
@@ -339,12 +342,14 @@ Additional Inherited Members</h2></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaf21ce35a65b2f3d4cb7ef8979e61924e"></a>u_light_attenuation_quadratic0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcab3eae4baef33eb3918a497d22b6c39bf"></a>u_light_spotlight_inner_cosine0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaa6723e82d3844d7003a33e2cf536a586"></a>u_light_spotlight_outer_cosine0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca74c8678418e617cfdef23e1a4339e020"></a>u_light_position_camera_space0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca7fe2b74532b4286478e6b5a24170a680"></a>u_light_direction_camera_space0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca4a7546db8dbdd49fcb4aa78e5538bd66"></a>u_light_position0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca9b032964a55bdffcd2d785a7f5db38de"></a>u_light_direction0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca2eaf06af48fb3af510ca44d06f416b26"></a>u_light_shadow_distance0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca4bea6146e49003338f2a582ab4e9d2b4"></a>u_light_view_projection_matrix0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca6f39b6bf50be6db010d2eeba63443769"></a>num_shader_uniforms&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00010">10</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00009">9</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 
 </div>
 </div>
@@ -354,6 +359,9 @@ Additional Inherited Members</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">mkr::forward_shader::forward_shader </td>
@@ -379,9 +387,14 @@ Additional Inherited Members</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00005">5</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00081">81</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 
 </div>
 </div>
@@ -408,7 +421,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00070">70</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00087">87</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +450,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Assign textures to GL_TEXTURE0 to GL_TEXTUREN. For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions that may be used to load uniform variables defined as sampler types. Loading samplers with any other function will result in a GL_INVALID_OPERATION error. Thus, we must cast texture_unit to a signed integer. </p>
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00053">53</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00063">63</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -465,32 +478,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Assign uniforms to uniform_handles_. </p>
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00011">11</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a2231c6c49254df374d3247ea38d2fd86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2231c6c49254df374d3247ea38d2fd86">&#9670;&nbsp;</a></span>max_lights</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr uint32_t mkr::forward_shader::max_lights = 32</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00008">8</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00005">5</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
 
 </div>
 </div>

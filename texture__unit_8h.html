@@ -73,10 +73,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<code>#include &quot;<a class="el" href="lighting_8h_source.html">graphics/lighting/lighting.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for texture_unit.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="texture__unit_8h__incl.svg" width="159" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="texture__unit_8h__incl.svg" width="267" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -97,23 +98,17 @@ Namespaces</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704df">mkr::texture_unit</a> : int32_t { <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c">mkr::texture_skybox</a> = 0
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfad4b163748a357ff6d4011717c1759004">mkr::texture_debug</a>
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">mkr::texture_diffuse</a>
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5">mkr::texture_normal</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89">mkr::texture_specular</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79">mkr::texture_gloss</a>
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89">mkr::texture_specular</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79">mkr::texture_gloss</a>
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e">mkr::texture_displacement</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfab5e15f29cadab8f1f8081341bff5f3f0">mkr::texture_frag_position</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa95f748d4b1ef941454f52af4ecee820b">mkr::texture_frag_normal</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac">mkr::texture_shadows0</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfafe46177cc5a88a581cf68ce5317c7be2">mkr::texture_frag_diffuse</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa78ab070005550fa9389ab539d705e8e6">mkr::texture_frag_specular</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa31365efb3f17ef94ebed82d6d78d235c">mkr::texture_frag_gloss</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa9bf1291d9a8e08e853c51eb192817f86">mkr::texture_light_diffuse</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa375ec01642107a6178872e8055cc66ad">mkr::texture_light_specular</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfaed244b158e2663c712a3bffe60427194">mkr::texture_composite</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8d0729a76366b9369a2eea61fb64cefe">mkr::texture_depth_stencil</a>
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169">mkr::cubemap_shadows0</a> = lighting::max_lights + texture_shadows0
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f">mkr::num_texture_units</a> = lighting::max_lights + cubemap_shadows0
 <br />
  }</td></tr>
 <tr class="separator:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -114,9 +114,9 @@ Public Types</h2></td></tr>
 , <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fa1b1faf90de90dd8ef19099fd1671834a">u_light_spotlight_inner_cosine0</a> = max_lights + u_light_attenuation_quadratic0
 , <br />
 &#160;&#160;<a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fa109e82e1a1a760f6ecfefcf69314a060">u_light_spotlight_outer_cosine0</a> = max_lights + u_light_spotlight_inner_cosine0
-, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fad97425da42c3ec91f043115d96168352">u_light_position_camera_space0</a> = max_lights + u_light_spotlight_outer_cosine0
-, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fa22ee6e9d2d08db99885890a6f14fca21">u_light_direction_camera_space0</a> = max_lights + u_light_position_camera_space0
-, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fac532b48d21f949a3e56cbd178aabcaef">num_shader_uniforms</a> = max_lights + u_light_direction_camera_space0
+, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fa965a5a0a1da847242f5d8934eb82b969">u_light_position0</a> = max_lights + u_light_spotlight_outer_cosine0
+, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079faa80f5fe92a28be6b53c057dc6c206951">u_light_direction0</a> = max_lights + u_light_position0
+, <a class="el" href="classmkr_1_1light__shader.html#a29adfa42069f6cd7cc1fdd8e6af5079fac532b48d21f949a3e56cbd178aabcaef">num_shader_uniforms</a> = max_lights + u_light_direction0
 <br />
  }</td></tr>
 <tr class="separator:a29adfa42069f6cd7cc1fdd8e6af5079f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +130,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classmkr_1_1shader__program"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmkr_1_1shader__program')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmkr_1_1shader__program.html">mkr::shader_program</a></td></tr>
 <tr class="memitem:af071501a7f30a37b62170ce32e10d766 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">shader_program</a> (const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</td></tr>
 <tr class="separator:af071501a7f30a37b62170ce32e10d766 inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1313ede21c9f1b9cec9df8b121df6bc9 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a1313ede21c9f1b9cec9df8b121df6bc9">shader_program</a> (const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_gs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</td></tr>
+<tr class="separator:a1313ede21c9f1b9cec9df8b121df6bc9 inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dc34eb66d84e537eb57a5a990c07b5d inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#a5dc34eb66d84e537eb57a5a990c07b5d">~shader_program</a> ()</td></tr>
 <tr class="separator:a5dc34eb66d84e537eb57a5a990c07b5d inherit pub_methods_classmkr_1_1shader__program"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af718c8520b6836cd7f2f6a47fc5863c4 inherit pub_methods_classmkr_1_1shader__program"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shader__program.html#af718c8520b6836cd7f2f6a47fc5863c4">name</a> () const</td></tr>
@@ -251,7 +253,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a4a046dee57a8f755df8c93f3be82d997"><td class="memItemLeft" align="right" valign="top">static constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1light__shader.html#a4a046dee57a8f755df8c93f3be82d997">max_lights</a> = 32</td></tr>
+<tr class="memitem:a4a046dee57a8f755df8c93f3be82d997"><td class="memItemLeft" align="right" valign="top">static constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1light__shader.html#a4a046dee57a8f755df8c93f3be82d997">max_lights</a> = 8</td></tr>
 <tr class="separator:a4a046dee57a8f755df8c93f3be82d997"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -312,8 +314,8 @@ Additional Inherited Members</h2></td></tr>
 <tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fa23b46c50742c195e2bc9230234a8e9fc"></a>u_light_attenuation_quadratic0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fa1b1faf90de90dd8ef19099fd1671834a"></a>u_light_spotlight_inner_cosine0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fa109e82e1a1a760f6ecfefcf69314a060"></a>u_light_spotlight_outer_cosine0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fad97425da42c3ec91f043115d96168352"></a>u_light_position_camera_space0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fa22ee6e9d2d08db99885890a6f14fca21"></a>u_light_direction_camera_space0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fa965a5a0a1da847242f5d8934eb82b969"></a>u_light_position0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079faa80f5fe92a28be6b53c057dc6c206951"></a>u_light_direction0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a29adfa42069f6cd7cc1fdd8e6af5079fac532b48d21f949a3e56cbd178aabcaef"></a>num_shader_uniforms&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
@@ -453,7 +455,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr uint32_t mkr::light_shader::max_lights = 32</td>
+          <td class="memname">constexpr uint32_t mkr::light_shader::max_lights = 8</td>
         </tr>
       </table>
   </td>

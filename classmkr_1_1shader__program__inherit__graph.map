@@ -1,8 +1,10 @@
 <map id="mkr::shader_program" name="mkr::shader_program">
-<area shape="rect" id="node1" title=" " alt="" coords="369,5,555,1021"/>
-<area shape="rect" id="node2" href="$classmkr_1_1forward__shader.html" title=" " alt="" coords="5,1069,164,1191"/>
-<area shape="rect" id="node3" href="$classmkr_1_1geometry__shader.html" title=" " alt="" coords="188,1069,360,1191"/>
-<area shape="rect" id="node4" href="$classmkr_1_1light__shader.html" title=" " alt="" coords="385,1069,539,1191"/>
-<area shape="rect" id="node5" href="$classmkr_1_1post__proc__shader.html" title=" " alt="" coords="564,1069,736,1191"/>
-<area shape="rect" id="node6" href="$classmkr_1_1skybox__shader.html" title=" " alt="" coords="761,1069,915,1191"/>
+<area shape="rect" id="node1" title=" " alt="" coords="557,5,743,1036"/>
+<area shape="rect" id="node2" href="$classmkr_1_1forward__shader.html" title=" " alt="" coords="5,1084,164,1205"/>
+<area shape="rect" id="node3" href="$classmkr_1_1geometry__shader.html" title=" " alt="" coords="188,1084,360,1205"/>
+<area shape="rect" id="node4" href="$classmkr_1_1light__shader.html" title=" " alt="" coords="385,1084,539,1205"/>
+<area shape="rect" id="node5" href="$classmkr_1_1post__proc__shader.html" title=" " alt="" coords="564,1084,736,1205"/>
+<area shape="rect" id="node6" href="$classmkr_1_1shadow__2d__shader.html" title=" " alt="" coords="760,1091,943,1198"/>
+<area shape="rect" id="node7" href="$classmkr_1_1shadow__cubemap__shader.html" title=" " alt="" coords="967,1084,1194,1205"/>
+<area shape="rect" id="node8" href="$classmkr_1_1skybox__shader.html" title=" " alt="" coords="1218,1084,1373,1205"/>
 </map>

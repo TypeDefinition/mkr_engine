@@ -71,18 +71,22 @@ $(function() {
 <div class="contents">
 <a href="lighting_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;maths/colour.h&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html">    6</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classmkr_1_1lighting.html">lighting</a> {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html#a29f401df69bf2297d9be364ffbd5342c">    8</a></span>&#160;        <a class="code" href="classmkr_1_1lighting.html#a29f401df69bf2297d9be364ffbd5342c">lighting</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">   10</a></span>&#160;        <span class="keyword">static</span> colour <a class="code" href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">ambient_light_</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    };</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;}</div>
-<div class="ttc" id="aclassmkr_1_1lighting_html"><div class="ttname"><a href="classmkr_1_1lighting.html">mkr::lighting</a></div><div class="ttdef"><b>Definition:</b> <a href="lighting_8h_source.html#l00006">lighting.h:6</a></div></div>
-<div class="ttc" id="aclassmkr_1_1lighting_html_a05fdf0bf39258c6d1bde9dde1d3a145d"><div class="ttname"><a href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">mkr::lighting::ambient_light_</a></div><div class="ttdeci">static colour ambient_light_</div><div class="ttdef"><b>Definition:</b> <a href="lighting_8h_source.html#l00010">lighting.h:10</a></div></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;maths/colour.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classmkr_1_1lighting.html">lighting</a> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html#a29f401df69bf2297d9be364ffbd5342c">    9</a></span>&#160;        <a class="code" href="classmkr_1_1lighting.html#a29f401df69bf2297d9be364ffbd5342c">lighting</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html#a1d2c15e1eaa3c8162a4a6773a9be5d4e">   11</a></span>&#160;        <span class="keyword">static</span> constexpr uint32_t <a class="code" href="classmkr_1_1lighting.html#a1d2c15e1eaa3c8162a4a6773a9be5d4e">max_lights</a> = 4; <span class="comment">// Must match shader!</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">   13</a></span>&#160;        <span class="keyword">static</span> colour <a class="code" href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">ambient_light_</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    };</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
+<div class="ttc" id="aclassmkr_1_1lighting_html"><div class="ttname"><a href="classmkr_1_1lighting.html">mkr::lighting</a></div><div class="ttdef"><b>Definition:</b> <a href="lighting_8h_source.html#l00007">lighting.h:7</a></div></div>
+<div class="ttc" id="aclassmkr_1_1lighting_html_a05fdf0bf39258c6d1bde9dde1d3a145d"><div class="ttname"><a href="classmkr_1_1lighting.html#a05fdf0bf39258c6d1bde9dde1d3a145d">mkr::lighting::ambient_light_</a></div><div class="ttdeci">static colour ambient_light_</div><div class="ttdef"><b>Definition:</b> <a href="lighting_8h_source.html#l00013">lighting.h:13</a></div></div>
+<div class="ttc" id="aclassmkr_1_1lighting_html_a1d2c15e1eaa3c8162a4a6773a9be5d4e"><div class="ttname"><a href="classmkr_1_1lighting.html#a1d2c15e1eaa3c8162a4a6773a9be5d4e">mkr::lighting::max_lights</a></div><div class="ttdeci">static constexpr uint32_t max_lights</div><div class="ttdef"><b>Definition:</b> <a href="lighting_8h_source.html#l00011">lighting.h:11</a></div></div>
 <div class="ttc" id="aclassmkr_1_1lighting_html_a29f401df69bf2297d9be364ffbd5342c"><div class="ttname"><a href="classmkr_1_1lighting.html#a29f401df69bf2297d9be364ffbd5342c">mkr::lighting::lighting</a></div><div class="ttdeci">lighting()=delete</div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

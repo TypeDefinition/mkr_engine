@@ -46,7 +46,7 @@ if (edges && edges.length) {
         </defs>
 
 <script type="text/javascript">
-var viewWidth = 1393;
+var viewWidth = 1388;
 var viewHeight = 479;
 var sectionId = 'dynsection-0';
 </script>
@@ -54,7 +54,7 @@ var sectionId = 'dynsection-0';
 <svg id="graph" class="graph">
 <g id="viewport">
 <title>singleton</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-475 1389,-475 1389,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-475 1383.5,-475 1383.5,4 -4,4"/>
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
@@ -110,13 +110,13 @@ var sectionId = 'dynsection-0';
 <text text-anchor="start" x="199" y="-334.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; app_window_</text>
 <text text-anchor="start" x="199" y="-323.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; window_width_</text>
 <text text-anchor="start" x="199" y="-312.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; window_height_</text>
-<text text-anchor="start" x="199" y="-301.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; d_buff_</text>
-<text text-anchor="start" x="199" y="-290.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; g_buff_</text>
-<text text-anchor="start" x="199" y="-279.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; l_buff_</text>
-<text text-anchor="start" x="199" y="-268.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; f_buff_</text>
-<text text-anchor="start" x="199" y="-257.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; pp_buff_</text>
+<text text-anchor="start" x="199" y="-301.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; f_buff_</text>
+<text text-anchor="start" x="199" y="-290.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; s2d_buff_</text>
+<text text-anchor="start" x="199" y="-279.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; scube_buff_</text>
+<text text-anchor="start" x="199" y="-268.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; light_view_projection</text>
+<text text-anchor="start" x="199" y="-257.5" font-family="Helvetica,sans-Serif" font-size="10.00">_matrix_</text>
 <text text-anchor="start" x="199" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; screen_quad_</text>
-<text text-anchor="start" x="199" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; skybox_mesh_</text>
+<text text-anchor="start" x="199" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; skybox_cube_</text>
 <text text-anchor="start" x="199" y="-224.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; cameras_</text>
 <text text-anchor="start" x="199" y="-213.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; lights_</text>
 <text text-anchor="start" x="199" y="-202.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; deferred_meshes_</text>
@@ -134,10 +134,10 @@ var sectionId = 'dynsection-0';
 <text text-anchor="start" x="199" y="-73.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; graphics_renderer()</text>
 <text text-anchor="start" x="199" y="-62.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~graphics_renderer()</text>
 <text text-anchor="start" x="199" y="-51.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; render()</text>
-<text text-anchor="start" x="199" y="-40.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; geometry_pass()</text>
-<text text-anchor="start" x="199" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; light_pass()</text>
-<text text-anchor="start" x="199" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; forward_pass()</text>
-<text text-anchor="start" x="199" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; post_proc_pass()</text>
+<text text-anchor="start" x="199" y="-40.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; point_shadow()</text>
+<text text-anchor="start" x="199" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; spot_shadow()</text>
+<text text-anchor="start" x="199" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; directional_shadow()</text>
+<text text-anchor="start" x="199" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; forward_pass()</text>
 </a>
 </g>
 </g>
@@ -319,27 +319,27 @@ var sectionId = 'dynsection-0';
 <g id="node10" class="node">
 <title>Node10</title>
 <g id="a_node10"><a xlink:href="classmkr_1_1texture__manager.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="1254,-121.5 1254,-255.5 1385,-255.5 1385,-121.5 1254,-121.5"/>
-<text text-anchor="start" x="1262" y="-243.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::texture_manager</text>
-<text text-anchor="middle" x="1319.5" y="-232.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; texture_manager &gt;</text>
-<polyline fill="none" stroke="black" points="1254,-225.5 1385,-225.5 "/>
-<text text-anchor="start" x="1262" y="-213.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_2ds_</text>
-<text text-anchor="start" x="1262" y="-202.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_cubes_</text>
-<polyline fill="none" stroke="black" points="1254,-195.5 1385,-195.5 "/>
-<text text-anchor="start" x="1262" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture_2d()</text>
-<text text-anchor="start" x="1262" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_texture_2d()</text>
-<text text-anchor="start" x="1262" y="-161.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture_cube()</text>
-<text text-anchor="start" x="1262" y="-150.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_texture_cube()</text>
-<text text-anchor="start" x="1262" y="-139.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_manager()</text>
-<text text-anchor="start" x="1262" y="-128.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~texture_manager()</text>
+<polygon fill="white" stroke="black" points="1253.5,-121.5 1253.5,-255.5 1379.5,-255.5 1379.5,-121.5 1253.5,-121.5"/>
+<text text-anchor="start" x="1261.5" y="-243.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::texture_manager</text>
+<text text-anchor="middle" x="1316.5" y="-232.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; texture_manager &gt;</text>
+<polyline fill="none" stroke="black" points="1253.5,-225.5 1379.5,-225.5 "/>
+<text text-anchor="start" x="1261.5" y="-213.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture2ds_</text>
+<text text-anchor="start" x="1261.5" y="-202.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; cubemaps_</text>
+<polyline fill="none" stroke="black" points="1253.5,-195.5 1379.5,-195.5 "/>
+<text text-anchor="start" x="1261.5" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_texture2d()</text>
+<text text-anchor="start" x="1261.5" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_texture2d()</text>
+<text text-anchor="start" x="1261.5" y="-161.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_cubemap()</text>
+<text text-anchor="start" x="1261.5" y="-150.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ make_cubemap()</text>
+<text text-anchor="start" x="1261.5" y="-139.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; texture_manager()</text>
+<text text-anchor="start" x="1261.5" y="-128.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~texture_manager()</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node10 -->
 <g id="edge9" class="edge">
 <title>Node1&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M775.96,-441.06C884.12,-440.43 1171.53,-433.35 1244.5,-377 1282.1,-347.96 1300.91,-297.14 1310.28,-255.72"/>
-<polygon fill="none" stroke="midnightblue" points="775.75,-437.57 765.77,-441.11 775.78,-444.56 775.75,-437.57"/>
+<path fill="none" stroke="midnightblue" d="M776.01,-441.12C884.28,-440.62 1171.93,-433.85 1244.5,-377 1281.7,-347.86 1299.69,-297.04 1308.38,-255.65"/>
+<polygon fill="none" stroke="midnightblue" points="775.79,-437.62 765.8,-441.15 775.81,-444.62 775.79,-437.62"/>
 </g>
 </g>
 </svg>

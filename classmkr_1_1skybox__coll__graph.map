@@ -1,12 +1,11 @@
 <map id="mkr::skybox" name="mkr::skybox">
-<area shape="rect" id="node1" title=" " alt="" coords="482,1351,585,1428"/>
-<area shape="rect" id="node2" href="$classmkr_1_1texture__cube.html" title=" " alt="" coords="294,1196,437,1288"/>
-<area shape="rect" id="node3" href="$classmkr_1_1texture.html" title=" " alt="" coords="240,556,387,751"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,5,157,83"/>
-<area shape="rect" id="node5" title=" " alt="" coords="181,5,256,83"/>
-<area shape="rect" id="node6" title=" " alt="" coords="564,5,623,83"/>
-<area shape="rect" id="node8" href="$classmkr_1_1shader__program.html" title=" " alt="" coords="490,160,675,1147"/>
-<area shape="rect" id="node7" title=" " alt="" coords="331,5,395,83"/>
-<area shape="rect" id="node9" title=" " alt="" coords="671,5,833,83"/>
-<area shape="rect" id="node10" title=" " alt="" coords="625,1203,687,1281"/>
+<area shape="rect" id="node1" title=" " alt="" coords="409,1380,512,1457"/>
+<area shape="rect" id="node2" href="$classmkr_1_1shader__program.html" title=" " alt="" coords="184,160,369,1161"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,167,83"/>
+<area shape="rect" id="node4" title=" " alt="" coords="522,5,581,83"/>
+<area shape="rect" id="node8" href="$classmkr_1_1texture.html" title=" " alt="" coords="521,571,667,751"/>
+<area shape="rect" id="node5" title=" " alt="" coords="297,5,361,83"/>
+<area shape="rect" id="node6" title=" " alt="" coords="429,1225,492,1303"/>
+<area shape="rect" id="node7" href="$classmkr_1_1cubemap.html" title=" " alt="" coords="520,1211,639,1317"/>
+<area shape="rect" id="node9" title=" " alt="" coords="650,5,725,83"/>
 </map>

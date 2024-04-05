@@ -46,7 +46,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        input_manager::instance().set_relative_mouse(true);
+        // input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -201,12 +201,12 @@ namespace mkr {
         world_.entity("floor").set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
 
         // Cube
-        // transform cube_trans;
-        // cube_trans.set_position({5.0f, 0.5f, 5.0f});
-        // render_mesh cube_rend{};
-        // cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
-        // cube_rend.material_ = material_manager::instance().get_material("brick_wall");
-        // world_.entity("cube").set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
+        transform cube_trans;
+        cube_trans.set_position({5.0f, 0.5f, 5.0f});
+        render_mesh cube_rend{};
+        cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
+        cube_rend.material_ = material_manager::instance().get_material("brick_wall");
+        world_.entity("cube").set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
 
         // Sphere
         transform sphere_trans;
@@ -225,6 +225,7 @@ namespace mkr {
             rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
             light_trans.set_rotation(rotation_x * rotation_y);
             light lt;
+            lt.set_shadow_distance(30.0f);
             lt.set_mode(light_mode::directional);
             lt.set_power(0.1f);
             world_.entity().set<transform>(light_trans).set<light>(lt).add<local_to_world>();
@@ -250,7 +251,7 @@ namespace mkr {
             light_trans.set_rotation(rotation_x * rotation_y);
             light lt;
             lt.set_mode(light_mode::spot);
-            lt.set_power(1.0f);
+            lt.set_power(0.7f);
             world_.entity().set<transform>(light_trans).set<light>(lt).add<local_to_world>();
         }
     }

@@ -8,16 +8,18 @@ namespace mkr {
     enum texture_unit : int32_t {
         texture_skybox = 0,
 
-        texture_debug,
-
         texture_diffuse,
         texture_normal,
         texture_specular,
         texture_gloss,
         texture_displacement,
 
-        texture_shadows0,
-        cubemap_shadows0 = lighting::max_lights + texture_shadows0,
+        // For every shadow index, since only either the texture2d or cubemap will be bound at any given time,
+        // they can share the same index.
+        texture_shadows0, // Range: [texture_shadows0, texture_shadows0 + lighting::max_lights)
+        cubemap_shadows0 = texture_shadows0, // Range: [cubemap_shadows0, cubemap_shadows0 + lighting::max_lights)
+
+        num_texture_units = lighting::max_lights + cubemap_shadows0,
 
         // texture_frag_position, // L-Pass, P-Pass
         // texture_frag_normal, // L-Pass, P-Pass
@@ -29,7 +31,5 @@ namespace mkr {
 
         // texture_composite, // P-Pass
         // texture_depth_stencil, // P-Pass
-
-        num_texture_units = lighting::max_lights + cubemap_shadows0,
     };
 } // mkr

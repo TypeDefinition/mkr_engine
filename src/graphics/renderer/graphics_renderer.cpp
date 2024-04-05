@@ -110,7 +110,7 @@ namespace mkr {
             for (auto i = 0; i < num_lights; ++i) {
                 const auto& light = lights_[i].light_;
                 if (light.get_mode() == light_mode::directional) {
-                    light_view_projection_matrix_[i] = directional_shadow(s2d_buff_[i].get(), lights_[i].transform_, trans, cam);
+                    light_view_projection_matrix_[i] = directional_shadow(s2d_buff_[i].get(), lights_[i].transform_, light, trans, cam);
                 }
             }
 
@@ -125,7 +125,7 @@ namespace mkr {
             const auto projection_matrix = (cam.mode_ == projection_mode::perspective)
                                            ? matrix_util::perspective_matrix(cam.aspect_ratio_, cam.fov_, cam.near_plane_, cam.far_plane_)
                                            : matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
-            const auto inv_view_matrix = matrix_util::inverse_matrix(view_matrix).value_or(matrix4x4 ::identity());
+            const auto inv_view_matrix = matrix_util::inverse_matrix(view_matrix).value_or(matrix4x4::identity());
 
             // Render forward pass.
             forward_pass(view_matrix, projection_matrix, inv_view_matrix, view_dir_z, view_dir_y, view_dir_x);
@@ -228,7 +228,7 @@ namespace mkr {
         return projection_matrix * view_matrix;
     }
 
-    matrix4x4 graphics_renderer::directional_shadow(shadow_2d_buffer* _buffer, const local_to_world& _light_trans, const local_to_world& _cam_trans, const camera& _cam) {
+    matrix4x4 graphics_renderer::directional_shadow(shadow_2d_buffer* _buffer, const local_to_world& _light_trans, const light& _light, const local_to_world& _cam_trans, const camera& _cam) {
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -242,7 +242,7 @@ namespace mkr {
         const auto bounds = shadow_bounds::get_perspective_bounds(light_view_matrix,
                                                                   _cam_trans.position_,
                                                                   _cam_trans.left_, _cam_trans.up_, _cam_trans.forward_,
-                                                                  _cam.near_plane_, _cam.far_plane_,
+                                                                  _cam.near_plane_, _light.get_shadow_distance(),
                                                                   _cam.aspect_ratio_, _cam.fov_);
         const float width = bounds.max().x_ - bounds.min().x_;
         const float height = bounds.max().y_ - bounds.min().y_;
@@ -302,8 +302,11 @@ namespace mkr {
             // Bind shadow maps.
             const auto num_lights = maths_util::min<int32_t>(lights_.size(), lighting::max_lights);
             for (auto i = 0; i < num_lights; ++i) {
-                s2d_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::texture_shadows0 + i);
-                scube_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::cubemap_shadows0 + i);
+                if (light_mode::point == lights_[i].light_.get_mode()) {
+                    scube_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::cubemap_shadows0 + i);
+                } else {
+                    s2d_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::texture_shadows0 + i);
+                }
             }
 
             // Transform

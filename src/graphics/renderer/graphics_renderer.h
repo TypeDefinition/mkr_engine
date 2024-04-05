@@ -86,7 +86,7 @@ namespace mkr {
 
         matrix4x4 point_shadow(shadow_cubemap_buffer* _buffer, const local_to_world& _trans, const light& _light);
         matrix4x4 spot_shadow(shadow_2d_buffer* _buffer, const local_to_world& _trans, const light& _light);
-        matrix4x4 directional_shadow(shadow_2d_buffer* _buffer, const local_to_world& _light_trans, const local_to_world& _cam_trans, const camera& _cam);
+        matrix4x4 directional_shadow(shadow_2d_buffer* _buffer, const local_to_world& _light_trans, const light& _light, const local_to_world& _cam_trans, const camera& _cam);
 
         void forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_z, const vector3& _view_dir_y, const vector3& _view_dir_x);
 

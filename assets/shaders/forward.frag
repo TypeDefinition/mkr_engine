@@ -271,12 +271,9 @@ float get_gloss(const in vec2 _tex_coord) {
 }
 
 bool cast_point_shadow(const in light _light, const in samplerCube _cubemap, const in vec3 _frag_normal, float _bias) {
-    // Only cast shadows on surfaces facing the light.
-    if (dot(io_position - _light.position_, _frag_normal) > 0.0f) { return false; }
-
-    vec4 frag_world_pos =  u_inv_view_matrix * vec4(io_position, 1.0f); // World space.
-    vec4 light_world_pos =  u_inv_view_matrix * vec4(_light.position_, 1.0f); // World space.
-    const vec3 tex_coord = (frag_world_pos - light_world_pos).xyz;
+    const vec4 frag_world_pos =  u_inv_view_matrix * vec4(io_position, 1.0f); // World space.
+    const vec4 light_world_pos =  u_inv_view_matrix * vec4(_light.position_, 1.0f); // World space.
+    const vec3 tex_coord = (frag_world_pos - light_world_pos).xyz; // No need to normalise the tex_coord for a cubemap.
 
     // Distance from light to shadow.
     const float shadow_dist = texture(_cubemap, tex_coord).r;
@@ -284,14 +281,11 @@ bool cast_point_shadow(const in light _light, const in samplerCube _cubemap, con
     // Distance from light to fragment.
     const float frag_dist = length(io_position - _light.position_) / _light.shadow_distance_;
 
-    // Cast a shadow if the fragment distance is further than the shadow distance, and the fragment distance is within the shadow casting distance.
-    return shadow_dist + _bias < frag_dist && frag_dist < 1.0f;
+    return dot(io_position - _light.position_, _frag_normal) < 0.0f && // Only cast shadows on surfaces facing the light.
+            shadow_dist + _bias < frag_dist && frag_dist < 1.0f; // Is the shadow closer to the light than the fragment?
 }
 
 bool cast_spot_shadow(const in light _light, const in sampler2D _texture, const in vec3 _frag_normal, float _bias) {
-    // Only cast shadows on surfaces facing the light.
-    if (dot(_light.direction_, _frag_normal) > 0.0f) { return false; }
-
     const vec4 light_clip_pos = _light.view_projection_matrix_ * u_inv_view_matrix * vec4(io_position, 1.0f); // Fragment position in the light's clip space.
     const vec3 light_ndc_pos = light_clip_pos.xyz / light_clip_pos.w; // Fragment position in the light's NDC space.
     const vec2 tex_coord = (light_ndc_pos.xy * 0.5f) + vec2(0.5f, 0.5f); // Normalise from the [-1, 1] range to the [0, 1] range.
@@ -302,8 +296,10 @@ bool cast_spot_shadow(const in light _light, const in sampler2D _texture, const 
     // Distance from light to fragment.
     const float frag_dist = 0.5f * light_ndc_pos.z + 0.5f; // Normalise from the [-1, 1] range to the [0, 1] range.
 
-    // Cast a shadow if the fragment distance is further than the shadow distance, and the fragment distance is within the shadow casting distance.
-    return shadow_dist + _bias < frag_dist && frag_dist < 1.0f;
+    return 0.0f <= tex_coord.x && tex_coord.x <= 1.0f && // Ensure that the fragment can be seen by the light.
+            0.0f <= tex_coord.y && tex_coord.y <= 1.0f &&
+            dot(_light.direction_, _frag_normal) < 0.0f && // Only cast shadows on surfaces facing the light.
+            shadow_dist + _bias < frag_dist && frag_dist < 1.0f; // Is the shadow closer to the light than the fragment?
 }
 
 bool cast_directional_shadow(const in light _light, const in sampler2D _texture, const in vec3 _frag_normal, float _bias) {

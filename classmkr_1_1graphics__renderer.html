@@ -127,8 +127,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a28c9b6891e064af8a13c42483e6310c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5faef12b92a2717febc17b9cfe700b7"><td class="memItemLeft" align="right" valign="top">matrix4x4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#ad5faef12b92a2717febc17b9cfe700b7">spot_shadow</a> (<a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a> *_buffer, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_trans, const <a class="el" href="classmkr_1_1light.html">light</a> &amp;_light)</td></tr>
 <tr class="separator:ad5faef12b92a2717febc17b9cfe700b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75e018444d9aabf536ae75748b895216"><td class="memItemLeft" align="right" valign="top">matrix4x4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a75e018444d9aabf536ae75748b895216">directional_shadow</a> (<a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a> *_buffer, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_light_trans, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_cam_trans, const <a class="el" href="structmkr_1_1camera.html">camera</a> &amp;_cam)</td></tr>
-<tr class="separator:a75e018444d9aabf536ae75748b895216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03b093c17c37fada37b9ddda4fdfd027"><td class="memItemLeft" align="right" valign="top">matrix4x4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a03b093c17c37fada37b9ddda4fdfd027">directional_shadow</a> (<a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a> *_buffer, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_light_trans, const <a class="el" href="classmkr_1_1light.html">light</a> &amp;_light, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_cam_trans, const <a class="el" href="structmkr_1_1camera.html">camera</a> &amp;_cam)</td></tr>
+<tr class="separator:a03b093c17c37fada37b9ddda4fdfd027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaa5d02d186dd8b000f8e925298753ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aeaa5d02d186dd8b000f8e925298753ce">forward_pass</a> (const matrix4x4 &amp;_view_matrix, const matrix4x4 &amp;_projection_matrix, const matrix4x4 &amp;_inv_view_matrix, const vector3 &amp;_view_dir_z, const vector3 &amp;_view_dir_y, const vector3 &amp;_view_dir_x)</td></tr>
 <tr class="separator:aeaa5d02d186dd8b000f8e925298753ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -200,8 +200,8 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a75e018444d9aabf536ae75748b895216"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75e018444d9aabf536ae75748b895216">&#9670;&nbsp;</a></span>directional_shadow()</h2>
+<a id="a03b093c17c37fada37b9ddda4fdfd027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03b093c17c37fada37b9ddda4fdfd027">&#9670;&nbsp;</a></span>directional_shadow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -220,6 +220,12 @@ Friends</h2></td></tr>
           <td></td>
           <td class="paramtype">const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;&#160;</td>
           <td class="paramname"><em>_light_trans</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classmkr_1_1light.html">light</a> &amp;&#160;</td>
+          <td class="paramname"><em>_light</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -510,7 +516,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00378">378</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00381">381</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -540,7 +546,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00382">382</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00385">385</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -570,7 +576,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00386">386</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00389">389</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>

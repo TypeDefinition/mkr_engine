@@ -24,7 +24,7 @@ namespace mkr {
         colour diffuse_colour_ = colour::white();
         colour specular_colour_ = colour::white();
         float gloss_ = 32.0f;
-        float displacement_scale_ = 0.02f;
+        float displacement_scale_ = 0.05f;
 
         // Textures
         texture2d* texture_diffuse_;

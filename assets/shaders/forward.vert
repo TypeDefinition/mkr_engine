@@ -18,7 +18,6 @@ out io_block {
     vec3 io_position; // Vertex position in camera space.
     vec3 io_normal; // Vertex normal in camera space.
     mat3 io_tbn_matrix; // Converts from tangent space to camera space.
-    mat3 io_inv_tbn_matrix; // Converts from camera space to tangent space.
 };
 
 // Uniforms
@@ -30,20 +29,17 @@ uniform vec2 u_texture_scale;
 void main() {
     io_tex_coord = (v_tex_coord + vec3(u_texture_offset, 0.0f)) * vec3(u_texture_scale, 1.0f);
     io_position = (u_view_matrix * v_model_matrix * vec4(v_position, 1.0f)).xyz;
-    io_normal = v_normal_matrix * v_normal;
+    io_normal = normalize(v_normal_matrix * v_normal);
 
-    // This is the Gramm-Schmidt process. dot(Tangent, Normal) gives us the length of the projection of the tangent along the normal vector.
-    // The product of this length by the normal itself is the component of the tangent along the normal.
-    // Substract that from the tangent and we get a new vector which is perpendicular to the normal.
-    // This is our new tangent.
-    vec3 tangent = normalize(v_tangent - dot(v_tangent, v_normal) * v_normal);
-    // A cross product between the tangent and the normal gives us the bitangent.
-    vec3 bitangent = cross(v_normal, tangent);
-
-    io_tbn_matrix[0] = normalize(v_normal_matrix * tangent);
-    io_tbn_matrix[1] = normalize(v_normal_matrix * bitangent);
-    io_tbn_matrix[2] = io_normal;
-    io_inv_tbn_matrix = transpose(io_tbn_matrix); // Since TBN is an orthogonal matrix, its transpose is also its inverse.
+    /* This is the Gramm-Schmidt process. dot(Tangent, Normal) gives us the length of the projection of the tangent along the normal vector.
+       The product of this length by the normal itself is the component of the tangent along the normal.
+       Substract that from the tangent and we get a new vector which is perpendicular to the normal.
+       This is our new tangent. */
+    vec3 n = io_normal;
+    vec3 t = normalize(v_normal_matrix * v_tangent);
+    t = normalize(t - dot(t, n) * n);
+    vec3 b = cross(n, t);
+    io_tbn_matrix = mat3(t, b, n);
 
     gl_Position = u_projection_matrix * u_view_matrix * v_model_matrix * vec4(v_position, 1.0f);
 }

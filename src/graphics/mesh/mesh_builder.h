@@ -226,42 +226,6 @@ namespace mkr {
             return std::make_unique<mesh>(_name, vertices, indices);
         }
 
-        static std::unique_ptr<mesh> make_debug_quad(const std::string& _name) {
-            std::vector<vertex> vertices(4);
-
-            vertices[0].position_ = {0.0f, 0.0f, 0.0f};
-            vertices[1].position_ = {1.0f, 1.0f, 0.0f};
-            vertices[2].position_ = {0.0f, 1.0f, 0.0f};
-            vertices[3].position_ = {1.0f, 0.0f, 0.0f};
-
-            vertices[0].normal_ = {0.0f, 0.0f, 1.0f};
-            vertices[1].normal_ = {0.0f, 0.0f, 1.0f};
-            vertices[2].normal_ = {0.0f, 0.0f, 1.0f};
-            vertices[3].normal_ = {0.0f, 0.0f, 1.0f};
-
-            vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
-            vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
-            vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
-            vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};
-
-            vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};
-            vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};
-            vertices[2].tangent_ = {1.0f, 0.0f, 0.0f};
-            vertices[3].tangent_ = {1.0f, 0.0f, 0.0f};
-
-            std::vector<uint32_t> indices(6);
-
-            indices[0] = 0;
-            indices[1] = 1;
-            indices[2] = 2;
-
-            indices[3] = 0;
-            indices[4] = 3;
-            indices[5] = 1;
-
-            return std::make_unique<mesh>(_name, vertices, indices);
-        }
-
         static std::unique_ptr<mesh> load_obj(const std::string &_name, const std::string &_file) {
             // Vertex Data and Index Data
             std::vector<vertex> vertices;
@@ -349,19 +313,18 @@ namespace mkr {
                 edges[1][1] = vertices[indices[i + 2]].position_.y_ - vertices[indices[i]].position_.y_;
                 edges[2][1] = vertices[indices[i + 2]].position_.z_ - vertices[indices[i]].position_.z_;
 
-                // We have the length of 2 edges, and we know that each the edges can be represented by
-                // some length of the tangent + some length of the bitangent.
-                // One way we can find that length is by using the UV coordinates.
-                // So for example, we know that for one of the edges,
-                // the ratio of the edge along the tangent axis (also the same as the U axis for the texture coordinates) is U1 - U0 and.
-                // the ratio of the edge along the bitangent axis (also the same as the U axis for the texture coordinates) is V1 - V0.
-                matrix2x2 tangent_to_bitangent_ratio;
-                tangent_to_bitangent_ratio[0][0] = vertices[indices[i + 1]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;
-                tangent_to_bitangent_ratio[1][0] = vertices[indices[i + 1]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;
-                tangent_to_bitangent_ratio[0][1] = vertices[indices[i + 2]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;
-                tangent_to_bitangent_ratio[1][1] = vertices[indices[i + 2]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;
+                /* We have the length of 2 edges, and we know that each the edges can be represented by some length of the tangent + some length of the bitangent.
+                   One way we can find that length is by using the UV coordinates.
+                   So for example, we know that for one of the edges,
+                   the ratio of the edge along the tangent axis (also the same as the U axis for the texture coordinates) is U1 - U0 and.
+                   the ratio of the edge along the bitangent axis (also the same as the V axis for the texture coordinates) is V1 - V0. */
+                matrix2x2 uv_delta;
+                uv_delta[0][0] = vertices[indices[i + 1]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;
+                uv_delta[1][0] = vertices[indices[i + 1]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;
+                uv_delta[0][1] = vertices[indices[i + 2]].tex_coord_.x_ - vertices[indices[i]].tex_coord_.x_;
+                uv_delta[1][1] = vertices[indices[i + 2]].tex_coord_.y_ - vertices[indices[i]].tex_coord_.y_;
 
-                matrix3x2 tangents = matrix_util::inverse_matrix(tangent_to_bitangent_ratio).value_or(matrix2x2::identity()) * edges;
+                matrix3x2 tangents = matrix_util::inverse_matrix(uv_delta).value_or(matrix2x2::identity()) * edges;
 
                 vertices[indices[i + 0]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);
                 vertices[indices[i + 1]].tangent_ += vector3(tangents[0][0], tangents[1][0], tangents[2][0]);
@@ -373,8 +336,7 @@ namespace mkr {
             }
 
             // Create the mesh.
-            auto m = std::make_unique<mesh>(_name, vertices, indices);
-            return m;
+            return std::make_unique<mesh>(_name, vertices, indices);
         }
     };
 } // mkr

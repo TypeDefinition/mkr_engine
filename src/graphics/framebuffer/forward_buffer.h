@@ -21,8 +21,8 @@ namespace mkr {
             // Colour attachments.
             colour_attachments_.resize(colour_attachments::num_attachments);
             colour_attachments_[colour_attachments::colour] = std::make_unique<texture2d>("colour", _width, _height, sized_format::rgba8);
-            colour_attachments_[colour_attachments::position] = std::make_unique<texture2d>("position", _width, _height, sized_format::rgba16f);
-            colour_attachments_[colour_attachments::normal] = std::make_unique<texture2d>("normal", _width, _height, sized_format::rgba16f);
+            colour_attachments_[colour_attachments::position] = std::make_unique<texture2d>("position", _width, _height, sized_format::rgb16f);
+            colour_attachments_[colour_attachments::normal] = std::make_unique<texture2d>("normal", _width, _height, sized_format::rgb16f);
             for (auto i = 0; i < colour_attachments_.size(); ++i) {
                 glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + i, colour_attachments_[i]->handle(), 0);
             }

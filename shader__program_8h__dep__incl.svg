@@ -46,7 +46,7 @@ if (edges && edges.length) {
         </defs>
 
 <script type="text/javascript">
-var viewWidth = 1581;
+var viewWidth = 1585;
 var viewHeight = 307;
 var sectionId = 'dynsection-1';
 </script>
@@ -54,7 +54,7 @@ var sectionId = 'dynsection-1';
 <svg id="graph" class="graph">
 <g id="viewport">
 <title>src/graphics/shader/shader_program.h</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-303 1577,-303 1577,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-303 1581,-303 1581,4 -4,4"/>
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
@@ -147,10 +147,10 @@ var sectionId = 'dynsection-1';
 <!-- Node17 -->
 <g id="node17" class="node">
 <title>Node17</title>
-<g id="a_node17"><a xlink:href="light__shader_8h.html" target="_top" xlink:title=" ">
+<g id="a_node17"><a xlink:href="lighting__shader_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="black" points="1310,-67.5 1310,-97.5 1421,-97.5 1421,-67.5 1310,-67.5"/>
 <text text-anchor="start" x="1318" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/graphics/shader</text>
-<text text-anchor="middle" x="1365.5" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/light_shader.h</text>
+<text text-anchor="middle" x="1365.5" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">/lighting_shader.h</text>
 </a>
 </g>
 </g>
@@ -468,17 +468,17 @@ var sectionId = 'dynsection-1';
 <g id="node16" class="node">
 <title>Node16</title>
 <g id="a_node16"><a xlink:href="geometry__shader_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="1448,-0.5 1448,-30.5 1573,-30.5 1573,-0.5 1448,-0.5"/>
-<text text-anchor="start" x="1456" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/graphics/shader</text>
-<text text-anchor="middle" x="1510.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/geometry_shader.cpp</text>
+<polygon fill="white" stroke="black" points="1452,-0.5 1452,-30.5 1577,-30.5 1577,-0.5 1452,-0.5"/>
+<text text-anchor="start" x="1460" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/graphics/shader</text>
+<text text-anchor="middle" x="1514.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/geometry_shader.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node15&#45;&gt;Node16 -->
 <g id="edge26" class="edge">
 <title>Node15&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M1501.06,-57.4C1503.15,-48.37 1505.44,-38.41 1507.25,-30.58"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1497.59,-56.87 1498.75,-67.4 1504.41,-58.44 1497.59,-56.87"/>
+<path fill="none" stroke="midnightblue" d="M1502.46,-57.7C1505.12,-48.59 1508.07,-38.49 1510.39,-30.58"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1499.07,-56.82 1499.62,-67.4 1505.79,-58.78 1499.07,-56.82"/>
 </g>
 <!-- Node17&#45;&gt;Node3 -->
 <g id="edge28" class="edge">
@@ -495,18 +495,18 @@ var sectionId = 'dynsection-1';
 <!-- Node18 -->
 <g id="node18" class="node">
 <title>Node18</title>
-<g id="a_node18"><a xlink:href="light__shader_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="1319,-0.5 1319,-30.5 1430,-30.5 1430,-0.5 1319,-0.5"/>
-<text text-anchor="start" x="1327" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/graphics/shader</text>
-<text text-anchor="middle" x="1374.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/light_shader.cpp</text>
+<g id="a_node18"><a xlink:href="lighting__shader_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="black" points="1319.5,-0.5 1319.5,-30.5 1433.5,-30.5 1433.5,-0.5 1319.5,-0.5"/>
+<text text-anchor="start" x="1327.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">src/graphics/shader</text>
+<text text-anchor="middle" x="1376.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/lighting_shader.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node17&#45;&gt;Node18 -->
 <g id="edge30" class="edge">
 <title>Node17&#45;&gt;Node18</title>
-<path fill="none" stroke="midnightblue" d="M1368.84,-57.4C1370.09,-48.37 1371.47,-38.41 1372.55,-30.58"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1365.36,-57.01 1367.45,-67.4 1372.29,-57.97 1365.36,-57.01"/>
+<path fill="none" stroke="midnightblue" d="M1369.58,-57.4C1371.11,-48.37 1372.79,-38.41 1374.12,-30.58"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1366.1,-56.95 1367.89,-67.4 1373.01,-58.12 1366.1,-56.95"/>
 </g>
 <!-- Node19&#45;&gt;Node3 -->
 <g id="edge32" class="edge">

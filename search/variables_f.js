@@ -14,7 +14,7 @@ var searchData=
   ['shadow_5fshader_5fcube_5f_1672',['shadow_shader_cube_',['../classmkr_1_1material.html#a94f19dea49b24b9477a696b80217d6c0',1,'mkr::material']]],
   ['skybox_5f_1673',['skybox_',['../structmkr_1_1camera.html#a5ac592bb52d1b48096c938a7c0268ff0',1,'mkr::camera']]],
   ['skybox_5fcube_5f_1674',['skybox_cube_',['../classmkr_1_1graphics__renderer.html#a85cf3d5b1696d91c74afda9703abf354',1,'mkr::graphics_renderer']]],
-  ['specular_5fback_5f_1675',['specular_back_',['../classmkr_1_1light__buffer.html#a3f29a77b5beb1562081ebaca9ad190d5',1,'mkr::light_buffer']]],
+  ['specular_5fback_5f_1675',['specular_back_',['../classmkr_1_1lighting__buffer.html#acccd186ce6c51b677151fc816437c33f',1,'mkr::lighting_buffer']]],
   ['specular_5fcolour_5f_1676',['specular_colour_',['../classmkr_1_1material.html#af1b9f052916b5cc75fbaab8ddae326e6',1,'mkr::material']]],
   ['spotlight_5finner_5fangle_5f_1677',['spotlight_inner_angle_',['../classmkr_1_1light.html#a28dc4e7c81c9abcb7995fa5dd58a4b48',1,'mkr::light']]],
   ['spotlight_5fouter_5fangle_5f_1678',['spotlight_outer_angle_',['../classmkr_1_1light.html#a31ee116b42b9e052be4949b87ebe11e1',1,'mkr::light']]],

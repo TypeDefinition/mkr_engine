@@ -129,8 +129,12 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:ad5faef12b92a2717febc17b9cfe700b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03b093c17c37fada37b9ddda4fdfd027"><td class="memItemLeft" align="right" valign="top">matrix4x4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a03b093c17c37fada37b9ddda4fdfd027">directional_shadow</a> (<a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a> *_buffer, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_light_trans, const <a class="el" href="classmkr_1_1light.html">light</a> &amp;_light, const <a class="el" href="structmkr_1_1local__to__world.html">local_to_world</a> &amp;_cam_trans, const <a class="el" href="structmkr_1_1camera.html">camera</a> &amp;_cam)</td></tr>
 <tr class="separator:a03b093c17c37fada37b9ddda4fdfd027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaa5d02d186dd8b000f8e925298753ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aeaa5d02d186dd8b000f8e925298753ce">forward_pass</a> (const matrix4x4 &amp;_view_matrix, const matrix4x4 &amp;_projection_matrix, const matrix4x4 &amp;_inv_view_matrix, const vector3 &amp;_view_dir_z, const vector3 &amp;_view_dir_y, const vector3 &amp;_view_dir_x)</td></tr>
-<tr class="separator:aeaa5d02d186dd8b000f8e925298753ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab27889f37c8c7661c5ade22f1b88e0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aab27889f37c8c7661c5ade22f1b88e0b">geometry_pass</a> (const matrix4x4 &amp;_view_matrix, const matrix4x4 &amp;_projection_matrix)</td></tr>
+<tr class="separator:aab27889f37c8c7661c5ade22f1b88e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57ff6c77dfaea39eeb2716d18fa8a18c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a57ff6c77dfaea39eeb2716d18fa8a18c">lighting_pass</a> (const matrix4x4 &amp;_view_matrix, const matrix4x4 &amp;_inv_view_matrix, const vector3 &amp;_view_dir_x, const vector3 &amp;_view_dir_y, const vector3 &amp;_view_dir_z)</td></tr>
+<tr class="separator:a57ff6c77dfaea39eeb2716d18fa8a18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb05b71134e3b598496187bf4d659e78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aeb05b71134e3b598496187bf4d659e78">forward_pass</a> (const matrix4x4 &amp;_view_matrix, const matrix4x4 &amp;_projection_matrix, const matrix4x4 &amp;_inv_view_matrix, const vector3 &amp;_view_dir_x, const vector3 &amp;_view_dir_y, const vector3 &amp;_view_dir_z)</td></tr>
+<tr class="separator:aeb05b71134e3b598496187bf4d659e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -140,6 +144,10 @@ Private Attributes</h2></td></tr>
 <tr class="separator:abbcbdce247815fedf2ee671e88192a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea08e104db3efd807eb0a72f17fd7082"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aea08e104db3efd807eb0a72f17fd7082">window_height_</a> = 1080</td></tr>
 <tr class="separator:aea08e104db3efd807eb0a72f17fd7082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa7c11f1aedc94b816a01e5ed5affeb2"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classmkr_1_1geometry__buffer.html">geometry_buffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#afa7c11f1aedc94b816a01e5ed5affeb2">g_buff_</a></td></tr>
+<tr class="separator:afa7c11f1aedc94b816a01e5ed5affeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2de2e0108508425cf4a68f549e1d377"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classmkr_1_1lighting__buffer.html">lighting_buffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#aa2de2e0108508425cf4a68f549e1d377">l_buff_</a></td></tr>
+<tr class="separator:aa2de2e0108508425cf4a68f549e1d377"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901ae3acb341793861c91c306402b0d6"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classmkr_1_1forward__buffer.html">forward_buffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a901ae3acb341793861c91c306402b0d6">f_buff_</a></td></tr>
 <tr class="separator:a901ae3acb341793861c91c306402b0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59ae33da60e332c8a6de4ea65ed8937e"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html#a59ae33da60e332c8a6de4ea65ed8937e">s2d_buff_</a> [<a class="el" href="classmkr_1_1lighting.html#a1d2c15e1eaa3c8162a4a6773a9be5d4e">lighting::max_lights</a>]</td></tr>
@@ -170,7 +178,7 @@ Friends</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00037">37</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00026">26</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac479fe4064ccb78e11c030010a6505b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac479fe4064ccb78e11c030010a6505b3">&#9670;&nbsp;</a></span>graphics_renderer()</h2>
@@ -195,7 +203,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00082">82</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00070">70</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -252,7 +260,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00231">231</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00252">252</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -271,12 +279,12 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00086">86</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00088">88</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
-<a id="aeaa5d02d186dd8b000f8e925298753ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeaa5d02d186dd8b000f8e925298753ce">&#9670;&nbsp;</a></span>forward_pass()</h2>
+<a id="aeb05b71134e3b598496187bf4d659e78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb05b71134e3b598496187bf4d659e78">&#9670;&nbsp;</a></span>forward_pass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,7 +314,7 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const vector3 &amp;&#160;</td>
-          <td class="paramname"><em>_view_dir_z</em>, </td>
+          <td class="paramname"><em>_view_dir_x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -318,7 +326,7 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const vector3 &amp;&#160;</td>
-          <td class="paramname"><em>_view_dir_x</em>&#160;</td>
+          <td class="paramname"><em>_view_dir_z</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -333,7 +341,45 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00279">279</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00437">437</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aab27889f37c8c7661c5ade22f1b88e0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab27889f37c8c7661c5ade22f1b88e0b">&#9670;&nbsp;</a></span>geometry_pass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mkr::graphics_renderer::geometry_pass </td>
+          <td>(</td>
+          <td class="paramtype">const matrix4x4 &amp;&#160;</td>
+          <td class="paramname"><em>_view_matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const matrix4x4 &amp;&#160;</td>
+          <td class="paramname"><em>_projection_matrix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00305">305</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -353,6 +399,62 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00017">17</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a57ff6c77dfaea39eeb2716d18fa8a18c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57ff6c77dfaea39eeb2716d18fa8a18c">&#9670;&nbsp;</a></span>lighting_pass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mkr::graphics_renderer::lighting_pass </td>
+          <td>(</td>
+          <td class="paramtype">const matrix4x4 &amp;&#160;</td>
+          <td class="paramname"><em>_view_matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const matrix4x4 &amp;&#160;</td>
+          <td class="paramname"><em>_inv_view_matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector3 &amp;&#160;</td>
+          <td class="paramname"><em>_view_dir_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector3 &amp;&#160;</td>
+          <td class="paramname"><em>_view_dir_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector3 &amp;&#160;</td>
+          <td class="paramname"><em>_view_dir_z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00366">366</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -396,7 +498,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00144">144</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00155">155</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -423,7 +525,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00090">90</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00092">92</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,7 +569,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00194">194</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00210">210</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -486,7 +588,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00058">58</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00060">60</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -516,7 +618,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00381">381</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00560">560</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -546,7 +648,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00385">385</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00564">564</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -576,7 +678,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00389">389</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00568">568</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -595,7 +697,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00078">78</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8cpp_source.html#l00080">80</a> of file <a class="el" href="graphics__renderer_8cpp_source.html">graphics_renderer.cpp</a>.</p>
 
 </div>
 </div>
@@ -622,7 +724,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00083">83</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00071">71</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -672,7 +774,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00053">53</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00042">42</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -696,7 +798,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00072">72</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00060">60</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -720,7 +822,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00078">78</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00066">66</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -744,7 +846,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00062">62</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00049">49</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -768,7 +870,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00079">79</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00067">67</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -792,7 +894,55 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00080">80</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00068">68</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+
+</div>
+</div>
+<a id="afa7c11f1aedc94b816a01e5ed5affeb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa7c11f1aedc94b816a01e5ed5affeb2">&#9670;&nbsp;</a></span>g_buff_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classmkr_1_1geometry__buffer.html">geometry_buffer</a>&gt; mkr::graphics_renderer::g_buff_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00047">47</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+
+</div>
+</div>
+<a id="aa2de2e0108508425cf4a68f549e1d377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2de2e0108508425cf4a68f549e1d377">&#9670;&nbsp;</a></span>l_buff_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classmkr_1_1lighting__buffer.html">lighting_buffer</a>&gt; mkr::graphics_renderer::l_buff_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00048">48</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -816,7 +966,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00065">65</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00053">53</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -840,7 +990,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00075">75</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00063">63</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -864,7 +1014,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00063">63</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00050">50</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -888,7 +1038,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00068">68</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00056">56</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -912,7 +1062,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00064">64</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00051">51</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -936,7 +1086,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00069">69</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00057">57</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -960,7 +1110,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00055">55</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00044">44</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>
@@ -984,7 +1134,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00054">54</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00043">43</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
 
 </div>
 </div>

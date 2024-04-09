@@ -119,9 +119,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1geometry__buffer.html">geometry_buffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1light__buffer.html">light_buffer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1lighting__buffer.html">lighting_buffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1post__proc__buffer.html">post_proc_buffer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1post__buffer.html">post_buffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1shadow__2d__buffer.html">shadow_2d_buffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,7 +161,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1geometry__shader.html">geometry_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1light__shader.html">light_shader</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1lighting__shader.html">lighting_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1post__proc__shader.html">post_proc_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,19 +303,19 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacemkr.html#acfe8eb975826e128dc28acdaeb6aa330aa32bb1df2fc7dc5d4907882fbeba3219">num_vbo</a>
  }</td></tr>
 <tr class="separator:acfe8eb975826e128dc28acdaeb6aa330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1af81b2d0e3cf9b89ab132aaeea299e2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2">stencil_value</a> : uint8_t { <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2ab401d7dd6222b62b414a3b808861dc91">placeholder0</a> = 1
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a295c3ba81c252b9d029300f0314d2251">placeholder1</a> = 2
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a25e350b18168b13238fd9db61b91e820">placeholder2</a> = 4
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a98259b1bcd4879d3841d0e3ec63400c3">placeholder3</a> = 8
+<tr class="memitem:ac0c601750916b3a0a8fcebb2c070c528"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528">stencil</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528ab401d7dd6222b62b414a3b808861dc91">placeholder0</a> = 1
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a295c3ba81c252b9d029300f0314d2251">placeholder1</a> = 2
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a25e350b18168b13238fd9db61b91e820">placeholder2</a> = 4
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a98259b1bcd4879d3841d0e3ec63400c3">placeholder3</a> = 8
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a13a0157a448fbf5252457aa14392746a">placeholder4</a> = 16
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a997195c6ee24c834287e96be26f812aa">placeholder5</a> = 32
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2a83ca9f1303df52792df5292a408a51be">placeholder6</a> = 64
-, <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2ad2f6e07c45a90ece12800b57368eea2d">placeholder7</a> = 128
+&#160;&#160;<a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a13a0157a448fbf5252457aa14392746a">placeholder4</a> = 16
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a997195c6ee24c834287e96be26f812aa">placeholder5</a> = 32
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528a83ca9f1303df52792df5292a408a51be">placeholder6</a> = 64
+, <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528ad2f6e07c45a90ece12800b57368eea2d">placeholder7</a> = 128
 <br />
  }</td></tr>
-<tr class="separator:a1af81b2d0e3cf9b89ab132aaeea299e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ac0c601750916b3a0a8fcebb2c070c528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704df">texture_unit</a> : int32_t { <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c">texture_skybox</a> = 0
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">texture_diffuse</a>
@@ -324,10 +324,11 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79">texture_gloss</a>
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e">texture_displacement</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa4779b46fb5d4803d6806d6d5b5faccc0">texture_position</a>
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac">texture_shadows0</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169">cubemap_shadows0</a> = texture_shadows0
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f">num_texture_units</a> = lighting::max_lights + cubemap_shadows0
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169">cubemap_shadows0</a> = texture_shadows0
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f">num_texture_units</a> = lighting::max_lights + cubemap_shadows0
 <br />
  }</td></tr>
 <tr class="separator:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1604,29 +1605,29 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a1af81b2d0e3cf9b89ab132aaeea299e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1af81b2d0e3cf9b89ab132aaeea299e2">&#9670;&nbsp;</a></span>stencil_value</h2>
+<a id="ac0c601750916b3a0a8fcebb2c070c528"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c601750916b3a0a8fcebb2c070c528">&#9670;&nbsp;</a></span>stencil</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="namespacemkr.html#a1af81b2d0e3cf9b89ab132aaeea299e2">mkr::stencil_value</a> : uint8_t</td>
+          <td class="memname">enum <a class="el" href="namespacemkr.html#ac0c601750916b3a0a8fcebb2c070c528">mkr::stencil</a> : uint8_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2ab401d7dd6222b62b414a3b808861dc91"></a>placeholder0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a295c3ba81c252b9d029300f0314d2251"></a>placeholder1&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a25e350b18168b13238fd9db61b91e820"></a>placeholder2&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a98259b1bcd4879d3841d0e3ec63400c3"></a>placeholder3&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a13a0157a448fbf5252457aa14392746a"></a>placeholder4&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a997195c6ee24c834287e96be26f812aa"></a>placeholder5&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2a83ca9f1303df52792df5292a408a51be"></a>placeholder6&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a1af81b2d0e3cf9b89ab132aaeea299e2ad2f6e07c45a90ece12800b57368eea2d"></a>placeholder7&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528ab401d7dd6222b62b414a3b808861dc91"></a>placeholder0&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a295c3ba81c252b9d029300f0314d2251"></a>placeholder1&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a25e350b18168b13238fd9db61b91e820"></a>placeholder2&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a98259b1bcd4879d3841d0e3ec63400c3"></a>placeholder3&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a13a0157a448fbf5252457aa14392746a"></a>placeholder4&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a997195c6ee24c834287e96be26f812aa"></a>placeholder5&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528a83ca9f1303df52792df5292a408a51be"></a>placeholder6&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac0c601750916b3a0a8fcebb2c070c528ad2f6e07c45a90ece12800b57368eea2d"></a>placeholder7&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="graphics__renderer_8h_source.html#l00026">26</a> of file <a class="el" href="graphics__renderer_8h_source.html">graphics_renderer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stencil_8h_source.html#l00007">7</a> of file <a class="el" href="stencil_8h_source.html">stencil.h</a>.</p>
 
 </div>
 </div>
@@ -1648,6 +1649,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89"></a>texture_specular&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79"></a>texture_gloss&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e"></a>texture_displacement&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa4779b46fb5d4803d6806d6d5b5faccc0"></a>texture_position&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac"></a>texture_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169"></a>cubemap_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f"></a>num_texture_units&#160;</td><td class="fielddoc"></td></tr>

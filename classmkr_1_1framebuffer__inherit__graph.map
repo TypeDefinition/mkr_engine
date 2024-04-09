@@ -1,9 +1,9 @@
 <map id="mkr::framebuffer" name="mkr::framebuffer">
-<area shape="rect" id="node1" title=" " alt="" coords="408,5,652,464"/>
+<area shape="rect" id="node1" title=" " alt="" coords="411,5,655,464"/>
 <area shape="rect" id="node2" href="$classmkr_1_1forward__buffer.html" title=" " alt="" coords="5,527,159,619"/>
 <area shape="rect" id="node3" href="$classmkr_1_1geometry__buffer.html" title=" " alt="" coords="183,527,349,619"/>
-<area shape="rect" id="node4" href="$classmkr_1_1light__buffer.html" title=" " alt="" coords="373,512,511,633"/>
-<area shape="rect" id="node5" href="$classmkr_1_1post__proc__buffer.html" title=" " alt="" coords="535,519,701,626"/>
-<area shape="rect" id="node6" href="$classmkr_1_1shadow__2d__buffer.html" title=" " alt="" coords="726,527,902,619"/>
-<area shape="rect" id="node7" href="$classmkr_1_1shadow__cubemap__buffer.html" title=" " alt="" coords="927,519,1147,626"/>
+<area shape="rect" id="node4" href="$classmkr_1_1lighting__buffer.html" title=" " alt="" coords="374,512,526,633"/>
+<area shape="rect" id="node5" href="$classmkr_1_1post__buffer.html" title=" " alt="" coords="550,519,683,626"/>
+<area shape="rect" id="node6" href="$classmkr_1_1shadow__2d__buffer.html" title=" " alt="" coords="707,527,883,619"/>
+<area shape="rect" id="node7" href="$classmkr_1_1shadow__cubemap__buffer.html" title=" " alt="" coords="908,519,1128,626"/>
 </map>

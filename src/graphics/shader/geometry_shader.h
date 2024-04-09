@@ -9,7 +9,6 @@ namespace mkr {
             // Vertex Shader
             u_view_matrix,
             u_projection_matrix,
-            u_view_projection_matrix,
             u_texture_offset,
             u_texture_scale,
 

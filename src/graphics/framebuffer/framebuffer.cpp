@@ -31,7 +31,7 @@ namespace mkr {
         GLbitfield mask = (_colour ? GL_COLOR_BUFFER_BIT : 0) | (_depth ? GL_DEPTH_BUFFER_BIT : 0) | (_stencil ? GL_STENCIL_BUFFER_BIT : 0);
         // If filter is not GL_NEAREST and mask includes GL_DEPTH_BUFFER_BIT or GL_STENCIL_BUFFER_BIT, no data is transferred and a GL_INVALID_OPERATION error is generated.
         // So for simplicity let's just use GL_NEAREST. Don't act smart and use GL_LINEAR.
-        glBlitNamedFramebuffer(handle_, _other->handle_, _src_x0, _src_y0, _src_x1, _src_y1, _dst_x0, _dst_y0, _dst_x1, _dst_y1, mask, GL_NEAREST);
+        glBlitNamedFramebuffer(handle_, _other ? _other->handle_ : 0, _src_x0, _src_y0, _src_x1, _src_y1, _dst_x0, _dst_y0, _dst_x1, _dst_y1, mask, GL_NEAREST);
     }
 
     void framebuffer::set_read_colour_attachment(int32_t _attachment) {

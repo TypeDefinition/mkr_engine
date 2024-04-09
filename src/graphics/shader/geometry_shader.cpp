@@ -12,7 +12,6 @@ namespace mkr {
         // Vertex Shader
         uniform_handles_[uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
         uniform_handles_[uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
-        uniform_handles_[uniform::u_view_projection_matrix] = get_uniform_location("u_view_projection_matrix");
         uniform_handles_[uniform::u_texture_offset] = get_uniform_location("u_texture_offset");
         uniform_handles_[uniform::u_texture_scale] = get_uniform_location("u_texture_scale");
 

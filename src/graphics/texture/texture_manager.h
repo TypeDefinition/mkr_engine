@@ -36,7 +36,8 @@ namespace mkr {
             return (iter == cubemaps_.end()) ? nullptr : iter->second.get();
         }
 
-        cubemap* make_cubemap(const std::string& _name, std::array<std::string, num_cubemap_sides> _files, bool _flip_x = false, bool _flip_y = false) {
+        // Skybox textures need to be flipped on the Y-axis due to some stupid OpenGL cubemap convention.
+        cubemap* make_cubemap(const std::string& _name, std::array<std::string, num_cubemap_sides> _files, bool _flip_x = false, bool _flip_y = true) {
             cubemaps_[_name] = texture_loader::load_cubemap(_name, _files, _flip_x, _flip_y);
             return cubemaps_[_name].get();
         }

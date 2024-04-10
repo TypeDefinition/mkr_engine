@@ -105,8 +105,8 @@ namespace mkr {
 
         // Render the scene once for every camera.
         while (!cameras_.empty()) {
-            const auto& cam = cameras_.top().camera_;
-            const auto& trans = cameras_.top().transform_;
+            auto& cam = cameras_.top().camera_;
+            auto& trans = cameras_.top().transform_;
 
             // Shadow maps for directional lights need to be recalculated once for each camera.
             for (auto i = 0; i < num_lights; ++i) {
@@ -123,16 +123,20 @@ namespace mkr {
 
             // View Matrix
             const auto view_matrix = matrix_util::view_matrix(trans.position_, trans.forward_, trans.up_);
+            const auto inv_view_matrix = matrix_util::inverse_matrix(view_matrix).value_or(matrix4x4::identity());
+
             // Projection Matrix
             const auto projection_matrix = (cam.mode_ == projection_mode::perspective)
                                            ? matrix_util::perspective_matrix(cam.aspect_ratio_, cam.fov_, cam.near_plane_, cam.far_plane_)
                                            : matrix_util::orthographic_matrix(cam.aspect_ratio_, cam.ortho_size_, cam.near_plane_, cam.far_plane_);
-            const auto inv_view_matrix = matrix_util::inverse_matrix(view_matrix).value_or(matrix4x4::identity());
+
 
             // Render passes.
             geometry_pass(view_matrix, projection_matrix);
             lighting_pass(view_matrix, inv_view_matrix, view_dir_x, view_dir_y, view_dir_z);
             forward_pass(view_matrix, projection_matrix, inv_view_matrix, view_dir_x, view_dir_y, view_dir_z);
+            skybox_pass(matrix_util::view_matrix(vector3::zero(), trans.forward_, trans.up_), // No translation.
+                        projection_matrix, &cam.skybox_);
 
             // Blit result to default framebuffer.
             framebuffer::bind_default_buffer();
@@ -153,6 +157,7 @@ namespace mkr {
     }
 
     matrix4x4 graphics_renderer::point_shadow(shadow_cubemap_buffer* _buffer, const local_to_world& _trans, const light& _light) {
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -208,6 +213,7 @@ namespace mkr {
     }
 
     matrix4x4 graphics_renderer::spot_shadow(shadow_2d_buffer* _buffer, const local_to_world& _trans, const light& _light) {
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -250,6 +256,7 @@ namespace mkr {
     }
 
     matrix4x4 graphics_renderer::directional_shadow(shadow_2d_buffer* _buffer, const local_to_world& _light_trans, const light& _light, const local_to_world& _cam_trans, const camera& _cam) {
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -303,6 +310,7 @@ namespace mkr {
     }
 
     void graphics_renderer::geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
@@ -366,7 +374,6 @@ namespace mkr {
     void graphics_renderer::lighting_pass(const matrix4x4& _view_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z) {
         glDisable(GL_BLEND);
         glDisable(GL_DEPTH_TEST);
-        glDisable(GL_STENCIL_TEST);
         glViewport(0, 0, l_buff_->width(), l_buff_->height());
 
         l_buff_->bind();
@@ -435,15 +442,18 @@ namespace mkr {
     }
 
     void graphics_renderer::forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z) {
+        glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
         glDepthFunc(GL_LESS);
+
         glViewport(0, 0, f_buff_->width(), f_buff_->height());
 
         // Clear colour attachments.
         f_buff_->bind();
         f_buff_->set_draw_colour_attachment_all();
         f_buff_->clear_colour_all();
+        f_buff_->clear_depth_stencil();
 
         // Blit colour.
         l_buff_->set_read_colour_attachment(lighting_buffer::colour_attachments::colour);
@@ -555,6 +565,37 @@ namespace mkr {
                 glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, model_matrices.size());
             }
         }
+    }
+
+    void graphics_renderer::skybox_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const skybox* _skybox) {
+        if (!_skybox || !_skybox->shader_) { return; }
+
+        glDisable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(GL_FALSE); // Do not write to the depth buffer.
+        glDepthFunc(GL_LEQUAL); // We'll set our depth to 1 in the fragment shader.
+        glViewport(0, 0, f_buff_->width(), f_buff_->height());
+
+        /* Even though the skybox shader only writes to one colour attachment, we have to disable writing to the other colour attachments, otherwise they will have some undefined values written to them.
+           As long as a colour attachment to set to be drawn to it, some value will be written to it no matter what, even if the shader does not specify.
+           For the case of my computer, it will cause the values in colour_attachments::colour to also be written to the other colour attachments.
+           [https://stackoverflow.com/questions/39545966/opengl-3-0-framebuffer-outputting-to-attachments-without-me-specifying] */
+        f_buff_->bind();
+        f_buff_->set_draw_colour_attachment(forward_buffer::colour_attachments::colour);
+
+        auto shader = _skybox->shader_;
+        shader->use();
+
+        if (_skybox->texture_) { _skybox->texture_->bind(texture_unit::texture_skybox); }
+
+        shader->set_uniform(skybox_shader::uniform::u_view_matrix, false, _view_matrix);
+        shader->set_uniform(skybox_shader::uniform::u_projection_matrix, false, _projection_matrix);
+        shader->set_uniform(skybox_shader::uniform::u_colour, _skybox->colour_);
+        shader->set_uniform(skybox_shader::uniform::u_texture_skybox_enabled, _skybox->texture_ != nullptr);
+
+        skybox_cube_->bind();
+        skybox_cube_->set_instance_data({{matrix4x4::identity(), matrix3x3::identity()}});
+        glDrawElementsInstanced(GL_TRIANGLES, skybox_cube_->num_indices(), GL_UNSIGNED_INT, 0, 1);
     }
 
     void graphics_renderer::submit_camera(const local_to_world& _transform, const camera& _camera) {

@@ -13,6 +13,7 @@ namespace mkr {
     public:
         mesh_builder() = delete;
 
+        // Note: Cubemaps use left-hand coordinate system instead of right-hand coordinate system.
         static std::unique_ptr<mesh> make_skybox(const std::string& _name) {
             std::vector<vertex> vertices(24);
             std::vector<uint32_t> indices;
@@ -23,10 +24,10 @@ namespace mkr {
             vertices[2].position_ = {1.0f, 1.0f, 1.0f}; // Top Left
             vertices[3].position_ = {-1.0f, -1.0f, 1.0f}; // Bottom Right
 
-            vertices[0].tex_coord_ = {-1.0f, 1.0f, 1.0f};
-            vertices[1].tex_coord_ = {1.0f, -1.0f, 1.0f};
-            vertices[2].tex_coord_ = {-1.0f, -1.0f, 1.0f};
-            vertices[3].tex_coord_ = {1.0f, 1.0f, 1.0f};
+            vertices[0].tex_coord_ = {0.0f, 0.0f};
+            vertices[1].tex_coord_ = {1.0f, 1.0f};
+            vertices[2].tex_coord_ = {0.0f, 1.0f};
+            vertices[3].tex_coord_ = {1.0f, 0.0f};
 
             vertices[0].normal_ = {0.0f, 0.0f, -1.0f};
             vertices[1].normal_ = {0.0f, 0.0f, -1.0f};
@@ -51,10 +52,10 @@ namespace mkr {
             vertices[6].position_ = {1.0f, 1.0f, -1.0f}; // Back Left
             vertices[7].position_ = {-1.0f, 1.0f, 1.0f}; // Front Right
 
-            vertices[4].tex_coord_ = {-1.0f, 1.0f, -1.0f};
-            vertices[5].tex_coord_ = {1.0f, 1.0f, 1.0f};
-            vertices[6].tex_coord_ = {-1.0f, 1.0f, 1.0f};
-            vertices[7].tex_coord_ = {1.0f, 1.0f, -1.0f};
+            vertices[4].tex_coord_ = {0.0f, 0.0f};
+            vertices[5].tex_coord_ = {1.0f, 1.0f};
+            vertices[6].tex_coord_ = {0.0f, 1.0f};
+            vertices[7].tex_coord_ = {1.0f, 0.0f};
 
             vertices[4].normal_ = {0.0f, -1.0f, 0.0f};
             vertices[5].normal_ = {0.0f, -1.0f, 0.0f};
@@ -73,16 +74,16 @@ namespace mkr {
             indices.push_back(7);
             indices.push_back(5);
 
-            // Down
+            // Bottom
             vertices[8].position_ = {1.0f, -1.0f, -1.0f}; // Back Left
             vertices[9].position_ = {-1.0f, -1.0f, 1.0f}; // Front Right
             vertices[10].position_ = {1.0f, -1.0f, 1.0f}; // Front Left
             vertices[11].position_ = {-1.0f, -1.0f, -1.0f}; // Back Right
 
-            vertices[8].tex_coord_ = {-1.0f, -1.0f, 1.0f};
-            vertices[9].tex_coord_ = {1.0f, -1.0f, -1.0f};
-            vertices[10].tex_coord_ = {-1.0f, -1.0f, -1.0f};
-            vertices[11].tex_coord_ = {1.0f, -1.0f, 1.0f};
+            vertices[8].tex_coord_ = {0.0f, 0.0f};
+            vertices[9].tex_coord_ = {1.0f, 1.0f};
+            vertices[10].tex_coord_ = {0.0f, 1.0f};
+            vertices[11].tex_coord_ = {1.0f, 0.0f};
 
             vertices[8].normal_ = {0.0f, 1.0f, 0.0f};
             vertices[9].normal_ = {0.0f, 1.0f, 0.0f};
@@ -107,11 +108,10 @@ namespace mkr {
             vertices[14].position_ = {1.0f, 1.0f, -1.0f}; // Back Top
             vertices[15].position_ = {1.0f, -1.0f, 1.0f}; // Front Bottom
 
-            // Cubemaps use left-hand coordinate system instead of right-hand coordinate system.
-            vertices[12].tex_coord_ = {-1.0f, 1.0f, -1.0f};
-            vertices[13].tex_coord_ = {-1.0f, -1.0f, 1.0f};
-            vertices[14].tex_coord_ = {-1.0f, -1.0f, -1.0f};
-            vertices[15].tex_coord_ = {-1.0f, 1.0f, 1.0f};
+            vertices[12].tex_coord_ = {0.0f, 0.0f};
+            vertices[13].tex_coord_ = {1.0f, 1.0f};
+            vertices[14].tex_coord_ = {0.0f, 1.0f};
+            vertices[15].tex_coord_ = {1.0f, 0.0f};
 
             vertices[12].normal_ = {-1.0f, 0.0f, 0.0f};
             vertices[13].normal_ = {-1.0f, 0.0f, 0.0f};
@@ -137,10 +137,10 @@ namespace mkr {
             vertices[19].position_ = {-1.0f, -1.0f, -1.0f}; // Back Bottom
 
             // Cubemaps use left-hand coordinate system instead of right-hand coordinate system.
-            vertices[16].tex_coord_ = {1.0f, 1.0f, 1.0f};
-            vertices[17].tex_coord_ = {1.0f, -1.0f, -1.0f};
-            vertices[18].tex_coord_ = {1.0f, -1.0f, 1.0f};
-            vertices[19].tex_coord_ = {1.0f, 1.0f, -1.0f};
+            vertices[16].tex_coord_ = {0.0f, 0.0f};
+            vertices[17].tex_coord_ = {1.0f, 1.0f};
+            vertices[18].tex_coord_ = {0.0f, 1.0f};
+            vertices[19].tex_coord_ = {1.0f, 0.0f};
 
             vertices[16].normal_ = {1.0f, 0.0f, 0.0f};
             vertices[17].normal_ = {1.0f, 0.0f, 0.0f};
@@ -165,10 +165,10 @@ namespace mkr {
             vertices[22].position_ = {-1.0f, 1.0f, -1.0f}; // Top Right
             vertices[23].position_ = {1.0f, -1.0f, -1.0f}; // Bottom Left
 
-            vertices[20].tex_coord_ = {1.0f, 1.0f, -1.0f};
-            vertices[21].tex_coord_ = {-1.0f, -1.0f, -1.0f};
-            vertices[22].tex_coord_ = {1.0f, -1.0f, -1.0f};
-            vertices[23].tex_coord_ = {-1.0f, 1.0f, -1.0f};
+            vertices[20].tex_coord_ = {0.0f, 0.0f};
+            vertices[21].tex_coord_ = {1.0f, 1.0f};
+            vertices[22].tex_coord_ = {0.0f, 1.0f};
+            vertices[23].tex_coord_ = {1.0f, 0.0f};
 
             vertices[20].normal_ = {0.0f, 0.0f, 1.0f};
             vertices[21].normal_ = {0.0f, 0.0f, 1.0f};
@@ -203,10 +203,10 @@ namespace mkr {
             vertices[2].normal_ = {0.0f, 0.0f, 1.0f};
             vertices[3].normal_ = {0.0f, 0.0f, 1.0f};
 
-            vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};
-            vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};
-            vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};
-            vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};
+            vertices[0].tex_coord_ = {0.0f, 0.0f};
+            vertices[1].tex_coord_ = {1.0f, 1.0f};
+            vertices[2].tex_coord_ = {0.0f, 1.0f};
+            vertices[3].tex_coord_ = {1.0f, 0.0f};
 
             vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};
             vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};
@@ -234,7 +234,7 @@ namespace mkr {
             // Vertex Attribute(s)
             std::vector<vector3> positions;
             std::vector<vector3> normals;
-            std::vector<vector3> tex_coords;
+            std::vector<vector2> tex_coords;
 
             // Read the file.
             std::string file_str = file_util::file_to_str(_file);
@@ -252,7 +252,7 @@ namespace mkr {
 
                 // TexCoord
                 if (std::strncmp("vt ", line.c_str(), 3) == 0) {
-                    vector3 tex_coord;
+                    vector2 tex_coord;
                     std::sscanf(line.c_str() + 3, "%f%f", &tex_coord.x_, &tex_coord.y_);
                     tex_coords.push_back(tex_coord);
                 }

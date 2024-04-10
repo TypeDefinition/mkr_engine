@@ -8,8 +8,8 @@
 namespace mkr {
     class skybox {
     public:
+        colour colour_ = colour::white();
         cubemap* texture_ = nullptr;
         shader_program* shader_ = nullptr;
-        colour colour_ = colour::white();
     };
 }

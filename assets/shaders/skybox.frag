@@ -1,7 +1,7 @@
 #version 460 core
 
 // Outputs
-layout (location = 0) out vec4 out_composite;
+layout (location = 0) out vec4 out_colour;
 
 // Inputs
 in io_block {
@@ -9,10 +9,11 @@ in io_block {
 };
 
 // Uniforms
-uniform vec4 u_skybox_colour;
+uniform vec4 u_colour;
 uniform bool u_texture_skybox_enabled;
 uniform samplerCube u_texture_skybox;
 
 void main() {
-    out_composite = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) * u_skybox_colour : u_skybox_colour;
+    gl_FragDepth = 1.0f; // Set the skybox to infinitely far away.
+    out_colour = u_texture_skybox_enabled ? texture(u_texture_skybox, io_tex_coord) * u_colour : u_colour;
 }

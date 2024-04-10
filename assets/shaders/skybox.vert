@@ -2,7 +2,7 @@
 
 // Per-Vertex Inputs
 layout (location = 0) in vec3 v_position;
-layout (location = 1) in vec3 v_tex_coord;
+layout (location = 1) in vec2 v_tex_coord;
 layout (location = 2) in vec3 v_normal;
 layout (location = 3) in vec3 v_tangent;
 
@@ -16,9 +16,10 @@ out io_block {
 };
 
 // Uniforms
-uniform mat4 u_view_projection_matrix;
+uniform mat4 u_view_matrix;
+uniform mat4 u_projection_matrix;
 
 void main() {
-    io_tex_coord = v_tex_coord;
-    gl_Position = u_view_projection_matrix * v_model_matrix * vec4(v_position, 1.0);
+    io_tex_coord = vec3(-v_position.x, v_position.yz); // Cubemap coordinates are left-handed.
+    gl_Position = u_projection_matrix * u_view_matrix * vec4(v_position, 1.0);
 }

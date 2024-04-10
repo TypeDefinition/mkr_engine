@@ -46,7 +46,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        // input_manager::instance().set_relative_mouse(true);
+        input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -126,7 +126,7 @@ namespace mkr {
     }
 
     void game_scene::init_shaders() {
-        // shader_manager::instance().make_shader<skybox_shader>("skybox", {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
+        shader_manager::instance().make_shader<skybox_shader>("skybox", {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
         shader_manager::instance().make_shader<shadow_2d_shader>("shadow_2d", {"./../assets/shaders/shadow_2d.vert"}, {"./../assets/shaders/shadow_2d.frag"});
         shader_manager::instance().make_shader<shadow_cubemap_shader>("shadow_cubemap", {"./../assets/shaders/shadow_cubemap.vert"}, {"./../assets/shaders/shadow_cubemap.geom"}, {"./../assets/shaders/shadow_cubemap.frag"});
         shader_manager::instance().make_shader<geometry_shader>("geometry", {"./../assets/shaders/geometry.vert"}, {"./../assets/shaders/geometry.frag",
@@ -151,6 +151,15 @@ namespace mkr {
 
     void game_scene::init_materials() {
         // Skybox
+        texture_manager::instance().make_cubemap("skybox_test", {
+            "./../assets/textures/skyboxes/test/skybox_test_right.png",
+            "./../assets/textures/skyboxes/test/skybox_test_left.png",
+            "./../assets/textures/skyboxes/test/skybox_test_top.png",
+            "./../assets/textures/skyboxes/test/skybox_test_bottom.png",
+            "./../assets/textures/skyboxes/test/skybox_test_front.png",
+            "./../assets/textures/skyboxes/test/skybox_test_back.png",
+        });
+
         texture_manager::instance().make_cubemap("skybox_sunset", {
             "./../assets/textures/skyboxes/sunset/skybox_sunset_right.png",
             "./../assets/textures/skyboxes/sunset/skybox_sunset_left.png",
@@ -229,6 +238,7 @@ namespace mkr {
             cube_trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
             render_mesh cube_rend{};
             cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
+            // cube_rend.mesh_ = mesh_manager::instance().get_mesh("quad");
             cube_rend.material_ = material_manager::instance().get_material("brick");
             world_.entity().set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
         }
@@ -300,6 +310,7 @@ namespace mkr {
         camera cam;
         cam.skybox_.shader_ = shader_manager::instance().get_shader("skybox");
         cam.skybox_.texture_ = texture_manager::instance().get_cubemap("skybox_sunset");
+        // cam.skybox_.texture_ = texture_manager::instance().get_cubemap("skybox_test");
 
         auto body = world_.entity("head").add<transform>().add<body_tag>().add<local_to_world>();
         auto head = world_.entity("body").set<transform>(head_trans).add<head_tag>().set<camera>(cam).add<local_to_world>();

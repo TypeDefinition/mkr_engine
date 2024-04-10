@@ -4,7 +4,7 @@
 
 // Per-Vertex Inputs
 layout (location = 0) in vec3 v_position;
-layout (location = 1) in vec3 v_tex_coord;
+layout (location = 1) in vec2 v_tex_coord;
 layout (location = 2) in vec3 v_normal;
 layout (location = 3) in vec3 v_tangent;
 
@@ -14,7 +14,7 @@ layout(location = 8) in mat3 v_normal_matrix; // The max size of a vertex attrib
 
 // Outputs
 out io_block {
-    vec3 io_tex_coord;
+    vec2 io_tex_coord;
     vec3 io_position; // Vertex position in camera space.
     vec3 io_normal; // Vertex normal in camera space.
     mat3 io_tbn_matrix; // Converts from tangent space to camera space.
@@ -32,7 +32,7 @@ void main() {
     t = normalize(t - dot(t, n) * n);
     vec3 b = cross(n, t);
 
-    io_tex_coord = (v_tex_coord + vec3(u_texture_offset, 0.0f)) * vec3(u_texture_scale, 1.0f);
+    io_tex_coord = (v_tex_coord + u_texture_offset) * u_texture_scale;
     io_position = (u_view_matrix * v_model_matrix * vec4(v_position, 1.0f)).xyz;
     io_normal = n;
     io_tbn_matrix = mat3(t, b, n);

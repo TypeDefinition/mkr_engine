@@ -79,6 +79,7 @@ namespace mkr {
         void geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
         void lighting_pass(const matrix4x4& _view_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z);
         void forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z);
+        void skybox_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const skybox* _skybox);
 
     public:
         void init();

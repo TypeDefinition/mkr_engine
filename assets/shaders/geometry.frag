@@ -9,7 +9,7 @@ layout (location = 4) out float out_gloss;
 
 // Inputs
 in io_block {
-    vec3 io_tex_coord;
+    vec2 io_tex_coord;
     vec3 io_position;// Vertex position in camera space.
     vec3 io_normal;// Vertex normal in camera space.
     mat3 io_tbn_matrix;// Converts from tangent space to camera space.
@@ -58,7 +58,7 @@ vec4 get_specular(const in vec2 _tex_coord) {
 }
 
 vec2 get_tex_coord() {
-    return u_texture_displacement_enabled ? parallax_occlusion(u_texture_displacement, io_tex_coord.xy, u_displacement_scale, io_position, io_tbn_matrix, io_normal) : io_tex_coord.xy;
+    return u_texture_displacement_enabled ? parallax_occlusion(u_texture_displacement, io_tex_coord, u_displacement_scale, io_position, io_tbn_matrix, io_normal) : io_tex_coord;
 }
 
 void main() {

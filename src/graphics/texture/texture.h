@@ -88,9 +88,12 @@ namespace mkr {
 
     /**
      * [https://www.khronos.org/opengl/wiki/Cubemap_Texture]
+     * [https://stackoverflow.com/questions/11685608/convention-of-faces-in-opengl-cubemapping]
      *
-     * Important: OpenGL uses left-hand coordinate system for cubemap orientations,
-     * as opposed to the usual right-hand coordinate system for everything else.
+     * !!!Important!!!
+     * Due to some stupid decisions by OpenGL to follow Pixar's RenderMan convention,
+     * 1. Cubemap's coordinate system is left-handed, instead of right-handed.
+     * 2. Cubemap's texture coordinates go from top-left to bottom-right, instead of bottom-left to top-right.
      *
      * We order the sides of the cubemap according to OpenGL's cubemap face order.
      * Layer 0 - GL_TEXTURE_CUBE_MAP_POSITIVE_X
@@ -108,7 +111,7 @@ namespace mkr {
         cubemap_positive_z = 4,
         cubemap_negative_z = 5,
 
-        // We take positive y to be forward, negative x to be left, and positive y to be up.
+        // This is the convention I decided on.
         cubemap_right = cubemap_positive_x,
         cubemap_left = cubemap_negative_x,
         cubemap_top = cubemap_positive_y,

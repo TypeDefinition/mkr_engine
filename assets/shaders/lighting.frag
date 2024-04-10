@@ -4,7 +4,7 @@ layout (location = 0) out vec4 out_colour;
 
 // Inputs
 in io_block {
-    vec3 io_tex_coord;
+    vec2 io_tex_coord;
 };
 
 // Constants
@@ -127,11 +127,11 @@ vec4 get_light_specular(const in vec3 _pos, const in vec3 _normal, float _gloss,
 }
 
 void main() {
-    const vec3 pos = texture(u_texture_position, io_tex_coord.xy).rgb;
-    const vec3 norm = texture(u_texture_normal, io_tex_coord.xy).rgb;
-    const vec4 diff = texture(u_texture_diffuse, io_tex_coord.xy);
-    const vec4 spec = texture(u_texture_specular, io_tex_coord.xy);
-    const float gloss = texture(u_texture_gloss, io_tex_coord.xy).r;
+    const vec3 pos = texture(u_texture_position, io_tex_coord).rgb;
+    const vec3 norm = texture(u_texture_normal, io_tex_coord).rgb;
+    const vec4 diff = texture(u_texture_diffuse, io_tex_coord);
+    const vec4 spec = texture(u_texture_specular, io_tex_coord);
+    const float gloss = texture(u_texture_gloss, io_tex_coord).r;
 
     bool cast_shadow[max_lights];
     get_cast_shadow(pos, norm, cast_shadow);

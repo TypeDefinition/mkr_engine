@@ -4,7 +4,7 @@
 #include "graphics/lighting/lighting.h"
 
 namespace mkr {
-    class forward_shader : public shader_program {
+    class alpha_weight_shader : public shader_program {
     public:
         enum uniform : uint32_t {
             // Transform
@@ -22,13 +22,13 @@ namespace mkr {
 
             // Textures
             u_texture_diffuse_enabled,
-            u_texture_specular_enabled,
             u_texture_normal_enabled,
+            u_texture_specular_enabled,
             u_texture_displacement_enabled,
 
             u_texture_diffuse,
-            u_texture_specular,
             u_texture_normal,
+            u_texture_specular,
             u_texture_displacement,
 
             // Shadows
@@ -70,12 +70,12 @@ namespace mkr {
         void assign_textures();
 
     public:
-        forward_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
+        alpha_weight_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
             : shader_program(_name, _vs_sources, _fs_sources, uniform::num_shader_uniforms) {
             assign_uniforms();
             assign_textures();
         }
 
-        virtual ~forward_shader() {}
+        virtual ~alpha_weight_shader() {}
     };
 }

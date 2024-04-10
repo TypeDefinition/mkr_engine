@@ -3,9 +3,9 @@
 layout (location = 0) out vec4 out_composite;
 
 // Inputs
-in io_block {
-    vec2 io_tex_coord;
-};
+in VS_OUT {
+    vec2 tex_coord;
+} vs_out;
 
 uniform sampler2D u_texture_frag_position;
 uniform sampler2D u_texture_frag_normal;

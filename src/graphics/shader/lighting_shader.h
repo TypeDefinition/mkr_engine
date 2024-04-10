@@ -15,7 +15,6 @@ namespace mkr {
             u_texture_normal,
             u_texture_diffuse,
             u_texture_specular,
-            u_texture_gloss,
 
             // Shadows
             u_texture_shadows0,

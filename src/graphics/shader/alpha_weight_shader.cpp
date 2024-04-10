@@ -1,22 +1,31 @@
-#include "graphics/shader/lighting_shader.h"
+#include "graphics/shader/alpha_weight_shader.h"
 #include "graphics/shader/texture_unit.h"
 
 namespace mkr {
-    lighting_shader::lighting_shader(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources)
-        : shader_program(_name, _vs_sources, _fs_sources, uniform::num_shader_uniforms) {
-        assign_uniforms();
-        assign_textures();
-    }
-
-    void lighting_shader::assign_uniforms() {
+    void alpha_weight_shader::assign_uniforms() {
         // Transform
+        uniform_handles_[uniform::u_view_matrix] = get_uniform_location("u_view_matrix");
+        uniform_handles_[uniform::u_projection_matrix] = get_uniform_location("u_projection_matrix");
+        uniform_handles_[uniform::u_texture_offset] = get_uniform_location("u_texture_offset");
+        uniform_handles_[uniform::u_texture_scale] = get_uniform_location("u_texture_scale");
+
         uniform_handles_[uniform::u_inv_view_matrix] = get_uniform_location("u_inv_view_matrix");
 
+        // Material
+        uniform_handles_[uniform::u_diffuse_colour] = get_uniform_location("u_diffuse_colour");
+        uniform_handles_[uniform::u_specular_colour] = get_uniform_location("u_specular_colour");
+        uniform_handles_[uniform::u_displacement_scale] = get_uniform_location("u_displacement_scale");
+
         // Textures
-        uniform_handles_[uniform::u_texture_position] = get_uniform_location("u_texture_position");
-        uniform_handles_[uniform::u_texture_normal] = get_uniform_location("u_texture_normal");
+        uniform_handles_[uniform::u_texture_diffuse_enabled] = get_uniform_location("u_texture_diffuse_enabled");
+        uniform_handles_[uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");
+        uniform_handles_[uniform::u_texture_specular_enabled] = get_uniform_location("u_texture_specular_enabled");
+        uniform_handles_[uniform::u_texture_displacement_enabled] = get_uniform_location("u_texture_displacement_enabled");
+
         uniform_handles_[uniform::u_texture_diffuse] = get_uniform_location("u_texture_diffuse");
+        uniform_handles_[uniform::u_texture_normal] = get_uniform_location("u_texture_normal");
         uniform_handles_[uniform::u_texture_specular] = get_uniform_location("u_texture_specular");
+        uniform_handles_[uniform::u_texture_displacement] = get_uniform_location("u_texture_displacement");
 
         // Shadows
         for (auto i = 0; i < lighting::max_lights; ++i) {
@@ -43,15 +52,15 @@ namespace mkr {
         }
     }
 
-    void lighting_shader::assign_textures() {
-        set_uniform(uniform::u_texture_position, (int32_t) texture_unit::texture_position);
-        set_uniform(uniform::u_texture_normal, (int32_t) texture_unit::texture_normal);
+    void alpha_weight_shader::assign_textures() {
         set_uniform(uniform::u_texture_diffuse, (int32_t) texture_unit::texture_diffuse);
+        set_uniform(uniform::u_texture_normal, (int32_t) texture_unit::texture_normal);
         set_uniform(uniform::u_texture_specular, (int32_t) texture_unit::texture_specular);
+        set_uniform(uniform::u_texture_displacement, (int32_t) texture_unit::texture_displacement);
 
         for (auto i = 0; i < lighting::max_lights; ++i) {
             set_uniform(i + uniform::u_texture_shadows0, (int32_t) (i + texture_unit::texture_shadows0));
             set_uniform(i + uniform::u_cubemap_shadows0, (int32_t) (i + texture_unit::cubemap_shadows0));
         }
     }
-} // mkr
+}

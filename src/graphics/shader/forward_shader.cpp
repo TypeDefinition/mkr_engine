@@ -14,20 +14,17 @@ namespace mkr {
         // Material
         uniform_handles_[uniform::u_diffuse_colour] = get_uniform_location("u_diffuse_colour");
         uniform_handles_[uniform::u_specular_colour] = get_uniform_location("u_specular_colour");
-        uniform_handles_[uniform::u_gloss] = get_uniform_location("u_gloss");
         uniform_handles_[uniform::u_displacement_scale] = get_uniform_location("u_displacement_scale");
 
         // Textures
         uniform_handles_[uniform::u_texture_diffuse_enabled] = get_uniform_location("u_texture_diffuse_enabled");
-        uniform_handles_[uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");
         uniform_handles_[uniform::u_texture_specular_enabled] = get_uniform_location("u_texture_specular_enabled");
-        uniform_handles_[uniform::u_texture_gloss_enabled] = get_uniform_location("u_texture_gloss_enabled");
+        uniform_handles_[uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");
         uniform_handles_[uniform::u_texture_displacement_enabled] = get_uniform_location("u_texture_displacement_enabled");
 
         uniform_handles_[uniform::u_texture_diffuse] = get_uniform_location("u_texture_diffuse");
-        uniform_handles_[uniform::u_texture_normal] = get_uniform_location("u_texture_normal");
         uniform_handles_[uniform::u_texture_specular] = get_uniform_location("u_texture_specular");
-        uniform_handles_[uniform::u_texture_gloss] = get_uniform_location("u_texture_gloss");
+        uniform_handles_[uniform::u_texture_normal] = get_uniform_location("u_texture_normal");
         uniform_handles_[uniform::u_texture_displacement] = get_uniform_location("u_texture_displacement");
 
         // Shadows
@@ -57,9 +54,8 @@ namespace mkr {
 
     void forward_shader::assign_textures() {
         set_uniform(uniform::u_texture_diffuse, (int32_t) texture_unit::texture_diffuse);
-        set_uniform(uniform::u_texture_normal, (int32_t) texture_unit::texture_normal);
         set_uniform(uniform::u_texture_specular, (int32_t) texture_unit::texture_specular);
-        set_uniform(uniform::u_texture_gloss, (int32_t) texture_unit::texture_gloss);
+        set_uniform(uniform::u_texture_normal, (int32_t) texture_unit::texture_normal);
         set_uniform(uniform::u_texture_displacement, (int32_t) texture_unit::texture_displacement);
 
         for (auto i = 0; i < lighting::max_lights; ++i) {

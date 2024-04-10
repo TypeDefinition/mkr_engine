@@ -7,11 +7,11 @@ layout (location = 2) in vec3 v_normal;
 layout (location = 3) in vec3 v_tangent;
 
 // Outputs
-out io_block {
-    vec2 io_tex_coord;
-};
+out VS_OUT {
+    vec2 tex_coord;
+} vs_out;
 
 void main() {
-    io_tex_coord = v_tex_coord;
+    vs_out.tex_coord = v_tex_coord;
     gl_Position = vec4(v_position, 1.0f);
 }

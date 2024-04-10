@@ -7,11 +7,12 @@
 #include <maths/matrix_util.h>
 #include "graphics/renderer/stencil.h"
 #include "graphics/app_window.h"
+#include "graphics/framebuffer/shadow_2d_buffer.h"
+#include "graphics/framebuffer/shadow_cubemap_buffer.h"
 #include "graphics/framebuffer/geometry_buffer.h"
 #include "graphics/framebuffer/lighting_buffer.h"
 #include "graphics/framebuffer/forward_buffer.h"
-#include "graphics/framebuffer/shadow_2d_buffer.h"
-#include "graphics/framebuffer/shadow_cubemap_buffer.h"
+#include "graphics/framebuffer/alpha_buffer.h"
 #include "graphics/framebuffer/post_buffer.h"
 #include "graphics/lighting/lighting.h"
 #include "graphics/material/material.h"
@@ -44,11 +45,15 @@ namespace mkr {
         uint32_t window_height_ = 1080;
 
         // Framebuffers
-        std::unique_ptr<geometry_buffer> g_buff_;
-        std::unique_ptr<lighting_buffer> l_buff_;
-        std::unique_ptr<forward_buffer> f_buff_;
         std::unique_ptr<shadow_2d_buffer> s2d_buff_[lighting::max_lights];
         std::unique_ptr<shadow_cubemap_buffer> scube_buff_[lighting::max_lights];
+
+        std::unique_ptr<geometry_buffer> g_buff_;
+        std::unique_ptr<lighting_buffer> l_buff_;
+
+        std::unique_ptr<forward_buffer> f_buff_;
+
+        std::unique_ptr<alpha_buffer> a_buff_;
 
         matrix4x4 light_view_projection_matrix_[lighting::max_lights];
 
@@ -64,8 +69,8 @@ namespace mkr {
 
         // Meshes
         std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> deferred_meshes_;
-        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> forward_opaque_meshes_;
-        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> forward_transparent_meshes_;
+        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> forward_meshes_;
+        std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> transparent_meshes_;
 
         graphics_renderer() {}
         virtual ~graphics_renderer() {}
@@ -79,6 +84,8 @@ namespace mkr {
         void geometry_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
         void lighting_pass(const matrix4x4& _view_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z);
         void forward_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z);
+        void alpha_weight_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z);
+        void alpha_blend_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix);
         void skybox_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const skybox* _skybox);
 
     public:

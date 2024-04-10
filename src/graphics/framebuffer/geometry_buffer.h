@@ -11,7 +11,6 @@ namespace mkr {
             normal,
             diffuse,
             specular,
-            gloss,
             num_attachments,
         };
 
@@ -28,7 +27,6 @@ namespace mkr {
             colour_attachments_[colour_attachments::normal] = std::make_unique<texture2d>("normal", _width, _height, sized_format::rgb16f);
             colour_attachments_[colour_attachments::diffuse] = std::make_unique<texture2d>("diffuse", _width, _height, sized_format::rgba8);
             colour_attachments_[colour_attachments::specular] = std::make_unique<texture2d>("specular", _width, _height, sized_format::rgba8);
-            colour_attachments_[colour_attachments::gloss] = std::make_unique<texture2d>("gloss", _width, _height, sized_format::r16f);
             for (auto i = 0; i < colour_attachments_.size(); ++i) {
                 glNamedFramebufferTexture(handle_, GL_COLOR_ATTACHMENT0 + i, colour_attachments_[i]->handle(), 0);
             }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <memory>
 #include <unordered_map>
 #include <common/singleton.h>
@@ -26,6 +27,7 @@ namespace mkr {
 
         // For now, we only support .obj files.
         mesh* make_mesh(const std::string& _name, const std::string& _file) {
+            if (meshes_.contains(_name)) { throw std::runtime_error("duplicate mesh name"); }
             meshes_[_name] = mesh_builder::load_obj(_name, _file);
             return meshes_[_name].get();
         }

@@ -26,6 +26,8 @@ namespace mkr {
 
         template<typename T>
         shader_program* make_shader(const std::string& _name, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _fs_files) requires std::is_base_of_v<shader_program, T> {
+            if (shaders_.contains(_name)) { throw std::runtime_error("duplicate shader name"); }
+
             std::vector<std::string> vs_sources;
             for (const auto& filename : _vs_files) {
                 vs_sources.push_back(file_util::file_to_str(filename));
@@ -42,6 +44,8 @@ namespace mkr {
 
         template<typename T>
         shader_program* make_shader(const std::string& _name, const std::vector<std::string>& _vs_files, const std::vector<std::string>& _gs_files, const std::vector<std::string>& _fs_files) requires std::is_base_of_v<shader_program, T> {
+            if (shaders_.contains(_name)) { throw std::runtime_error("duplicate shader name"); }
+
             std::vector<std::string> vs_sources;
             for (const auto& filename : _vs_files) {
                 vs_sources.push_back(file_util::file_to_str(filename));

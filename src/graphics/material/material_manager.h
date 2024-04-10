@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <memory>
 #include <unordered_map>
 #include <common/singleton.h>
@@ -23,6 +24,7 @@ namespace mkr {
         }
 
         material* make_material(const std::string& _name) {
+            if (materials_.contains(_name)) { throw std::runtime_error("duplicate material name"); }
             materials_[_name] = std::make_unique<material>();;
             return materials_[_name].get();
         }

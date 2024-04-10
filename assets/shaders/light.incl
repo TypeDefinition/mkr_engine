@@ -31,5 +31,5 @@ float specular_intensity(const in vec3 _pos, const in vec3 _normal,
                          float _gloss) {
     const vec3 light_to_frag = _is_dir_light ? normalize(_light_dir) : normalize(_pos - _light_pos);
     const vec3 view_dir = normalize(-_pos);
-    return pow(max(dot(reflect(light_to_frag, _normal), view_dir), 0.0f), _gloss);
+    return pow(max(dot(reflect(light_to_frag, _normal), view_dir), 0.0f), 32.0f * _gloss);
 }

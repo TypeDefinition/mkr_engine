@@ -15,19 +15,16 @@ namespace mkr {
             // Fragment Shader
             u_diffuse_colour,
             u_specular_colour,
-            u_gloss,
             u_displacement_scale,
 
             u_texture_diffuse_enabled,
             u_texture_normal_enabled,
             u_texture_specular_enabled,
-            u_texture_gloss_enabled,
             u_texture_displacement_enabled,
 
             u_texture_diffuse,
             u_texture_normal,
             u_texture_specular,
-            u_texture_gloss,
             u_texture_displacement,
 
             num_shader_uniforms,

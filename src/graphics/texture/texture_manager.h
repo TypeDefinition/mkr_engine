@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <memory>
 #include <unordered_map>
 #include <common/singleton.h>
@@ -26,6 +27,7 @@ namespace mkr {
         }
 
         texture2d* make_texture2d(const std::string& _name, const std::string& _file, bool _flip_x = false, bool _flip_y = false) {
+            if (texture2ds_.contains(_name)) { throw std::runtime_error("duplicate texture2d name"); }
             texture2ds_[_name] = texture_loader::load_texture2d(_name, _file, _flip_x, _flip_y);
             return texture2ds_[_name].get();
         }
@@ -38,6 +40,7 @@ namespace mkr {
 
         // Skybox textures need to be flipped on the Y-axis due to some stupid OpenGL cubemap convention.
         cubemap* make_cubemap(const std::string& _name, std::array<std::string, num_cubemap_sides> _files, bool _flip_x = false, bool _flip_y = true) {
+            if (cubemaps_.contains(_name)) { throw std::runtime_error("duplicate cubemap name"); }
             cubemaps_[_name] = texture_loader::load_cubemap(_name, _files, _flip_x, _flip_y);
             return cubemaps_[_name].get();
         }

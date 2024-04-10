@@ -3,13 +3,15 @@
 #include <log/log.h>
 #include "graphics/renderer/graphics_renderer.h"
 #include "graphics/shader/texture_unit.h"
-#include "graphics/shader/forward_shader.h"
-#include "graphics/shader/geometry_shader.h"
-#include "graphics/shader/lighting_shader.h"
-#include "graphics/shader/post_proc_shader.h"
-#include "graphics/shader/skybox_shader.h"
 #include "graphics/shader/shadow_2d_shader.h"
 #include "graphics/shader/shadow_cubemap_shader.h"
+#include "graphics/shader/geometry_shader.h"
+#include "graphics/shader/lighting_shader.h"
+#include "graphics/shader/forward_shader.h"
+#include "graphics/shader/alpha_weight_shader.h"
+#include "graphics/shader/alpha_blend_shader.h"
+#include "graphics/shader/skybox_shader.h"
+#include "graphics/shader/post_proc_shader.h"
 #include "graphics/mesh/mesh_builder.h"
 #include "graphics/shadow/shadow_bounds.h"
 
@@ -48,13 +50,16 @@ namespace mkr {
         screen_quad_ = mesh_builder::make_screen_quad("screen_quad");
 
         // Framebuffers
-        g_buff_ = std::make_unique<geometry_buffer>(app_window_->width(), app_window_->height());
-        l_buff_ = std::make_unique<lighting_buffer>(app_window_->width(), app_window_->height());
-        f_buff_ = std::make_unique<forward_buffer>(app_window_->width(), app_window_->height());
         for (auto i = 0; i < lighting::max_lights; ++i) {
             s2d_buff_[i] = std::make_unique<shadow_2d_buffer>(2048);
             scube_buff_[i] = std::make_unique<shadow_cubemap_buffer>(2048);
         }
+
+        g_buff_ = std::make_unique<geometry_buffer>(app_window_->width(), app_window_->height());
+        l_buff_ = std::make_unique<lighting_buffer>(app_window_->width(), app_window_->height());
+        f_buff_ = std::make_unique<forward_buffer>(app_window_->width(), app_window_->height());
+
+        a_buff_ = std::make_unique<alpha_buffer>(app_window_->width(), app_window_->height());
     }
 
     void graphics_renderer::start() {
@@ -135,8 +140,9 @@ namespace mkr {
             geometry_pass(view_matrix, projection_matrix);
             lighting_pass(view_matrix, inv_view_matrix, view_dir_x, view_dir_y, view_dir_z);
             forward_pass(view_matrix, projection_matrix, inv_view_matrix, view_dir_x, view_dir_y, view_dir_z);
-            skybox_pass(matrix_util::view_matrix(vector3::zero(), trans.forward_, trans.up_), // No translation.
-                        projection_matrix, &cam.skybox_);
+            skybox_pass(matrix_util::view_matrix(vector3::zero(), trans.forward_, trans.up_), projection_matrix, &cam.skybox_);
+            alpha_weight_pass(view_matrix, projection_matrix, inv_view_matrix, view_dir_x, view_dir_y, view_dir_z);
+            alpha_blend_pass(view_matrix, projection_matrix);
 
             // Blit result to default framebuffer.
             framebuffer::bind_default_buffer();
@@ -152,8 +158,8 @@ namespace mkr {
         // Clear objects for next frame.
         lights_.clear();
         deferred_meshes_.clear();
-        forward_opaque_meshes_.clear();
-        forward_transparent_meshes_.clear();
+        forward_meshes_.clear();
+        transparent_meshes_.clear();
     }
 
     matrix4x4 graphics_renderer::point_shadow(shadow_cubemap_buffer* _buffer, const local_to_world& _trans, const light& _light) {
@@ -178,17 +184,30 @@ namespace mkr {
 
         auto shader = mkr::material::shadow_shader_cube_;
         shader->use();
+
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices0, false, view_projection_matrices[0]);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices1, false, view_projection_matrices[1]);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices2, false, view_projection_matrices[2]);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices3, false, view_projection_matrices[3]);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices4, false, view_projection_matrices[4]);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_view_projection_matrices5, false, view_projection_matrices[5]);
+
         shader->set_uniform(shadow_cubemap_shader::uniform::u_light_pos, _trans.position_);
         shader->set_uniform(shadow_cubemap_shader::uniform::u_shadow_distance, _light.get_shadow_distance());
 
-        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes) -> void {
+        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
+            shader->set_uniform(shadow_cubemap_shader::uniform::u_is_transparent, _is_transparent);
+
             for (auto& material_iter : _meshes) {
+                auto material_ptr = material_iter.first;
+
+                if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
+
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
                     auto& model_matrices = mesh_iter.second;
@@ -205,9 +224,9 @@ namespace mkr {
             }
         };
 
-        draw_func(deferred_meshes_);
-        draw_func(forward_opaque_meshes_);
-        draw_func(forward_transparent_meshes_);
+        draw_func(deferred_meshes_, false);
+        draw_func(forward_meshes_, false);
+        draw_func(transparent_meshes_, true);
 
         return matrix4x4::identity();
     }
@@ -230,8 +249,19 @@ namespace mkr {
         shader->set_uniform(shadow_2d_shader::uniform::u_view_matrix, false, view_matrix);
         shader->set_uniform(shadow_2d_shader::uniform::u_projection_matrix, false, projection_matrix);
 
-        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes) -> void {
+        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
+            shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
+
             for (auto& material_iter : _meshes) {
+                auto material_ptr = material_iter.first;
+
+                if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
+
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
                     auto& model_matrices = mesh_iter.second;
@@ -248,9 +278,9 @@ namespace mkr {
             }
         };
 
-        draw_func(deferred_meshes_);
-        draw_func(forward_opaque_meshes_);
-        draw_func(forward_transparent_meshes_);
+        draw_func(deferred_meshes_, false);
+        draw_func(forward_meshes_, false);
+        draw_func(transparent_meshes_, true);
 
         return projection_matrix * view_matrix;
     }
@@ -284,8 +314,19 @@ namespace mkr {
         shader->set_uniform(shadow_2d_shader::uniform::u_view_matrix, false, view_matrix);
         shader->set_uniform(shadow_2d_shader::uniform::u_projection_matrix, false, projection_matrix);
 
-        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes) -> void {
+        const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
+            shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
+
             for (auto& material_iter : _meshes) {
+                auto material_ptr = material_iter.first;
+
+                if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
+
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
+                shader->set_uniform(shadow_2d_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
                     auto& model_matrices = mesh_iter.second;
@@ -302,9 +343,9 @@ namespace mkr {
             }
         };
 
-        draw_func(deferred_meshes_);
-        draw_func(forward_opaque_meshes_);
-        draw_func(forward_transparent_meshes_);
+        draw_func(deferred_meshes_, false);
+        draw_func(forward_meshes_, false);
+        draw_func(transparent_meshes_, true);
 
         return projection_matrix * view_matrix;
     }
@@ -330,7 +371,6 @@ namespace mkr {
             if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
             if (material_ptr->texture_normal_) { material_ptr->texture_normal_->bind(texture_unit::texture_normal); }
             if (material_ptr->texture_specular_) { material_ptr->texture_specular_->bind(texture_unit::texture_specular); }
-            if (material_ptr->texture_gloss_) { material_ptr->texture_gloss_->bind(texture_unit::texture_gloss); }
             if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
 
             // Transform
@@ -342,14 +382,12 @@ namespace mkr {
             // Material
             shader->set_uniform(geometry_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
             shader->set_uniform(geometry_shader::uniform::u_specular_colour, material_ptr->specular_colour_);
-            shader->set_uniform(geometry_shader::uniform::u_gloss, material_ptr->gloss_);
             shader->set_uniform(geometry_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Textures
             shader->set_uniform(geometry_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
             shader->set_uniform(geometry_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
             shader->set_uniform(geometry_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            shader->set_uniform(geometry_shader::uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
             shader->set_uniform(geometry_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
 
             // Draw to screen.
@@ -393,7 +431,6 @@ namespace mkr {
         g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::normal)->bind(texture_unit::texture_normal);
         g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::diffuse)->bind(texture_unit::texture_diffuse);
         g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::specular)->bind(texture_unit::texture_specular);
-        g_buff_->get_colour_attachment(geometry_buffer::colour_attachments::gloss)->bind(texture_unit::texture_gloss);
 
         // Bind shadow maps.
         const auto num_lights = maths_util::min<int32_t>(lights_.size(), lighting::max_lights);
@@ -476,7 +513,7 @@ namespace mkr {
         // Set draw attachments.
         f_buff_->set_draw_colour_attachment_all();
 
-        for (auto& material_iter : forward_opaque_meshes_) {
+        for (auto& material_iter : forward_meshes_) {
             auto material_ptr = material_iter.first;
             auto shader = material_ptr->forward_shader_;
             shader->use();
@@ -485,7 +522,6 @@ namespace mkr {
             if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
             if (material_ptr->texture_normal_) { material_ptr->texture_normal_->bind(texture_unit::texture_normal); }
             if (material_ptr->texture_specular_) { material_ptr->texture_specular_->bind(texture_unit::texture_specular); }
-            if (material_ptr->texture_gloss_) { material_ptr->texture_gloss_->bind(texture_unit::texture_gloss); }
             if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
 
             // Bind shadow maps.
@@ -509,14 +545,12 @@ namespace mkr {
             // Material
             shader->set_uniform(forward_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
             shader->set_uniform(forward_shader::uniform::u_specular_colour, material_ptr->specular_colour_);
-            shader->set_uniform(forward_shader::uniform::u_gloss, material_ptr->gloss_);
             shader->set_uniform(forward_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Textures
             shader->set_uniform(forward_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
             shader->set_uniform(forward_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
             shader->set_uniform(forward_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            shader->set_uniform(forward_shader::uniform::u_texture_gloss_enabled, material_ptr->texture_gloss_ != nullptr);
             shader->set_uniform(forward_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
 
             // Lights
@@ -547,6 +581,157 @@ namespace mkr {
                 shader->set_uniform(i + forward_shader::uniform::u_light_shadow_distance0, l.get_shadow_distance());
                 shader->set_uniform(i + forward_shader::uniform::u_light_view_projection_matrix0, false, light_view_projection_matrix_[i]);
             }
+
+            // Draw to screen.
+            for (auto& mesh_iter : material_iter.second) {
+                auto mesh_ptr = mesh_iter.first;
+                auto& model_matrices = mesh_iter.second;
+
+                std::vector<mesh_instance_data> batch;
+                for (auto& model_matrix : model_matrices) {
+                    const auto model_view_inverse = matrix_util::inverse_matrix(_view_matrix * model_matrix).value_or(matrix4x4::identity());
+                    const auto normal_matrix = matrix_util::minor_matrix(model_view_inverse.transposed(), 3, 3);
+                    batch.push_back({model_matrix, normal_matrix});
+                }
+
+                mesh_ptr->bind();
+                mesh_ptr->set_instance_data(batch);
+                glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, model_matrices.size());
+            }
+        }
+    }
+
+    void graphics_renderer::alpha_weight_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const matrix4x4& _inv_view_matrix, const vector3& _view_dir_x, const vector3& _view_dir_y, const vector3& _view_dir_z) {
+        glEnable(GL_BLEND);
+        glBlendFunci(alpha_buffer::colour_attachments::accumulation, GL_ONE, GL_ONE); // Accumulation blend target.
+        glBlendFunci(alpha_buffer::colour_attachments::revealage, GL_ZERO, GL_ONE_MINUS_SRC_COLOR); // Revealage blend target.
+        glEnable(GL_DEPTH_TEST); // We want to depth test against opaque objects,
+        glDepthMask(GL_FALSE); // but not transparent objects.
+        glDepthFunc(GL_LESS);
+
+        glViewport(0, 0, a_buff_->width(), a_buff_->height());
+
+        a_buff_->bind();
+        a_buff_->set_draw_colour_attachment_all();
+        a_buff_->clear_colour(alpha_buffer::colour_attachments::accumulation, colour::black());
+        a_buff_->clear_colour(alpha_buffer::colour_attachments::revealage, colour{1.0f, 0.0f, 0.0f, 0.0f});
+        a_buff_->clear_depth_stencil();
+
+        // Blit depth-stencil.
+        f_buff_->blit_to(a_buff_.get(), false, true, true, 0, 0, f_buff_->width(), f_buff_->height(), 0, 0, a_buff_->width(), a_buff_->height());
+
+        for (auto& material_iter : transparent_meshes_) {
+            auto material_ptr = material_iter.first;
+            auto shader = material_ptr->alpha_weight_shader_;
+            shader->use();
+
+            // Bind textures.
+            if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
+            if (material_ptr->texture_normal_) { material_ptr->texture_normal_->bind(texture_unit::texture_normal); }
+            if (material_ptr->texture_specular_) { material_ptr->texture_specular_->bind(texture_unit::texture_specular); }
+            if (material_ptr->texture_displacement_) { material_ptr->texture_displacement_->bind(texture_unit::texture_displacement); }
+
+            // Bind shadow maps.
+            const auto num_lights = maths_util::min<int32_t>(lights_.size(), lighting::max_lights);
+            for (auto i = 0; i < num_lights; ++i) {
+                if (light_mode::point == lights_[i].light_.get_mode()) {
+                    scube_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::cubemap_shadows0 + i);
+                } else {
+                    s2d_buff_[i]->get_depth_stencil_attachment()->bind(texture_unit::texture_shadows0 + i);
+                }
+            }
+
+            // Transform
+            shader->set_uniform(alpha_weight_shader::uniform::u_view_matrix, false, _view_matrix);
+            shader->set_uniform(alpha_weight_shader::uniform::u_projection_matrix, false, _projection_matrix);
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
+
+            shader->set_uniform(alpha_weight_shader::uniform::u_inv_view_matrix, false, _inv_view_matrix);
+
+            // Material
+            shader->set_uniform(alpha_weight_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
+            shader->set_uniform(alpha_weight_shader::uniform::u_specular_colour, material_ptr->specular_colour_);
+            shader->set_uniform(alpha_weight_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
+
+            // Textures
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+
+            // Lights
+            shader->set_uniform(alpha_weight_shader::uniform::u_num_lights, num_lights);
+            shader->set_uniform(alpha_weight_shader::uniform::u_ambient_light, lighting::ambient_light_);
+
+            for (auto i = 0; i < num_lights; ++i) {
+                const auto& t = lights_[i].transform_;
+                const auto& l = lights_[i].light_;
+
+                const auto light_pos_view = _view_matrix * t.position_; // Light position in view space.
+                const auto light_dir_view = vector3{_view_dir_x.dot(t.forward_), _view_dir_y.dot(t.forward_), _view_dir_z.dot(t.forward_)}.normalised(); // Light direction in view space.
+
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_mode0, l.get_mode());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_power0, l.get_power());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_colour0, l.get_colour());
+
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_attenuation_constant0, l.get_attenuation_constant());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_attenuation_linear0, l.get_attenuation_linear());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_attenuation_quadratic0, l.get_attenuation_quadratic());
+
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_spotlight_inner_cosine0, l.get_spotlight_inner_consine());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_spotlight_outer_cosine0, l.get_spotlight_outer_consine());
+
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_position0, light_pos_view);
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_direction0, light_dir_view);
+
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_shadow_distance0, l.get_shadow_distance());
+                shader->set_uniform(i + alpha_weight_shader::uniform::u_light_view_projection_matrix0, false, light_view_projection_matrix_[i]);
+            }
+
+            // Draw to screen.
+            for (auto& mesh_iter : material_iter.second) {
+                auto mesh_ptr = mesh_iter.first;
+                auto& model_matrices = mesh_iter.second;
+
+                std::vector<mesh_instance_data> batch;
+                for (auto& model_matrix : model_matrices) {
+                    const auto model_view_inverse = matrix_util::inverse_matrix(_view_matrix * model_matrix).value_or(matrix4x4::identity());
+                    const auto normal_matrix = matrix_util::minor_matrix(model_view_inverse.transposed(), 3, 3);
+                    batch.push_back({model_matrix, normal_matrix});
+                }
+
+                mesh_ptr->bind();
+                mesh_ptr->set_instance_data(batch);
+                glDrawElementsInstanced(GL_TRIANGLES, mesh_ptr->num_indices(), GL_UNSIGNED_INT, 0, model_matrices.size());
+            }
+        }
+    }
+
+    void graphics_renderer::alpha_blend_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
+
+        glViewport(0, 0, f_buff_->width(), f_buff_->height());
+
+        f_buff_->bind();
+        f_buff_->set_draw_colour_attachment_all();
+
+        for (auto& material_iter : transparent_meshes_) {
+            auto material_ptr = material_iter.first;
+            auto shader = material_ptr->alpha_blend_shader_;
+            shader->use();
+
+            // Bind textures.
+            a_buff_->get_colour_attachment(alpha_buffer::colour_attachments::accumulation)->bind(texture_unit::texture_accumulation);
+            a_buff_->get_colour_attachment(alpha_buffer::colour_attachments::revealage)->bind(texture_unit::texture_revealage);
+
+            // Transform
+            shader->set_uniform(alpha_blend_shader::uniform::u_view_matrix, false, _view_matrix);
+            shader->set_uniform(alpha_blend_shader::uniform::u_projection_matrix, false, _projection_matrix);
 
             // Draw to screen.
             for (auto& mesh_iter : material_iter.second) {
@@ -612,11 +797,11 @@ namespace mkr {
             case render_path::deferred:
                 deferred_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
                 break;
-            case render_path::forward_opaque:
-                forward_opaque_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
+            case render_path::forward:
+                forward_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
                 break;
-            case render_path::forward_transparent:
-                forward_transparent_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
+            case render_path::transparent:
+                transparent_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
                 break;
             default:
                 break;

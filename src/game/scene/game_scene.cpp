@@ -13,6 +13,8 @@
 #include "graphics/shader/forward_shader.h"
 #include "graphics/shader/geometry_shader.h"
 #include "graphics/shader/lighting_shader.h"
+#include "graphics/shader/alpha_weight_shader.h"
+#include "graphics/shader/alpha_blend_shader.h"
 #include "graphics/shader/post_proc_shader.h"
 #include "graphics/shader/skybox_shader.h"
 #include "graphics/shader/shadow_2d_shader.h"
@@ -138,6 +140,13 @@ namespace mkr {
                                                                                                                  "./../assets/shaders/parallax.incl",
                                                                                                                  "./../assets/shaders/shadow.incl",
                                                                                                                  "./../assets/shaders/light.incl"});
+
+        shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight", {"./../assets/shaders/forward.vert"}, {"./../assets/shaders/alpha_weight.frag",
+                                                                                                                           "./../assets/shaders/parallax.incl",
+                                                                                                                           "./../assets/shaders/shadow.incl",
+                                                                                                                           "./../assets/shaders/light.incl"});
+        shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend", {"./../assets/shaders/alpha_blend.vert"}, {"./../assets/shaders/alpha_blend.frag"});
+
         // shader_manager::instance().make_shader<post_proc_shader>("post_proc_invert", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_invert.frag"});
         // shader_manager::instance().make_shader<post_proc_shader>("post_proc_greyscale", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_greyscale.frag"});
         // shader_manager::instance().make_shader<post_proc_shader>("post_proc_blur", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_blur.frag"});
@@ -174,7 +183,6 @@ namespace mkr {
         tiles->texture_diffuse_ = texture_manager::instance().make_texture2d("tiles_001_albedo", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
         tiles->texture_normal_ = texture_manager::instance().make_texture2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
         tiles->texture_displacement_ = texture_manager::instance().make_texture2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
-        tiles->texture_gloss_ = texture_manager::instance().make_texture2d("tiles_001_gloss", "./../assets/textures/materials/tiles/tiles_001_gloss.png");
         tiles->texture_specular_ = texture_manager::instance().make_texture2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
         tiles->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
         tiles->displacement_scale_ = 0.1f;
@@ -186,7 +194,6 @@ namespace mkr {
         brick_wall->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_wall_001_albedo", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
         brick_wall->texture_normal_ = texture_manager::instance().make_texture2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
         brick_wall->texture_displacement_ = texture_manager::instance().make_texture2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
-        brick_wall->texture_gloss_ = texture_manager::instance().make_texture2d("brick_wall_001_gloss", "./../assets/textures/materials/brick_wall/brick_wall_001_gloss.png");
         brick_wall->texture_specular_ = texture_manager::instance().make_texture2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
         brick_wall->forward_shader_ = shader_manager::instance().get_shader("forward");
 
@@ -194,24 +201,42 @@ namespace mkr {
         metal_pattern->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_pattern_albedo", "./../assets/textures/materials/metal/metal_pattern_001_albedo.png");
         metal_pattern->texture_normal_ = texture_manager::instance().make_texture2d("metal_pattern_normal", "./../assets/textures/materials/metal/metal_pattern_001_normal.png");
         metal_pattern->texture_displacement_ = texture_manager::instance().make_texture2d("metal_pattern_displacement", "./../assets/textures/materials/metal/metal_pattern_001_displacement.png");
-        metal_pattern->texture_gloss_ = texture_manager::instance().make_texture2d("metal_pattern_gloss", "./../assets/textures/materials/metal/metal_pattern_001_gloss.png");
         metal_pattern->texture_specular_ = texture_manager::instance().make_texture2d("metal_pattern_specular", "./../assets/textures/materials/metal/metal_pattern_001_specular.png");
         metal_pattern->forward_shader_ = shader_manager::instance().get_shader("forward");
-        metal_pattern->render_path_ = render_path::forward_opaque;
+        metal_pattern->render_path_ = render_path::forward;
 
         // Sphere
         auto green = material_manager::instance().make_material("green");
         green->diffuse_colour_ = colour::green();
         green->forward_shader_ = shader_manager::instance().get_shader("forward");
-        green->render_path_ = render_path::forward_opaque;
+        green->render_path_ = render_path::forward;
+
+        auto red = material_manager::instance().make_material("red");
+        red->diffuse_colour_ = colour{1.0f, 0.0f, 0.0f, 0.2f};
+        red->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+        red->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+        red->render_path_ = render_path::transparent;
+
+        auto blue = material_manager::instance().make_material("blue");
+        blue->diffuse_colour_ = colour{0.0f, 0.0f, 1.0f, 0.2f};
+        blue->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+        blue->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+        blue->render_path_ = render_path::transparent;
 
         // Cube
         auto brick2 = material_manager::instance().make_material("brick");
-        brick2->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./../assets/textures/tutorial/brick_diffuse.png");
-        brick2->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./../assets/textures/tutorial/brick_normal.png");
-        brick2->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./../assets/textures/tutorial/brick_displacement.png");
+        brick2->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./../assets/textures/test/brick_diffuse.png");
+        brick2->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./../assets/textures/test/brick_normal.png");
+        brick2->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./../assets/textures/test/brick_displacement.png");
         brick2->forward_shader_ = shader_manager::instance().get_shader("forward");
-        brick2->render_path_ = render_path::forward_opaque;
+        brick2->render_path_ = render_path::forward;
+
+        // Window
+        auto window = material_manager::instance().make_material("window");
+        window->texture_diffuse_ = texture_manager::instance().make_texture2d("window_diffuse", "./../assets/textures/test/window.png");
+        window->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+        window->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+        window->render_path_ = render_path::transparent;
     }
 
     void game_scene::init_meshes() {
@@ -228,7 +253,18 @@ namespace mkr {
         render_mesh floor_rend{};
         floor_rend.mesh_ = mesh_manager::instance().get_mesh("plane");
         floor_rend.material_ = material_manager::instance().get_material("tiles");
-        world_.entity("floor").set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
+        world_.entity().set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
+
+        {
+            transform trans;
+            trans.set_position({3.0f, 1.0f, 2.0f});
+            trans.set_scale({3.0f, 3.0f, 1.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi} * quaternion{vector3::x_axis(), -45.0f * maths_util::deg2rad});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("quad");
+            rend.material_ = material_manager::instance().get_material("window");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
 
         // Cube
         {
@@ -256,12 +292,41 @@ namespace mkr {
         }
 
         // Sphere
-        transform sphere_trans;
-        sphere_trans.set_position({0.0f, 0.5f, 0.0f});
-        render_mesh sphere_rend{};
-        sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
-        sphere_rend.material_ = material_manager::instance().get_material("green");
-        world_.entity("sphere").set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+        {
+            transform sphere_trans;
+            sphere_trans.set_position({0.0f, 0.5f, 4.0f});
+            render_mesh sphere_rend{};
+            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            sphere_rend.material_ = material_manager::instance().get_material("blue");
+            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+        }
+
+        {
+            transform sphere_trans;
+            sphere_trans.set_position({0.0f, 0.5f, 6.0f});
+            render_mesh sphere_rend{};
+            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            sphere_rend.material_ = material_manager::instance().get_material("red");
+            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+        }
+
+        {
+            transform sphere_trans;
+            sphere_trans.set_position({0.0f, 0.5f, 10.0f});
+            render_mesh sphere_rend{};
+            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            sphere_rend.material_ = material_manager::instance().get_material("green");
+            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+        }
+
+        {
+            transform sphere_trans;
+            sphere_trans.set_position({0.0f, 0.5f, 8.0f});
+            render_mesh sphere_rend{};
+            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            sphere_rend.material_ = material_manager::instance().get_material("blue");
+            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
+        }
 
         // Directional Light
         {

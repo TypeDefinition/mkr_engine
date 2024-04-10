@@ -11,15 +11,16 @@ layout(location = 4) in mat4 v_model_matrix; // The max size of a vertex attribu
 layout(location = 8) in mat3 v_normal_matrix; // The max size of a vertex attribute is vec4. A mat3 is the size of 3 vec3s. Since this is a mat3, it takes up attribute 8, 9, and 10.
 
 // Outputs
-out io_block {
-    vec3 io_tex_coord;
-};
+out VS_OUT {
+    vec3 tex_coord;
+} vs_out;
 
 // Uniforms
 uniform mat4 u_view_matrix;
 uniform mat4 u_projection_matrix;
 
 void main() {
-    io_tex_coord = vec3(-v_position.x, v_position.yz); // Cubemap coordinates are left-handed.
+    vs_out.tex_coord = vec3(-v_position.x, v_position.yz); // Cubemap coordinates are left-handed.
     gl_Position = u_projection_matrix * u_view_matrix * vec4(v_position, 1.0);
+    gl_Position.z = gl_Position.w; // Ensures that gl_FragDepth will always be 1.
 }

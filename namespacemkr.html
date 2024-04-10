@@ -1050,8 +1050,11 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>[<a href="https://www.khronos.org/opengl/wiki/Cubemap_Texture">https://www.khronos.org/opengl/wiki/Cubemap_Texture</a>]</p>
-<p>Important: OpenGL uses left-hand coordinate system for cubemap orientations, as opposed to the usual right-hand coordinate system for everything else.</p>
+<p>[<a href="https://www.khronos.org/opengl/wiki/Cubemap_Texture">https://www.khronos.org/opengl/wiki/Cubemap_Texture</a>] [<a href="https://stackoverflow.com/questions/11685608/convention-of-faces-in-opengl-cubemapping">https://stackoverflow.com/questions/11685608/convention-of-faces-in-opengl-cubemapping</a>]</p>
+<p>!!!Important!!! Due to some stupid decisions by OpenGL to follow Pixar's RenderMan convention,</p><ol type="1">
+<li>Cubemap's coordinate system is left-handed, instead of right-handed.</li>
+<li>Cubemap's texture coordinates go from top-left to bottom-right, instead of bottom-left to top-right.</li>
+</ol>
 <p>We order the sides of the cubemap according to OpenGL's cubemap face order. Layer 0 - GL_TEXTURE_CUBE_MAP_POSITIVE_X Layer 1 - GL_TEXTURE_CUBE_MAP_NEGATIVE_X Layer 2 - GL_TEXTURE_CUBE_MAP_POSITIVE_Y Layer 3 - GL_TEXTURE_CUBE_MAP_NEGATIVE_Y Layer 4 - GL_TEXTURE_CUBE_MAP_POSITIVE_Z Layer 5 - GL_TEXTURE_CUBE_MAP_NEGATIVE_Z </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a09c92574cd3d2f5c038ef61954fbe9a7a60f2ccb62aecda150a95dd14f67dc2c8"></a>cubemap_positive_x&#160;</td><td class="fielddoc"></td></tr>
@@ -1069,7 +1072,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="a09c92574cd3d2f5c038ef61954fbe9a7a845568667ea5f4e95ba71b1a4e7db9a5"></a>num_cubemap_sides&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00103">103</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="texture_8h_source.html#l00106">106</a> of file <a class="el" href="texture_8h_source.html">texture.h</a>.</p>
 
 </div>
 </div>

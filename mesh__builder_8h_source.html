@@ -84,105 +84,105 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#a1ee30c09ea44ff55deb6143a1d45bec4">   14</a></span>&#160;        <a class="code" href="classmkr_1_1mesh__builder.html#a1ee30c09ea44ff55deb6143a1d45bec4">mesh_builder</a>() = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">   16</a></span>&#160;        <span class="keyword">static</span> std::unique_ptr&lt;mesh&gt; <a class="code" href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">make_skybox</a>(<span class="keyword">const</span> std::string&amp; _name) {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            std::vector&lt;vertex&gt; vertices(24);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            std::vector&lt;uint32_t&gt; indices;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="comment">// Front</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            vertices[0].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Bottom Left</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            vertices[1].position_ = {-1.0f, 1.0f, 1.0f}; <span class="comment">// Top Right</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            vertices[2].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Top Left</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            vertices[3].position_ = {-1.0f, -1.0f, 1.0f}; <span class="comment">// Bottom Right</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            vertices[0].tex_coord_ = {-1.0f, 1.0f, 1.0f};</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            vertices[1].tex_coord_ = {1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            vertices[2].tex_coord_ = {-1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            vertices[3].tex_coord_ = {1.0f, 1.0f, 1.0f};</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            vertices[0].normal_ = {0.0f, 0.0f, -1.0f};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            vertices[1].normal_ = {0.0f, 0.0f, -1.0f};</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            vertices[2].normal_ = {0.0f, 0.0f, -1.0f};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            vertices[3].normal_ = {0.0f, 0.0f, -1.0f};</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            vertices[0].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            vertices[1].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            vertices[2].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            vertices[3].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            indices.push_back(0);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            indices.push_back(1);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            indices.push_back(2);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            indices.push_back(0);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            indices.push_back(3);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            indices.push_back(1);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">// Top</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            vertices[4].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Front Left</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            vertices[5].position_ = {-1.0f, 1.0f, -1.0f}; <span class="comment">// Back Right</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            vertices[6].position_ = {1.0f, 1.0f, -1.0f}; <span class="comment">// Back Left</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            vertices[7].position_ = {-1.0f, 1.0f, 1.0f}; <span class="comment">// Front Right</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            vertices[4].tex_coord_ = {-1.0f, 1.0f, -1.0f};</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            vertices[5].tex_coord_ = {1.0f, 1.0f, 1.0f};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            vertices[6].tex_coord_ = {-1.0f, 1.0f, 1.0f};</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            vertices[7].tex_coord_ = {1.0f, 1.0f, -1.0f};</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            vertices[4].normal_ = {0.0f, -1.0f, 0.0f};</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            vertices[5].normal_ = {0.0f, -1.0f, 0.0f};</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            vertices[6].normal_ = {0.0f, -1.0f, 0.0f};</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            vertices[7].normal_ = {0.0f, -1.0f, 0.0f};</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            vertices[4].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            vertices[5].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            vertices[6].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            vertices[7].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            indices.push_back(4);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            indices.push_back(5);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            indices.push_back(6);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            indices.push_back(4);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            indices.push_back(7);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            indices.push_back(5);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="comment">// Down</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            vertices[8].position_ = {1.0f, -1.0f, -1.0f}; <span class="comment">// Back Left</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            vertices[9].position_ = {-1.0f, -1.0f, 1.0f}; <span class="comment">// Front Right</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            vertices[10].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Front Left</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            vertices[11].position_ = {-1.0f, -1.0f, -1.0f}; <span class="comment">// Back Right</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            vertices[8].tex_coord_ = {-1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            vertices[9].tex_coord_ = {1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            vertices[10].tex_coord_ = {-1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            vertices[11].tex_coord_ = {1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            vertices[8].normal_ = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            vertices[9].normal_ = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            vertices[10].normal_ = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            vertices[11].normal_ = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            vertices[8].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            vertices[9].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            vertices[10].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            vertices[11].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            indices.push_back(8);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            indices.push_back(9);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            indices.push_back(10);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            indices.push_back(8);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            indices.push_back(11);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            indices.push_back(9);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="comment">// Left</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            vertices[12].position_ = {1.0f, -1.0f, -1.0f}; <span class="comment">// Back Bottom</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            vertices[13].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Front Top</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            vertices[14].position_ = {1.0f, 1.0f, -1.0f}; <span class="comment">// Back Top</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            vertices[15].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Front Bottom</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="comment">// Cubemaps use left-hand coordinate system instead of right-hand coordinate system.</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            vertices[12].tex_coord_ = {-1.0f, 1.0f, -1.0f};</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            vertices[13].tex_coord_ = {-1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            vertices[14].tex_coord_ = {-1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            vertices[15].tex_coord_ = {-1.0f, 1.0f, 1.0f};</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="comment">// Note: Cubemaps use left-hand coordinate system instead of right-hand coordinate system.</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">   17</a></span>&#160;        <span class="keyword">static</span> std::unique_ptr&lt;mesh&gt; <a class="code" href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">make_skybox</a>(<span class="keyword">const</span> std::string&amp; _name) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            std::vector&lt;vertex&gt; vertices(24);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            std::vector&lt;uint32_t&gt; indices;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="comment">// Front</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            vertices[0].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Bottom Left</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            vertices[1].position_ = {-1.0f, 1.0f, 1.0f}; <span class="comment">// Top Right</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            vertices[2].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Top Left</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            vertices[3].position_ = {-1.0f, -1.0f, 1.0f}; <span class="comment">// Bottom Right</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            vertices[0].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            vertices[1].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            vertices[2].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            vertices[3].tex_coord_ = {1.0f, 0.0f};</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            vertices[0].normal_ = {0.0f, 0.0f, -1.0f};</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            vertices[1].normal_ = {0.0f, 0.0f, -1.0f};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            vertices[2].normal_ = {0.0f, 0.0f, -1.0f};</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            vertices[3].normal_ = {0.0f, 0.0f, -1.0f};</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            vertices[0].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            vertices[1].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            vertices[2].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            vertices[3].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            indices.push_back(0);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            indices.push_back(1);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            indices.push_back(2);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            indices.push_back(0);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            indices.push_back(3);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            indices.push_back(1);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="comment">// Top</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            vertices[4].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Front Left</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            vertices[5].position_ = {-1.0f, 1.0f, -1.0f}; <span class="comment">// Back Right</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            vertices[6].position_ = {1.0f, 1.0f, -1.0f}; <span class="comment">// Back Left</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            vertices[7].position_ = {-1.0f, 1.0f, 1.0f}; <span class="comment">// Front Right</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            vertices[4].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            vertices[5].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            vertices[6].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            vertices[7].tex_coord_ = {1.0f, 0.0f};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            vertices[4].normal_ = {0.0f, -1.0f, 0.0f};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            vertices[5].normal_ = {0.0f, -1.0f, 0.0f};</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            vertices[6].normal_ = {0.0f, -1.0f, 0.0f};</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            vertices[7].normal_ = {0.0f, -1.0f, 0.0f};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            vertices[4].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            vertices[5].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            vertices[6].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            vertices[7].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            indices.push_back(4);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            indices.push_back(5);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            indices.push_back(6);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            indices.push_back(4);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            indices.push_back(7);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            indices.push_back(5);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="comment">// Bottom</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            vertices[8].position_ = {1.0f, -1.0f, -1.0f}; <span class="comment">// Back Left</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            vertices[9].position_ = {-1.0f, -1.0f, 1.0f}; <span class="comment">// Front Right</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            vertices[10].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Front Left</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            vertices[11].position_ = {-1.0f, -1.0f, -1.0f}; <span class="comment">// Back Right</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            vertices[8].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            vertices[9].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            vertices[10].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            vertices[11].tex_coord_ = {1.0f, 0.0f};</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            vertices[8].normal_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            vertices[9].normal_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            vertices[10].normal_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            vertices[11].normal_ = {0.0f, 1.0f, 0.0f};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            vertices[8].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            vertices[9].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            vertices[10].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            vertices[11].tangent_ = {-1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            indices.push_back(8);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            indices.push_back(9);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            indices.push_back(10);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            indices.push_back(8);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            indices.push_back(11);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            indices.push_back(9);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="comment">// Left</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            vertices[12].position_ = {1.0f, -1.0f, -1.0f}; <span class="comment">// Back Bottom</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            vertices[13].position_ = {1.0f, 1.0f, 1.0f}; <span class="comment">// Front Top</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            vertices[14].position_ = {1.0f, 1.0f, -1.0f}; <span class="comment">// Back Top</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            vertices[15].position_ = {1.0f, -1.0f, 1.0f}; <span class="comment">// Front Bottom</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            vertices[12].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            vertices[13].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            vertices[14].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            vertices[15].tex_coord_ = {1.0f, 0.0f};</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            vertices[12].normal_ = {-1.0f, 0.0f, 0.0f};</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            vertices[13].normal_ = {-1.0f, 0.0f, 0.0f};</div>
@@ -208,10 +208,10 @@ $(function() {
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            vertices[19].position_ = {-1.0f, -1.0f, -1.0f}; <span class="comment">// Back Bottom</span></div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <span class="comment">// Cubemaps use left-hand coordinate system instead of right-hand coordinate system.</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            vertices[16].tex_coord_ = {1.0f, 1.0f, 1.0f};</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            vertices[17].tex_coord_ = {1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            vertices[18].tex_coord_ = {1.0f, -1.0f, 1.0f};</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            vertices[19].tex_coord_ = {1.0f, 1.0f, -1.0f};</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            vertices[16].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            vertices[17].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            vertices[18].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            vertices[19].tex_coord_ = {1.0f, 0.0f};</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            vertices[16].normal_ = {1.0f, 0.0f, 0.0f};</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            vertices[17].normal_ = {1.0f, 0.0f, 0.0f};</div>
@@ -236,10 +236,10 @@ $(function() {
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            vertices[22].position_ = {-1.0f, 1.0f, -1.0f}; <span class="comment">// Top Right</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            vertices[23].position_ = {1.0f, -1.0f, -1.0f}; <span class="comment">// Bottom Left</span></div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            vertices[20].tex_coord_ = {1.0f, 1.0f, -1.0f};</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            vertices[21].tex_coord_ = {-1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            vertices[22].tex_coord_ = {1.0f, -1.0f, -1.0f};</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            vertices[23].tex_coord_ = {-1.0f, 1.0f, -1.0f};</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            vertices[20].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            vertices[21].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            vertices[22].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            vertices[23].tex_coord_ = {1.0f, 0.0f};</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            vertices[20].normal_ = {0.0f, 0.0f, 1.0f};</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            vertices[21].normal_ = {0.0f, 0.0f, 1.0f};</div>
@@ -274,10 +274,10 @@ $(function() {
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            vertices[2].normal_ = {0.0f, 0.0f, 1.0f};</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            vertices[3].normal_ = {0.0f, 0.0f, 1.0f};</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;            vertices[0].tex_coord_ = {0.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            vertices[1].tex_coord_ = {1.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            vertices[2].tex_coord_ = {0.0f, 1.0f, 0.0f};</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            vertices[3].tex_coord_ = {1.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;            vertices[0].tex_coord_ = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            vertices[1].tex_coord_ = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            vertices[2].tex_coord_ = {0.0f, 1.0f};</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            vertices[3].tex_coord_ = {1.0f, 0.0f};</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            vertices[0].tangent_ = {1.0f, 0.0f, 0.0f};</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            vertices[1].tangent_ = {1.0f, 0.0f, 0.0f};</div>
@@ -305,7 +305,7 @@ $(function() {
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <span class="comment">// Vertex Attribute(s)</span></div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            std::vector&lt;vector3&gt; positions;</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            std::vector&lt;vector3&gt; normals;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            std::vector&lt;vector3&gt; tex_coords;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            std::vector&lt;vector2&gt; tex_coords;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <span class="comment">// Read the file.</span></div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            std::string file_str = <a class="code" href="classmkr_1_1file__util.html#a4f37845d070c91ff23fa0785b98db89d">file_util::file_to_str</a>(_file);</div>
@@ -323,7 +323,7 @@ $(function() {
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                <span class="comment">// TexCoord</span></div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                <span class="keywordflow">if</span> (std::strncmp(<span class="stringliteral">&quot;vt &quot;</span>, line.c_str(), 3) == 0) {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                    vector3 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                    vector2 <a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                    std::sscanf(line.c_str() + 3, <span class="stringliteral">&quot;%f%f&quot;</span>, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.x_, &amp;<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>.y_);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                    tex_coords.push_back(<a class="code" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">tex_coord</a>);</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                }</div>
@@ -361,7 +361,7 @@ $(function() {
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#ad2045f8f3cc23bc61d9c11113dd03c43">position_</a> = positions[position_indices[i] - 1]; <span class="comment">// -1 because .OBJ starts their index at 1.</span></div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a919b863885b18c198d5990500aac4945">normal_</a> = normals[normal_indices[i] - 1];</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a09534f469c83020a5f11837374ca6ced">tex_coord_</a> = tex_coords[tex_coord_indices[i] - 1];</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                        <a class="code" href="structmkr_1_1vertex.html">vertex</a>.<a class="code" href="structmkr_1_1vertex.html#a2b38dd1c00c7fc009bfd4caec9932315">tex_coord_</a> = tex_coords[tex_coord_indices[i] - 1];</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                        vertices.push_back(<a class="code" href="structmkr_1_1vertex.html">vertex</a>);</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                    }</div>
@@ -416,17 +416,17 @@ $(function() {
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_a1ee30c09ea44ff55deb6143a1d45bec4"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a1ee30c09ea44ff55deb6143a1d45bec4">mkr::mesh_builder::mesh_builder</a></div><div class="ttdeci">mesh_builder()=delete</div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_a66d5eced8c2a5c419553ccd996438fea"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a66d5eced8c2a5c419553ccd996438fea">mkr::mesh_builder::load_obj</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; load_obj(const std::string &amp;_name, const std::string &amp;_file)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00229">mesh_builder.h:229</a></div></div>
 <div class="ttc" id="aclassmkr_1_1mesh__builder_html_a755d646cc88bda260d2766c18cad1c64"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#a755d646cc88bda260d2766c18cad1c64">mkr::mesh_builder::make_screen_quad</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_screen_quad(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00193">mesh_builder.h:193</a></div></div>
-<div class="ttc" id="aclassmkr_1_1mesh__builder_html_ac38c3807cf8fc57625fb610cf7839f06"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">mkr::mesh_builder::make_skybox</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_skybox(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00016">mesh_builder.h:16</a></div></div>
+<div class="ttc" id="aclassmkr_1_1mesh__builder_html_ac38c3807cf8fc57625fb610cf7839f06"><div class="ttname"><a href="classmkr_1_1mesh__builder.html#ac38c3807cf8fc57625fb610cf7839f06">mkr::mesh_builder::make_skybox</a></div><div class="ttdeci">static std::unique_ptr&lt; mesh &gt; make_skybox(const std::string &amp;_name)</div><div class="ttdef"><b>Definition:</b> <a href="mesh__builder_8h_source.html#l00017">mesh_builder.h:17</a></div></div>
 <div class="ttc" id="afile__util_8h_html"><div class="ttname"><a href="file__util_8h.html">file_util.h</a></div></div>
 <div class="ttc" id="amesh_8h_html"><div class="ttname"><a href="mesh_8h.html">mesh.h</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="anamespacemkr_html_abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7"><div class="ttname"><a href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a09c06e9a8d2038500e21bae962a5abc7">mkr::normal</a></div><div class="ttdeci">@ normal</div><div class="ttdef"><b>Definition:</b> <a href="vbo_8h_source.html#l00033">vbo.h:33</a></div></div>
 <div class="ttc" id="anamespacemkr_html_abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f"><div class="ttname"><a href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a8fe021f67e720dc9c296da06e976b14f">mkr::position</a></div><div class="ttdeci">@ position</div><div class="ttdef"><b>Definition:</b> <a href="vbo_8h_source.html#l00031">vbo.h:31</a></div></div>
 <div class="ttc" id="anamespacemkr_html_abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e"><div class="ttname"><a href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935a90e2617b40a6779caeb913bde780a96e">mkr::tex_coord</a></div><div class="ttdeci">@ tex_coord</div><div class="ttdef"><b>Definition:</b> <a href="vbo_8h_source.html#l00032">vbo.h:32</a></div></div>
-<div class="ttc" id="astructmkr_1_1vertex_html"><div class="ttname"><a href="structmkr_1_1vertex.html">mkr::vertex</a></div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00006">vertex.h:6</a></div></div>
-<div class="ttc" id="astructmkr_1_1vertex_html_a09534f469c83020a5f11837374ca6ced"><div class="ttname"><a href="structmkr_1_1vertex.html#a09534f469c83020a5f11837374ca6ced">mkr::vertex::tex_coord_</a></div><div class="ttdeci">vector3 tex_coord_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00008">vertex.h:8</a></div></div>
-<div class="ttc" id="astructmkr_1_1vertex_html_a919b863885b18c198d5990500aac4945"><div class="ttname"><a href="structmkr_1_1vertex.html#a919b863885b18c198d5990500aac4945">mkr::vertex::normal_</a></div><div class="ttdeci">vector3 normal_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00009">vertex.h:9</a></div></div>
-<div class="ttc" id="astructmkr_1_1vertex_html_ad2045f8f3cc23bc61d9c11113dd03c43"><div class="ttname"><a href="structmkr_1_1vertex.html#ad2045f8f3cc23bc61d9c11113dd03c43">mkr::vertex::position_</a></div><div class="ttdeci">vector3 position_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00007">vertex.h:7</a></div></div>
+<div class="ttc" id="astructmkr_1_1vertex_html"><div class="ttname"><a href="structmkr_1_1vertex.html">mkr::vertex</a></div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00007">vertex.h:7</a></div></div>
+<div class="ttc" id="astructmkr_1_1vertex_html_a2b38dd1c00c7fc009bfd4caec9932315"><div class="ttname"><a href="structmkr_1_1vertex.html#a2b38dd1c00c7fc009bfd4caec9932315">mkr::vertex::tex_coord_</a></div><div class="ttdeci">vector2 tex_coord_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00009">vertex.h:9</a></div></div>
+<div class="ttc" id="astructmkr_1_1vertex_html_a919b863885b18c198d5990500aac4945"><div class="ttname"><a href="structmkr_1_1vertex.html#a919b863885b18c198d5990500aac4945">mkr::vertex::normal_</a></div><div class="ttdeci">vector3 normal_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00010">vertex.h:10</a></div></div>
+<div class="ttc" id="astructmkr_1_1vertex_html_ad2045f8f3cc23bc61d9c11113dd03c43"><div class="ttname"><a href="structmkr_1_1vertex.html#ad2045f8f3cc23bc61d9c11113dd03c43">mkr::vertex::position_</a></div><div class="ttdeci">vector3 position_</div><div class="ttdef"><b>Definition:</b> <a href="vertex_8h_source.html#l00008">vertex.h:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

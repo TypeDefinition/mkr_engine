@@ -92,12 +92,13 @@ Collaboration diagram for mkr::skybox_shader:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:aa1994d05bfe0e799f8861e07bb894fc2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2">uniform</a> : uint32_t { <br />
-&#160;&#160;<a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2a61bbeec7fe04e31a5fb21e6f22f2e1ba">u_view_projection_matrix</a>
-, <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2ae805f8a82651aa054a15b28bf5ce0114">u_skybox_colour</a>
+&#160;&#160;<a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2a40495078a0af2721b26f728bcb27809d">u_view_matrix</a>
+, <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2adece29960f6c434fe0f735c031e9e0c0">u_projection_matrix</a>
+, <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2a0189a918a5af96a91d9368fdbe167873">u_colour</a>
 , <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2aeb40eff72152abcdf4847606f6116660">u_texture_skybox_enabled</a>
-, <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2af0caecc8c3537d8b24d95e172f70a8c0">u_texture_skybox</a>
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2a2f9e89e0ae4c41cd978349b0e428e798">num_shader_uniforms</a>
+&#160;&#160;<a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2af0caecc8c3537d8b24d95e172f70a8c0">u_texture_skybox</a>
+, <a class="el" href="classmkr_1_1skybox__shader.html#aa1994d05bfe0e799f8861e07bb894fc2a2f9e89e0ae4c41cd978349b0e428e798">num_shader_uniforms</a>
 <br />
  }</td></tr>
 <tr class="separator:aa1994d05bfe0e799f8861e07bb894fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,7 +260,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00006">6</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00008">8</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aa1994d05bfe0e799f8861e07bb894fc2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1994d05bfe0e799f8861e07bb894fc2">&#9670;&nbsp;</a></span>uniform</h2>
@@ -273,14 +274,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2a61bbeec7fe04e31a5fb21e6f22f2e1ba"></a>u_view_projection_matrix&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2ae805f8a82651aa054a15b28bf5ce0114"></a>u_skybox_colour&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2a40495078a0af2721b26f728bcb27809d"></a>u_view_matrix&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2adece29960f6c434fe0f735c031e9e0c0"></a>u_projection_matrix&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2a0189a918a5af96a91d9368fdbe167873"></a>u_colour&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2aeb40eff72152abcdf4847606f6116660"></a>u_texture_skybox_enabled&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2af0caecc8c3537d8b24d95e172f70a8c0"></a>u_texture_skybox&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="aa1994d05bfe0e799f8861e07bb894fc2a2f9e89e0ae4c41cd978349b0e428e798"></a>num_shader_uniforms&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00008">8</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00010">10</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 
 </div>
 </div>
@@ -290,6 +292,9 @@ Additional Inherited Members</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">mkr::skybox_shader::skybox_shader </td>
@@ -315,9 +320,14 @@ Additional Inherited Members</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8cpp_source.html#l00005">5</a> of file <a class="el" href="skybox__shader_8cpp_source.html">skybox_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00042">42</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 
 </div>
 </div>
@@ -344,7 +354,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00026">26</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00048">48</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 
 </div>
 </div>
@@ -367,12 +377,12 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8cpp_source.html#l00021">21</a> of file <a class="el" href="skybox__shader_8cpp_source.html">skybox_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00037">37</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 
 </div>
 </div>
@@ -394,18 +404,17 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="skybox__shader_8cpp_source.html#l00011">11</a> of file <a class="el" href="skybox__shader_8cpp_source.html">skybox_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="skybox__shader_8h_source.html#l00026">26</a> of file <a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/graphics/shader/<a class="el" href="skybox__shader_8h_source.html">skybox_shader.h</a></li>
-<li>src/graphics/shader/<a class="el" href="skybox__shader_8cpp_source.html">skybox_shader.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

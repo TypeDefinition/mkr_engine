@@ -1,11 +1,14 @@
 <map id="src/graphics/shader/skybox_shader.h" name="src/graphics/shader/skybox_shader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="271,5,419,47"/>
-<area shape="rect" id="node2" href="$shader__program_8h.html" title=" " alt="" coords="259,95,432,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,184,64,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="89,184,151,211"/>
-<area shape="rect" id="node5" title=" " alt="" coords="176,184,261,211"/>
-<area shape="rect" id="node6" title=" " alt="" coords="286,184,405,211"/>
-<area shape="rect" id="node7" title=" " alt="" coords="429,184,557,211"/>
-<area shape="rect" id="node8" title=" " alt="" coords="581,184,709,211"/>
-<area shape="rect" id="node9" title=" " alt="" coords="733,184,856,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="806,5,954,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="952,259,1019,285"/>
+<area shape="rect" id="node3" href="$shader__program_8h.html" title=" " alt="" coords="359,95,532,136"/>
+<area shape="rect" id="node11" href="$texture__unit_8h.html" title=" " alt="" coords="792,95,968,136"/>
+<area shape="rect" id="node4" title=" " alt="" coords="474,184,532,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="557,184,620,211"/>
+<area shape="rect" id="node6" title=" " alt="" coords="644,184,730,211"/>
+<area shape="rect" id="node7" title=" " alt="" coords="360,259,478,285"/>
+<area shape="rect" id="node8" title=" " alt="" coords="23,184,151,211"/>
+<area shape="rect" id="node9" title=" " alt="" coords="175,184,303,211"/>
+<area shape="rect" id="node10" title=" " alt="" coords="327,184,450,211"/>
+<area shape="rect" id="node12" href="$lighting_8h.html" title=" " alt="" coords="754,184,948,211"/>
 </map>

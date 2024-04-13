@@ -196,13 +196,12 @@ namespace mkr {
         shader->set_uniform(shadow_cubemap_shader::uniform::u_shadow_distance, _light.get_shadow_distance());
 
         const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
-            shader->set_uniform(shadow_cubemap_shader::uniform::u_is_transparent, _is_transparent);
-
             for (auto& material_iter : _meshes) {
                 auto material_ptr = material_iter.first;
 
                 if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
 
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_is_transparent, _is_transparent);
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
@@ -250,13 +249,12 @@ namespace mkr {
         shader->set_uniform(shadow_2d_shader::uniform::u_projection_matrix, false, projection_matrix);
 
         const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
-            shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
-
             for (auto& material_iter : _meshes) {
                 auto material_ptr = material_iter.first;
 
                 if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
 
+                shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
@@ -315,13 +313,12 @@ namespace mkr {
         shader->set_uniform(shadow_2d_shader::uniform::u_projection_matrix, false, projection_matrix);
 
         const auto draw_func = [&](std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>>& _meshes, bool _is_transparent) -> void {
-            shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
-
             for (auto& material_iter : _meshes) {
                 auto material_ptr = material_iter.first;
 
                 if (material_ptr->texture_diffuse_) { material_ptr->texture_diffuse_->bind(texture_unit::texture_diffuse); }
 
+                shader->set_uniform(shadow_2d_shader::uniform::u_is_transparent, _is_transparent);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);

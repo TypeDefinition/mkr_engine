@@ -128,29 +128,47 @@ namespace mkr {
     }
 
     void game_scene::init_shaders() {
-        shader_manager::instance().make_shader<skybox_shader>("skybox", {"./../assets/shaders/skybox.vert"}, {"./../assets/shaders/skybox.frag"});
-        shader_manager::instance().make_shader<shadow_2d_shader>("shadow_2d", {"./../assets/shaders/shadow_2d.vert"}, {"./../assets/shaders/shadow_2d.frag"});
-        shader_manager::instance().make_shader<shadow_cubemap_shader>("shadow_cubemap", {"./../assets/shaders/shadow_cubemap.vert"}, {"./../assets/shaders/shadow_cubemap.geom"}, {"./../assets/shaders/shadow_cubemap.frag"});
-        shader_manager::instance().make_shader<geometry_shader>("geometry", {"./../assets/shaders/geometry.vert"}, {"./../assets/shaders/geometry.frag",
-                                                                                                                    "./../assets/shaders/parallax.incl"});
-        shader_manager::instance().make_shader<lighting_shader>("lighting", {"./../assets/shaders/lighting.vert"}, {"./../assets/shaders/lighting.frag",
-                                                                                                                    "./../assets/shaders/shadow.incl",
-                                                                                                                    "./../assets/shaders/light.incl"});
-        shader_manager::instance().make_shader<forward_shader>("forward", {"./../assets/shaders/forward.vert"}, {"./../assets/shaders/forward.frag",
-                                                                                                                 "./../assets/shaders/parallax.incl",
-                                                                                                                 "./../assets/shaders/shadow.incl",
-                                                                                                                 "./../assets/shaders/light.incl"});
+        shader_manager::instance().make_shader<skybox_shader>("skybox",
+                                                              {"./../assets/shaders/skybox/skybox.vert"},
+                                                              {"./../assets/shaders/skybox/skybox.frag"});
 
-        shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight", {"./../assets/shaders/forward.vert"}, {"./../assets/shaders/alpha_weight.frag",
-                                                                                                                           "./../assets/shaders/parallax.incl",
-                                                                                                                           "./../assets/shaders/shadow.incl",
-                                                                                                                           "./../assets/shaders/light.incl"});
-        shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend", {"./../assets/shaders/alpha_blend.vert"}, {"./../assets/shaders/alpha_blend.frag"});
+        shader_manager::instance().make_shader<shadow_2d_shader>("shadow_2d",
+                                                                 {"./../assets/shaders/shadow/shadow_2d.vert"},
+                                                                 {"./../assets/shaders/shadow/shadow_2d.frag"});
 
-        // shader_manager::instance().make_shader<post_proc_shader>("post_proc_invert", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_invert.frag"});
-        // shader_manager::instance().make_shader<post_proc_shader>("post_proc_greyscale", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_greyscale.frag"});
-        // shader_manager::instance().make_shader<post_proc_shader>("post_proc_blur", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_blur.frag"});
-        // shader_manager::instance().make_shader<post_proc_shader>("post_proc_outline", {"./../assets/shaders/post_proc.vert"}, {"./../assets/shaders/post_proc_outline.frag"});
+        shader_manager::instance().make_shader<shadow_cubemap_shader>("shadow_cubemap",
+                                                                      {"./../assets/shaders/shadow/shadow_cubemap.vert"},
+                                                                      {"./../assets/shaders/shadow/shadow_cubemap.geom"},
+                                                                      {"./../assets/shaders/shadow/shadow_cubemap.frag"});
+
+        shader_manager::instance().make_shader<geometry_shader>("geometry",
+                                                                {"./../assets/shaders/deferred/geometry.vert"},
+                                                                {"./../assets/shaders/deferred/geometry.frag",
+                                                                 "./../assets/shaders/include/parallax.incl"});
+
+        shader_manager::instance().make_shader<lighting_shader>("lighting",
+                                                                {"./../assets/shaders/deferred/lighting.vert"},
+                                                                {"./../assets/shaders/deferred/lighting.frag",
+                                                                 "./../assets/shaders/include/shadow.incl",
+                                                                 "./../assets/shaders/include/light.incl"});
+
+        shader_manager::instance().make_shader<forward_shader>("forward",
+                                                               {"./../assets/shaders/forward/forward.vert"},
+                                                               {"./../assets/shaders/forward/forward.frag",
+                                                                "./../assets/shaders/include/parallax.incl",
+                                                                "./../assets/shaders/include/shadow.incl",
+                                                                "./../assets/shaders/include/light.incl"});
+
+        shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight",
+                                                                    {"./../assets/shaders/alpha/alpha_weight.vert"},
+                                                                    {"./../assets/shaders/alpha/alpha_weight.frag",
+                                                                     "./../assets/shaders/include/parallax.incl",
+                                                                     "./../assets/shaders/include/shadow.incl",
+                                                                     "./../assets/shaders/include/light.incl"});
+
+        shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend",
+                                                                   {"./../assets/shaders/alpha/alpha_blend.vert"},
+                                                                   {"./../assets/shaders/alpha/alpha_blend.frag"});
 
         material::geometry_shader_ = shader_manager::instance().get_shader("geometry");
         material::light_shader_ = shader_manager::instance().get_shader("lighting");

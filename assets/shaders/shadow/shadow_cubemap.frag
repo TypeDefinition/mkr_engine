@@ -9,13 +9,13 @@ in GS_OUT {
 uniform vec3 u_light_pos;
 uniform float u_shadow_distance;
 
-uniform bool is_transparent;
+uniform bool u_is_transparent;
 uniform vec4 u_diffuse_colour;
 uniform bool u_texture_diffuse_enabled;
 uniform sampler2D u_texture_diffuse;
 
 void main() {
-    if (is_transparent) {
+    if (u_is_transparent) {
         // Discard transparent fragments.
         float alpha = u_diffuse_colour.a;
         if (u_texture_diffuse_enabled) {

@@ -113,6 +113,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1app__window.html">app_window</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1alpha__buffer.html">alpha_buffer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1forward__buffer.html">forward_buffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1framebuffer.html">framebuffer</a></td></tr>
@@ -156,6 +158,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmkr_1_1vertex.html">vertex</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1graphics__renderer.html">graphics_renderer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1alpha__blend__shader.html">alpha_blend_shader</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1alpha__weight__shader.html">alpha_weight_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmkr_1_1forward__shader.html">forward_shader</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,8 +283,8 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="separator:a9655959a225d822da5e035327fbdb9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad08e11457fb92a01b7c2ed043292f8b9"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9">render_path</a> { <a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9a43fff3df3fc0b3417c86dc3040fb2d86">deferred</a>
-, <a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9a445a1f1aa88f7a83a9a0fd6005cc6443">forward_opaque</a>
-, <a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9af69a14b1595eb8db7ddef8b7bb3f4609">forward_transparent</a>
+, <a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9a965dbaac085fc891bfbbd4f9d145bbc8">forward</a>
+, <a class="el" href="namespacemkr.html#ad08e11457fb92a01b7c2ed043292f8b9a5e96bf62b9b2c18fdb65564b4a18fd1f">transparent</a>
  }</td></tr>
 <tr class="separator:ad08e11457fb92a01b7c2ed043292f8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe8c29bfe2e55bc16a894b1120995935"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#abe8c29bfe2e55bc16a894b1120995935">vertex_attrib</a> : GLuint { <br />
@@ -318,16 +324,17 @@ Enumerations</h2></td></tr>
 <tr class="separator:ac0c601750916b3a0a8fcebb2c070c528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f278ec75926bdfd4b49d1fd23c704df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704df">texture_unit</a> : int32_t { <br />
 &#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c">texture_skybox</a> = 0
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">texture_diffuse</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5">texture_normal</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89">texture_specular</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">texture_diffuse</a> = 1
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89">texture_specular</a> = 2
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5">texture_normal</a> = 3
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79">texture_gloss</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e">texture_displacement</a>
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e">texture_displacement</a> = 4
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa4779b46fb5d4803d6806d6d5b5faccc0">texture_position</a>
-, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac">texture_shadows0</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfaed3cb019fa94748c11130ff1ca0b8a11">texture_accumulation</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfaf598b0422072c5d9d217f1cfcdb7a479">texture_revealage</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169">cubemap_shadows0</a> = texture_shadows0
+&#160;&#160;<a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac">texture_shadows0</a>
+, <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169">cubemap_shadows0</a> = texture_shadows0
 , <a class="el" href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f">num_texture_units</a> = lighting::max_lights + cubemap_shadows0
 <br />
  }</td></tr>
@@ -1503,8 +1510,8 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad08e11457fb92a01b7c2ed043292f8b9a43fff3df3fc0b3417c86dc3040fb2d86"></a>deferred&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ad08e11457fb92a01b7c2ed043292f8b9a445a1f1aa88f7a83a9a0fd6005cc6443"></a>forward_opaque&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ad08e11457fb92a01b7c2ed043292f8b9af69a14b1595eb8db7ddef8b7bb3f4609"></a>forward_transparent&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad08e11457fb92a01b7c2ed043292f8b9a965dbaac085fc891bfbbd4f9d145bbc8"></a>forward&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad08e11457fb92a01b7c2ed043292f8b9a5e96bf62b9b2c18fdb65564b4a18fd1f"></a>transparent&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="render__path_8h_source.html#l00004">4</a> of file <a class="el" href="render__path_8h_source.html">render_path.h</a>.</p>
@@ -1648,11 +1655,12 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa3e73636b1d3567f3e4554e27f48c2e4c"></a>texture_skybox&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873"></a>texture_diffuse&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5"></a>texture_normal&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa77f77f76d87adf102db0c97761a32f89"></a>texture_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa28836e1906c467f91fe721f876196f79"></a>texture_gloss&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa2e6f41bb29037dc80504b943a03a37f5"></a>texture_normal&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa713a31f5dc6be65e75247060dc49742e"></a>texture_displacement&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa4779b46fb5d4803d6806d6d5b5faccc0"></a>texture_position&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfaed3cb019fa94748c11130ff1ca0b8a11"></a>texture_accumulation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfaf598b0422072c5d9d217f1cfcdb7a479"></a>texture_revealage&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfad0d43d452801153231699bb9e84733ac"></a>texture_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa56a127e30908390a1aa07e17d77be169"></a>cubemap_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3f278ec75926bdfd4b49d1fd23c704dfa8eb6d6438c0bc737fa59bdd0140bda6f"></a>num_texture_units&#160;</td><td class="fielddoc"></td></tr>

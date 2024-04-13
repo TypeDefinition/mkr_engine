@@ -1,10 +1,12 @@
 <map id="mkr::shader_program" name="mkr::shader_program">
-<area shape="rect" id="node1" title=" " alt="" coords="560,5,745,1036"/>
-<area shape="rect" id="node2" href="$classmkr_1_1forward__shader.html" title=" " alt="" coords="5,1084,164,1205"/>
-<area shape="rect" id="node3" href="$classmkr_1_1geometry__shader.html" title=" " alt="" coords="188,1084,360,1205"/>
-<area shape="rect" id="node4" href="$classmkr_1_1lighting__shader.html" title=" " alt="" coords="384,1084,543,1205"/>
-<area shape="rect" id="node5" href="$classmkr_1_1post__proc__shader.html" title=" " alt="" coords="567,1084,739,1205"/>
-<area shape="rect" id="node6" href="$classmkr_1_1shadow__2d__shader.html" title=" " alt="" coords="763,1091,945,1198"/>
-<area shape="rect" id="node7" href="$classmkr_1_1shadow__cubemap__shader.html" title=" " alt="" coords="970,1084,1197,1205"/>
-<area shape="rect" id="node8" href="$classmkr_1_1skybox__shader.html" title=" " alt="" coords="1221,1084,1375,1205"/>
+<area shape="rect" id="node1" title=" " alt="" coords="803,5,988,1036"/>
+<area shape="rect" id="node2" href="$classmkr_1_1alpha__blend__shader.html" title=" " alt="" coords="5,1091,193,1213"/>
+<area shape="rect" id="node3" href="$classmkr_1_1alpha__weight__shader.html" title=" " alt="" coords="217,1091,413,1213"/>
+<area shape="rect" id="node4" href="$classmkr_1_1forward__shader.html" title=" " alt="" coords="437,1091,596,1213"/>
+<area shape="rect" id="node5" href="$classmkr_1_1geometry__shader.html" title=" " alt="" coords="620,1091,792,1213"/>
+<area shape="rect" id="node6" href="$classmkr_1_1lighting__shader.html" title=" " alt="" coords="816,1091,975,1213"/>
+<area shape="rect" id="node7" href="$classmkr_1_1post__proc__shader.html" title=" " alt="" coords="999,1091,1171,1213"/>
+<area shape="rect" id="node8" href="$classmkr_1_1shadow__2d__shader.html" title=" " alt="" coords="1195,1091,1377,1213"/>
+<area shape="rect" id="node9" href="$classmkr_1_1shadow__cubemap__shader.html" title=" " alt="" coords="1402,1084,1629,1220"/>
+<area shape="rect" id="node10" href="$classmkr_1_1skybox__shader.html" title=" " alt="" coords="1653,1091,1807,1213"/>
 </map>

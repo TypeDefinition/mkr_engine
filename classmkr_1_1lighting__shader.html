@@ -98,27 +98,26 @@ Public Types</h2></td></tr>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a57629c7d0c1ca475ba11d91cd05efd19">u_texture_diffuse</a>
 , <br />
 &#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3aa808c872ede19d305d1d1f6f027f1c96">u_texture_specular</a>
-, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a01bfa828bc39cb1635547eabb8a6ddca">u_texture_gloss</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3afe73d96ea830de4f59a76c8dc61e4ef4">u_texture_shadows0</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3af4b912cea98cf521f8d56a9276273a61">u_cubemap_shadows0</a> = lighting::max_lights + u_texture_shadows0
+, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3aea1f30fa6d397185400de5f5202ec4b5">u_num_lights</a> = lighting::max_lights + u_cubemap_shadows0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3aea1f30fa6d397185400de5f5202ec4b5">u_num_lights</a> = lighting::max_lights + u_cubemap_shadows0
-, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ae73259de016ac00cada93482dd6359a0">u_ambient_light</a>
+&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ae73259de016ac00cada93482dd6359a0">u_ambient_light</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a4f89fab12604d016839d8a26d1537ed8">u_light_mode0</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3aa9e9953f8a967d4d987bf683899c8390">u_light_power0</a> = lighting::max_lights + u_light_mode0
+, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a4fb7ea8d1b12e7d39f67138b0c87bb54">u_light_colour0</a> = lighting::max_lights + u_light_power0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a4fb7ea8d1b12e7d39f67138b0c87bb54">u_light_colour0</a> = lighting::max_lights + u_light_power0
-, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a01b3d62f3b1c4fc35817129d59dc8535">u_light_attenuation_constant0</a> = lighting::max_lights + u_light_colour0
+&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a01b3d62f3b1c4fc35817129d59dc8535">u_light_attenuation_constant0</a> = lighting::max_lights + u_light_colour0
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ac73134182fd4551a9d78f469e9751ba2">u_light_attenuation_linear0</a> = lighting::max_lights + u_light_attenuation_constant0
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a09403076bbfd19e460aa0fbc3af82a3e">u_light_attenuation_quadratic0</a> = lighting::max_lights + u_light_attenuation_linear0
+, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3add61951484bc9200ab6d61b807ba0610">u_light_spotlight_inner_cosine0</a> = lighting::max_lights + u_light_attenuation_quadratic0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3add61951484bc9200ab6d61b807ba0610">u_light_spotlight_inner_cosine0</a> = lighting::max_lights + u_light_attenuation_quadratic0
-, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ac24e6708c114d7cce8e12316b7fe62e5">u_light_spotlight_outer_cosine0</a> = lighting::max_lights + u_light_spotlight_inner_cosine0
+&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ac24e6708c114d7cce8e12316b7fe62e5">u_light_spotlight_outer_cosine0</a> = lighting::max_lights + u_light_spotlight_inner_cosine0
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a1385ceb1beff9386b790dca464032e4c">u_light_position0</a> = lighting::max_lights + u_light_spotlight_outer_cosine0
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ae322ef45dc99f8ca08311b43b1f28589">u_light_direction0</a> = lighting::max_lights + u_light_position0
+, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a0ab780f457669f2910279e3129666e9e">u_light_shadow_distance0</a> = lighting::max_lights + u_light_direction0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a0ab780f457669f2910279e3129666e9e">u_light_shadow_distance0</a> = lighting::max_lights + u_light_direction0
-, <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ad7f4318851d04a5650012fdd89781f9e">u_light_view_projection_matrix0</a> = lighting::max_lights + u_light_shadow_distance0
+&#160;&#160;<a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ad7f4318851d04a5650012fdd89781f9e">u_light_view_projection_matrix0</a> = lighting::max_lights + u_light_shadow_distance0
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3a20eb38c4f00a2ab128c64cb1640948f4">num_shader_uniforms</a> = lighting::max_lights + u_light_view_projection_matrix0
 <br />
  }</td></tr>
@@ -300,7 +299,6 @@ Additional Inherited Members</h2></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3ad743c353b93f3860a9685507357936b8"></a>u_texture_normal&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3a57629c7d0c1ca475ba11d91cd05efd19"></a>u_texture_diffuse&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3aa808c872ede19d305d1d1f6f027f1c96"></a>u_texture_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3a01bfa828bc39cb1635547eabb8a6ddca"></a>u_texture_gloss&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3afe73d96ea830de4f59a76c8dc61e4ef4"></a>u_texture_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3af4b912cea98cf521f8d56a9276273a61"></a>u_cubemap_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a5795c0e4a24521afe587dd4a7679cde3aea1f30fa6d397185400de5f5202ec4b5"></a>u_num_lights&#160;</td><td class="fielddoc"></td></tr>
@@ -384,7 +382,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="lighting__shader_8h_source.html#l00061">61</a> of file <a class="el" href="lighting__shader_8h_source.html">lighting_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lighting__shader_8h_source.html#l00060">60</a> of file <a class="el" href="lighting__shader_8h_source.html">lighting_shader.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +411,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Assign textures to GL_TEXTURE0 to GL_TEXTUREN. For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions that may be used to load uniform variables defined as sampler types. Loading samplers with any other function will result in a GL_INVALID_OPERATION error. Thus, we must cast texture_unit to a signed integer. </p>
 
-<p class="definition">Definition at line <a class="el" href="lighting__shader_8cpp_source.html#l00047">47</a> of file <a class="el" href="lighting__shader_8cpp_source.html">lighting_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lighting__shader_8cpp_source.html#l00046">46</a> of file <a class="el" href="lighting__shader_8cpp_source.html">lighting_shader.cpp</a>.</p>
 
 </div>
 </div>

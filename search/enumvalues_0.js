@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['borderless_1733',['borderless',['../namespacemkr.html#a9655959a225d822da5e035327fbdb9bdaad652ab5db9b9aa5c523d7a52fcafa17',1,'mkr']]]
+  ['accumulation_1763',['accumulation',['../classmkr_1_1alpha__buffer.html#aa64acbfc4fa340bd8cd3ee38f4acd5f4a4532ae70b80897b8005ad95cca4daf37',1,'mkr::alpha_buffer']]]
 ];

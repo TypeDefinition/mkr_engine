@@ -100,42 +100,39 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca377d7b548f78159c2a8d22d74d65a77f">u_inv_view_matrix</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9d4d0c8ea3bc601826f289a8789c578d">u_diffuse_colour</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca955253e62254cd267addddf88882de24">u_specular_colour</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca0872448724496f696ebe5e9bf0c5d1b1">u_gloss</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9a0b8ac5c826b2fc2c94d0bf628b7a2d">u_displacement_scale</a>
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9a0b8ac5c826b2fc2c94d0bf628b7a2d">u_displacement_scale</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcafb15cec60c8f8c42c98bdd0a0276ac1c">u_texture_diffuse_enabled</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca3edf942bb3f3e3888ac9c779cfa40af8">u_texture_normal_enabled</a>
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcafb15cec60c8f8c42c98bdd0a0276ac1c">u_texture_diffuse_enabled</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca8936e7ed944a8d4d270fe5f67881abd9">u_texture_specular_enabled</a>
-, <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcab92936477f434989dfebbf7cf56b5883">u_texture_gloss_enabled</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca3edf942bb3f3e3888ac9c779cfa40af8">u_texture_normal_enabled</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5c5119e4cdfc9243585b3b201966333e">u_texture_displacement_enabled</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6917bd1d2cc64534aa125cc84dbfa8ca">u_texture_diffuse</a>
+, <br />
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6917bd1d2cc64534aa125cc84dbfa8ca">u_texture_diffuse</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415">u_texture_specular</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcad9572a687fcb88ed2bc0cf612246c98b">u_texture_normal</a>
-, <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415">u_texture_specular</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca0c8e803cd330c7236ecec19f876646aa">u_texture_gloss</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca89e067d3fb9dea4abbf733435b24574b">u_texture_displacement</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca04909bebc2437bb9a0bcb2cee98beeee">u_texture_shadows0</a>
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaea9ce1f92f8f4552f06e5082aa0a11">u_cubemap_shadows0</a> = lighting::max_lights + u_texture_shadows0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca04909bebc2437bb9a0bcb2cee98beeee">u_texture_shadows0</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaea9ce1f92f8f4552f06e5082aa0a11">u_cubemap_shadows0</a> = lighting::max_lights + u_texture_shadows0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf34c58ac3facc896eb29a6fdeedb70cb">u_num_lights</a> = lighting::max_lights + u_cubemap_shadows0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcad8ec8ab6dfada2b70a157bef0ca0aae1">u_ambient_light</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca8dd74e054868d5e1451e80609780cb06">u_light_mode0</a>
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca277e474ab504487585e4a1f776f38d8a">u_light_power0</a> = lighting::max_lights + u_light_mode0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca8dd74e054868d5e1451e80609780cb06">u_light_mode0</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca277e474ab504487585e4a1f776f38d8a">u_light_power0</a> = lighting::max_lights + u_light_mode0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca02c9e0c3befcaa5f51291aa26e6ab447">u_light_colour0</a> = lighting::max_lights + u_light_power0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca26f8208ac80e767e65253560f52ca44b">u_light_attenuation_constant0</a> = lighting::max_lights + u_light_colour0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5060d4cfa34d8d933b39fbc2866d1c93">u_light_attenuation_linear0</a> = lighting::max_lights + u_light_attenuation_constant0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf21ce35a65b2f3d4cb7ef8979e61924e">u_light_attenuation_quadratic0</a> = lighting::max_lights + u_light_attenuation_linear0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5060d4cfa34d8d933b39fbc2866d1c93">u_light_attenuation_linear0</a> = lighting::max_lights + u_light_attenuation_constant0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaf21ce35a65b2f3d4cb7ef8979e61924e">u_light_attenuation_quadratic0</a> = lighting::max_lights + u_light_attenuation_linear0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcab3eae4baef33eb3918a497d22b6c39bf">u_light_spotlight_inner_cosine0</a> = lighting::max_lights + u_light_attenuation_quadratic0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcaa6723e82d3844d7003a33e2cf536a586">u_light_spotlight_outer_cosine0</a> = lighting::max_lights + u_light_spotlight_inner_cosine0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4a7546db8dbdd49fcb4aa78e5538bd66">u_light_position0</a> = lighting::max_lights + u_light_spotlight_outer_cosine0
 , <br />
-&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9b032964a55bdffcd2d785a7f5db38de">u_light_direction0</a> = lighting::max_lights + u_light_position0
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4a7546db8dbdd49fcb4aa78e5538bd66">u_light_position0</a> = lighting::max_lights + u_light_spotlight_outer_cosine0
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca9b032964a55bdffcd2d785a7f5db38de">u_light_direction0</a> = lighting::max_lights + u_light_position0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca2eaf06af48fb3af510ca44d06f416b26">u_light_shadow_distance0</a> = lighting::max_lights + u_light_direction0
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca4bea6146e49003338f2a582ab4e9d2b4">u_light_view_projection_matrix0</a> = lighting::max_lights + u_light_shadow_distance0
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6f39b6bf50be6db010d2eeba63443769">num_shader_uniforms</a> = lighting::max_lights + u_light_view_projection_matrix0
+, <br />
+&#160;&#160;<a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca6f39b6bf50be6db010d2eeba63443769">num_shader_uniforms</a> = lighting::max_lights + u_light_view_projection_matrix0
 <br />
  }</td></tr>
 <tr class="separator:a31b23f8fca76f9fc4dd4ff11f07e6ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,17 +315,14 @@ Additional Inherited Members</h2></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca377d7b548f78159c2a8d22d74d65a77f"></a>u_inv_view_matrix&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca9d4d0c8ea3bc601826f289a8789c578d"></a>u_diffuse_colour&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca955253e62254cd267addddf88882de24"></a>u_specular_colour&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca0872448724496f696ebe5e9bf0c5d1b1"></a>u_gloss&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca9a0b8ac5c826b2fc2c94d0bf628b7a2d"></a>u_displacement_scale&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcafb15cec60c8f8c42c98bdd0a0276ac1c"></a>u_texture_diffuse_enabled&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca3edf942bb3f3e3888ac9c779cfa40af8"></a>u_texture_normal_enabled&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca8936e7ed944a8d4d270fe5f67881abd9"></a>u_texture_specular_enabled&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcab92936477f434989dfebbf7cf56b5883"></a>u_texture_gloss_enabled&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca3edf942bb3f3e3888ac9c779cfa40af8"></a>u_texture_normal_enabled&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca5c5119e4cdfc9243585b3b201966333e"></a>u_texture_displacement_enabled&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca6917bd1d2cc64534aa125cc84dbfa8ca"></a>u_texture_diffuse&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcad9572a687fcb88ed2bc0cf612246c98b"></a>u_texture_normal&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415"></a>u_texture_specular&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca0c8e803cd330c7236ecec19f876646aa"></a>u_texture_gloss&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcad9572a687fcb88ed2bc0cf612246c98b"></a>u_texture_normal&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca89e067d3fb9dea4abbf733435b24574b"></a>u_texture_displacement&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffca04909bebc2437bb9a0bcb2cee98beeee"></a>u_texture_shadows0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a31b23f8fca76f9fc4dd4ff11f07e6ffcaeaea9ce1f92f8f4552f06e5082aa0a11"></a>u_cubemap_shadows0&#160;</td><td class="fielddoc"></td></tr>
@@ -394,7 +388,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00076">76</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00073">73</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +415,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00082">82</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8h_source.html#l00079">79</a> of file <a class="el" href="forward__shader_8h_source.html">forward_shader.h</a>.</p>
 
 </div>
 </div>
@@ -450,7 +444,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Assign textures to GL_TEXTURE0 to GL_TEXTUREN. For some weird reason, glProgramUniform1i and glProgramUniform1iv are the only two functions that may be used to load uniform variables defined as sampler types. Loading samplers with any other function will result in a GL_INVALID_OPERATION error. Thus, we must cast texture_unit to a signed integer. </p>
 
-<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00058">58</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="forward__shader_8cpp_source.html#l00055">55</a> of file <a class="el" href="forward__shader_8cpp_source.html">forward_shader.cpp</a>.</p>
 
 </div>
 </div>

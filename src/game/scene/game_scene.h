@@ -23,6 +23,10 @@ namespace mkr {
         void init_levels();
         void init_player();
 
+        void init_sphere_gallery();
+        void init_transparency_gallery();
+        void init_shadow_gallery();
+
     public:
         game_scene();
         virtual ~game_scene();

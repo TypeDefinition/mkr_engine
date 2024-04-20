@@ -51,7 +51,7 @@ namespace mkr {
 
         // Framebuffers
         for (auto i = 0; i < lighting::max_lights; ++i) {
-            s2d_buff_[i] = std::make_unique<shadow_2d_buffer>(2048);
+            s2d_buff_[i] = std::make_unique<shadow_2d_buffer>(4096);
             scube_buff_[i] = std::make_unique<shadow_cubemap_buffer>(2048);
         }
 
@@ -148,8 +148,9 @@ namespace mkr {
             framebuffer::bind_default_buffer();
             framebuffer::clear_default_buffer_colour();
             framebuffer::clear_default_depth_stencil();
+
             f_buff_->set_read_colour_attachment(forward_buffer::colour_attachments::colour);
-            f_buff_->blit_to(nullptr, true, false, false, 0, 0, app_window_->width(), app_window_->height(), 0, 0, f_buff_->width(), f_buff_->height());
+            f_buff_->blit_to(nullptr, true, false, false, 0, 0, f_buff_->width(), f_buff_->height(), 0, 0, app_window_->width(), app_window_->height());
 
             // Pop camera off the priority queue.
             cameras_.pop();

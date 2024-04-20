@@ -1,24 +1,5 @@
 #version 460 core
 
-vec2 parallax(const in sampler2D _texture, const in vec2 _tex_coord,
-              float _disp_scale,
-              const in vec3 _frag_pos, const in mat3 _tbn_matrix) {
-    /* Convert height map to depth map because depth looks nicer then height.
-       A height of 0.9 is a depth of 0.1, a height of 0.4 is a depth of 0.6 etc. */
-    const float depth = 1.0f - texture(_texture, _tex_coord).r;
-    const vec3 view_dir = normalize(transpose(_tbn_matrix) * _frag_pos); // Convert from camera space to tangent space.
-
-    /* Note the division of view_dir.xy by view_dir.z.
-       As the view_dir vector is normalized view_dir.z will be somewhere in the range between 0.0 and 1.0.
-       When view_dir is largely parallel to the surface its z component is close to 0.0 and the division returns a much larger offset as compared to when view_dir is perpendicular to the surface.
-       So basically we're increasing the size of the offset in such a way that it offsets the texture coordinates at a larger scale when looking at a surface from a steeper angle.
-
-       Some people prefer to leave the division by view_dir.z out of the equation as normal Parallax Mapping could produce undesirable results at certain angles.
-       This is called "Parallax Mapping with Offset Limiting".
-       Choosing which technique to pick is usually a matter of personal preference. */
-    return _tex_coord + (view_dir.xy / view_dir.z * depth * _disp_scale);
-}
-
 vec2 parallax_occlusion(const in sampler2D _texture, const in vec2 _tex_coord,
                         float _disp_scale,
                         const in vec3 _frag_pos, const in mat3 _tbn_matrix,
@@ -28,7 +9,7 @@ vec2 parallax_occlusion(const in sampler2D _texture, const in vec2 _tex_coord,
     const int num_layers = int(mix(max_layers, min_layers, dot(_normal, normalize(-_frag_pos))));
 
     const vec3 view_dir = normalize(transpose(_tbn_matrix) * _frag_pos); // Convert from camera space to tangent space.
-    const vec2 uv_delta = view_dir.xy / view_dir.z / num_layers * _disp_scale; // How much to shift the uv coordinates per layer.
+    const vec2 uv_delta = -view_dir.xy / view_dir.z / num_layers * _disp_scale; // How much to shift the uv coordinates per layer.
 
     vec2 prev_uv_offset = vec2(0.0f, 0.0f);
     float prev_layer_depth = 0.0f;

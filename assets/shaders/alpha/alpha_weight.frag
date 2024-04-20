@@ -75,9 +75,9 @@ uniform light u_lights[max_lights];
 // Includes
 vec2 parallax_occlusion(const in sampler2D _texture, const in vec2 _tex_coord, float _disp_scale, const in vec3 _frag_pos, const in mat3 _inv_tbn_matrix, const in vec3 _normal);
 
-bool cast_point_shadow(const in samplerCube _cubemap, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in vec3 _light_pos, float _cast_dist, float _bias);
-bool cast_spot_shadow(const in sampler2D _texture, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in mat4 _light_vp_mat, const in vec3 _light_dir, float _bias);
-bool cast_directional_shadow(const in sampler2D _texture, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in mat4 _light_vp_mat, const in vec3 _light_dir, float _bias);
+bool cast_point_shadow(const in samplerCube _cubemap, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in vec3 _light_pos, float _cast_dist);
+bool cast_spot_shadow(const in sampler2D _texture, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in mat4 _light_vp_mat, const in vec3 _light_dir);
+bool cast_directional_shadow(const in sampler2D _texture, const in vec3 _pos, const in vec3 _normal, const in mat4 _inv_view_matrix, const in mat4 _light_vp_mat, const in vec3 _light_dir);
 
 float light_attenuation(const in vec3 _pos, const in vec3 _light_pos, const in float _attn_const, const in float _attn_linear, const in float _attn_quad);
 float spotlight_effect(const in vec3 _pos, const in vec3 _light_pos, const in vec3 _light_dir, const in float _inner_cos, const in float _outer_cos);
@@ -86,11 +86,10 @@ float specular_intensity(const in vec3 _pos, const in vec3 _normal, const in vec
 
 // Local Functions
 void get_cast_shadow(const in vec3 _normal, inout bool cast_shadow[max_lights]) {
-    const float bias = 0.005f;
     for (int i = 0; i < u_num_lights; ++i) {
-        cast_shadow[i] = (u_lights[i].mode_ == light_point && cast_point_shadow(u_cubemap_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].position_, u_lights[i].shadow_distance_, bias)) ||
-                         (u_lights[i].mode_ == light_spot && cast_spot_shadow(u_texture_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].view_projection_matrix_, u_lights[i].direction_, bias)) ||
-                         (u_lights[i].mode_ == light_directional && cast_directional_shadow(u_texture_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].view_projection_matrix_, u_lights[i].direction_, bias));
+        cast_shadow[i] = (u_lights[i].mode_ == light_point && cast_point_shadow(u_cubemap_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].position_, u_lights[i].shadow_distance_)) ||
+                         (u_lights[i].mode_ == light_spot && cast_spot_shadow(u_texture_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].view_projection_matrix_, u_lights[i].direction_)) ||
+                         (u_lights[i].mode_ == light_directional && cast_directional_shadow(u_texture_shadows[i], vs_out.position, _normal, u_inv_view_matrix, u_lights[i].view_projection_matrix_, u_lights[i].direction_));
     }
 }
 

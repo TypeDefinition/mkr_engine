@@ -35,6 +35,9 @@ namespace mkr {
         init_materials();
         init_levels();
         init_player();
+        // init_sphere_gallery();
+        // init_transparency_gallery();
+        init_shadow_gallery();
     }
 
     void game_scene::pre_update() {
@@ -48,7 +51,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        input_manager::instance().set_relative_mouse(true);
+        // input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -120,6 +123,7 @@ namespace mkr {
     void game_scene::init_systems() {
         world_.system<transform, const head_tag>().each([&](transform& _trans, const head_tag _head) { hcs_(_trans, _head); });
         world_.system<transform, const body_tag>().each([&](transform& _trans, const body_tag _body) { bcs_(_trans, _body); });
+        world_.system<transform, const rotate_tag>().each([](transform& _trans, const rotate_tag _camera) { _trans.rotate(quaternion{vector3::y_axis(), 5.0f * maths_util::deg2rad * application::instance().delta_time()}); });
 
         // Render systems.
         world_.system<const local_to_world, const camera>().each([](const local_to_world& _transform, const camera& _camera) { graphics_renderer::instance().submit_camera(_transform, _camera); });
@@ -196,65 +200,124 @@ namespace mkr {
             "./../assets/textures/skyboxes/sunset/skybox_sunset_back.png",
         });
 
-        // Floor
-        auto tiles = material_manager::instance().make_material("tiles");
-        tiles->texture_diffuse_ = texture_manager::instance().make_texture2d("tiles_001_albedo", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
-        tiles->texture_normal_ = texture_manager::instance().make_texture2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
-        tiles->texture_displacement_ = texture_manager::instance().make_texture2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
-        tiles->texture_specular_ = texture_manager::instance().make_texture2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
-        tiles->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
-        tiles->displacement_scale_ = 0.1f;
-        tiles->forward_shader_ = shader_manager::instance().get_shader("forward");
-        // tiles->render_path_ = render_path::forward_opaque;
+        {
+            auto mat = material_manager::instance().make_material("tiles");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("tiles_001_diffuse", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
+            mat->displacement_scale_ = 0.05f;
+        }
 
-        // Cube
-        auto brick_wall = material_manager::instance().make_material("brick_wall");
-        brick_wall->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_wall_001_albedo", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
-        brick_wall->texture_normal_ = texture_manager::instance().make_texture2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
-        brick_wall->texture_displacement_ = texture_manager::instance().make_texture2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
-        brick_wall->texture_specular_ = texture_manager::instance().make_texture2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
-        brick_wall->forward_shader_ = shader_manager::instance().get_shader("forward");
+        {
+            auto mat = material_manager::instance().make_material("pavement");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("pavement_diffuse", "./../assets/textures/materials/pavement/pavement_brick_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("pavement_normal", "./../assets/textures/materials/pavement/pavement_brick_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("pavement_displacement", "./../assets/textures/materials/pavement/pavement_brick_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("pavement_specular", "./../assets/textures/materials/pavement/pavement_brick_001_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
+            mat->displacement_scale_ = 0.1f;
+        }
 
-        auto metal_pattern = material_manager::instance().make_material("metal_pattern");
-        metal_pattern->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_pattern_albedo", "./../assets/textures/materials/metal/metal_pattern_001_albedo.png");
-        metal_pattern->texture_normal_ = texture_manager::instance().make_texture2d("metal_pattern_normal", "./../assets/textures/materials/metal/metal_pattern_001_normal.png");
-        metal_pattern->texture_displacement_ = texture_manager::instance().make_texture2d("metal_pattern_displacement", "./../assets/textures/materials/metal/metal_pattern_001_displacement.png");
-        metal_pattern->texture_specular_ = texture_manager::instance().make_texture2d("metal_pattern_specular", "./../assets/textures/materials/metal/metal_pattern_001_specular.png");
-        metal_pattern->forward_shader_ = shader_manager::instance().get_shader("forward");
-        metal_pattern->render_path_ = render_path::forward;
+        {
+            auto mat = material_manager::instance().make_material("brick_wall");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_wall_001_diffuse", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
+            mat->displacement_scale_ = 0.05f;
+        }
 
-        // Sphere
-        auto green = material_manager::instance().make_material("green");
-        green->diffuse_colour_ = colour::green();
-        green->forward_shader_ = shader_manager::instance().get_shader("forward");
-        green->render_path_ = render_path::forward;
+        {
+            auto mat = material_manager::instance().make_material("rough_rock");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("rough_rock_diffuse", "./../assets/textures/materials/rough_rock/rough_rock_004_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("rough_rock_normal", "./../assets/textures/materials/rough_rock/rough_rock_004_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("rough_rock_displacement", "./../assets/textures/materials/rough_rock/rough_rock_004_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("rough_rock_specular", "./../assets/textures/materials/rough_rock/rough_rock_004_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
+        }
 
-        auto red = material_manager::instance().make_material("red");
-        red->diffuse_colour_ = colour{1.0f, 0.0f, 0.0f, 0.2f};
-        red->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
-        red->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
-        red->render_path_ = render_path::transparent;
+        {
+            auto mat = material_manager::instance().make_material("metal_pattern");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_pattern_diffuse", "./../assets/textures/materials/metal/metal_pattern_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_pattern_normal", "./../assets/textures/materials/metal/metal_pattern_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_pattern_displacement", "./../assets/textures/materials/metal/metal_pattern_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_pattern_specular", "./../assets/textures/materials/metal/metal_pattern_001_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
+        }
 
-        auto blue = material_manager::instance().make_material("blue");
-        blue->diffuse_colour_ = colour{0.0f, 0.0f, 1.0f, 0.2f};
-        blue->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
-        blue->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
-        blue->render_path_ = render_path::transparent;
+        {
+            auto mat = material_manager::instance().make_material("metal_plate");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_plate_diffuse", "./../assets/textures/materials/metal/metal_plate_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_plate_normal", "./../assets/textures/materials/metal/metal_plate_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_plate_displacement", "./../assets/textures/materials/metal/metal_plate_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_plate_specular", "./../assets/textures/materials/metal/metal_plate_001_specular.png");
+            mat->texture_scale_ = vector2{1.0f, 1.0f} * 8.0f;
+            mat->displacement_scale_ = 0.02f;
+        }
 
-        // Cube
-        auto brick2 = material_manager::instance().make_material("brick");
-        brick2->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./../assets/textures/test/brick_diffuse.png");
-        brick2->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./../assets/textures/test/brick_normal.png");
-        brick2->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./../assets/textures/test/brick_displacement.png");
-        brick2->forward_shader_ = shader_manager::instance().get_shader("forward");
-        brick2->render_path_ = render_path::forward;
+        {
+            auto mat = material_manager::instance().make_material("green");
+            mat->diffuse_colour_ = colour(0.0f, 1.0f, 0.0f, 0.3f);
+            mat->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+            mat->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+            mat->render_path_ = render_path::transparent;
+        }
 
-        // Window
-        auto window = material_manager::instance().make_material("window");
-        window->texture_diffuse_ = texture_manager::instance().make_texture2d("window_diffuse", "./../assets/textures/test/window.png");
-        window->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
-        window->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
-        window->render_path_ = render_path::transparent;
+        {
+            auto mat = material_manager::instance().make_material("red_op");
+            mat->diffuse_colour_ = colour(1.0f, 0.0f, 0.0f, 1.0f);
+            mat->render_path_ = render_path::deferred;
+        }
+
+        {
+            auto mat = material_manager::instance().make_material("green_op");
+            mat->diffuse_colour_ = colour(1.0f, 1.0f, 0.0f, 1.0f);
+            mat->render_path_ = render_path::deferred;
+        }
+
+        {
+            auto mat = material_manager::instance().make_material("blue_op");
+            mat->diffuse_colour_ = colour(0.0f, 0.0f, 1.0f, 1.0f);
+            mat->render_path_ = render_path::deferred;
+        }
+
+
+
+        {
+            auto mat = material_manager::instance().make_material("red");
+            mat->diffuse_colour_ = colour{1.0f, 0.0f, 0.0f, 0.3f};
+            mat->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+            mat->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+            mat->render_path_ = render_path::transparent;
+        }
+
+        {
+            auto mat = material_manager::instance().make_material("blue");
+            mat->diffuse_colour_ = colour{0.0f, 0.0f, 1.0f, 0.3f};
+            mat->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+            mat->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+            mat->render_path_ = render_path::transparent;
+        }
+
+        {
+            auto mat = material_manager::instance().make_material("brick_test");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./../assets/textures/test/brick_diffuse.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./../assets/textures/test/brick_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./../assets/textures/test/brick_displacement.png");
+            mat->forward_shader_ = shader_manager::instance().get_shader("forward");
+            mat->render_path_ = render_path::forward;
+        }
+
+        {
+            auto mat = material_manager::instance().make_material("window");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("window_diffuse", "./../assets/textures/test/window.png");
+            mat->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
+            mat->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
+            mat->render_path_ = render_path::transparent;
+        }
     }
 
     void game_scene::init_meshes() {
@@ -262,107 +325,39 @@ namespace mkr {
         mesh_manager::instance().make_mesh("cube", "./../assets/models/cube.obj");
         mesh_manager::instance().make_mesh("plane", "./../assets/models/plane.obj");
         mesh_manager::instance().make_mesh("quad", "./../assets/models/quad.obj");
+        mesh_manager::instance().make_mesh("monkey", "./../assets/models/monkey.obj");
+        mesh_manager::instance().make_mesh("cone", "./../assets/models/cone.obj");
+        mesh_manager::instance().make_mesh("torus", "./../assets/models/torus.obj");
     }
 
     void game_scene::init_levels() {
         // Floor
-        transform floor_trans;
-        floor_trans.set_scale({100.0f, 1.0f, 100.0f});
-        render_mesh floor_rend{};
-        floor_rend.mesh_ = mesh_manager::instance().get_mesh("plane");
-        floor_rend.material_ = material_manager::instance().get_material("tiles");
-        world_.entity().set<transform>(floor_trans).set<render_mesh>(floor_rend).add<local_to_world>();
-
         {
             transform trans;
-            trans.set_position({3.0f, 1.0f, 2.0f});
-            trans.set_scale({3.0f, 3.0f, 1.0f});
-            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi} * quaternion{vector3::x_axis(), -45.0f * maths_util::deg2rad});
+            trans.set_scale({100.0f, 1.0f, 100.0f});
             render_mesh rend{};
-            rend.mesh_ = mesh_manager::instance().get_mesh("quad");
-            rend.material_ = material_manager::instance().get_material("window");
+            rend.mesh_ = mesh_manager::instance().get_mesh("plane");
+            rend.material_ = material_manager::instance().get_material("tiles");
             world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
         }
 
-        // Cube
-        {
-            transform cube_trans;
-            cube_trans.set_position({5.0f, 1.0f, 5.0f});
-            cube_trans.set_scale({2.0f, 2.0f, 2.0f});
-            cube_trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
-            render_mesh cube_rend{};
-            cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
-            // cube_rend.mesh_ = mesh_manager::instance().get_mesh("quad");
-            cube_rend.material_ = material_manager::instance().get_material("brick");
-            world_.entity().set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
-        }
-
-        // Cube
-        {
-            transform cube_trans;
-            cube_trans.set_position({-5.0f, 1.0f, 5.0f});
-            cube_trans.set_scale({2.0f, 2.0f, 2.0f});
-            cube_trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
-            render_mesh cube_rend{};
-            cube_rend.mesh_ = mesh_manager::instance().get_mesh("cube");
-            cube_rend.material_ = material_manager::instance().get_material("brick_wall");
-            world_.entity().set<transform>(cube_trans).set<render_mesh>(cube_rend).add<local_to_world>();
-        }
-
-        // Sphere
-        {
-            transform sphere_trans;
-            sphere_trans.set_position({0.0f, 0.5f, 4.0f});
-            render_mesh sphere_rend{};
-            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
-            sphere_rend.material_ = material_manager::instance().get_material("blue");
-            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
-        }
-
-        {
-            transform sphere_trans;
-            sphere_trans.set_position({0.0f, 0.5f, 6.0f});
-            render_mesh sphere_rend{};
-            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
-            sphere_rend.material_ = material_manager::instance().get_material("red");
-            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
-        }
-
-        {
-            transform sphere_trans;
-            sphere_trans.set_position({0.0f, 0.5f, 10.0f});
-            render_mesh sphere_rend{};
-            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
-            sphere_rend.material_ = material_manager::instance().get_material("green");
-            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
-        }
-
-        {
-            transform sphere_trans;
-            sphere_trans.set_position({0.0f, 0.5f, 8.0f});
-            render_mesh sphere_rend{};
-            sphere_rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
-            sphere_rend.material_ = material_manager::instance().get_material("blue");
-            world_.entity().set<transform>(sphere_trans).set<render_mesh>(sphere_rend).add<local_to_world>();
-        }
-
         // Directional Light
-        {
+        /*{
             transform light_trans;
             light_trans.set_position({0.0f, 0.0f, 0.0f});
             quaternion rotation_x, rotation_y;
             rotation_x.set_rotation(vector3::x_axis(), 45.0f * maths_util::deg2rad);
-            rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
+            // rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
             light_trans.set_rotation(rotation_x * rotation_y);
             light lt;
             lt.set_shadow_distance(30.0f);
             lt.set_mode(light_mode::directional);
             lt.set_power(1.0f);
             world_.entity().set<transform>(light_trans).set<light>(lt).add<local_to_world>();
-        }
+        }*/
 
         // Point Light
-        {
+        /*{
             transform light_trans;
             light_trans.set_position({5.0f, 5.0f, -5.0f});
             light lt;
@@ -383,12 +378,12 @@ namespace mkr {
             lt.set_mode(light_mode::spot);
             lt.set_power(0.7f);
             world_.entity().set<transform>(light_trans).set<light>(lt).add<local_to_world>();
-        }
+        }*/
     }
 
     void game_scene::init_player() {
         transform head_trans;
-        head_trans.set_position({0.0f, 1.7f, 0.0f});
+        head_trans.set_position({0.0f, 4.0f, 0.0f});
 
         camera cam;
         cam.skybox_.shader_ = shader_manager::instance().get_shader("skybox");
@@ -398,5 +393,200 @@ namespace mkr {
         auto body = world_.entity("head").add<transform>().add<body_tag>().add<local_to_world>();
         auto head = world_.entity("body").set<transform>(head_trans).add<head_tag>().set<camera>(cam).add<local_to_world>();
         head.child_of(body);
+    }
+
+    void game_scene::init_sphere_gallery() {
+        {
+            transform trans;
+            trans.set_position({-10.0f, 1.0f, 10.0f});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("metal_pattern");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({-5.0f, 1.0f, 10.0f});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("metal_plate");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({0.0f, 1.0f, 10.0f});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("pavement");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({5.0f, 1.0f, 10.0f});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("brick_wall");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f, 1.0f, 10.0f});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("rough_rock");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+    }
+
+    void game_scene::init_transparency_gallery() {
+        {
+            transform trans;
+            trans.set_position({0.0f, 1.5f, -10.0f});
+            trans.set_scale({0.5f, 0.5f, 0.5f});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("monkey");
+            rend.material_ = material_manager::instance().get_material("red");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({0.0f, 1.5f, -10.0f});
+            trans.set_scale({1.0f, 1.0f, 1.0f});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("monkey");
+            rend.material_ = material_manager::instance().get_material("blue");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({0.0f, 1.5f, -10.0f});
+            trans.set_scale({1.5f, 1.5f, 1.5f});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("monkey");
+            rend.material_ = material_manager::instance().get_material("green");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+        }
+    }
+
+    void game_scene::init_shadow_gallery() {
+        {
+            transform trans;
+            trans.set_position({0.0f, 6.0f, 0.0f});
+            trans.set_rotation(quaternion{vector3::x_axis(), maths_util::deg2rad * 45.0f});
+            light lt;
+            lt.set_mode(light_mode::spot);
+            lt.set_power(1.0f);
+            world_.entity().set<transform>(trans).set<light>(lt).add<local_to_world>();
+        }
+
+        /*{
+            transform trans;
+            trans.set_position({0.0f, 10.0f, 0.0f});
+            trans.set_rotation(quaternion{vector3::x_axis(), maths_util::deg2rad * 60.0f});
+            light lt;
+            lt.set_mode(light_mode::spot);
+            lt.set_power(1.0f);
+            world_.entity().set<transform>(trans).set<light>(lt).add<local_to_world>();
+        }*/
+
+        {
+            transform trans;
+            trans.set_position({10.0f, 10.0f, 0.0f});
+            light lt;
+            lt.set_mode(light_mode::point);
+            lt.set_power(1.0f);
+            world_.entity().set<transform>(trans).set<light>(lt).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({-10.0f, 10.0f, 0.0f});
+            light lt;
+            lt.set_mode(light_mode::point);
+            lt.set_power(1.0f);
+            world_.entity().set<transform>(trans).set<light>(lt).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(0.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(0.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), maths_util::pi * -0.5f});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("quad");
+            rend.material_ = material_manager::instance().get_material("window");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(60.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(60.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), 60.0f * maths_util::deg2rad});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("cube");
+            rend.material_ = material_manager::instance().get_material("metal_plate");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(120.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(120.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), 120.0f * maths_util::deg2rad});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
+            rend.material_ = material_manager::instance().get_material("rough_rock");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(180.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(180.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), 180.0f * maths_util::deg2rad});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("cone");
+            rend.material_ = material_manager::instance().get_material("red_op");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(240.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(240.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), 240.0f * maths_util::deg2rad} * quaternion{vector3::x_axis(), 0.5f * maths_util::pi});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("torus");
+            rend.material_ = material_manager::instance().get_material("blue_op");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
+
+        {
+            transform trans;
+            trans.set_position({10.0f * std::cos(300.0f * maths_util::deg2rad), 1.0f, 10.0f * std::sin(300.0f * maths_util::deg2rad)});
+            trans.set_scale({2.0f, 2.0f, 2.0f});
+            trans.set_rotation(quaternion{vector3::y_axis(), 300.0f * maths_util::deg2rad});
+            render_mesh rend{};
+            rend.mesh_ = mesh_manager::instance().get_mesh("cube");
+            rend.material_ = material_manager::instance().get_material("pavement");
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+        }
     }
 } // mkr

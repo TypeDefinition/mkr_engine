@@ -35,9 +35,9 @@ namespace mkr {
         init_materials();
         init_levels();
         init_player();
-        // init_sphere_gallery();
-        // init_transparency_gallery();
-        init_shadow_gallery();
+        init_sphere_gallery();
+        init_transparency_gallery();
+        // init_shadow_gallery();
     }
 
     void game_scene::pre_update() {
@@ -51,7 +51,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        // input_manager::instance().set_relative_mouse(true);
+        input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -342,19 +342,19 @@ namespace mkr {
         }
 
         // Directional Light
-        /*{
+        {
             transform light_trans;
             light_trans.set_position({0.0f, 0.0f, 0.0f});
             quaternion rotation_x, rotation_y;
             rotation_x.set_rotation(vector3::x_axis(), 45.0f * maths_util::deg2rad);
-            // rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
+            rotation_y.set_rotation(vector3::y_axis(), 45.0f * maths_util::deg2rad);
             light_trans.set_rotation(rotation_x * rotation_y);
             light lt;
             lt.set_shadow_distance(30.0f);
             lt.set_mode(light_mode::directional);
             lt.set_power(1.0f);
             world_.entity().set<transform>(light_trans).set<light>(lt).add<local_to_world>();
-        }*/
+        }
 
         // Point Light
         /*{
@@ -383,7 +383,7 @@ namespace mkr {
 
     void game_scene::init_player() {
         transform head_trans;
-        head_trans.set_position({0.0f, 4.0f, 0.0f});
+        head_trans.set_position({0.0f, 1.7f, 0.0f});
 
         camera cam;
         cam.skybox_.shader_ = shader_manager::instance().get_shader("skybox");
@@ -426,7 +426,7 @@ namespace mkr {
             render_mesh rend{};
             rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
             rend.material_ = material_manager::instance().get_material("pavement");
-            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
         }
 
         {

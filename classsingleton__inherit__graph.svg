@@ -275,29 +275,26 @@ var sectionId = 'dynsection-0';
 <g id="node8" class="node">
 <title>Node8</title>
 <g id="a_node8"><a xlink:href="classmkr_1_1sdl__message__pump.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="black" points="933.5,-143.5 933.5,-310.5 1073.5,-310.5 1073.5,-143.5 933.5,-143.5"/>
-<text text-anchor="start" x="941.5" y="-298.5" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::sdl_message_pump</text>
-<text text-anchor="middle" x="1003.5" y="-287.5" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; sdl_message_pump &gt;</text>
-<polyline fill="none" stroke="black" points="933.5,-280.5 1073.5,-280.5 "/>
-<text text-anchor="start" x="941.5" y="-268.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; event_dispatcher_</text>
-<text text-anchor="start" x="941.5" y="-257.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; worker_thread_</text>
-<text text-anchor="start" x="941.5" y="-246.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; run_</text>
-<polyline fill="none" stroke="black" points="933.5,-239.5 1073.5,-239.5 "/>
-<text text-anchor="start" x="941.5" y="-227.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_event_dispatcher()</text>
-<text text-anchor="start" x="941.5" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_event_dispatcher()</text>
-<text text-anchor="start" x="941.5" y="-205.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ init()</text>
-<text text-anchor="start" x="941.5" y="-194.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ start()</text>
-<text text-anchor="start" x="941.5" y="-183.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ stop()</text>
-<text text-anchor="start" x="941.5" y="-172.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ exit()</text>
-<text text-anchor="start" x="941.5" y="-161.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; sdl_message_pump()</text>
-<text text-anchor="start" x="941.5" y="-150.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~sdl_message_pump()</text>
+<polygon fill="white" stroke="black" points="933.5,-160 933.5,-294 1073.5,-294 1073.5,-160 933.5,-160"/>
+<text text-anchor="start" x="941.5" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">mkr::sdl_message_pump</text>
+<text text-anchor="middle" x="1003.5" y="-271" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; sdl_message_pump &gt;</text>
+<polyline fill="none" stroke="black" points="933.5,-264 1073.5,-264 "/>
+<text text-anchor="start" x="941.5" y="-252" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; event_dispatcher_</text>
+<polyline fill="none" stroke="black" points="933.5,-245 1073.5,-245 "/>
+<text text-anchor="start" x="941.5" y="-233" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_event_dispatcher()</text>
+<text text-anchor="start" x="941.5" y="-222" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_event_dispatcher()</text>
+<text text-anchor="start" x="941.5" y="-211" font-family="Helvetica,sans-Serif" font-size="10.00">+ init()</text>
+<text text-anchor="start" x="941.5" y="-200" font-family="Helvetica,sans-Serif" font-size="10.00">+ update()</text>
+<text text-anchor="start" x="941.5" y="-189" font-family="Helvetica,sans-Serif" font-size="10.00">+ exit()</text>
+<text text-anchor="start" x="941.5" y="-178" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; sdl_message_pump()</text>
+<text text-anchor="start" x="941.5" y="-167" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; ~sdl_message_pump()</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node8 -->
 <g id="edge7" class="edge">
 <title>Node1&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M755.67,-516.22C802.48,-512.02 878.37,-498.3 924.5,-454 963.62,-416.43 983.39,-358.43 993.36,-310.6"/>
+<path fill="none" stroke="midnightblue" d="M755.67,-516.22C802.48,-512.02 878.37,-498.3 924.5,-454 968.27,-411.97 987.81,-344.37 996.52,-294.04"/>
 <polygon fill="none" stroke="midnightblue" points="755.27,-512.74 745.58,-517.02 755.82,-519.72 755.27,-512.74"/>
 </g>
 <!-- Node9 -->

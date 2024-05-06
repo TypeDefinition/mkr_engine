@@ -6,6 +6,5 @@ var searchData=
   ['window_5fflags_1056',['window_flags',['../namespacemkr.html#a9655959a225d822da5e035327fbdb9bd',1,'mkr']]],
   ['window_5fheight_5f_1057',['window_height_',['../classmkr_1_1graphics__renderer.html#aea08e104db3efd807eb0a72f17fd7082',1,'mkr::graphics_renderer']]],
   ['window_5fwidth_5f_1058',['window_width_',['../classmkr_1_1graphics__renderer.html#abbcbdce247815fedf2ee671e88192a34',1,'mkr::graphics_renderer']]],
-  ['worker_5fthread_5f_1059',['worker_thread_',['../classmkr_1_1sdl__message__pump.html#aad3f2703ed5455e7091ec07c4a60ab02',1,'mkr::sdl_message_pump']]],
-  ['world_5f_1060',['world_',['../classmkr_1_1scene.html#af5c07f4f0c6219bdf13fd456b6db04ae',1,'mkr::scene']]]
+  ['world_5f_1059',['world_',['../classmkr_1_1scene.html#af5c07f4f0c6219bdf13fd456b6db04ae',1,'mkr::scene']]]
 ];

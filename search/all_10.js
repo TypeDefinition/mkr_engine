@@ -81,5 +81,5 @@ var searchData=
   ['rotation_5f_802',['rotation_',['../classmkr_1_1head__control__system.html#aaf05a3b15f3d465c13a945fbbabcb789',1,'mkr::head_control_system::rotation_()'],['../classmkr_1_1body__control__system.html#a3ea4d543bbedb23db8eba897491717cd',1,'mkr::body_control_system::rotation_()'],['../classmkr_1_1transform.html#a1943b44cd7a942997b8039e0d08798d5',1,'mkr::transform::rotation_()'],['../structmkr_1_1local__to__world.html#a1dad7250cfd26a8eb4d6c1e4e22a2666',1,'mkr::local_to_world::rotation_()']]],
   ['rotation_5fmatrix_803',['rotation_matrix',['../classmkr_1_1transform.html#a7801af1b5e478191ba367359b1ecdb1c',1,'mkr::transform']]],
   ['run_804',['run',['../classmkr_1_1application.html#a786aedb13ed6cad792216356dd61d13c',1,'mkr::application']]],
-  ['run_5f_805',['run_',['../classmkr_1_1sdl__message__pump.html#a7cc69df000403a5e418c74949d100fa0',1,'mkr::sdl_message_pump::run_()'],['../classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3',1,'mkr::application::run_()']]]
+  ['run_5f_805',['run_',['../classmkr_1_1application.html#a866ef9c16ef2e48bb6b5f21d8f39edc3',1,'mkr::application']]]
 ];

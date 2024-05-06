@@ -1,11 +1,12 @@
 <map id="src/graphics/shader/post_proc_shader.h" name="src/graphics/shader/post_proc_shader.h">
-<area shape="rect" id="node1" title=" " alt="" coords="270,5,421,47"/>
-<area shape="rect" id="node2" href="$shader__program_8h.html" title=" " alt="" coords="259,95,432,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,184,64,211"/>
-<area shape="rect" id="node4" title=" " alt="" coords="89,184,151,211"/>
-<area shape="rect" id="node5" title=" " alt="" coords="176,184,261,211"/>
-<area shape="rect" id="node6" title=" " alt="" coords="286,184,405,211"/>
-<area shape="rect" id="node7" title=" " alt="" coords="429,184,557,211"/>
-<area shape="rect" id="node8" title=" " alt="" coords="581,184,709,211"/>
-<area shape="rect" id="node9" title=" " alt="" coords="733,184,856,211"/>
+<area shape="rect" id="node1" title=" " alt="" coords="307,5,458,47"/>
+<area shape="rect" id="node2" href="$shader__program_8h.html" title=" " alt="" coords="296,95,469,136"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,184,83,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="107,184,165,211"/>
+<area shape="rect" id="node5" title=" " alt="" coords="190,184,253,211"/>
+<area shape="rect" id="node6" title=" " alt="" coords="277,184,363,211"/>
+<area shape="rect" id="node7" title=" " alt="" coords="387,184,506,211"/>
+<area shape="rect" id="node8" title=" " alt="" coords="531,184,659,211"/>
+<area shape="rect" id="node9" title=" " alt="" coords="683,184,811,211"/>
+<area shape="rect" id="node10" title=" " alt="" coords="835,184,957,211"/>
 </map>

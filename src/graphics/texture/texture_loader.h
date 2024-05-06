@@ -68,10 +68,10 @@ namespace mkr {
 
         static void init() {
             // Initialise SDL_image.
-            int img_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP;
-            if (img_flags != (IMG_Init(img_flags) & img_flags)) {
+            int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+            if (flags != (flags & IMG_Init(flags))) {
                 const std::string err_msg = "IMG_Init failed";
-                mkr::log::error(err_msg);
+                log::error(err_msg);
                 throw std::runtime_error(err_msg);
             }
         }

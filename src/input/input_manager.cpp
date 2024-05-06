@@ -1,5 +1,4 @@
 #include <log/log.h>
-#include <maths/maths_util.h>
 #include "application/sdl_message_pump.h"
 #include "input/input_helper.h"
 #include "input/input_manager.h"
@@ -108,6 +107,8 @@ namespace mkr {
             mkr::log::error(err_msg);
             throw std::runtime_error(err_msg);
         }
+        SDL_JoystickEventState(SDL_ENABLE);
+        SDL_GameControllerEventState(SDL_ENABLE);
 
         sdl_event_listener.set_callback(std::bind(&input_manager::sdl_event_callback, this, std::placeholders::_1));
         sdl_message_pump::instance().get_event_dispatcher().add_listener<sdl_event>(&sdl_event_listener);

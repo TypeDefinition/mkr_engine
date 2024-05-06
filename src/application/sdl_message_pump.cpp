@@ -10,21 +10,14 @@ namespace mkr {
         }
     }
 
-    void sdl_message_pump::start() {
-        run_ = true;
-        worker_thread_ = std::thread([&]() {
-            while (run_) {
-                sdl_event e;
-                if (SDL_PollEvent(&e.sdl_event_)) {
-                    event_dispatcher_.dispatch_event<sdl_event>(&e);
-                }
-            }
-        });
-    }
 
-    void sdl_message_pump::stop() {
-        run_ = false;
-        worker_thread_.join();
+    void sdl_message_pump::update() {
+        // SDL_PollEvent must be invoked on the main thread according to the specifications.
+        // Otherwise, Windows will think that the application is not responding.
+        sdl_event e;
+        while (SDL_PollEvent(&e.sdl_event_)) {
+            event_dispatcher_.dispatch_event<sdl_event>(&e);
+        }
     }
 
     void sdl_message_pump::exit() {

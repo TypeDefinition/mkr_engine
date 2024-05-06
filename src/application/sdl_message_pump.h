@@ -18,8 +18,6 @@ namespace mkr {
 
     private:
         event_dispatcher event_dispatcher_;
-        std::thread worker_thread_;
-        std::atomic_bool run_;
 
         sdl_message_pump() = default;
         virtual ~sdl_message_pump() = default;
@@ -29,8 +27,7 @@ namespace mkr {
         inline const event_dispatcher& get_event_dispatcher() const { return event_dispatcher_; }
 
         void init();
-        void start();
-        void stop();
+        void update();
         void exit();
     };
 }

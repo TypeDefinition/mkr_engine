@@ -51,7 +51,7 @@ namespace mkr {
     }
 
     void game_scene::init_input() {
-        input_manager::instance().set_relative_mouse(true);
+        // input_manager::instance().set_relative_mouse(true);
 
         // Register Buttons
         input_manager::instance().register_button(quit, input_context_default, controller_index_default, kc_escape);
@@ -133,46 +133,46 @@ namespace mkr {
 
     void game_scene::init_shaders() {
         shader_manager::instance().make_shader<skybox_shader>("skybox",
-                                                              {"./../assets/shaders/skybox/skybox.vert"},
-                                                              {"./../assets/shaders/skybox/skybox.frag"});
+                                                              {"./assets/shaders/skybox/skybox.vert"},
+                                                              {"./assets/shaders/skybox/skybox.frag"});
 
         shader_manager::instance().make_shader<shadow_2d_shader>("shadow_2d",
-                                                                 {"./../assets/shaders/shadow/shadow_2d.vert"},
-                                                                 {"./../assets/shaders/shadow/shadow_2d.frag"});
+                                                                 {"./assets/shaders/shadow/shadow_2d.vert"},
+                                                                 {"./assets/shaders/shadow/shadow_2d.frag"});
 
         shader_manager::instance().make_shader<shadow_cubemap_shader>("shadow_cubemap",
-                                                                      {"./../assets/shaders/shadow/shadow_cubemap.vert"},
-                                                                      {"./../assets/shaders/shadow/shadow_cubemap.geom"},
-                                                                      {"./../assets/shaders/shadow/shadow_cubemap.frag"});
+                                                                      {"./assets/shaders/shadow/shadow_cubemap.vert"},
+                                                                      {"./assets/shaders/shadow/shadow_cubemap.geom"},
+                                                                      {"./assets/shaders/shadow/shadow_cubemap.frag"});
 
         shader_manager::instance().make_shader<geometry_shader>("geometry",
-                                                                {"./../assets/shaders/deferred/geometry.vert"},
-                                                                {"./../assets/shaders/deferred/geometry.frag",
-                                                                 "./../assets/shaders/include/parallax.incl"});
+                                                                {"./assets/shaders/deferred/geometry.vert"},
+                                                                {"./assets/shaders/deferred/geometry.frag",
+                                                                 "./assets/shaders/include/parallax.incl"});
 
         shader_manager::instance().make_shader<lighting_shader>("lighting",
-                                                                {"./../assets/shaders/deferred/lighting.vert"},
-                                                                {"./../assets/shaders/deferred/lighting.frag",
-                                                                 "./../assets/shaders/include/shadow.incl",
-                                                                 "./../assets/shaders/include/light.incl"});
+                                                                {"./assets/shaders/deferred/lighting.vert"},
+                                                                {"./assets/shaders/deferred/lighting.frag",
+                                                                 "./assets/shaders/include/shadow.incl",
+                                                                 "./assets/shaders/include/light.incl"});
 
         shader_manager::instance().make_shader<forward_shader>("forward",
-                                                               {"./../assets/shaders/forward/forward.vert"},
-                                                               {"./../assets/shaders/forward/forward.frag",
-                                                                "./../assets/shaders/include/parallax.incl",
-                                                                "./../assets/shaders/include/shadow.incl",
-                                                                "./../assets/shaders/include/light.incl"});
+                                                               {"./assets/shaders/forward/forward.vert"},
+                                                               {"./assets/shaders/forward/forward.frag",
+                                                                "./assets/shaders/include/parallax.incl",
+                                                                "./assets/shaders/include/shadow.incl",
+                                                                "./assets/shaders/include/light.incl"});
 
         shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight",
-                                                                    {"./../assets/shaders/alpha/alpha_weight.vert"},
-                                                                    {"./../assets/shaders/alpha/alpha_weight.frag",
-                                                                     "./../assets/shaders/include/parallax.incl",
-                                                                     "./../assets/shaders/include/shadow.incl",
-                                                                     "./../assets/shaders/include/light.incl"});
+                                                                    {"./assets/shaders/alpha/alpha_weight.vert"},
+                                                                    {"./assets/shaders/alpha/alpha_weight.frag",
+                                                                     "./assets/shaders/include/parallax.incl",
+                                                                     "./assets/shaders/include/shadow.incl",
+                                                                     "./assets/shaders/include/light.incl"});
 
         shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend",
-                                                                   {"./../assets/shaders/alpha/alpha_blend.vert"},
-                                                                   {"./../assets/shaders/alpha/alpha_blend.frag"});
+                                                                   {"./assets/shaders/alpha/alpha_blend.vert"},
+                                                                   {"./assets/shaders/alpha/alpha_blend.frag"});
 
         material::geometry_shader_ = shader_manager::instance().get_shader("geometry");
         material::light_shader_ = shader_manager::instance().get_shader("lighting");
@@ -183,77 +183,77 @@ namespace mkr {
     void game_scene::init_materials() {
         // Skybox
         texture_manager::instance().make_cubemap("skybox_test", {
-            "./../assets/textures/skyboxes/test/skybox_test_right.png",
-            "./../assets/textures/skyboxes/test/skybox_test_left.png",
-            "./../assets/textures/skyboxes/test/skybox_test_top.png",
-            "./../assets/textures/skyboxes/test/skybox_test_bottom.png",
-            "./../assets/textures/skyboxes/test/skybox_test_front.png",
-            "./../assets/textures/skyboxes/test/skybox_test_back.png",
+            "./assets/textures/skyboxes/test/skybox_test_right.png",
+            "./assets/textures/skyboxes/test/skybox_test_left.png",
+            "./assets/textures/skyboxes/test/skybox_test_top.png",
+            "./assets/textures/skyboxes/test/skybox_test_bottom.png",
+            "./assets/textures/skyboxes/test/skybox_test_front.png",
+            "./assets/textures/skyboxes/test/skybox_test_back.png",
         });
 
         texture_manager::instance().make_cubemap("skybox_sunset", {
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_right.png",
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_left.png",
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_top.png",
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_bottom.png",
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_front.png",
-            "./../assets/textures/skyboxes/sunset/skybox_sunset_back.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_right.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_left.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_top.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_bottom.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_front.png",
+            "./assets/textures/skyboxes/sunset/skybox_sunset_back.png",
         });
 
         {
             auto mat = material_manager::instance().make_material("tiles");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("tiles_001_diffuse", "./../assets/textures/materials/tiles/tiles_001_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("tiles_001_normal", "./../assets/textures/materials/tiles/tiles_001_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("tiles_001_displacement", "./../assets/textures/materials/tiles/tiles_001_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("tiles_001_specular", "./../assets/textures/materials/tiles/tiles_001_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("tiles_001_diffuse", "./assets/textures/materials/tiles/tiles_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("tiles_001_normal", "./assets/textures/materials/tiles/tiles_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("tiles_001_displacement", "./assets/textures/materials/tiles/tiles_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("tiles_001_specular", "./assets/textures/materials/tiles/tiles_001_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 50.0f;
             mat->displacement_scale_ = 0.05f;
         }
 
         {
             auto mat = material_manager::instance().make_material("pavement");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("pavement_diffuse", "./../assets/textures/materials/pavement/pavement_brick_001_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("pavement_normal", "./../assets/textures/materials/pavement/pavement_brick_001_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("pavement_displacement", "./../assets/textures/materials/pavement/pavement_brick_001_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("pavement_specular", "./../assets/textures/materials/pavement/pavement_brick_001_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("pavement_diffuse", "./assets/textures/materials/pavement/pavement_brick_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("pavement_normal", "./assets/textures/materials/pavement/pavement_brick_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("pavement_displacement", "./assets/textures/materials/pavement/pavement_brick_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("pavement_specular", "./assets/textures/materials/pavement/pavement_brick_001_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
             mat->displacement_scale_ = 0.1f;
         }
 
         {
             auto mat = material_manager::instance().make_material("brick_wall");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_wall_001_diffuse", "./../assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_wall_001_normal", "./../assets/textures/materials/brick_wall/brick_wall_001_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_wall_001_displacement", "./../assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("brick_wall_001_specular", "./../assets/textures/materials/brick_wall/brick_wall_001_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_wall_001_diffuse", "./assets/textures/materials/brick_wall/brick_wall_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_wall_001_normal", "./assets/textures/materials/brick_wall/brick_wall_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_wall_001_displacement", "./assets/textures/materials/brick_wall/brick_wall_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("brick_wall_001_specular", "./assets/textures/materials/brick_wall/brick_wall_001_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
             mat->displacement_scale_ = 0.05f;
         }
 
         {
             auto mat = material_manager::instance().make_material("rough_rock");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("rough_rock_diffuse", "./../assets/textures/materials/rough_rock/rough_rock_004_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("rough_rock_normal", "./../assets/textures/materials/rough_rock/rough_rock_004_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("rough_rock_displacement", "./../assets/textures/materials/rough_rock/rough_rock_004_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("rough_rock_specular", "./../assets/textures/materials/rough_rock/rough_rock_004_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("rough_rock_diffuse", "./assets/textures/materials/rough_rock/rough_rock_004_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("rough_rock_normal", "./assets/textures/materials/rough_rock/rough_rock_004_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("rough_rock_displacement", "./assets/textures/materials/rough_rock/rough_rock_004_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("rough_rock_specular", "./assets/textures/materials/rough_rock/rough_rock_004_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 4.0f;
         }
 
         {
             auto mat = material_manager::instance().make_material("metal_pattern");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_pattern_diffuse", "./../assets/textures/materials/metal/metal_pattern_001_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_pattern_normal", "./../assets/textures/materials/metal/metal_pattern_001_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_pattern_displacement", "./../assets/textures/materials/metal/metal_pattern_001_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_pattern_specular", "./../assets/textures/materials/metal/metal_pattern_001_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_pattern_diffuse", "./assets/textures/materials/metal/metal_pattern_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_pattern_normal", "./assets/textures/materials/metal/metal_pattern_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_pattern_displacement", "./assets/textures/materials/metal/metal_pattern_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_pattern_specular", "./assets/textures/materials/metal/metal_pattern_001_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 3.0f;
         }
 
         {
             auto mat = material_manager::instance().make_material("metal_plate");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_plate_diffuse", "./../assets/textures/materials/metal/metal_plate_001_albedo.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_plate_normal", "./../assets/textures/materials/metal/metal_plate_001_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_plate_displacement", "./../assets/textures/materials/metal/metal_plate_001_displacement.png");
-            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_plate_specular", "./../assets/textures/materials/metal/metal_plate_001_specular.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("metal_plate_diffuse", "./assets/textures/materials/metal/metal_plate_001_albedo.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("metal_plate_normal", "./assets/textures/materials/metal/metal_plate_001_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("metal_plate_displacement", "./assets/textures/materials/metal/metal_plate_001_displacement.png");
+            mat->texture_specular_ = texture_manager::instance().make_texture2d("metal_plate_specular", "./assets/textures/materials/metal/metal_plate_001_specular.png");
             mat->texture_scale_ = vector2{1.0f, 1.0f} * 8.0f;
             mat->displacement_scale_ = 0.02f;
         }
@@ -304,16 +304,16 @@ namespace mkr {
 
         {
             auto mat = material_manager::instance().make_material("brick_test");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./../assets/textures/test/brick_diffuse.png");
-            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./../assets/textures/test/brick_normal.png");
-            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./../assets/textures/test/brick_displacement.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("brick_diffuse", "./assets/textures/test/brick_diffuse.png");
+            mat->texture_normal_ = texture_manager::instance().make_texture2d("brick_normal", "./assets/textures/test/brick_normal.png");
+            mat->texture_displacement_ = texture_manager::instance().make_texture2d("brick_displacement", "./assets/textures/test/brick_displacement.png");
             mat->forward_shader_ = shader_manager::instance().get_shader("forward");
             mat->render_path_ = render_path::forward;
         }
 
         {
             auto mat = material_manager::instance().make_material("window");
-            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("window_diffuse", "./../assets/textures/test/window.png");
+            mat->texture_diffuse_ = texture_manager::instance().make_texture2d("window_diffuse", "./assets/textures/test/window.png");
             mat->alpha_weight_shader_ = shader_manager::instance().get_shader("alpha_weight");
             mat->alpha_blend_shader_ = shader_manager::instance().get_shader("alpha_blend");
             mat->render_path_ = render_path::transparent;
@@ -321,13 +321,13 @@ namespace mkr {
     }
 
     void game_scene::init_meshes() {
-        mesh_manager::instance().make_mesh("sphere", "./../assets/models/sphere.obj");
-        mesh_manager::instance().make_mesh("cube", "./../assets/models/cube.obj");
-        mesh_manager::instance().make_mesh("plane", "./../assets/models/plane.obj");
-        mesh_manager::instance().make_mesh("quad", "./../assets/models/quad.obj");
-        mesh_manager::instance().make_mesh("monkey", "./../assets/models/monkey.obj");
-        mesh_manager::instance().make_mesh("cone", "./../assets/models/cone.obj");
-        mesh_manager::instance().make_mesh("torus", "./../assets/models/torus.obj");
+        mesh_manager::instance().make_mesh("sphere", "./assets/models/sphere.obj");
+        mesh_manager::instance().make_mesh("cube", "./assets/models/cube.obj");
+        mesh_manager::instance().make_mesh("plane", "./assets/models/plane.obj");
+        mesh_manager::instance().make_mesh("quad", "./assets/models/quad.obj");
+        mesh_manager::instance().make_mesh("monkey", "./assets/models/monkey.obj");
+        mesh_manager::instance().make_mesh("cone", "./assets/models/cone.obj");
+        mesh_manager::instance().make_mesh("torus", "./assets/models/torus.obj");
     }
 
     void game_scene::init_levels() {
@@ -426,7 +426,7 @@ namespace mkr {
             render_mesh rend{};
             rend.mesh_ = mesh_manager::instance().get_mesh("sphere");
             rend.material_ = material_manager::instance().get_material("pavement");
-            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>();
+            world_.entity().set<transform>(trans).set<render_mesh>(rend).add<local_to_world>().add<rotate_tag>();
         }
 
         {

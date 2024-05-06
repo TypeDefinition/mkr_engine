@@ -31,9 +31,6 @@ namespace mkr {
     }
 
     void application::start() {
-        // Message Pump
-        sdl_message_pump::instance().start();
-
         // Systems
         graphics_renderer::instance().start();
     }
@@ -49,6 +46,9 @@ namespace mkr {
             delta_time_ = static_cast<float>(curr_frame_time - prev_frame_time) / static_cast<float>(SDL_GetPerformanceFrequency());
             time_elapsed_ += delta_time_;
 
+            // Message Pump
+            sdl_message_pump::instance().update();
+
             // Systems
             input_manager::instance().update();
             scene_manager::instance().update();
@@ -57,12 +57,10 @@ namespace mkr {
     }
 
     void application::stop() {
-        // Message Pump
-        sdl_message_pump::instance().stop();
     }
 
     void application::exit() {
-        // Exit Message Pump
+        // Exit message pump.
         sdl_message_pump::instance().exit(); // Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.
 
         // Exit systems.
@@ -71,7 +69,7 @@ namespace mkr {
         graphics_renderer::instance().exit();
         scene_manager::instance().exit();
 
-        // Destroy Message Pump
+        // Destroy message pump.
         sdl_message_pump::destroy();
 
         // Destroy systems.

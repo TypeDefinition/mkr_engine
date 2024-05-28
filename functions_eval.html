@@ -168,6 +168,28 @@ $(function() {
 <li>u_far
 : <a class="el" href="classmkr_1_1post__proc__shader.html#a73c0232c4b7f44cff15c0f6591d9aaeea1afd2e0eae1e151b5f8fe1505863bcd3">mkr::post_proc_shader</a>
 </li>
+<li>u_has_texture_diffuse
+: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dceaf7e07725846f71c8daced62e2ad305b6">mkr::alpha_weight_shader</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca097cfa1949b0d3828984c502078f994d">mkr::forward_shader</a>
+, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a9fa065576d68c388d52a302fbe84f00a">mkr::geometry_shader</a>
+, <a class="el" href="classmkr_1_1shadow__2d__shader.html#acb01640ecf6d057019a9c82a188dc33aa4bcf71392c1ad323f88ffe077b937f9b">mkr::shadow_2d_shader</a>
+, <a class="el" href="classmkr_1_1shadow__cubemap__shader.html#a07cff1e2ea5e79d3feb178661629b09ea382f48e9d0ff08678ba1b5942fbc31bb">mkr::shadow_cubemap_shader</a>
+</li>
+<li>u_has_texture_displacement
+: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea1b1434021bce6d8e4d36b121af0cdff1">mkr::alpha_weight_shader</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca657df327bd9a1f6cfddf4e58ff64f412">mkr::forward_shader</a>
+, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a48f0154b0889d726be9d539ea019ca16">mkr::geometry_shader</a>
+</li>
+<li>u_has_texture_normal
+: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea635a2a0b77e5ff1b5ce5f061d807723b">mkr::alpha_weight_shader</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcabdb74f0359f4e6165896ee3889f7a4e4">mkr::forward_shader</a>
+, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1ad4fa0e8a07b0805d63046bdf0d347f0c">mkr::geometry_shader</a>
+</li>
+<li>u_has_texture_specular
+: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dceae2374e820bdc9135bee718d7e6b3f308">mkr::alpha_weight_shader</a>
+, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5bd794ee914954027704dbfcbf86ae9c">mkr::forward_shader</a>
+, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a02cac30791f5b755201e1ae2b65054da">mkr::geometry_shader</a>
+</li>
 <li>u_inv_view_matrix
 : <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dceacc3b083a1895b464595d653b2ae40fe2">mkr::alpha_weight_shader</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca377d7b548f78159c2a8d22d74d65a77f">mkr::forward_shader</a>
@@ -281,22 +303,10 @@ $(function() {
 , <a class="el" href="classmkr_1_1shadow__2d__shader.html#acb01640ecf6d057019a9c82a188dc33aa3d5781c63c7076a281f5f621b2a11e98">mkr::shadow_2d_shader</a>
 , <a class="el" href="classmkr_1_1shadow__cubemap__shader.html#a07cff1e2ea5e79d3feb178661629b09ea43fd6a269f0199339d13697c48b04ec6">mkr::shadow_cubemap_shader</a>
 </li>
-<li>u_texture_diffuse_enabled
-: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea924f03101c5d5a20a4fae4a6187ce9d8">mkr::alpha_weight_shader</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcafb15cec60c8f8c42c98bdd0a0276ac1c">mkr::forward_shader</a>
-, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a4bb3a875afcc7f1f688ef845c34fe4ae">mkr::geometry_shader</a>
-, <a class="el" href="classmkr_1_1shadow__2d__shader.html#acb01640ecf6d057019a9c82a188dc33aaaba229e37c770f461c4ca6caa19a18d1">mkr::shadow_2d_shader</a>
-, <a class="el" href="classmkr_1_1shadow__cubemap__shader.html#a07cff1e2ea5e79d3feb178661629b09eac7d172924654acd0d86a780d79568b6e">mkr::shadow_cubemap_shader</a>
-</li>
 <li>u_texture_displacement
 : <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dceaab22f30a4798f68ef77000439ed29358">mkr::alpha_weight_shader</a>
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca89e067d3fb9dea4abbf733435b24574b">mkr::forward_shader</a>
 , <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a9eb3d020a0045c3c83b464063df17ac4">mkr::geometry_shader</a>
-</li>
-<li>u_texture_displacement_enabled
-: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dceaa188d5f18a2de19cafcebfd8daf8912c">mkr::alpha_weight_shader</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5c5119e4cdfc9243585b3b201966333e">mkr::forward_shader</a>
-, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a72a7f9c52dea9757864446dacec8de25">mkr::geometry_shader</a>
 </li>
 <li>u_texture_frag_normal
 : <a class="el" href="classmkr_1_1post__proc__shader.html#a73c0232c4b7f44cff15c0f6591d9aaeea1128857c1abbf1f48a4a8757e6d4a336">mkr::post_proc_shader</a>
@@ -309,11 +319,6 @@ $(function() {
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffcad9572a687fcb88ed2bc0cf612246c98b">mkr::forward_shader</a>
 , <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1ab9765b570975cb8caff5c1731270e8ee">mkr::geometry_shader</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3ad743c353b93f3860a9685507357936b8">mkr::lighting_shader</a>
-</li>
-<li>u_texture_normal_enabled
-: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea1f988b2a329cc9f29b06fcae403fba86">mkr::alpha_weight_shader</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca3edf942bb3f3e3888ac9c779cfa40af8">mkr::forward_shader</a>
-, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1aedb988e712f21f106244397b9b170603">mkr::geometry_shader</a>
 </li>
 <li>u_texture_offset
 : <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea8ed9adbf318a48340b957d56566ff139">mkr::alpha_weight_shader</a>
@@ -351,11 +356,6 @@ $(function() {
 , <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca5f3eadb36df31f83d83b94da8f069415">mkr::forward_shader</a>
 , <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1a8551be13f42032e4890d37c7088f8b5c">mkr::geometry_shader</a>
 , <a class="el" href="classmkr_1_1lighting__shader.html#a5795c0e4a24521afe587dd4a7679cde3aa808c872ede19d305d1d1f6f027f1c96">mkr::lighting_shader</a>
-</li>
-<li>u_texture_specular_enabled
-: <a class="el" href="classmkr_1_1alpha__weight__shader.html#a909f78ce60dce85c05e6d6edec3a5dcea8f29de5dd73724d0b650b2dd51b8e35f">mkr::alpha_weight_shader</a>
-, <a class="el" href="classmkr_1_1forward__shader.html#a31b23f8fca76f9fc4dd4ff11f07e6ffca8936e7ed944a8d4d270fe5f67881abd9">mkr::forward_shader</a>
-, <a class="el" href="classmkr_1_1geometry__shader.html#a80ac01ff749ee927210226ae7a8b58b1ad156dd685309dcd0f5ee68e6cc43964a">mkr::geometry_shader</a>
 </li>
 <li>u_top_right
 : <a class="el" href="classmkr_1_1post__proc__shader.html#a73c0232c4b7f44cff15c0f6591d9aaeea909bdc4afa7b5041de7bc04f8636f4da">mkr::post_proc_shader</a>

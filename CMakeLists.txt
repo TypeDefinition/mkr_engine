@@ -46,7 +46,10 @@ FetchContent_MakeAvailable(mkr_maths_lib)
 FetchContent_Declare(mkr_log_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log_lib.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_log_lib)
 
-FetchContent_Declare(flecs GIT_REPOSITORY https://github.com/SanderMertens/flecs.git GIT_TAG master)
+FetchContent_Declare(mkr_glsl_include GIT_REPOSITORY https://github.com/TypeDefinition/mkr_glsl_include.git GIT_TAG main)
+FetchContent_MakeAvailable(mkr_glsl_include)
+
+FetchContent_Declare(flecs GIT_REPOSITORY https://github.com/SanderMertens/flecs.git GIT_TAG 37233f127d5006ceb0087fbfcd2f3e36f5b77a23)
 FetchContent_MakeAvailable(flecs)
 
 # Dependencies
@@ -72,13 +75,13 @@ target_link_directories(${PROJECT_NAME} PUBLIC ${SDL2_LIB_DIR}
 
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths_lib mkr_common_lib mkr_log_lib
+                                                 mkr_maths_lib mkr_common_lib mkr_log_lib mkr_glsl_include
                                                  SDL2main SDL2 SDL2_image
                                                  glew32 opengl32
                                                  flecs)
 else()
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths_lib mkr_common_lib mkr_log_lib
+                                                 mkr_maths_lib mkr_common_lib mkr_log_lib mkr_glsl_include
                                                  SDL2 SDL2_image
                                                  GLEW GL
                                                  flecs)

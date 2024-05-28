@@ -21,10 +21,10 @@ namespace mkr {
             u_displacement_scale,
 
             // Textures
-            u_texture_diffuse_enabled,
-            u_texture_normal_enabled,
-            u_texture_specular_enabled,
-            u_texture_displacement_enabled,
+            u_has_texture_diffuse,
+            u_has_texture_normal,
+            u_has_texture_specular,
+            u_has_texture_displacement,
 
             u_texture_diffuse,
             u_texture_normal,

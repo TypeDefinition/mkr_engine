@@ -24,7 +24,7 @@ namespace mkr {
 
             u_is_transparent,
             u_diffuse_colour,
-            u_texture_diffuse_enabled,
+            u_has_texture_diffuse,
             u_texture_diffuse,
 
             num_shader_uniforms,
@@ -50,7 +50,7 @@ namespace mkr {
 
             uniform_handles_[uniform::u_is_transparent] = get_uniform_location("u_is_transparent");
             uniform_handles_[uniform::u_diffuse_colour] = get_uniform_location("u_diffuse_colour");
-            uniform_handles_[uniform::u_texture_diffuse_enabled] = get_uniform_location("u_texture_diffuse_enabled");
+            uniform_handles_[uniform::u_has_texture_diffuse] = get_uniform_location("u_has_texture_diffuse");
             uniform_handles_[uniform::u_texture_diffuse] = get_uniform_location("u_texture_diffuse");
         }
 

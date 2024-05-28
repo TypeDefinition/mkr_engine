@@ -206,7 +206,7 @@ namespace mkr {
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_cubemap_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
-                shader->set_uniform(shadow_cubemap_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+                shader->set_uniform(shadow_cubemap_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
 
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
@@ -259,7 +259,7 @@ namespace mkr {
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
-                shader->set_uniform(shadow_2d_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+                shader->set_uniform(shadow_2d_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
 
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
@@ -323,7 +323,7 @@ namespace mkr {
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_offset, material_ptr->texture_offset_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_texture_scale, material_ptr->texture_scale_);
                 shader->set_uniform(shadow_2d_shader::uniform::u_diffuse_colour, material_ptr->diffuse_colour_);
-                shader->set_uniform(shadow_2d_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
+                shader->set_uniform(shadow_2d_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
 
                 for (auto& mesh_iter : material_iter.second) {
                     auto mesh_ptr = mesh_iter.first;
@@ -383,10 +383,10 @@ namespace mkr {
             shader->set_uniform(geometry_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Textures
-            shader->set_uniform(geometry_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
-            shader->set_uniform(geometry_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
-            shader->set_uniform(geometry_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            shader->set_uniform(geometry_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+            shader->set_uniform(geometry_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
+            shader->set_uniform(geometry_shader::uniform::u_has_texture_normal, material_ptr->texture_normal_ != nullptr);
+            shader->set_uniform(geometry_shader::uniform::u_has_texture_specular, material_ptr->texture_specular_ != nullptr);
+            shader->set_uniform(geometry_shader::uniform::u_has_texture_displacement, material_ptr->texture_displacement_ != nullptr);
 
             // Draw to screen.
             for (auto& mesh_iter : material_iter.second) {
@@ -546,10 +546,10 @@ namespace mkr {
             shader->set_uniform(forward_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Textures
-            shader->set_uniform(forward_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
-            shader->set_uniform(forward_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
-            shader->set_uniform(forward_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            shader->set_uniform(forward_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+            shader->set_uniform(forward_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
+            shader->set_uniform(forward_shader::uniform::u_has_texture_normal, material_ptr->texture_normal_ != nullptr);
+            shader->set_uniform(forward_shader::uniform::u_has_texture_specular, material_ptr->texture_specular_ != nullptr);
+            shader->set_uniform(forward_shader::uniform::u_has_texture_displacement, material_ptr->texture_displacement_ != nullptr);
 
             // Lights
             shader->set_uniform(forward_shader::uniform::u_num_lights, num_lights);
@@ -653,10 +653,10 @@ namespace mkr {
             shader->set_uniform(alpha_weight_shader::uniform::u_displacement_scale, material_ptr->displacement_scale_);
 
             // Textures
-            shader->set_uniform(alpha_weight_shader::uniform::u_texture_diffuse_enabled, material_ptr->texture_diffuse_ != nullptr);
-            shader->set_uniform(alpha_weight_shader::uniform::u_texture_normal_enabled, material_ptr->texture_normal_ != nullptr);
-            shader->set_uniform(alpha_weight_shader::uniform::u_texture_specular_enabled, material_ptr->texture_specular_ != nullptr);
-            shader->set_uniform(alpha_weight_shader::uniform::u_texture_displacement_enabled, material_ptr->texture_displacement_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_has_texture_diffuse, material_ptr->texture_diffuse_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_has_texture_normal, material_ptr->texture_normal_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_has_texture_specular, material_ptr->texture_specular_ != nullptr);
+            shader->set_uniform(alpha_weight_shader::uniform::u_has_texture_displacement, material_ptr->texture_displacement_ != nullptr);
 
             // Lights
             shader->set_uniform(alpha_weight_shader::uniform::u_num_lights, num_lights);

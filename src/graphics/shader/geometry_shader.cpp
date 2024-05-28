@@ -20,10 +20,10 @@ namespace mkr {
         uniform_handles_[uniform::u_specular_colour] = get_uniform_location("u_specular_colour");
         uniform_handles_[uniform::u_displacement_scale] = get_uniform_location("u_displacement_scale");
 
-        uniform_handles_[uniform::u_texture_diffuse_enabled] = get_uniform_location("u_texture_diffuse_enabled");
-        uniform_handles_[uniform::u_texture_normal_enabled] = get_uniform_location("u_texture_normal_enabled");
-        uniform_handles_[uniform::u_texture_specular_enabled] = get_uniform_location("u_texture_specular_enabled");
-        uniform_handles_[uniform::u_texture_displacement_enabled] = get_uniform_location("u_texture_displacement_enabled");
+        uniform_handles_[uniform::u_has_texture_diffuse] = get_uniform_location("u_has_texture_diffuse");
+        uniform_handles_[uniform::u_has_texture_normal] = get_uniform_location("u_has_texture_normal");
+        uniform_handles_[uniform::u_has_texture_specular] = get_uniform_location("u_has_texture_specular");
+        uniform_handles_[uniform::u_has_texture_displacement] = get_uniform_location("u_has_texture_displacement");
 
         uniform_handles_[uniform::u_texture_diffuse] = get_uniform_location("u_texture_diffuse");
         uniform_handles_[uniform::u_texture_normal] = get_uniform_location("u_texture_normal");

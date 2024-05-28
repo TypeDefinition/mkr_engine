@@ -14,31 +14,30 @@ in VS_OUT {
     mat3 tbn_matrix;// Converts from tangent space to camera space.
 } vs_out;
 
+#include <parallax.frag>
+
 // Material
 uniform vec4 u_diffuse_colour;
 uniform vec4 u_specular_colour;
 uniform float u_displacement_scale;
 
 // Textures
-uniform bool u_texture_diffuse_enabled;
-uniform bool u_texture_normal_enabled;
-uniform bool u_texture_specular_enabled;
-uniform bool u_texture_displacement_enabled;
+uniform bool u_has_texture_diffuse;
+uniform bool u_has_texture_normal;
+uniform bool u_has_texture_specular;
+uniform bool u_has_texture_displacement;
 
 uniform sampler2D u_texture_diffuse;
 uniform sampler2D u_texture_normal;
 uniform sampler2D u_texture_specular;
 uniform sampler2D u_texture_displacement;
 
-// Includes
-vec2 parallax_occlusion(const in sampler2D _texture, const in vec2 _tex_coord, float _disp_scale, const in vec3 _frag_pos, const in mat3 _inv_tbn_matrix, const in vec3 _normal);
-
 vec2 get_tex_coord() {
-    return u_texture_displacement_enabled ? parallax_occlusion(u_texture_displacement, vs_out.tex_coord, u_displacement_scale, vs_out.position, vs_out.tbn_matrix, vs_out.normal) : vs_out.tex_coord;
+    return u_has_texture_displacement ? parallax(u_texture_displacement, vs_out.tex_coord, u_displacement_scale, vs_out.position, vs_out.tbn_matrix, vs_out.normal) : vs_out.tex_coord;
 }
 
 vec3 get_normal(const in vec2 _tex_coord) {
-    if (u_texture_normal_enabled) {
+    if (u_has_texture_normal) {
         const vec3 normal = 2.0f * texture(u_texture_normal, _tex_coord).rgb - vec3(1.0f, 1.0f, 1.0f); // Convert into the [-1, 1] range.
         return vs_out.tbn_matrix * normal; // Convert the normal from tangent space to camera space.
     }
@@ -46,11 +45,11 @@ vec3 get_normal(const in vec2 _tex_coord) {
 }
 
 vec4 get_diffuse(const in vec2 _tex_coord) {
-    return u_texture_diffuse_enabled ? texture(u_texture_diffuse, _tex_coord) * u_diffuse_colour : u_diffuse_colour;
+    return u_has_texture_diffuse ? texture(u_texture_diffuse, _tex_coord) * u_diffuse_colour : u_diffuse_colour;
 }
 
 vec4 get_specular(const in vec2 _tex_coord) {
-    return u_texture_specular_enabled ? texture(u_texture_specular, _tex_coord) * u_specular_colour : u_specular_colour;
+    return u_has_texture_specular ? texture(u_texture_specular, _tex_coord) * u_specular_colour : u_specular_colour;
 }
 
 void main() {

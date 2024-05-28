@@ -1,6 +1,5 @@
-#version 460 core
-
-vec2 parallax_occlusion(const in sampler2D _texture, const in vec2 _tex_coord,
+// Parallax Occlusion
+vec2 parallax(const in sampler2D _texture, const in vec2 _tex_coord,
                         float _disp_scale,
                         const in vec3 _frag_pos, const in mat3 _tbn_matrix,
                         const in vec3 _normal) {

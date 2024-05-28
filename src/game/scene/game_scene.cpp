@@ -136,6 +136,35 @@ namespace mkr {
                                                               {"./assets/shaders/skybox/skybox.vert"},
                                                               {"./assets/shaders/skybox/skybox.frag"});
 
+        shader_manager::instance().make_shader<forward_shader>("forward",
+                                                               {"./assets/shaders/forward/forward.vert"},
+                                                               {"./assets/shaders/forward/forward.frag",
+                                                                "./assets/shaders/include/parallax.frag",
+                                                                "./assets/shaders/include/shadow.frag",
+                                                                "./assets/shaders/include/light.frag"});
+
+        shader_manager::instance().make_shader<geometry_shader>("geometry",
+                                                                {"./assets/shaders/deferred/geometry.vert"},
+                                                                {"./assets/shaders/deferred/geometry.frag",
+                                                                 "./assets/shaders/include/parallax.frag"});
+
+        shader_manager::instance().make_shader<lighting_shader>("lighting",
+                                                                {"./assets/shaders/deferred/lighting.vert"},
+                                                                {"./assets/shaders/deferred/lighting.frag",
+                                                                 "./assets/shaders/include/shadow.frag",
+                                                                 "./assets/shaders/include/light.frag"});
+
+        shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight",
+                                                                    {"./assets/shaders/alpha/alpha_weight.vert"},
+                                                                    {"./assets/shaders/alpha/alpha_weight.frag",
+                                                                     "./assets/shaders/include/parallax.frag",
+                                                                     "./assets/shaders/include/shadow.frag",
+                                                                     "./assets/shaders/include/light.frag"});
+
+        shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend",
+                                                                   {"./assets/shaders/alpha/alpha_blend.vert"},
+                                                                   {"./assets/shaders/alpha/alpha_blend.frag"});
+
         shader_manager::instance().make_shader<shadow_2d_shader>("shadow_2d",
                                                                  {"./assets/shaders/shadow/shadow_2d.vert"},
                                                                  {"./assets/shaders/shadow/shadow_2d.frag"});
@@ -144,35 +173,6 @@ namespace mkr {
                                                                       {"./assets/shaders/shadow/shadow_cubemap.vert"},
                                                                       {"./assets/shaders/shadow/shadow_cubemap.geom"},
                                                                       {"./assets/shaders/shadow/shadow_cubemap.frag"});
-
-        shader_manager::instance().make_shader<geometry_shader>("geometry",
-                                                                {"./assets/shaders/deferred/geometry.vert"},
-                                                                {"./assets/shaders/deferred/geometry.frag",
-                                                                 "./assets/shaders/include/parallax.incl"});
-
-        shader_manager::instance().make_shader<lighting_shader>("lighting",
-                                                                {"./assets/shaders/deferred/lighting.vert"},
-                                                                {"./assets/shaders/deferred/lighting.frag",
-                                                                 "./assets/shaders/include/shadow.incl",
-                                                                 "./assets/shaders/include/light.incl"});
-
-        shader_manager::instance().make_shader<forward_shader>("forward",
-                                                               {"./assets/shaders/forward/forward.vert"},
-                                                               {"./assets/shaders/forward/forward.frag",
-                                                                "./assets/shaders/include/parallax.incl",
-                                                                "./assets/shaders/include/shadow.incl",
-                                                                "./assets/shaders/include/light.incl"});
-
-        shader_manager::instance().make_shader<alpha_weight_shader>("alpha_weight",
-                                                                    {"./assets/shaders/alpha/alpha_weight.vert"},
-                                                                    {"./assets/shaders/alpha/alpha_weight.frag",
-                                                                     "./assets/shaders/include/parallax.incl",
-                                                                     "./assets/shaders/include/shadow.incl",
-                                                                     "./assets/shaders/include/light.incl"});
-
-        shader_manager::instance().make_shader<alpha_blend_shader>("alpha_blend",
-                                                                   {"./assets/shaders/alpha/alpha_blend.vert"},
-                                                                   {"./assets/shaders/alpha/alpha_blend.frag"});
 
         material::geometry_shader_ = shader_manager::instance().get_shader("geometry");
         material::light_shader_ = shader_manager::instance().get_shader("lighting");

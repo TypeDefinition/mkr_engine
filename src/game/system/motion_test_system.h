@@ -18,7 +18,7 @@ namespace mkr {
                 if (!e) { return; }
 
                 std::string info = "Position: " + e->position_.to_string() + " Delta: " + e->delta_.to_string();
-                log::info(info);
+                MKR_INFO(info);
             });
             input_manager::instance().get_event_dispatcher()->add_listener<motion_event>(&input_listener_);
         }

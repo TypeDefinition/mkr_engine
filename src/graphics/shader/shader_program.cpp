@@ -19,7 +19,7 @@ namespace mkr {
             glGetShaderiv(shader_handle, GL_INFO_LOG_LENGTH, &log_length);
             std::unique_ptr<GLchar> info_log{new GLchar[log_length]};
             glGetShaderInfoLog(shader_handle, log_length, &log_length, info_log.get());
-            mkr::log::error(info_log.get());
+            MKR_CORE_ERROR(info_log.get());
             throw std::runtime_error(info_log.get());
         }
 
@@ -30,7 +30,7 @@ namespace mkr {
         GLint uniform_location = glGetUniformLocation(program_handle_, _uniform_name.c_str());
         if (uniform_location == -1) {
             std::string err_msg = "cannot find uniform " + _uniform_name + " in shader " + name_;
-            mkr::log::warn(err_msg);
+            MKR_CORE_WARN(err_msg);
         }
         return uniform_location;
     }
@@ -39,14 +39,14 @@ namespace mkr {
         GLint attrib_location = glGetAttribLocation(program_handle_, _attrib_name.c_str());
         if (attrib_location == -1) {
             std::string err_msg = "cannot find attribute " + _attrib_name + " in shader " + name_;
-            mkr::log::warn(err_msg);
+            MKR_CORE_WARN(err_msg);
         }
         return attrib_location;
     }
 
     shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms)
         : name_{_name} {
-        mkr::log::info("creating shader program {}", _name.c_str());
+        MKR_CORE_INFO("creating shader program {}", _name.c_str());
 
         // Allocate uniform handle array.
         uniform_handles_ = std::make_unique<GLint[]>(_num_uniforms);
@@ -97,15 +97,15 @@ namespace mkr {
             glGetProgramiv(program_handle_, GL_INFO_LOG_LENGTH, &log_length);
             std::unique_ptr<GLchar> info_log{new GLchar[log_length]};
             glGetProgramInfoLog(program_handle_, log_length, &log_length, info_log.get());
-            mkr::log::error(info_log.get());
+            MKR_CORE_ERROR(info_log.get());
             throw std::runtime_error(info_log.get());
         }
 
-        mkr::log::info("shader program {} created", _name.c_str());
+        MKR_CORE_INFO("shader program {} created", _name.c_str());
     }
 
     shader_program::shader_program(const std::string& _name, const std::vector<std::string>& _vs_sources, const std::vector<std::string>& _gs_sources, const std::vector<std::string>& _fs_sources, size_t _num_uniforms) {
-        mkr::log::info("creating shader program {}", _name.c_str());
+        MKR_CORE_INFO("creating shader program {}", _name.c_str());
 
         // Allocate uniform handle array.
         uniform_handles_ = std::make_unique<GLint[]>(_num_uniforms);
@@ -169,11 +169,11 @@ namespace mkr {
             glGetProgramiv(program_handle_, GL_INFO_LOG_LENGTH, &log_length);
             std::unique_ptr<GLchar> info_log{new GLchar[log_length]};
             glGetProgramInfoLog(program_handle_, log_length, &log_length, info_log.get());
-            mkr::log::error(info_log.get());
+            MKR_CORE_ERROR(info_log.get());
             throw std::runtime_error(info_log.get());
         }
 
-        mkr::log::info("shader program {} created", _name.c_str());
+        MKR_CORE_INFO("shader program {} created", _name.c_str());
     }
 
     shader_program::~shader_program() {

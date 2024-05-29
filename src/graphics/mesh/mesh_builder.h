@@ -280,7 +280,7 @@ namespace mkr {
 
                     if (matches != 9) {
                         std::string msg = "Cannot load mesh [" + _file + "]. Make sure that the mesh is triangulated!";
-                        log::error(msg);
+                        MKR_CORE_ERROR(msg);
                         return nullptr;
                     }
 

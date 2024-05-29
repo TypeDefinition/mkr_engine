@@ -71,7 +71,7 @@ namespace mkr {
             int flags = IMG_INIT_JPG | IMG_INIT_PNG;
             if (flags != (flags & IMG_Init(flags))) {
                 const std::string err_msg = "IMG_Init failed";
-                log::error(err_msg);
+                MKR_CORE_ERROR(err_msg);
                 throw std::runtime_error(err_msg);
             }
         }
@@ -84,12 +84,12 @@ namespace mkr {
             SDL_PixelFormat* pixel_format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
             SDL_Surface* raw_surface = IMG_Load(_file.c_str());
             if (raw_surface == nullptr) {
-                mkr::log::error("unable to load texture: {}", _file);
+                MKR_CORE_ERROR("unable to load texture: {}", _file);
             }
 
             SDL_Surface* converted_surface = SDL_ConvertSurface(raw_surface, pixel_format, 0);
             if (converted_surface == nullptr) {
-                mkr::log::error("unable to convert texture: {}", _file);
+                MKR_CORE_ERROR("unable to convert texture: {}", _file);
             }
 
             void* pixel_data = converted_surface->pixels;
@@ -117,12 +117,12 @@ namespace mkr {
             for (auto i = 0; i < num_cubemap_sides; ++i) {
                 raw_surfaces[i] = IMG_Load(_files[i].c_str());
                 if (raw_surfaces[i] == nullptr) {
-                    mkr::log::error("unable to load texture: {}", _files[i]);
+                    MKR_CORE_ERROR("unable to load texture: {}", _files[i]);
                 }
 
                 converted_surfaces[i] = SDL_ConvertSurface(raw_surfaces[i], pixel_format, 0);
                 if (converted_surfaces[i] == nullptr) {
-                    mkr::log::error("unable to convert texture: {}", _files[i]);
+                    MKR_CORE_ERROR("unable to convert texture: {}", _files[i]);
                 }
 
                 void* pixel_data = converted_surfaces[i]->pixels;
@@ -136,7 +136,7 @@ namespace mkr {
 
             if (converted_surfaces[0]->w != converted_surfaces[0]->h) {
                 const std::string err_msg = "texture_loader::load_cubemap(): All 6 cube textures must be the same size, and every texture must be a square!";
-                mkr::log::error(err_msg);
+                MKR_CORE_ERROR(err_msg);
                 throw std::runtime_error(err_msg);
             }
 

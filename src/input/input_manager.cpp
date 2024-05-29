@@ -104,7 +104,7 @@ namespace mkr {
         SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
         if (0 != SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC)) {
             const std::string err_msg = "SDL_INIT_GAMECONTROLLER or SDL_INIT_JOYSTICK or SDL_INIT_HAPTIC failed";
-            mkr::log::error(err_msg);
+            MKR_CORE_ERROR(err_msg);
             throw std::runtime_error(err_msg);
         }
         SDL_JoystickEventState(SDL_ENABLE);

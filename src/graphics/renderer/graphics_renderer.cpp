@@ -20,7 +20,7 @@ namespace mkr {
         // Initialise SDL video subsystem.
         if (0 != SDL_InitSubSystem(SDL_INIT_VIDEO)) {
             const std::string err_msg = "SDL_INIT_VIDEO failed";
-            mkr::log::error(err_msg);
+            MKR_CORE_ERROR(err_msg);
             throw std::runtime_error(err_msg);
         }
 
@@ -36,7 +36,7 @@ namespace mkr {
         int majorVersion, minorVersion;
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &majorVersion);
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minorVersion);
-        mkr::log::info("OpenGL Version: {}.{}", majorVersion, minorVersion);
+        MKR_CORE_INFO("OpenGL Version: {}.{}", majorVersion, minorVersion);
 
         // Create Window
         app_window_ = std::make_unique<app_window>("mkr_engine", window_width_, window_height_, window_flags::none);

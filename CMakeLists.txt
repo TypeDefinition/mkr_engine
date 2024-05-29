@@ -5,12 +5,12 @@ cmake_minimum_required(VERSION 3.23.2)
 project(mkr_engine)
 
 # CMake Flags
-set(CMAKE_BUILD_TYPE Debug)
-# set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 23)
+# set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 # set(CMAKE_CXX_FLAGS_DEBUG "-g -fsanitize=thread")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 # Threads
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)

@@ -35,13 +35,13 @@ namespace mkr {
                 const auto* ce = dynamic_cast<const click_event*>(_event);
                 if (ce) {
                     if (ce->state_ == button_state::down) {
-                        if (ce->action_ == test_click) { log::trace("Down: " + ce->position_.to_string()); }
+                        if (ce->action_ == test_click) { MKR_TRACE("Down: " + ce->position_.to_string()); }
                     }
                     if (ce->state_ == button_state::pressed) {
-                        if (ce->action_ == test_click) { log::trace("Pressed: " + ce->position_.to_string()); }
+                        if (ce->action_ == test_click) { MKR_TRACE("Pressed: " + ce->position_.to_string()); }
                     }
                     if (ce->state_ == button_state::up) {
-                        if (ce->action_ == test_click) { log::trace("Up: " + ce->position_.to_string()); }
+                        if (ce->action_ == test_click) { MKR_TRACE("Up: " + ce->position_.to_string()); }
                     }
                 }
             });

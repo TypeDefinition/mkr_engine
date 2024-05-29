@@ -5,7 +5,7 @@ namespace mkr {
     void sdl_message_pump::init() {
         if (0 != SDL_InitSubSystem(SDL_INIT_EVENTS)) {
             const std::string err_msg = "SDL_INIT_EVENTS failed";
-            log::error(err_msg);
+            MKR_CORE_ERROR(err_msg);
             throw std::runtime_error(err_msg);
         }
     }

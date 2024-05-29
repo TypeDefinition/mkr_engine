@@ -37,14 +37,14 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 # External Dependencies
 include(FetchContent)
 
-FetchContent_Declare(mkr_common_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_common_lib.git GIT_TAG main)
-FetchContent_MakeAvailable(mkr_common_lib)
+FetchContent_Declare(mkr_common GIT_REPOSITORY https://github.com/TypeDefinition/mkr_common.git GIT_TAG main)
+FetchContent_MakeAvailable(mkr_common)
 
-FetchContent_Declare(mkr_maths_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_maths_lib.git GIT_TAG main)
-FetchContent_MakeAvailable(mkr_maths_lib)
+FetchContent_Declare(mkr_maths GIT_REPOSITORY https://github.com/TypeDefinition/mkr_maths.git GIT_TAG main)
+FetchContent_MakeAvailable(mkr_maths)
 
-FetchContent_Declare(mkr_log_lib GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log_lib.git GIT_TAG main)
-FetchContent_MakeAvailable(mkr_log_lib)
+FetchContent_Declare(mkr_log GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log.git GIT_TAG main)
+FetchContent_MakeAvailable(mkr_log)
 
 FetchContent_Declare(mkr_glsl_include GIT_REPOSITORY https://github.com/TypeDefinition/mkr_glsl_include.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_glsl_include)
@@ -75,13 +75,13 @@ target_link_directories(${PROJECT_NAME} PUBLIC ${SDL2_LIB_DIR}
 
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths_lib mkr_common_lib mkr_log_lib mkr_glsl_include
+                                                 mkr_maths mkr_common mkr_log mkr_glsl_include
                                                  SDL2main SDL2 SDL2_image
                                                  glew32 opengl32
                                                  flecs)
 else()
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths_lib mkr_common_lib mkr_log_lib mkr_glsl_include
+                                                 mkr_maths mkr_common mkr_log mkr_glsl_include
                                                  SDL2 SDL2_image
                                                  GLEW GL
                                                  flecs)

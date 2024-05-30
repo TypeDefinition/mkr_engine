@@ -43,14 +43,14 @@ FetchContent_MakeAvailable(mkr_common)
 FetchContent_Declare(mkr_maths GIT_REPOSITORY https://github.com/TypeDefinition/mkr_maths.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_maths)
 
-FetchContent_Declare(mkr_log GIT_REPOSITORY https://github.com/TypeDefinition/mkr_log.git GIT_TAG main)
-FetchContent_MakeAvailable(mkr_log)
-
 FetchContent_Declare(mkr_glsl_include GIT_REPOSITORY https://github.com/TypeDefinition/mkr_glsl_include.git GIT_TAG main)
 FetchContent_MakeAvailable(mkr_glsl_include)
 
 FetchContent_Declare(flecs GIT_REPOSITORY https://github.com/SanderMertens/flecs.git GIT_TAG 37233f127d5006ceb0087fbfcd2f3e36f5b77a23)
 FetchContent_MakeAvailable(flecs)
+
+FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog.git GIT_TAG 1253a57db644a07a13c202ad73f00f9ed66f9aed)
+FetchContent_MakeAvailable(spdlog)
 
 # Dependencies
 set(SDL2_INC_DIR ${PROJECT_SOURCE_DIR}/dep/sdl2/include)
@@ -75,14 +75,14 @@ target_link_directories(${PROJECT_NAME} PUBLIC ${SDL2_LIB_DIR}
 
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths mkr_common mkr_log mkr_glsl_include
+                                                 mkr_maths mkr_common mkr_glsl_include
                                                  SDL2main SDL2 SDL2_image
                                                  glew32 opengl32
-                                                 flecs)
+                                                 spdlog flecs)
 else()
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths mkr_common mkr_log mkr_glsl_include
+                                                 mkr_maths mkr_common mkr_glsl_include
                                                  SDL2 SDL2_image
                                                  GLEW GL
-                                                 flecs)
+                                                 spdlog flecs)
 endif()

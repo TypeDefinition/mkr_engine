@@ -69,14 +69,14 @@ $(function() {
 <div class="title">sdl_message_pump.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="sdl__message__pump_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;log/log.h&gt;</span></div>
+<a href="sdl__message__pump_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="log_8h.html">log/log.h</a>&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sdl__message__pump_8h.html">application/sdl_message_pump.h</a>&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
 <div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="classmkr_1_1sdl__message__pump.html#ad541697a43a302faf59bbd52273d8f50">    5</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1sdl__message__pump.html#ad541697a43a302faf59bbd52273d8f50">sdl_message_pump::init</a>() {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        <span class="keywordflow">if</span> (0 != SDL_InitSubSystem(SDL_INIT_EVENTS)) {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;            <span class="keyword">const</span> std::string err_msg = <span class="stringliteral">&quot;SDL_INIT_EVENTS failed&quot;</span>;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;            log::error(err_msg);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;            <a class="code" href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a>(err_msg);</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(err_msg);</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        }</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    }</div>
@@ -101,6 +101,8 @@ $(function() {
 <div class="ttc" id="aclassmkr_1_1sdl__message__pump_html_a2fdb723bd084172901c6d3dcc0e6caf1"><div class="ttname"><a href="classmkr_1_1sdl__message__pump.html#a2fdb723bd084172901c6d3dcc0e6caf1">mkr::sdl_message_pump::update</a></div><div class="ttdeci">void update()</div><div class="ttdef"><b>Definition:</b> <a href="sdl__message__pump_8cpp_source.html#l00014">sdl_message_pump.cpp:14</a></div></div>
 <div class="ttc" id="aclassmkr_1_1sdl__message__pump_html_ad2a50db19d0cdf3ac23ab2160ec98629"><div class="ttname"><a href="classmkr_1_1sdl__message__pump.html#ad2a50db19d0cdf3ac23ab2160ec98629">mkr::sdl_message_pump::event_dispatcher_</a></div><div class="ttdeci">event_dispatcher event_dispatcher_</div><div class="ttdef"><b>Definition:</b> <a href="sdl__message__pump_8h_source.html#l00020">sdl_message_pump.h:20</a></div></div>
 <div class="ttc" id="aclassmkr_1_1sdl__message__pump_html_ad541697a43a302faf59bbd52273d8f50"><div class="ttname"><a href="classmkr_1_1sdl__message__pump.html#ad541697a43a302faf59bbd52273d8f50">mkr::sdl_message_pump::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> <a href="sdl__message__pump_8cpp_source.html#l00005">sdl_message_pump.cpp:5</a></div></div>
+<div class="ttc" id="alog_8h_html"><div class="ttname"><a href="log_8h.html">log.h</a></div></div>
+<div class="ttc" id="alog_8h_html_a53f9ee6a1e2f5678808856bd9286dfe6"><div class="ttname"><a href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a></div><div class="ttdeci">#define MKR_CORE_ERROR(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00057">log.h:57</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="asdl__message__pump_8h_html"><div class="ttname"><a href="sdl__message__pump_8h.html">sdl_message_pump.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

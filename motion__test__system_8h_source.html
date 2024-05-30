@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <a href="motion__test__system_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;log/log.h&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="log_8h.html">log/log.h</a>&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="input__event_8h.html">input/input_event.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="input__manager_8h.html">input/input_manager.h</a>&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="event__listener_8h.html">event/event_listener.h</a>&quot;</span></div>
@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                <span class="keywordflow">if</span> (!e) { <span class="keywordflow">return</span>; }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                std::string info = <span class="stringliteral">&quot;Position: &quot;</span> + e-&gt;<a class="code" href="classmkr_1_1motion__event.html#a299b63490c78665efee631d445f08594">position_</a>.to_string() + <span class="stringliteral">&quot; Delta: &quot;</span> + e-&gt;delta_.to_string();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                log::info(info);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                <a class="code" href="log_8h.html#a39406a42de3d612fa1c0f2fb4e65fdc3">MKR_INFO</a>(info);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            });</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            input_manager::instance().get_event_dispatcher()-&gt;add_listener&lt;<a class="code" href="classmkr_1_1motion__event.html">motion_event</a>&gt;(&amp;<a class="code" href="classmkr_1_1motion__test__system.html#ac38ba78709249414214a0b70714585a6">input_listener_</a>);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
@@ -114,6 +114,8 @@ $(function() {
 <div class="ttc" id="aevent__listener_8h_html"><div class="ttname"><a href="event__listener_8h.html">event_listener.h</a></div></div>
 <div class="ttc" id="ainput__event_8h_html"><div class="ttname"><a href="input__event_8h.html">input_event.h</a></div></div>
 <div class="ttc" id="ainput__manager_8h_html"><div class="ttname"><a href="input__manager_8h.html">input_manager.h</a></div></div>
+<div class="ttc" id="alog_8h_html"><div class="ttname"><a href="log_8h.html">log.h</a></div></div>
+<div class="ttc" id="alog_8h_html_a39406a42de3d612fa1c0f2fb4e65fdc3"><div class="ttname"><a href="log_8h.html#a39406a42de3d612fa1c0f2fb4e65fdc3">MKR_INFO</a></div><div class="ttdeci">#define MKR_INFO(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00062">log.h:62</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

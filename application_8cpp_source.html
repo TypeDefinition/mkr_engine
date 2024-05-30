@@ -70,7 +70,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="application_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;SDL2/SDL.h&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;log/log.h&gt;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="log_8h.html">log/log.h</a>&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="application_8h.html">application/application.h</a>&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="sdl__message__pump_8h.html">application/sdl_message_pump.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="input__manager_8h.html">input/input_manager.h</a>&quot;</span></div>
@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">   19</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classmkr_1_1application.html#a18861413cf32e4cc41fe403c07def095">application::init</a>() {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="comment">// Initialise logging first to allow systems to start logging.</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        log::init();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classmkr_1_1log.html#af675b0159c302ddbdb1d8df7ced09e67">log::init</a>();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">// Message Pump</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        sdl_message_pump::instance().init();</div>
@@ -149,7 +149,7 @@ $(function() {
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        scene_manager::destroy();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="comment">// Exit logging last to allow systems to keep logging till the end.</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        log::exit();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classmkr_1_1log.html#acaaf401132a42983e118c735fd0865e8">log::exit</a>();</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;} <span class="comment">// mkr</span></div>
 <div class="ttc" id="aapplication_8h_html"><div class="ttname"><a href="application_8h.html">application.h</a></div></div>
@@ -162,10 +162,13 @@ $(function() {
 <div class="ttc" id="aclassmkr_1_1application_html_ac8e3ce23e342f9a3754e626f739bcc34"><div class="ttname"><a href="classmkr_1_1application.html#ac8e3ce23e342f9a3754e626f739bcc34">mkr::application::delta_time_</a></div><div class="ttdeci">float delta_time_</div><div class="ttdoc">The duration taken for the current frame.</div><div class="ttdef"><b>Definition:</b> <a href="application_8h_source.html#l00013">application.h:13</a></div></div>
 <div class="ttc" id="aclassmkr_1_1application_html_add826604c63ca6cf3bdc9a87fe7c93ac"><div class="ttname"><a href="classmkr_1_1application.html#add826604c63ca6cf3bdc9a87fe7c93ac">mkr::application::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00033">application.cpp:33</a></div></div>
 <div class="ttc" id="aclassmkr_1_1application_html_afbc060074a726b69e55c650a93d68bcd"><div class="ttname"><a href="classmkr_1_1application.html#afbc060074a726b69e55c650a93d68bcd">mkr::application::update</a></div><div class="ttdeci">void update()</div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00038">application.cpp:38</a></div></div>
+<div class="ttc" id="aclassmkr_1_1log_html_acaaf401132a42983e118c735fd0865e8"><div class="ttname"><a href="classmkr_1_1log.html#acaaf401132a42983e118c735fd0865e8">mkr::log::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00039">log.h:39</a></div></div>
+<div class="ttc" id="aclassmkr_1_1log_html_af675b0159c302ddbdb1d8df7ced09e67"><div class="ttname"><a href="classmkr_1_1log.html#af675b0159c302ddbdb1d8df7ced09e67">mkr::log::init</a></div><div class="ttdeci">static void init(const std::string &amp;_log_file=&quot;./log/log.txt&quot;)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00019">log.h:19</a></div></div>
 <div class="ttc" id="aclassmkr_1_1texture__loader_html_a10c984af0fe87d98bec1a39586f97c91"><div class="ttname"><a href="classmkr_1_1texture__loader.html#a10c984af0fe87d98bec1a39586f97c91">mkr::texture_loader::init</a></div><div class="ttdeci">static void init()</div><div class="ttdef"><b>Definition:</b> <a href="texture__loader_8h_source.html#l00069">texture_loader.h:69</a></div></div>
 <div class="ttc" id="aclassmkr_1_1texture__loader_html_ad750b732bd424117c645de9af7e07074"><div class="ttname"><a href="classmkr_1_1texture__loader.html#ad750b732bd424117c645de9af7e07074">mkr::texture_loader::exit</a></div><div class="ttdeci">static void exit()</div><div class="ttdef"><b>Definition:</b> <a href="texture__loader_8h_source.html#l00079">texture_loader.h:79</a></div></div>
 <div class="ttc" id="agraphics__renderer_8h_html"><div class="ttname"><a href="graphics__renderer_8h.html">graphics_renderer.h</a></div></div>
 <div class="ttc" id="ainput__manager_8h_html"><div class="ttname"><a href="input__manager_8h.html">input_manager.h</a></div></div>
+<div class="ttc" id="alog_8h_html"><div class="ttname"><a href="log_8h.html">log.h</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="ascene__manager_8h_html"><div class="ttname"><a href="scene__manager_8h.html">scene_manager.h</a></div></div>
 <div class="ttc" id="asdl__message__pump_8h_html"><div class="ttname"><a href="sdl__message__pump_8h.html">sdl_message_pump.h</a></div></div>

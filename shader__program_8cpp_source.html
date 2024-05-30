@@ -69,7 +69,7 @@ $(function() {
 <div class="title">shader_program.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="shader__program_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;log/log.h&gt;</span></div>
+<a href="shader__program_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="log_8h.html">log/log.h</a>&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="shader__program_8h.html">graphics/shader/shader_program.h</a>&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemkr.html">mkr</a> {</div>
@@ -90,7 +90,7 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            glGetShaderiv(shader_handle, GL_INFO_LOG_LENGTH, &amp;log_length);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            std::unique_ptr&lt;GLchar&gt; info_log{<span class="keyword">new</span> GLchar[log_length]};</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            glGetShaderInfoLog(shader_handle, log_length, &amp;log_length, info_log.get());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            mkr::log::error(info_log.get());</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <a class="code" href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a>(info_log.get());</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(info_log.get());</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
@@ -101,7 +101,7 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        GLint uniform_location = glGetUniformLocation(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, _uniform_name.c_str());</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">if</span> (uniform_location == -1) {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            std::string err_msg = <span class="stringliteral">&quot;cannot find uniform &quot;</span> + _uniform_name + <span class="stringliteral">&quot; in shader &quot;</span> + <a class="code" href="classmkr_1_1shader__program.html#a956a1a83a5b4490e96ec175fe5222d50">name_</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            mkr::log::warn(err_msg);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="log_8h.html#ae933ef0cfc3004a314f92183d2f99bd6">MKR_CORE_WARN</a>(err_msg);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordflow">return</span> uniform_location;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    }</div>
@@ -110,14 +110,14 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        GLint attrib_location = glGetAttribLocation(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, _attrib_name.c_str());</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">if</span> (attrib_location == -1) {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            std::string err_msg = <span class="stringliteral">&quot;cannot find attribute &quot;</span> + _attrib_name + <span class="stringliteral">&quot; in shader &quot;</span> + <a class="code" href="classmkr_1_1shader__program.html#a956a1a83a5b4490e96ec175fe5222d50">name_</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            mkr::log::warn(err_msg);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <a class="code" href="log_8h.html#ae933ef0cfc3004a314f92183d2f99bd6">MKR_CORE_WARN</a>(err_msg);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> attrib_location;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">   47</a></span>&#160;    <a class="code" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">shader_program::shader_program</a>(<span class="keyword">const</span> std::string&amp; _name, <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; _vs_sources, <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; _fs_sources, <span class="keywordtype">size_t</span> _num_uniforms)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        : name_{_name} {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        mkr::log::info(<span class="stringliteral">&quot;creating shader program {}&quot;</span>, _name.c_str());</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a>(<span class="stringliteral">&quot;creating shader program {}&quot;</span>, _name.c_str());</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="comment">// Allocate uniform handle array.</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classmkr_1_1shader__program.html#a2ab19fc1a13631f92ce9aaf300ae584b">uniform_handles_</a> = std::make_unique&lt;GLint[]&gt;(_num_uniforms);</div>
@@ -168,15 +168,15 @@ $(function() {
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            glGetProgramiv(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, GL_INFO_LOG_LENGTH, &amp;log_length);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            std::unique_ptr&lt;GLchar&gt; info_log{<span class="keyword">new</span> GLchar[log_length]};</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            glGetProgramInfoLog(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, log_length, &amp;log_length, info_log.get());</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            mkr::log::error(info_log.get());</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <a class="code" href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a>(info_log.get());</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(info_log.get());</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        mkr::log::info(<span class="stringliteral">&quot;shader program {} created&quot;</span>, _name.c_str());</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a>(<span class="stringliteral">&quot;shader program {} created&quot;</span>, _name.c_str());</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
 <div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classmkr_1_1shader__program.html#a1313ede21c9f1b9cec9df8b121df6bc9">  107</a></span>&#160;    <a class="code" href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">shader_program::shader_program</a>(<span class="keyword">const</span> std::string&amp; _name, <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; _vs_sources, <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; _gs_sources, <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; _fs_sources, <span class="keywordtype">size_t</span> _num_uniforms) {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        mkr::log::info(<span class="stringliteral">&quot;creating shader program {}&quot;</span>, _name.c_str());</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <a class="code" href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a>(<span class="stringliteral">&quot;creating shader program {}&quot;</span>, _name.c_str());</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="comment">// Allocate uniform handle array.</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="classmkr_1_1shader__program.html#a2ab19fc1a13631f92ce9aaf300ae584b">uniform_handles_</a> = std::make_unique&lt;GLint[]&gt;(_num_uniforms);</div>
@@ -240,11 +240,11 @@ $(function() {
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            glGetProgramiv(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, GL_INFO_LOG_LENGTH, &amp;log_length);</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            std::unique_ptr&lt;GLchar&gt; info_log{<span class="keyword">new</span> GLchar[log_length]};</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            glGetProgramInfoLog(<a class="code" href="classmkr_1_1shader__program.html#a0c7fcd0a8951f6d1fec954c6b4932609">program_handle_</a>, log_length, &amp;log_length, info_log.get());</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            mkr::log::error(info_log.get());</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            <a class="code" href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a>(info_log.get());</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(info_log.get());</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        }</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        mkr::log::info(<span class="stringliteral">&quot;shader program {} created&quot;</span>, _name.c_str());</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <a class="code" href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a>(<span class="stringliteral">&quot;shader program {} created&quot;</span>, _name.c_str());</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classmkr_1_1shader__program.html#a5dc34eb66d84e537eb57a5a990c07b5d">  179</a></span>&#160;    <a class="code" href="classmkr_1_1shader__program.html#a5dc34eb66d84e537eb57a5a990c07b5d">shader_program::~shader_program</a>() {</div>
@@ -505,6 +505,10 @@ $(function() {
 <div class="ttc" id="aclassmkr_1_1shader__program_html_ace38803f5311d28c3df5e3ae3a9eb448"><div class="ttname"><a href="classmkr_1_1shader__program.html#ace38803f5311d28c3df5e3ae3a9eb448">mkr::shader_program::create_shader</a></div><div class="ttdeci">static GLuint create_shader(GLenum _shader_type, const std::string &amp;_shader_source)</div><div class="ttdef"><b>Definition:</b> <a href="shader__program_8cpp_source.html#l00005">shader_program.cpp:5</a></div></div>
 <div class="ttc" id="aclassmkr_1_1shader__program_html_ae2de92f53c1cffff4698e33132b02b2c"><div class="ttname"><a href="classmkr_1_1shader__program.html#ae2de92f53c1cffff4698e33132b02b2c">mkr::shader_program::get_uniform_location</a></div><div class="ttdeci">GLint get_uniform_location(const std::string &amp;_uniform_name) const</div><div class="ttdef"><b>Definition:</b> <a href="shader__program_8cpp_source.html#l00029">shader_program.cpp:29</a></div></div>
 <div class="ttc" id="aclassmkr_1_1shader__program_html_af071501a7f30a37b62170ce32e10d766"><div class="ttname"><a href="classmkr_1_1shader__program.html#af071501a7f30a37b62170ce32e10d766">mkr::shader_program::shader_program</a></div><div class="ttdeci">shader_program(const std::string &amp;_name, const std::vector&lt; std::string &gt; &amp;_vs_sources, const std::vector&lt; std::string &gt; &amp;_fs_sources, size_t _num_uniforms)</div><div class="ttdef"><b>Definition:</b> <a href="shader__program_8cpp_source.html#l00047">shader_program.cpp:47</a></div></div>
+<div class="ttc" id="alog_8h_html"><div class="ttname"><a href="log_8h.html">log.h</a></div></div>
+<div class="ttc" id="alog_8h_html_a3b3044c19340ebd63cc93de2dab38014"><div class="ttname"><a href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a></div><div class="ttdeci">#define MKR_CORE_INFO(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00055">log.h:55</a></div></div>
+<div class="ttc" id="alog_8h_html_a53f9ee6a1e2f5678808856bd9286dfe6"><div class="ttname"><a href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a></div><div class="ttdeci">#define MKR_CORE_ERROR(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00057">log.h:57</a></div></div>
+<div class="ttc" id="alog_8h_html_ae933ef0cfc3004a314f92183d2f99bd6"><div class="ttname"><a href="log_8h.html#ae933ef0cfc3004a314f92183d2f99bd6">MKR_CORE_WARN</a></div><div class="ttdeci">#define MKR_CORE_WARN(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00056">log.h:56</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="ashader__program_8h_html"><div class="ttname"><a href="shader__program_8h.html">shader_program.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

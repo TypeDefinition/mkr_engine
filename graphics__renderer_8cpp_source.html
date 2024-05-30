@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <a href="graphics__renderer_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;GL/glew.h&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;SDL2/SDL.h&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;log/log.h&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="log_8h.html">log/log.h</a>&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="graphics__renderer_8h.html">graphics/renderer/graphics_renderer.h</a>&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="texture__unit_8h.html">graphics/shader/texture_unit.h</a>&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="shadow__2d__shader_8h.html">graphics/shader/shadow_2d_shader.h</a>&quot;</span></div>
@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="comment">// Initialise SDL video subsystem.</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">if</span> (0 != SDL_InitSubSystem(SDL_INIT_VIDEO)) {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="keyword">const</span> std::string err_msg = <span class="stringliteral">&quot;SDL_INIT_VIDEO failed&quot;</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            mkr::log::error(err_msg);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <a class="code" href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a>(err_msg);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(err_msg);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
@@ -107,7 +107,7 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">int</span> majorVersion, minorVersion;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &amp;majorVersion);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &amp;minorVersion);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        mkr::log::info(<span class="stringliteral">&quot;OpenGL Version: {}.{}&quot;</span>, majorVersion, minorVersion);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a>(<span class="stringliteral">&quot;OpenGL Version: {}.{}&quot;</span>, majorVersion, minorVersion);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">// Create Window</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classmkr_1_1graphics__renderer.html#ad8e80c6c3a0fd1a804208f41c32b51f5">app_window_</a> = std::make_unique&lt;app_window&gt;(<span class="stringliteral">&quot;mkr_engine&quot;</span>, <a class="code" href="classmkr_1_1graphics__renderer.html#abbcbdce247815fedf2ee671e88192a34">window_width_</a>, <a class="code" href="classmkr_1_1graphics__renderer.html#aea08e104db3efd807eb0a72f17fd7082">window_height_</a>, <a class="code" href="namespacemkr.html#a9655959a225d822da5e035327fbdb9bdadea58969a0734fca7a7a962adeb02da3">window_flags::none</a>);</div>
@@ -946,6 +946,9 @@ $(function() {
 <div class="ttc" id="ageometry__shader_8h_html"><div class="ttname"><a href="geometry__shader_8h.html">geometry_shader.h</a></div></div>
 <div class="ttc" id="agraphics__renderer_8h_html"><div class="ttname"><a href="graphics__renderer_8h.html">graphics_renderer.h</a></div></div>
 <div class="ttc" id="alighting__shader_8h_html"><div class="ttname"><a href="lighting__shader_8h.html">lighting_shader.h</a></div></div>
+<div class="ttc" id="alog_8h_html"><div class="ttname"><a href="log_8h.html">log.h</a></div></div>
+<div class="ttc" id="alog_8h_html_a3b3044c19340ebd63cc93de2dab38014"><div class="ttname"><a href="log_8h.html#a3b3044c19340ebd63cc93de2dab38014">MKR_CORE_INFO</a></div><div class="ttdeci">#define MKR_CORE_INFO(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00055">log.h:55</a></div></div>
+<div class="ttc" id="alog_8h_html_a53f9ee6a1e2f5678808856bd9286dfe6"><div class="ttname"><a href="log_8h.html#a53f9ee6a1e2f5678808856bd9286dfe6">MKR_CORE_ERROR</a></div><div class="ttdeci">#define MKR_CORE_ERROR(...)</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00057">log.h:57</a></div></div>
 <div class="ttc" id="amesh__builder_8h_html"><div class="ttname"><a href="mesh__builder_8h.html">mesh_builder.h</a></div></div>
 <div class="ttc" id="anamespacemkr_html"><div class="ttname"><a href="namespacemkr.html">mkr</a></div><div class="ttdef"><b>Definition:</b> <a href="application_8cpp_source.html#l00010">application.cpp:10</a></div></div>
 <div class="ttc" id="anamespacemkr_html_a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873"><div class="ttname"><a href="namespacemkr.html#a3f278ec75926bdfd4b49d1fd23c704dfa279c221a440a6e199736a992a2e13873">mkr::texture_diffuse</a></div><div class="ttdeci">@ texture_diffuse</div><div class="ttdef"><b>Definition:</b> <a href="texture__unit_8h_source.html#l00011">texture_unit.h:11</a></div></div>

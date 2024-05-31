@@ -6,8 +6,8 @@ project(mkr_engine)
 
 # CMake Flags
 set(CMAKE_CXX_STANDARD 23)
-# set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 # set(CMAKE_CXX_FLAGS_DEBUG "-g -fsanitize=thread")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
@@ -49,7 +49,7 @@ FetchContent_MakeAvailable(mkr_glsl_include)
 FetchContent_Declare(flecs GIT_REPOSITORY https://github.com/SanderMertens/flecs.git GIT_TAG 37233f127d5006ceb0087fbfcd2f3e36f5b77a23)
 FetchContent_MakeAvailable(flecs)
 
-FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog.git GIT_TAG 1253a57db644a07a13c202ad73f00f9ed66f9aed)
+FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog.git GIT_TAG c3aed4b68373955e1cc94307683d44dca1515d2b)
 FetchContent_MakeAvailable(spdlog)
 
 # Dependencies

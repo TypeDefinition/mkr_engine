@@ -11,7 +11,6 @@
 #include "graphics/shader/alpha_weight_shader.h"
 #include "graphics/shader/alpha_blend_shader.h"
 #include "graphics/shader/skybox_shader.h"
-#include "graphics/shader/post_proc_shader.h"
 #include "graphics/mesh/mesh_builder.h"
 #include "graphics/shadow/shadow_bounds.h"
 
@@ -789,17 +788,17 @@ namespace mkr {
         lights_.push_back({_transform, _light});
     }
 
-    void graphics_renderer::submit_mesh(const local_to_world& _transform, const render_mesh& _render_mesh) {
-        if (_render_mesh.material_ == nullptr || _render_mesh.mesh_ == nullptr) { return; }
-        switch (_render_mesh.material_->render_path_) {
+    void graphics_renderer::submit_mesh(const local_to_world& _transform, const renderable& _renderable) {
+        if (_renderable.material_ == nullptr || _renderable.mesh_ == nullptr) { return; }
+        switch (_renderable.material_->render_path_) {
             case render_path::deferred:
-                deferred_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
+                deferred_meshes_[_renderable.material_][_renderable.mesh_].push_back(_transform.transform_);
                 break;
             case render_path::forward:
-                forward_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
+                forward_meshes_[_renderable.material_][_renderable.mesh_].push_back(_transform.transform_);
                 break;
             case render_path::transparent:
-                transparent_meshes_[_render_mesh.material_][_render_mesh.mesh_].push_back(_transform.transform_);
+                transparent_meshes_[_renderable.material_][_renderable.mesh_].push_back(_transform.transform_);
                 break;
             default:
                 break;

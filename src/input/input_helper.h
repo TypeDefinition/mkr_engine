@@ -1,7 +1,6 @@
 #pragma once
 
 #include "input/input.h"
-#include "input/keycode.h"
 
 namespace mkr {
     /**
@@ -18,7 +17,7 @@ namespace mkr {
             \param _keycode The keycode.
             \return An input_mask representing the given input_context, controller_index and keycode.
         */
-        static input_mask_t get_input_mask(input_context _input_context, controller_index _controller_index, mkr::keycode _keycode) {
+        static input_mask_t get_input_mask(input_context _input_context, controller_index _controller_index, mkr::keycode_t _keycode) {
             uint64_t context_mask = (uint64_t) _input_context;
             context_mask <<= 48;
             context_mask &= 0xFFFF000000000000;
@@ -63,9 +62,9 @@ namespace mkr {
             \return The keycode of the input mask.
             \sa get_input_mask, get_context, get_controller_index, compare_context, compare_controller_index, compare_keycode, compare_mask
         */
-        static mkr::keycode get_keycode(input_mask_t _input_mask) {
+        static mkr::keycode_t get_keycode(input_mask_t _input_mask) {
             _input_mask &= 0x00000000FFFFFFFF;
-            return static_cast<mkr::keycode>(_input_mask);
+            return static_cast<mkr::keycode_t>(_input_mask);
         }
 
         /**
@@ -97,7 +96,7 @@ namespace mkr {
             \return Returns _keycode_a == _keycode_b.
             \sa get_input_mask, get_context, get_controller_index, get_keycode, compare_context, compare_controller_index, compare_mask
         */
-        static bool compare_keycode(mkr::keycode _keycode_a, mkr::keycode _keycode_b) {
+        static bool compare_keycode(mkr::keycode_t _keycode_a, mkr::keycode_t _keycode_b) {
             return _keycode_a == _keycode_b;
         }
 
@@ -115,8 +114,8 @@ namespace mkr {
             controller_index controller_index_a = get_controller_index(_mask_a);
             controller_index controller_index_b = get_controller_index(_mask_b);
 
-            mkr::keycode keycode_a = get_keycode(_mask_a);
-            mkr::keycode keycode_b = get_keycode(_mask_b);
+            mkr::keycode_t keycode_a = get_keycode(_mask_a);
+            mkr::keycode_t keycode_b = get_keycode(_mask_b);
 
             return compare_context(context_a, context_b) &&
                    compare_controller_index(controller_index_a, controller_index_b) &&

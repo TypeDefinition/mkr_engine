@@ -1,3 +1,4 @@
+/*
 #include "input/click_handler.h"
 #include "input/input_helper.h"
 
@@ -83,3 +84,4 @@ namespace mkr {
         registry_[_click].erase(_action);
     }
 } // mkr
+*/

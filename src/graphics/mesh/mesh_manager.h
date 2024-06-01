@@ -15,11 +15,11 @@ namespace mkr {
     private:
         std::unordered_map<std::string, std::unique_ptr<mesh>> meshes_;
 
+    public:
         mesh_manager() {}
 
         virtual ~mesh_manager() {}
 
-    public:
         mesh* get_mesh(const std::string& _name) {
             auto iter = meshes_.find(_name);
             return (iter == meshes_.end()) ? nullptr : iter->second.get();

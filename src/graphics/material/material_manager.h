@@ -13,11 +13,11 @@ namespace mkr {
     private:
         std::unordered_map<std::string, std::unique_ptr<material>> materials_;
 
+    public:
         material_manager() {}
 
         virtual ~material_manager() {}
 
-    public:
         material* get_material(const std::string& _name) {
             auto iter = materials_.find(_name);
             return (iter == materials_.end()) ? nullptr : iter->second.get();

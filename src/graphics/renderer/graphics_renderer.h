@@ -2,10 +2,8 @@
 
 #include <functional>
 #include <queue>
-#include <flecs.h>
 #include <common/singleton.h>
 #include <maths/matrix_util.h>
-#include "graphics/renderer/stencil.h"
 #include "graphics/app_window.h"
 #include "graphics/framebuffer/shadow_2d_buffer.h"
 #include "graphics/framebuffer/shadow_cubemap_buffer.h"
@@ -13,15 +11,13 @@
 #include "graphics/framebuffer/lighting_buffer.h"
 #include "graphics/framebuffer/forward_buffer.h"
 #include "graphics/framebuffer/alpha_buffer.h"
-#include "graphics/framebuffer/post_buffer.h"
 #include "graphics/lighting/lighting.h"
 #include "graphics/material/material.h"
 #include "graphics/mesh/mesh_instance_data.h"
-#include "component/render_mesh.h"
-#include "component/transform.h"
-#include "component/local_to_world.h"
-#include "component/camera.h"
-#include "component/light.h"
+#include "ecs/component/renderable.h"
+#include "ecs/component/local_to_world.h"
+#include "ecs/component/camera.h"
+#include "ecs/component/light.h"
 
 namespace mkr {
     class graphics_renderer : public singleton<graphics_renderer> {
@@ -41,8 +37,8 @@ namespace mkr {
 
         // App Window
         std::unique_ptr<app_window> app_window_;
-        uint32_t window_width_ = 1920;
-        uint32_t window_height_ = 1080;
+        uint32_t window_width_ = 1280;
+        uint32_t window_height_ = 720;
 
         // Framebuffers
         std::unique_ptr<shadow_2d_buffer> s2d_buff_[lighting::max_lights];
@@ -72,9 +68,6 @@ namespace mkr {
         std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> forward_meshes_;
         std::unordered_map<material*, std::unordered_map<mesh*, std::vector<matrix4x4>>> transparent_meshes_;
 
-        graphics_renderer() {}
-        virtual ~graphics_renderer() {}
-
         void render();
 
         matrix4x4 point_shadow(shadow_cubemap_buffer* _buffer, const local_to_world& _trans, const light& _light);
@@ -89,6 +82,9 @@ namespace mkr {
         void skybox_pass(const matrix4x4& _view_matrix, const matrix4x4& _projection_matrix, const skybox* _skybox);
 
     public:
+        graphics_renderer() {}
+        virtual ~graphics_renderer() {}
+
         void init();
         void start();
         void update();
@@ -96,6 +92,6 @@ namespace mkr {
 
         void submit_camera(const local_to_world& _transform, const camera& _camera);
         void submit_light(const local_to_world& _transform, const light& _light);
-        void submit_mesh(const local_to_world& _transform, const render_mesh& _render_mesh);
+        void submit_mesh(const local_to_world& _transform, const renderable& _renderable);
     };
 } // mkr

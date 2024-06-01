@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 /**
     \file input.h
     \brief
@@ -28,14 +30,14 @@
             We can represent these controllers using controller_index. As controller_index has 16bits, we can have up to 16 controllers.
 
         keycode -
-            This is a 32bit unsigned integer that represents the physical key being pressed. For the full list of available keycodes, refer to keycode.h.
+            This is a 32bit unsigned integer that represents the physical key being pressed.
 */
 namespace mkr {
-    /// \brief 64bit Input Mask
-    typedef uint64_t input_mask_t;
-
     /// \brief 32bit Input Action
     typedef uint32_t input_action_t;
+
+    /// \brief 64bit Input Mask
+    typedef uint64_t input_mask_t;
 
     /// \brief 16bit Input Context
     enum input_context : uint16_t {
@@ -84,4 +86,6 @@ namespace mkr {
         controller_index_14 = 0x4000,
         controller_index_15 = 0x8000,
     };
+
+    typedef uint32_t keycode_t;
 } // mkr

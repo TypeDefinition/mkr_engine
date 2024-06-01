@@ -15,11 +15,11 @@ namespace mkr {
         std::unordered_map<std::string, std::unique_ptr<texture2d>> texture2ds_;
         std::unordered_map<std::string, std::unique_ptr<cubemap>> cubemaps_;
 
+    public:
         texture_manager() {}
 
         virtual ~texture_manager() {}
 
-    public:
         // Texture 2D
         texture2d* get_texture2d(const std::string& _name) {
             auto iter = texture2ds_.find(_name);

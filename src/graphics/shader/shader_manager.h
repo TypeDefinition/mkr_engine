@@ -16,11 +16,11 @@ namespace mkr {
     private:
         std::unordered_map<std::string, std::unique_ptr<shader_program>> shaders_;
 
+    public:
         shader_manager() {}
 
         virtual ~shader_manager() {}
 
-    public:
         // Shaders
         shader_program* get_shader(const std::string& _name) {
             auto iter = shaders_.find(_name);

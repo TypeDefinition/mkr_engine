@@ -38,26 +38,4 @@ namespace mkr {
             : input_event(_action), value_(_value) {}
         virtual ~axis_event() {}
     };
-
-    class click_event : public button_event {
-    public:
-        /// The cursor position of the click.
-        const vector2 position_;
-
-        click_event(input_action_t _action, button_state _state, const vector2& _position)
-            : button_event(_action, _state), position_(_position) {}
-        virtual ~click_event() {}
-    };
-
-    class motion_event : public input_event {
-    public:
-        /// The cursor position of the motion.
-        const vector2 position_;
-        /// The movement delta of the motion. (How much was the cursor moved since the last frame?)
-        const vector2 delta_;
-
-        motion_event(input_action_t _action, const vector2& _position, const vector2& _delta)
-            : input_event(_action), position_(_position), delta_(_delta) {}
-        virtual ~motion_event() {}
-    };
 } // mkr

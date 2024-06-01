@@ -5,14 +5,12 @@
 #include "input/input_manager.h"
 #include "graphics/renderer/graphics_renderer.h"
 #include "graphics/texture/texture_loader.h"
-#include "scene/scene_manager.h"
+#include "game/scene/demo_scene.h"
 
 namespace mkr {
     void application::run() {
         init();
-        start();
         update();
-        stop();
         exit();
     }
 
@@ -27,17 +25,16 @@ namespace mkr {
         texture_loader::init();
         input_manager::instance().init();
         graphics_renderer::instance().init();
-        scene_manager::instance().init();
-    }
-
-    void application::start() {
-        // Systems
         graphics_renderer::instance().start();
+
+        scene_ = std::make_unique<demo_scene>();
     }
 
     void application::update() {
         uint64_t prev_frame_time = 0;
         uint64_t curr_frame_time = SDL_GetPerformanceCounter();
+
+        scene_->init();
 
         run_ = true;
         while (run_) {
@@ -51,12 +48,11 @@ namespace mkr {
 
             // Systems
             input_manager::instance().update();
-            scene_manager::instance().update();
+            scene_->update(delta_time_);
             graphics_renderer::instance().update();
         }
-    }
 
-    void application::stop() {
+        scene_->exit();
     }
 
     void application::exit() {
@@ -67,7 +63,6 @@ namespace mkr {
         texture_loader::exit();
         input_manager::instance().exit();
         graphics_renderer::instance().exit();
-        scene_manager::instance().exit();
 
         // Destroy message pump.
         sdl_message_pump::destroy();
@@ -75,7 +70,6 @@ namespace mkr {
         // Destroy systems.
         input_manager::destroy();
         graphics_renderer::destroy();
-        scene_manager::destroy();
 
         // Exit logging last to allow systems to keep logging till the end.
         log::exit();

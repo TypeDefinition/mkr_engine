@@ -19,10 +19,10 @@ namespace mkr {
     private:
         event_dispatcher event_dispatcher_;
 
+    public:
         sdl_message_pump() = default;
         virtual ~sdl_message_pump() = default;
 
-    public:
         inline event_dispatcher& get_event_dispatcher() { return event_dispatcher_; }
         inline const event_dispatcher& get_event_dispatcher() const { return event_dispatcher_; }
 

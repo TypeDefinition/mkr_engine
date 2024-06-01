@@ -2,11 +2,14 @@
 
 #include <SDL2/SDL.h>
 #include <common/singleton.h>
-#include "input/keycode.h"
+#include "application/sdl_message_pump.h"
 #include "input/button_handler.h"
 #include "input/axis_handler.h"
-#include "input/click_handler.h"
-#include "input/motion_handler.h"
+#include "input/keyboard_button.h"
+#include "input/mouse_button.h"
+#include "input/mouse_axis.h"
+#include "input/gamepad_button.h"
+#include "input/gamepad_axis.h"
 
 namespace mkr {
     /**
@@ -24,16 +27,14 @@ namespace mkr {
 
         button_handler button_handler_;
         axis_handler axis_handler_;
-        click_handler click_handler_;
-        motion_handler motion_handler_;
 
+        void on_sdl_event(const sdl_event* _event);
+
+    public:
         input_manager() = default;
 
         virtual ~input_manager() = default;
 
-        void sdl_event_callback(const event* _event);
-
-    public:
         void init();
 
         void update();
@@ -86,7 +87,7 @@ namespace mkr {
          * @param _button The physical button that must be pressed for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button);
+        void register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
 
         /**
          * Unregister an input action to an input context, controller index and button.
@@ -97,7 +98,7 @@ namespace mkr {
          * @param _button The physical button that must be pressed for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _button);
+        void unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
 
         /**
          * Register an input action to an input context, controller index and axis.
@@ -108,7 +109,7 @@ namespace mkr {
          * @param _axis The physical axis that must be moved for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis);
+        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
 
         /**
          * Unregister an input action to an input context, controller index and axis.
@@ -119,7 +120,7 @@ namespace mkr {
          * @param _axis The physical axis that must be moved for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _axis);
+        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
 
         /**
          * Register an input action to an input context, controller index and axis.
@@ -132,7 +133,7 @@ namespace mkr {
          * @param _negative_button The physical button representing -1 on the axis.
          * @see input.h, input_event.h
          */
-        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button);
+        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _positive_button, keycode_t _negative_button);
 
         /**
          * Unregister an input action to an input context, controller index and axis.
@@ -145,50 +146,14 @@ namespace mkr {
          * @param _negative_button The physical button press representing -1 on the axis.
          * @see input.h, input_event.h
          */
-        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _positive_button, mkr::keycode _negative_button);
+        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _positive_button, keycode_t _negative_button);
 
-        /**
-         * Register an input action to an input context, controller index and click.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _click The physical button that must be pressed for this action to be triggered.
-         * @see input.h, input_event.h
-         */
-        void register_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click);
+        bool is_button_down(input_action_t _action) const;
 
-        /**
-         * Unregister an input action to an input context, controller index and click.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _click The physical button that must be pressed for this action to be triggered.
-         * @see input.h, input_event.h
-         */
-        void unregister_click(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _click);
+        bool is_button_pressed(input_action_t _action) const;
 
-        /**
-         * Register an input action to an input context, controller index and motion.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _motion The physical motion that must occur for this action to be triggered.
-         * @see input.h, input_event.h
-         */
-        void register_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion);
+        bool is_button_up(input_action_t _action) const;
 
-        /**
-         * Unregister an input action to an input context, controller index and motion.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _motion The physical motion that must occur for this action to be triggered.
-         * @see input.h, input_event.h
-         */
-        void unregister_motion(input_action_t _input_action, input_context _input_context, controller_index _controller_index, mkr::keycode _motion);
+        float get_axis_value(input_action_t _action) const;
     };
 } // mkr

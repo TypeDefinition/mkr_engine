@@ -1,8 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <atomic>
-#include <string>
 #include <common/singleton.h>
+#include "ecs/scene/scene.h"
 
 namespace mkr {
     class application : public singleton<application> {
@@ -16,19 +17,19 @@ namespace mkr {
         /// A flag to exit the game loop. Set to false to quit the application.
         std::atomic_bool run_ = true;
 
-        application() {}
-        virtual ~application() {}
+        std::unique_ptr<scene> scene_;
 
         void init();
-        void start();
         void update();
-        void stop();
         void exit();
 
     public:
+        application() {}
+        virtual ~application() {}
+
         inline float delta_time() const { return delta_time_; }
         inline float time_elapsed() const { return time_elapsed_; }
-        inline void terminate() { run_ = false; }
+        inline void quit() { run_ = false; }
         virtual void run();
     };
 } // mkr

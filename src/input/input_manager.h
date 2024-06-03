@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include <common/singleton.h>
 #include "application/sdl_message_pump.h"
-#include "input/button_handler.h"
+#include "input/bool_handler.h"
 #include "input/axis1d_handler.h"
 #include "input/keyboard_button.h"
 #include "input/mouse_button.h"
@@ -25,8 +25,8 @@ namespace mkr {
         event_listener sdl_event_listener;
         event_dispatcher input_event_dispatcher_;
 
-        button_handler button_handler_;
-        axis1d_handler axis_handler_;
+        bool_handler bool_handler_;
+        axis1d_handler axis1d_handler_;
 
         void on_sdl_event(const sdl_event* _event);
 
@@ -87,7 +87,7 @@ namespace mkr {
          * @param _button The physical button that must be pressed for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void register_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
+        void register_bool(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
 
         /**
          * Unregister an input action to an input context, controller index and button.
@@ -98,7 +98,7 @@ namespace mkr {
          * @param _button The physical button that must be pressed for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void unregister_button(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
+        void unregister_bool(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _button);
 
         /**
          * Register an input action to an input context, controller index and axis.
@@ -109,43 +109,8 @@ namespace mkr {
          * @param _axis The physical axis that must be moved for this action to be triggered.
          * @see input.h, input_event.h
          */
-        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
+        void register_axis1d(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
 
-        /**
-         * Unregister an input action to an input context, controller index and axis.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _axis The physical axis that must be moved for this action to be triggered.
-         * @see input.h, input_event.h
-         */
-        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
-
-        /**
-         * Register an input action to an input context, controller index and axis.
-         * In this version, the axis is represented by 2 buttons presses rather than an actual axis movement such as a joystick or mouse.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _positive_button The physical button representing 1 on the axis.
-         * @param _negative_button The physical button representing -1 on the axis.
-         * @see input.h, input_event.h
-         */
-        void register_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _positive_button, keycode_t _negative_button);
-
-        /**
-         * Unregister an input action to an input context, controller index and axis.
-         * In this version, the axis is represented by 2 buttons presses rather than an actual axis movement such as a joystick or mouse.
-         * Refer to input.h and keycode.h for more information.
-         * @param _input_action The input action that will be triggered when the following conditions are met.
-         * @param _input_context The context that must be met for this action to be triggered.
-         * @param _controller_index The controller index that must be met for this action to be triggered.
-         * @param _positive_button The physical button press representing 1 on the axis.
-         * @param _negative_button The physical button press representing -1 on the axis.
-         * @see input.h, input_event.h
-         */
-        void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _positive_button, keycode_t _negative_button);
+        void unregister_axis1d(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _axis);
     };
 } // mkr

@@ -1,4 +1,3 @@
-#include "application/application.h"
 #include "input/input_manager.h"
 #include "graphics/mesh/mesh_manager.h"
 #include "graphics/texture/texture_manager.h"
@@ -42,31 +41,27 @@ namespace mkr {
     void demo_scene::init_input() {
         // input_manager::instance().set_relative_mouse(true);
 
-        // Register Buttons
-        input_manager::instance().register_button(quit, input_context_default, controller_index_default, keyboard_escape);
+        input_manager::instance().register_bool(quit, input_context_default, controller_index_default, keyboard_escape);
 
-        input_manager::instance().register_button(move_left, input_context_default, controller_index_default, keyboard_a);
-        input_manager::instance().register_button(move_right, input_context_default, controller_index_default, keyboard_d);
-        input_manager::instance().register_button(move_forward, input_context_default, controller_index_default, keyboard_w);
-        input_manager::instance().register_button(move_backward, input_context_default, controller_index_default, keyboard_s);
+        input_manager::instance().register_bool(move_left, input_context_default, controller_index_default, keyboard_a);
+        input_manager::instance().register_bool(move_right, input_context_default, controller_index_default, keyboard_d);
+        input_manager::instance().register_bool(move_forward, input_context_default, controller_index_default, keyboard_w);
+        input_manager::instance().register_bool(move_backward, input_context_default, controller_index_default, keyboard_s);
 
-        // Register Axes
-        input_manager::instance().register_axis(look_horizontal, input_context_default, controller_index_default, mouse_axis_x);
-        input_manager::instance().register_axis(look_vertical, input_context_default, controller_index_default, mouse_axis_y);
+        input_manager::instance().register_axis1d(look_horizontal, input_context_default, controller_index_default, mouse_axis_x);
+        input_manager::instance().register_axis1d(look_vertical, input_context_default, controller_index_default, mouse_axis_y);
     }
 
     void demo_scene::exit_input() {
-        // Register Buttons
-        input_manager::instance().unregister_button(quit, input_context_default, controller_index_default, keyboard_escape);
+        input_manager::instance().unregister_bool(quit, input_context_default, controller_index_default, keyboard_escape);
 
-        input_manager::instance().unregister_button(move_left, input_context_default, controller_index_default, keyboard_a);
-        input_manager::instance().unregister_button(move_right, input_context_default, controller_index_default, keyboard_d);
-        input_manager::instance().unregister_button(move_forward, input_context_default, controller_index_default, keyboard_w);
-        input_manager::instance().unregister_button(move_backward, input_context_default, controller_index_default, keyboard_s);
+        input_manager::instance().unregister_bool(move_left, input_context_default, controller_index_default, keyboard_a);
+        input_manager::instance().unregister_bool(move_right, input_context_default, controller_index_default, keyboard_d);
+        input_manager::instance().unregister_bool(move_forward, input_context_default, controller_index_default, keyboard_w);
+        input_manager::instance().unregister_bool(move_backward, input_context_default, controller_index_default, keyboard_s);
 
-        // Register Axes
-        input_manager::instance().unregister_axis(look_horizontal, input_context_default, controller_index_default, mouse_axis_x);
-        input_manager::instance().register_axis(look_vertical, input_context_default, controller_index_default, mouse_axis_y);
+        input_manager::instance().unregister_axis1d(look_horizontal, input_context_default, controller_index_default, mouse_axis_x);
+        input_manager::instance().unregister_axis1d(look_vertical, input_context_default, controller_index_default, mouse_axis_y);
     }
 
     void demo_scene::init_systems() {

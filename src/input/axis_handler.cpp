@@ -1,21 +1,16 @@
-#include "input/axis_handler.h"
+#include "input/axis1d_handler.h"
 #include "input/input_helper.h"
 #include "input/input_event.h"
 
 namespace mkr {
-    float axis_handler::get_axis_value(input_action_t _action) const {
-        auto iter = state_.find(_action);
-        return iter == state_.end() ? 0.0f : iter->second;
-    }
-
-    void axis_handler::dispatch_events(event_dispatcher& _event_dispatcher) {
+    void axis1d_handler::dispatch_events(event_dispatcher& _event_dispatcher) {
         for (auto iter : state_) {
             auto& action = iter.first;
             auto& value = iter.second;
 
             if (value != 0.0f) {
-                axis_event e{action, value};
-                _event_dispatcher.dispatch_event<axis_event>(&e);
+                axis1d_event e{action, value};
+                _event_dispatcher.dispatch_event<axis1d_event>(&e);
             }
 
             value = positive_[action] ? 1.0f : 0.0f;
@@ -23,7 +18,7 @@ namespace mkr {
         }
     }
 
-    void axis_handler::on_axis(input_mask_t _input_mask, float _value) {
+    void axis1d_handler::on_axis(input_mask_t _input_mask, float _value) {
         for (const auto& iter : registry_) {
             if (!input_helper::compare_mask(_input_mask, iter.first)) { continue; }
 
@@ -32,7 +27,7 @@ namespace mkr {
         }
     }
 
-    void axis_handler::on_button_down(input_mask_t _input_mask) {
+    void axis1d_handler::on_button_down(input_mask_t _input_mask) {
         for (const auto& iter : positive_buttons_) {
             if (!input_helper::compare_mask(_input_mask, iter.first)) { continue; }
 
@@ -56,7 +51,7 @@ namespace mkr {
         }
     }
 
-    void axis_handler::on_button_up(input_mask_t _input_mask) {
+    void axis1d_handler::on_button_up(input_mask_t _input_mask) {
         for (const auto& iter : positive_buttons_) {
             if (!input_helper::compare_mask(_input_mask, iter.first)) { continue; }
 
@@ -72,20 +67,20 @@ namespace mkr {
         }
     }
 
-    void axis_handler::register_axis(input_action_t _action, input_mask_t _mask) {
+    void axis1d_handler::register_axis(input_action_t _action, input_mask_t _mask) {
         registry_[_mask].insert(_action);
     }
 
-    void axis_handler::unregister_axis(input_action_t _action, input_mask_t _mask) {
+    void axis1d_handler::unregister_axis(input_action_t _action, input_mask_t _mask) {
         registry_[_mask].erase(_action);
     }
 
-    void axis_handler::register_button(input_action_t _action, input_mask_t _positive_mask, input_mask_t _negative_mask) {
+    void axis1d_handler::register_button(input_action_t _action, input_mask_t _positive_mask, input_mask_t _negative_mask) {
         positive_buttons_[_positive_mask].insert(_action);
         negative_buttons_[_negative_mask].insert(_action);
     }
 
-    void axis_handler::unregister_button(input_action_t _action, input_mask_t _positive_mask, input_mask_t _negative_mask) {
+    void axis1d_handler::unregister_button(input_action_t _action, input_mask_t _positive_mask, input_mask_t _negative_mask) {
         positive_buttons_[_positive_mask].erase(_action);
         negative_buttons_[_negative_mask].erase(_action);
     }

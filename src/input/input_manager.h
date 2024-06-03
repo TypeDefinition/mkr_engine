@@ -4,7 +4,7 @@
 #include <common/singleton.h>
 #include "application/sdl_message_pump.h"
 #include "input/button_handler.h"
-#include "input/axis_handler.h"
+#include "input/axis1d_handler.h"
 #include "input/keyboard_button.h"
 #include "input/mouse_button.h"
 #include "input/mouse_axis.h"
@@ -26,7 +26,7 @@ namespace mkr {
         event_dispatcher input_event_dispatcher_;
 
         button_handler button_handler_;
-        axis_handler axis_handler_;
+        axis1d_handler axis_handler_;
 
         void on_sdl_event(const sdl_event* _event);
 
@@ -147,13 +147,5 @@ namespace mkr {
          * @see input.h, input_event.h
          */
         void unregister_axis(input_action_t _input_action, input_context _input_context, controller_index _controller_index, keycode_t _positive_button, keycode_t _negative_button);
-
-        bool is_button_down(input_action_t _action) const;
-
-        bool is_button_pressed(input_action_t _action) const;
-
-        bool is_button_up(input_action_t _action) const;
-
-        float get_axis_value(input_action_t _action) const;
     };
 } // mkr

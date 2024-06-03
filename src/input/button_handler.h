@@ -14,10 +14,6 @@ namespace mkr {
         button_handler() = default;
         virtual ~button_handler() = default;
 
-        bool is_button_down(input_action_t _action) const;
-        bool is_button_pressed(input_action_t _action) const;
-        bool is_button_up(input_action_t _action) const;
-
         void dispatch_events(event_dispatcher& _event_dispatcher);
         void on_button_down(input_mask_t _input_mask);
         void on_button_up(input_mask_t _input_mask);

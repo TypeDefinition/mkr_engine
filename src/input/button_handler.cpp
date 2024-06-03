@@ -29,8 +29,8 @@ namespace mkr {
             auto action = iter.first;
             auto state = iter.second;
             if (state && !prev_state_[action]) {
-                button_event e{action, button_state::down};
-                _event_dispatcher.dispatch_event<button_event>(&e);
+                bool_event e{action, input_state::start};
+                _event_dispatcher.dispatch_event<bool_event>(&e);
             }
         }
 
@@ -38,8 +38,8 @@ namespace mkr {
             auto action = iter.first;
             auto state = iter.second;
             if (state) {
-                button_event e{action, button_state::pressed};
-                _event_dispatcher.dispatch_event<button_event>(&e);
+                bool_event e{action, input_state::ongoing};
+                _event_dispatcher.dispatch_event<bool_event>(&e);
             }
         }
 
@@ -47,8 +47,8 @@ namespace mkr {
             auto action = iter.first;
             auto state = iter.second;
             if (!state && prev_state_[action]) {
-                button_event e{action, button_state::down};
-                _event_dispatcher.dispatch_event<button_event>(&e);
+                bool_event e{action, input_state::start};
+                _event_dispatcher.dispatch_event<bool_event>(&e);
             }
         }
 

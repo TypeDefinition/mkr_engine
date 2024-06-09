@@ -37,8 +37,8 @@ namespace mkr {
 
         // App Window
         std::unique_ptr<app_window> app_window_;
-        uint32_t window_width_ = 1280;
-        uint32_t window_height_ = 720;
+        uint32_t window_width_ = 1920;
+        uint32_t window_height_ = 1080;
 
         // Framebuffers
         std::unique_ptr<shadow_2d_buffer> s2d_buff_[lighting::max_lights];

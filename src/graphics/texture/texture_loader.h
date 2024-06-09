@@ -66,20 +66,6 @@ namespace mkr {
     public:
         texture_loader() = delete;
 
-        static void init() {
-            // Initialise SDL_image.
-            int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-            if (flags != (flags & IMG_Init(flags))) {
-                const std::string err_msg = "IMG_Init failed";
-                MKR_CORE_ERROR(err_msg);
-                throw std::runtime_error(err_msg);
-            }
-        }
-
-        static void exit() {
-            IMG_Quit();
-        }
-
         static std::unique_ptr<texture2d> load_texture2d(const std::string& _name, const std::string& _file, bool _flip_x, bool _flip_y) {
             SDL_PixelFormat* pixel_format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
             SDL_Surface* raw_surface = IMG_Load(_file.c_str());

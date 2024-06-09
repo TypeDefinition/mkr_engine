@@ -26,8 +26,6 @@ namespace mkr {
         inline event_dispatcher& get_event_dispatcher() { return event_dispatcher_; }
         inline const event_dispatcher& get_event_dispatcher() const { return event_dispatcher_; }
 
-        void init();
         void update();
-        void exit();
     };
 }

@@ -23,7 +23,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 # Definitions
 if (WIN32) # WIN32 includes 64-bit Windows.
     add_compile_definitions(SDL_MAIN_HANDLED)
-endif()
+endif ()
 
 # Main Executable
 set(SRC_DIR "src")
@@ -67,12 +67,12 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths mkr_common mkr_glsl_include
-                                                 SDL2main SDL2 SDL2_image
-                                                 glew32 opengl32 spdlog)
-else()
+            mkr_maths mkr_common mkr_glsl_include
+            SDL2main SDL2 SDL2_image
+            glew32 opengl32 spdlog)
+else ()
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
-                                                 mkr_maths mkr_common mkr_glsl_include
-                                                 SDL2 SDL2_image
-                                                 GLEW GL spdlog)
-endif()
+            mkr_maths mkr_common mkr_glsl_include
+            SDL2 SDL2_image
+            GLEW GL spdlog)
+endif ()

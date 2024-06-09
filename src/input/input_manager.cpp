@@ -1,5 +1,4 @@
 #include <maths/vector2.h>
-#include <log/log.h>
 #include "input/input_helper.h"
 #include "input/input_manager.h"
 #include "input/sdl_to_keyboard.h"
@@ -82,15 +81,6 @@ namespace mkr {
     }
 
     void input_manager::init() {
-        SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
-        if (0 != SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC)) {
-            const std::string err_msg = "SDL_INIT_GAMECONTROLLER or SDL_INIT_JOYSTICK or SDL_INIT_HAPTIC failed";
-            MKR_CORE_ERROR(err_msg);
-            throw std::runtime_error(err_msg);
-        }
-        SDL_JoystickEventState(SDL_ENABLE);
-        SDL_GameControllerEventState(SDL_ENABLE);
-
         sdl_event_listener.set_callback<sdl_event>(std::bind(&input_manager::on_sdl_event, this, std::placeholders::_1));
         sdl_message_pump::instance().get_event_dispatcher().add_listener<sdl_event>(&sdl_event_listener);
     }
@@ -102,7 +92,6 @@ namespace mkr {
 
     void input_manager::exit() {
         sdl_message_pump::instance().get_event_dispatcher().remove_listener<sdl_event>(&sdl_event_listener);
-        SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC);
     }
 
     void input_manager::register_bool(input_action_t _input_action, input_context _input_context,

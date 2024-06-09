@@ -48,7 +48,7 @@ namespace mkr {
                 const float delta_time = application::instance().delta_time();
                 auto entities = scene_->entities_with<player_body, transform>();
                 for (auto ent: entities) {
-                    float angle = _event->value_ * rotation_velocity_ * delta_time;
+                    float angle = -_event->value_ * rotation_velocity_ * delta_time;
                     auto trans = scene_->get_component<transform>(ent);
                     trans->rotate(quaternion{vector3::y_axis(), angle});
                 }

@@ -16,34 +16,8 @@
 
 namespace mkr {
     void graphics_renderer::init() {
-        // Initialise SDL video subsystem.
-        if (0 != SDL_InitSubSystem(SDL_INIT_VIDEO)) {
-            const std::string err_msg = "SDL_INIT_VIDEO failed";
-            MKR_CORE_ERROR(err_msg);
-            throw std::runtime_error(err_msg);
-        }
-
-        // Enable Multisampling
-        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-
-        // Set Double Buffering
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-        // Set OpenGL Version
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-        int majorVersion, minorVersion;
-        SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &majorVersion);
-        SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &minorVersion);
-        MKR_CORE_INFO("OpenGL Version: {}.{}", majorVersion, minorVersion);
-
         // Create Window
         app_window_ = std::make_unique<app_window>("mkr_engine", window_width_, window_height_, window_flags::none);
-
-        // Initialise glew.
-        if (GLEW_OK != glewInit()) {
-            throw std::runtime_error("glewInit failed");
-        }
 
         skybox_cube_ = mesh_builder::make_skybox("skybox");
         screen_quad_ = mesh_builder::make_screen_quad("screen_quad");
@@ -90,7 +64,6 @@ namespace mkr {
     }
 
     void graphics_renderer::exit() {
-        SDL_QuitSubSystem(SDL_INIT_VIDEO);
     }
 
     void graphics_renderer::render() {

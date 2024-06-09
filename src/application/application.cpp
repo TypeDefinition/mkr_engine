@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <log/log.h>
+#include "sdl/sdl_api.h"
 #include "application/application.h"
 #include "application/sdl_message_pump.h"
 #include "input/input_manager.h"
@@ -18,11 +19,9 @@ namespace mkr {
         // Initialise logging first to allow systems to start logging.
         log::init();
 
-        // Message Pump
-        sdl_message_pump::instance().init();
+        sdl_api::init();
 
         // Systems
-        texture_loader::init();
         input_manager::instance().init();
         graphics_renderer::instance().init();
         graphics_renderer::instance().start();
@@ -56,11 +55,9 @@ namespace mkr {
     }
 
     void application::exit() {
-        // Exit message pump.
-        sdl_message_pump::instance().exit(); // Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.
+        sdl_api::exit();
 
         // Exit systems.
-        texture_loader::exit();
         input_manager::instance().exit();
         graphics_renderer::instance().exit();
 

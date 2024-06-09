@@ -2,7 +2,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <GL/glew.h>
 
 namespace mkr {
     enum window_flags : uint32_t {
@@ -38,6 +38,11 @@ namespace mkr {
 
             // Create OpenGL context.
             gl_context_ = SDL_GL_CreateContext(window_);
+
+            // Initialise glew.
+            if (GLEW_OK != glewInit()) {
+                throw std::runtime_error("glewInit failed");
+            }
         }
 
         ~app_window() {
@@ -57,4 +62,4 @@ namespace mkr {
 
         inline void swap_buffers() { SDL_GL_SwapWindow(window_); }
     };
-}
+} // mkr

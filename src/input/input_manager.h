@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL2/SDL.h>
 #include <common/singleton.h>
 #include "application/sdl_message_pump.h"
 #include "input/bool_handler.h"

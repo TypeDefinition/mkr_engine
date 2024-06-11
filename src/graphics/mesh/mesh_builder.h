@@ -2,7 +2,6 @@
 
 #include <cstring>
 #include <memory>
-#include <SDL2/SDL_image.h>
 #include <log/log.h>
 #include <maths/matrix_util.h>
 #include "graphics/mesh/mesh.h"

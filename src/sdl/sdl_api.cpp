@@ -1,13 +1,11 @@
 #include <stdexcept>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <log/log.h>
 #include "sdl_api.h"
 
 namespace mkr {
     void sdl_api::init() {
         init_video();
-        init_image();
         init_input();
         init_events();
     }
@@ -15,7 +13,6 @@ namespace mkr {
     void sdl_api::exit() {
         exit_events(); // Needs to exit first or else SDL_PollEvent will crash if the other subsystems are shutdown.
         exit_input();
-        exit_image();
         exit_video();
     }
 
@@ -43,19 +40,6 @@ namespace mkr {
 
     void sdl_api::exit_video() {
         SDL_QuitSubSystem(SDL_INIT_VIDEO);
-    }
-
-    void sdl_api::init_image() {
-        int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-        if (flags != (flags & IMG_Init(flags))) {
-            const std::string err_msg = "IMG_Init failed";
-            MKR_CORE_ERROR(err_msg);
-            throw std::runtime_error(err_msg);
-        }
-    }
-
-    void sdl_api::exit_image() {
-        IMG_Quit();
     }
 
     void sdl_api::init_input() {

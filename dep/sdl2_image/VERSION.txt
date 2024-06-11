@@ -1,2 +1,0 @@
-Compiler: MinGW-w64 (GCC)
-Architecture: 64-bit

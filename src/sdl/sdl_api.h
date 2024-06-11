@@ -6,9 +6,6 @@ namespace mkr {
         static void exit_video();
         static void init_video();
 
-        static void init_image();
-        static void exit_image();
-
         static void init_input();
         static void exit_input();
 

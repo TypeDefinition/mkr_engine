@@ -13,7 +13,7 @@ namespace mkr {
     class player_movement : public system {
     private:
         float velocity_ = 10.0f;
-        float rotation_velocity_ = 60.0f * maths_util::deg2rad;
+        float rotation_velocity_ = maths_util::deg2rad * 20.0f;
         event_listener bool_listener_, axis1d_listener_;
 
         void on_bool_event(const bool_event* _event) {

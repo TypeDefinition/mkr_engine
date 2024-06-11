@@ -53,14 +53,11 @@ FetchContent_MakeAvailable(spdlog)
 # Target
 target_link_directories(${PROJECT_NAME} PUBLIC
         ${PROJECT_SOURCE_DIR}/dep/sdl2/lib
-        ${PROJECT_SOURCE_DIR}/dep/sdl2_image/lib
         ${PROJECT_SOURCE_DIR}/dep/glew/lib/Release/x64)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${SRC_DIR}
         ${PROJECT_SOURCE_DIR}/dep/sdl2/include
-        ${PROJECT_SOURCE_DIR}/dep/sdl2/include/SDL2
-        ${PROJECT_SOURCE_DIR}/dep/sdl2_image/include
         ${PROJECT_SOURCE_DIR}/dep/glew/include
         ${PROJECT_SOURCE_DIR}/dep/roaring/include
         ${PROJECT_SOURCE_DIR}/dep/stb/include)
@@ -68,11 +65,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 if (WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
             mkr_maths mkr_common mkr_glsl_include
-            SDL2main SDL2 SDL2_image
+            SDL2main SDL2
             glew32 opengl32 spdlog)
 else ()
     target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads
             mkr_maths mkr_common mkr_glsl_include
-            SDL2 SDL2_image
+            SDL2
             GLEW GL spdlog)
 endif ()

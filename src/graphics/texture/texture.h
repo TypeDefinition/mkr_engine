@@ -2,7 +2,6 @@
 
 #include <array>
 #include <cmath>
-#include <SDL2/SDL_image.h>
 #include <GL/glew.h>
 #include <maths/maths_util.h>
 #include "graphics/texture/pixel_format.h"

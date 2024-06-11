@@ -302,10 +302,13 @@ namespace mkr {
         {
             auto body = create_entity();
             add_component<player_body>(body);
+
             auto head = create_entity();
-            add_component<camera>(head);
             add_component<player_head>(head);
             get_component<transform>(head)->set_position({0.0f, 1.7f, 0.0f});
+
+            add_component<camera>(head)->skybox_.texture_ = texture_manager::instance().get_cubemap("skybox_sunset");
+            get_component<camera>(head)->skybox_.shader_ = shader_manager::instance().get_shader("skybox");
 
             set_parent(head, body);
         }
